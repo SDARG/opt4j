@@ -1,1 +1,1 @@
-include 'opt4j-core', 'ptplot'
+include 'opt4j-core', 'opt4j-satdecoding', 'opt4j-benchmarks', 'ptplot'
