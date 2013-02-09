@@ -3,6 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'maven'
 
+mainClassName = 'org.opt4j.start.Opt4J'
 
 allprojects {
     group = 'org.opt4j'
@@ -17,4 +18,12 @@ allprojects {
 compileJava  {
    	def currentJvm = org.gradle.internal.jvm.Jvm.current()
 	println "current JVM: "+currentJvm
+}
+
+dependencies {
+	compile project(':opt4j-core')
+	compile project(':opt4j-satdecoding')
+	compile project(':opt4j-optimizers')
+	compile project(':opt4j-benchmarks')
+	compile project(':ptplot')
 }
