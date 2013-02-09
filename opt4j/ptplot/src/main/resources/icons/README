@@ -1,0 +1,22 @@
+Tango Icon Theme
+----------------
+
+This is an icon theme that follows the Tango visual guidelines [1].
+The icons are based on the Tango Icon Library 0.8.1 [2] and are licensed
+under Creative Commons Attribution-Share Alike 2.0 Generic License [3].
+
+The authors are:
+Felix Reimann <felix.reimann@cs.fau.de>
+Ulisse Perusin <uli.peru@gmail.com>
+Steven Garrity <sgarrity@silverorange.com>
+Lapo Calamandrei <calamandrei@gmail.com>
+Ryan Collier <rcollier@novell.com>
+Rodney Dawes <dobey@novell.com>
+Andreas Nilsson <nisses.mail@home.se>
+Tuomas Kuosmanen <tigert@tigert.com>
+Garrett LeSage <garrett@novell.com>
+Jakub Steiner <jimmac@novell.com>
+
+[1] http://tango-project.org/Tango_Icon_Theme_Guidelines
+[2] http://tango.freedesktop.org/releases/tango-icon-theme-0.8.1.tar.gz
+[3] http://creativecommons.org/licenses/by-sa/2.0/

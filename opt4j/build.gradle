@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'maven'
+
+
+allprojects {
+    group = 'org.opt4j'
+    version = '3.0'
+    sourceCompatibility = 1.6
+    
+    repositories {
+    	mavenCentral()
+    }
+}
+
+compileJava  {
+   	def currentJvm = org.gradle.internal.jvm.Jvm.current()
+	println "current JVM: "+currentJvm
+}

@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/opt4j/!svn/ver/586/ptolemyplot/trunk/src/ptolemy/plot
+END
+PlotApplication.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotApplication.java
+END
+PlotPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotPoint.java
+END
+PlotLive.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotLive.java
+END
+PlotFrame.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotFrame.java
+END
+PlotBox.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/opt4j/!svn/ver/586/ptolemyplot/trunk/src/ptolemy/plot/PlotBox.java
+END
+PlotFormatter.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotFormatter.java
+END
+PlotLiveApplet.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotLiveApplet.java
+END
+copyright.txt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/copyright.txt
+END
+CmdLineArgException.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/CmdLineArgException.java
+END
+PlotDataException.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotDataException.java
+END
+Histogram.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/Histogram.java
+END
+DefaultFonts.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/opt4j/!svn/ver/379/ptolemyplot/trunk/src/ptolemy/plot/DefaultFonts.java
+END
+Plot.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/opt4j/!svn/ver/365/ptolemyplot/trunk/src/ptolemy/plot/Plot.java
+END
+HistogramApplet.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/HistogramApplet.java
+END
+package.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/package.html
+END
+PlotApplet.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/PlotApplet.java
+END
+EPSGraphics.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/opt4j/!svn/ver/250/ptolemyplot/trunk/src/ptolemy/plot/EPSGraphics.java
+END
