@@ -15,6 +15,7 @@
 
 package org.opt4j.optimizer.ea;
 
+import org.opt4j.common.archive.Crowding;
 import org.opt4j.config.annotations.Info;
 import org.opt4j.start.Constant;
 

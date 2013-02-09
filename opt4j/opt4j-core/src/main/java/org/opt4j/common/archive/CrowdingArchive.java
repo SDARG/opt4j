@@ -19,15 +19,12 @@ import java.util.Collection;
 import java.util.List;
 
 import org.opt4j.core.Individual;
-import org.opt4j.optimizer.ea.Crowding;
-import org.opt4j.optimizer.ea.Nsga2;
 import org.opt4j.start.Constant;
 
 import com.google.inject.Inject;
 
 /**
- * The {@link CrowdingArchive} is based on the {@link Crowding} distance of the
- * {@link Nsga2}.
+ * The {@link CrowdingArchive} is based on the {@link Crowding} distance.
  * 
  * @author lukasiewycz
  * @see Crowding

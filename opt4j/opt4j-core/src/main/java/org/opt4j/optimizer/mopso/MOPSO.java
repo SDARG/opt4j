@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.opt4j.common.archive.Crowding;
 import org.opt4j.common.archive.CrowdingArchive;
 import org.opt4j.common.random.Rand;
 import org.opt4j.core.Genotype;
@@ -37,7 +38,6 @@ import org.opt4j.operator.algebra.Index;
 import org.opt4j.operator.algebra.Term;
 import org.opt4j.operator.mutate.MutationRate;
 import org.opt4j.operator.normalize.NormalizeDouble;
-import org.opt4j.optimizer.ea.Crowding;
 import org.opt4j.start.Constant;
 
 import com.google.inject.Inject;

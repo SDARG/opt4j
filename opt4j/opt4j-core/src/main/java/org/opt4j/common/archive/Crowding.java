@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
  */
-package org.opt4j.optimizer.ea;
+package org.opt4j.common.archive;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.opt4j.core.Individual;
+import org.opt4j.optimizer.ea.FrontDensityIndicator;
+import org.opt4j.optimizer.ea.Nsga2;
 
 /**
  * The {@link Crowding} calculates the crowding distance of {@link Individual}s

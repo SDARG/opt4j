@@ -17,6 +17,7 @@ package org.opt4j.optimizer.ea;
 import java.util.Collection;
 import java.util.Map;
 
+import org.opt4j.common.archive.Crowding;
 import org.opt4j.core.Individual;
 
 import com.google.inject.ImplementedBy;
