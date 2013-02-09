@@ -53,14 +53,6 @@ import com.google.inject.Singleton;
 public class Opt4JAbout extends JPanel implements About, Startupable {
 
 	/**
-	 * Date of build.
-	 */
-	public static final String DATE = "@DATE@";
-	/**
-	 * Version number.
-	 */
-	public static final String VERSION = "@VERSION@";
-	/**
 	 * Contributers to Opt4J.
 	 */
 	public static final String[] AUTHORS = { "Martin Lukasiewycz", "Michael Gla&szlig;", "Sabine Helwig",
@@ -120,7 +112,7 @@ public class Opt4JAbout extends JPanel implements About, Startupable {
 		footer.setBackground(Color.WHITE);
 
 		// Add Copyright & Credits
-		String copyright = "<html>Build " + DATE + " <br /> Version " + VERSION + "   \u00a9 Opt4J.org 2007</html>";
+		String copyright = "<html>Build " + Opt4J.getDateISO() + " <br /> Version " + Opt4J.getVersion() + "   \u00a9 Opt4J.org 2007</html>";
 		JLabel copyrightLabel = new JLabel(copyright);
 		copyrightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		copyrightLabel.setVerticalAlignment(SwingConstants.BOTTOM);

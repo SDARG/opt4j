@@ -1,9 +1,17 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+import org.apache.tools.ant.filters.ReplaceTokens
 
 dependencies {
 	compile group: 'com.google.inject', 			name: 'guice', 					version: '3.0'
 	compile group: 'com.google.inject.extensions', 	name: 'guice-multibindings', 	version: '3.0'
 	
 	compile project(':ptplot')
+}
+
+processResources {
+	from('src/main/resources') {
+        include '**/*.properties'
+		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
+	}
 }

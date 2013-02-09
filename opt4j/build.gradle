@@ -8,6 +8,7 @@ mainClassName = 'org.opt4j.start.Opt4J'
 allprojects {
     group = 'org.opt4j'
     version = '3.0'
+	dateISO = new Date().format("yyyy-MM-dd") 
     sourceCompatibility = 1.6
     
     repositories {

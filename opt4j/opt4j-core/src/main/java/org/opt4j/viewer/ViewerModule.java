@@ -18,6 +18,7 @@ import org.opt4j.config.Icons;
 import org.opt4j.config.annotations.Icon;
 import org.opt4j.config.annotations.Info;
 import org.opt4j.start.Constant;
+import org.opt4j.start.Opt4J;
 import org.opt4j.viewer.Viewer.CloseEvent;
 
 /**
@@ -32,7 +33,7 @@ public class ViewerModule extends VisualizationModule {
 
 	@Info("The title of the viewer frame.")
 	@Constant(value = "title", namespace = Viewer.class)
-	protected String title = "Opt4J @VERSION@ Viewer";
+	protected String title = "Opt4J "+Opt4J.getVersion()+" Viewer";
 
 	@Info("Event for the optimization process if the viewer is closed.")
 	@Constant(value = "closeEvent", namespace = Viewer.class)

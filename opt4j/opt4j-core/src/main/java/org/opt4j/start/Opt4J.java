@@ -19,6 +19,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.SplashScreen;
+import java.io.IOException;
+import java.util.Properties;
 
 import org.opt4j.config.ModuleAutoFinder;
 import org.opt4j.config.ModuleAutoFinderListener;
@@ -44,6 +46,34 @@ import com.google.inject.Module;
 public class Opt4J extends Configurator {
 
 	protected static final ModuleListUser moduleList = new ModuleListUser();
+
+	protected static Properties props = new Properties();
+
+	static {
+		try {
+			props.load(Opt4J.class.getResourceAsStream("/main.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Returns the version of the current build.
+	 * 
+	 * @return the version
+	 */
+	public static String getVersion() {
+		return props.getProperty("version");
+	}
+
+	/**
+	 * Returns the date of the current build.
+	 * 
+	 * @return the date
+	 */
+	public static String getDateISO() {
+		return props.getProperty("date");
+	}
 
 	static class SplashDecorator {
 
@@ -86,7 +116,7 @@ public class Opt4J extends Configurator {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		System.out.println("Starting Opt4J @VERSION@ (Build @DATE@)");
+		System.out.println("Starting Opt4J "+getVersion()+" (Build "+getDateISO()+")");
 		if (args.length > 0 && args[0].equalsIgnoreCase("-s")) {
 			SplashScreen splash = SplashScreen.getSplashScreen();
 			if (splash != null) {
@@ -134,8 +164,8 @@ public class Opt4J extends Configurator {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(new Color(242, 130, 38));
 			g.setFont(new Font("SansSerif", Font.BOLD, 11));
-			g.drawString("version @VERSION@", 170, 76);
-			g.drawString("@DATE@", 170, 91);
+			g.drawString("version "+getVersion(), 170, 76);
+			g.drawString(getDateISO(), 170, 91);
 			splash.update();
 		}
 	}

@@ -14,6 +14,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 
 import org.opt4j.config.Icons;
+import org.opt4j.start.Opt4J;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -34,7 +35,7 @@ public class DefaultApplicationFrame extends ApplicationFrame {
 	protected final Menu menu;
 	protected final FileOperations fileOperations;
 
-	protected final String title = "Opt4J @VERSION@ Configurator";
+	protected final String title = "Opt4J "+Opt4J.getVersion()+" Configurator";
 
 	/**
 	 * Constructs a {@link DefaultApplicationFrame} .
