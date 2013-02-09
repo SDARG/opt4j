@@ -13,7 +13,7 @@
  * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
  */
 
-package org.opt4j.optimizer.ea;
+package org.opt4j.operator.crossover;
 
 /**
  * The {@link Pair} groups two objects of the same type in a given order.

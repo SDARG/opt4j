@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.opt4j.common.archive.FrontDensityIndicator;
 import org.opt4j.common.random.Rand;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objectives;

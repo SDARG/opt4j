@@ -18,7 +18,6 @@ package org.opt4j.operator.crossover;
 import org.opt4j.core.Genotype;
 import org.opt4j.genotype.CompositeGenotype;
 import org.opt4j.operator.AbstractGenericOperator;
-import org.opt4j.optimizer.ea.Pair;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

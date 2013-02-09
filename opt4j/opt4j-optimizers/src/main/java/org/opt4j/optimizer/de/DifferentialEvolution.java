@@ -36,7 +36,7 @@ import org.opt4j.operator.algebra.Sub;
 import org.opt4j.operator.algebra.Term;
 import org.opt4j.operator.algebra.Var;
 import org.opt4j.operator.crossover.Crossover;
-import org.opt4j.optimizer.ea.Pair;
+import org.opt4j.operator.crossover.Pair;
 import org.opt4j.optimizer.ea.Selector;
 import org.opt4j.start.Constant;
 

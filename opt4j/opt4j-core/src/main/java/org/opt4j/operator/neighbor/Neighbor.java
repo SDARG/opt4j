@@ -17,7 +17,6 @@ package org.opt4j.operator.neighbor;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.optimizer.Operator;
-import org.opt4j.optimizer.sa.SimulatedAnnealing;
 
 import com.google.inject.ImplementedBy;
 
@@ -25,7 +24,6 @@ import com.google.inject.ImplementedBy;
  * The {@link Neighbor} operator as it is used for Simulated Annealing.
  * 
  * @author lukasiewycz
- * @see SimulatedAnnealing
  * 
  * @param <G>
  *            the type of genotype

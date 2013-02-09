@@ -17,37 +17,19 @@ package org.opt4j.optimizer.ea;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
-import org.opt4j.common.random.Rand;
 import org.opt4j.core.Individual;
-
-import com.google.inject.Inject;
+import org.opt4j.operator.crossover.Pair;
 
 /**
- * The {@link CouplerUnique} uses the set of parents and creates couples
- * randomly from this set. Parent pairs never contain equal {@link Individual}s.
+ * The {@link CouplerDefault} uses the pairs based on their index in the list:
+ * {@code p0+p1,p2+p3,etc.}.
  * 
- * @author lukasiewycz
+ * @author glass, lukasiewycz
  * 
  */
-public class CouplerUnique implements Coupler {
-
-	protected final Random random;
-
-	/**
-	 * Constructs a {@link CouplerRandom}.
-	 * 
-	 * @param random
-	 *            the random number generator
-	 */
-	@Inject
-	public CouplerUnique(Rand random) {
-		this.random = random;
-	}
+public class CouplerDefault implements Coupler {
 
 	/*
 	 * (non-Javadoc)
@@ -56,26 +38,10 @@ public class CouplerUnique implements Coupler {
 	 */
 	@Override
 	public Collection<Pair<Individual>> getCouples(int size, List<Individual> parents) {
-		Collection<Pair<Individual>> couples = new ArrayList<Pair<Individual>>();
-
-		Set<Individual> set = new HashSet<Individual>(parents);
-		List<Individual> p = new ArrayList<Individual>(set);
-
-		int n = p.size();
-
+		List<Pair<Individual>> couples = new ArrayList<Pair<Individual>>();
 		for (int i = 0; i < size; i++) {
-			Individual first;
-			Individual second;
-			if (n == 1) {
-				first = p.get(0);
-				second = first;
-			} else {
-				int x = random.nextInt(n);
-				int y = (x + random.nextInt(n - 1) + 1) % n;
-				first = p.get(x);
-				second = p.get(y);
-				assert (first != second) : x + "==" + y;
-			}
+			Individual first = parents.get((2 * i) % parents.size());
+			Individual second = parents.get((2 * i + 1) % parents.size());
 			Pair<Individual> pair = new Pair<Individual>(first, second);
 			couples.add(pair);
 		}

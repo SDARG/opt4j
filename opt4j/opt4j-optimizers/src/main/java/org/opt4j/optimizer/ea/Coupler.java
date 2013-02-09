@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.opt4j.core.Individual;
+import org.opt4j.operator.crossover.Pair;
 
 import com.google.inject.ImplementedBy;
 

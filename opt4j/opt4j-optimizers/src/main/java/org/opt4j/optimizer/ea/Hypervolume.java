@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.opt4j.common.archive.FrontDensityIndicator;
 import org.opt4j.core.Individual;
 import org.opt4j.start.Constant;
 

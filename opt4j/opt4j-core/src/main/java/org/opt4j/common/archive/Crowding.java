@@ -23,12 +23,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.opt4j.core.Individual;
-import org.opt4j.optimizer.ea.FrontDensityIndicator;
-import org.opt4j.optimizer.ea.Nsga2;
 
 /**
  * The {@link Crowding} calculates the crowding distance of {@link Individual}s
- * as used for instance in the the {@link Nsga2} algorithm. A bounding box
+ * as used for instance in the the {@code Nsga2} algorithm. A bounding box
  * around each individual is defined and restricted by the neighboring
  * individuals in each dimension. The crowding distance is the sum of the
  * side-lengths of the bounding box. If an individual does not have neighbors on

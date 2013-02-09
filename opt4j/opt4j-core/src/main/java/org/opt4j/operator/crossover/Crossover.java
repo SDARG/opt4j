@@ -17,7 +17,6 @@ package org.opt4j.operator.crossover;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.optimizer.Operator;
-import org.opt4j.optimizer.ea.Pair;
 
 import com.google.inject.ImplementedBy;
 

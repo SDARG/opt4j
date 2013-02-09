@@ -22,6 +22,7 @@ import java.util.Random;
 
 import org.opt4j.common.random.Rand;
 import org.opt4j.core.Individual;
+import org.opt4j.operator.crossover.Pair;
 
 import com.google.inject.Inject;
 

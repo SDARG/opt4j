@@ -21,7 +21,6 @@ import java.lang.annotation.Retention;
 
 import org.opt4j.common.random.Rand;
 import org.opt4j.operator.normalize.NormalizeDouble;
-import org.opt4j.optimizer.ea.Pair;
 import org.opt4j.start.Constant;
 
 import com.google.inject.BindingAnnotation;

@@ -21,7 +21,6 @@ import java.util.TreeSet;
 
 import org.opt4j.common.random.Rand;
 import org.opt4j.genotype.ListGenotype;
-import org.opt4j.optimizer.ea.Pair;
 
 import com.google.inject.Inject;
 

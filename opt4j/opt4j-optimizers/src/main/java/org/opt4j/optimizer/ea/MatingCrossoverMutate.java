@@ -25,6 +25,7 @@ import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualFactory;
 import org.opt4j.operator.copy.Copy;
 import org.opt4j.operator.crossover.Crossover;
+import org.opt4j.operator.crossover.Pair;
 import org.opt4j.operator.mutate.Mutate;
 import org.opt4j.operator.mutate.MutationRate;
 

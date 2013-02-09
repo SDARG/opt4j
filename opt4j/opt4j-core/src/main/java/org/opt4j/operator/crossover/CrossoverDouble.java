@@ -21,7 +21,6 @@ import java.util.Random;
 import org.opt4j.common.random.Rand;
 import org.opt4j.genotype.DoubleGenotype;
 import org.opt4j.operator.normalize.NormalizeDouble;
-import org.opt4j.optimizer.ea.Pair;
 
 import com.google.inject.ImplementedBy;
 import com.google.inject.Inject;

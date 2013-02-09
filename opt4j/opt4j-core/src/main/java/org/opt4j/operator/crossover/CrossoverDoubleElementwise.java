@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.opt4j.common.random.Rand;
 import org.opt4j.operator.normalize.NormalizeDouble;
-import org.opt4j.optimizer.ea.Pair;
 
 /**
  * The {@link CrossoverDoubleElementwise} can be used to derive

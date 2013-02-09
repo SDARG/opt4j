@@ -15,21 +15,27 @@
 
 package org.opt4j.optimizer.ea;
 
-import org.opt4j.common.archive.Crowding;
+import org.opt4j.common.archive.FrontDensityIndicator;
 import org.opt4j.config.annotations.Info;
 import org.opt4j.start.Constant;
 
 /**
- * Module for the {@link Nsga2} {@link Selector}.
+ * Module for the S-Metric Selection ({@link Selector}) based on the {@link Hypervolume} contribution.
  * 
- * 
- * @see Nsga2
+ * @see "M. Emmerich, N. Beume, and B. Naujoks. An EMO Algorithm Using the
+ *      Hypervolume Measure as Selection Criterion. EMO 2005."
+ * @see Hypervolume
  * @author lukasiewycz
+ * @author Ramin Etemaadi
  * 
  */
-@Info("A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization")
-public class Nsga2Module extends SelectorModule {
+@Info("SMS-EMOA: Multiobjective selection based on dominated hypervolume")
+public class SMSModule extends SelectorModule {
 
+	@Info("The offset value")
+	@Constant(value = "offset", namespace = Hypervolume.class)
+	protected double offset = 1.0;
+	
 	@Info("The tournament value")
 	@Constant(value = "tournament", namespace = Nsga2.class)
 	protected int tournament = 0;
@@ -54,6 +60,25 @@ public class Nsga2Module extends SelectorModule {
 	public void setTournament(int tournament) {
 		this.tournament = tournament;
 	}
+	
+	/**
+	 * Returns the offset value.
+	 * 
+	 * @return the offset value
+	 */
+	public double getOffset() {
+		return offset;
+	}
+	
+	/**
+	 * Sets the offset value.
+	 * 
+	 * @param offset
+	 *            the offset to set
+	 */
+	public void setOffset(double offset) {
+		this.offset = offset;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -63,7 +88,7 @@ public class Nsga2Module extends SelectorModule {
 	@Override
 	public void config() {
 		bindSelector(Nsga2.class);
-		bind(FrontDensityIndicator.class).to(Crowding.class);
+		bind(FrontDensityIndicator.class).to(Hypervolume.class);
 	}
 
 }
