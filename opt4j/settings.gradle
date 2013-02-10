@@ -1,1 +1,7 @@
-include 'opt4j-core', 'opt4j-satdecoding', 'opt4j-benchmarks', 'opt4j-optimizers', 'opt4j-operators', 'opt4j-viewer', 'opt4j-tutorial'
+include 'opt4j-core'
+include 'opt4j-satdecoding'
+include 'opt4j-benchmarks'
+include 'opt4j-optimizers'
+include 'opt4j-operators'
+include 'opt4j-viewer'
+include 'opt4j-tutorial'

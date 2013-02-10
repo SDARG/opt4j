@@ -1,6 +1,3 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-
 dependencies {
 	compile project(':opt4j-core')
 }

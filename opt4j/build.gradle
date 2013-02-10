@@ -15,30 +15,76 @@ allprojects {
 }
 
 subprojects {
+	apply plugin: 'java'
     apply plugin: 'maven'
-
-	//apply plugin: 'maven-publish'
+    apply plugin: 'signing'
 	
-	/*apply plugin: 'signing'
-	
-	task sourcesJar(type: Jar, dependsOn:classes) { 
-		classifier = 'sources' 
+	task sourcesJar(type: Jar, dependsOn:classes) {
 		from sourceSets.main.allSource 
+		classifier = 'sources' 
 	} 
 
-	task javadocJar(type: Jar, dependsOn:javadoc) { 
-		classifier = 'javadoc' 
+	task javadocJar(type: Jar, dependsOn:javadoc) {
 		from javadoc.destinationDir 
-	} r
+		classifier = 'javadoc' 
+	}
 
 	artifacts { 
+		archives jar
 		archives sourcesJar 
 		archives javadocJar 
-	} 
-	
+	}
+
 	signing {
-		sign configurations.archives
-	}*/
+	    sign configurations.archives
+	}
+	
+	uploadArchives {
+	    repositories {
+	        mavenDeployer {
+	            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+	 
+	            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+	              authentication(userName: sonatypeUsername, password: sonatypePassword)
+	            }
+	 
+	            pom.project {
+	               name 'Opt4J'
+	               packaging 'jar'
+	               description 'Opt4J is a modular framework for meta-heuristic optimization.'
+	               url 'http://www.opt4j.org'
+	 
+	               scm {
+	                   url 'http://hg.code.sf.net/p/opt4j/hgroot'
+	                   connection 'http://hg.code.sf.net/p/opt4j/hgroot'
+	               }
+	 
+	               licenses {
+	                   license {
+	                       name 'GNU Lesser General Public License'
+	                       url 'http://www.gnu.org/licenses/lgpl.txt'
+	                       distribution 'repo'
+	                   }
+	               }
+	 
+	               developers {
+	                   developer {
+	                       id 'lukasiewycz'
+	                       name 'Martin Lukasiewycz'
+	                   }
+	                   developer {
+	                       id 'reimann'
+	                       name 'Felix Reimann'
+	                   }
+	                   developer {
+	                       id 'glass'
+	                       name 'Michael Glass'
+	                   }
+	               }
+	           }
+	        }
+	    }
+	}
 }
 
 compileJava  {
