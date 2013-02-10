@@ -14,9 +14,7 @@
  */
 package org.opt4j.viewer;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.annotations.Icon;
-import org.opt4j.start.Opt4JModule;
+import org.opt4j.common.logger.OutputModule;
 
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
@@ -27,8 +25,7 @@ import com.google.inject.multibindings.Multibinder;
  * @author lukasiewycz
  * 
  */
-@Icon(Icons.APPLICATION)
-public abstract class VisualizationModule extends Opt4JModule {
+public abstract class VisualizationModule extends OutputModule {
 
 	/**
 	 * Add a {@link ToolBarService}.

@@ -22,6 +22,8 @@ import org.opt4j.start.Opt4J;
 import org.opt4j.start.Progress;
 import org.opt4j.viewer.Viewer.CloseEvent;
 
+import ptolemy.plot.DefaultFonts;
+
 /**
  * The {@link ViewerModule} configures the optimization process viewer.
  * 
@@ -32,9 +34,16 @@ import org.opt4j.viewer.Viewer.CloseEvent;
 @Info("A graphical viewer to observe the optimization process.")
 public class ViewerModule extends VisualizationModule {
 
+	static {
+		// initialize ptolemy plot once the viewer module is on the classpath
+		if (DefaultFonts.LABElFONT == null) {
+			throw new IllegalStateException();
+		}
+	}
+
 	@Info("The title of the viewer frame.")
 	@Constant(value = "title", namespace = Viewer.class)
-	protected String title = "Opt4J "+Opt4J.getVersion()+" Viewer";
+	protected String title = "Opt4J " + Opt4J.getVersion() + " Viewer";
 
 	@Info("Event for the optimization process if the viewer is closed.")
 	@Constant(value = "closeEvent", namespace = Viewer.class)

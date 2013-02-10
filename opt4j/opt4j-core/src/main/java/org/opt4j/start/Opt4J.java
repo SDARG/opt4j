@@ -130,23 +130,10 @@ public class Opt4J extends Configurator {
 				decorateVersionDate(splash);
 				decorator = new SplashDecorator(splash);
 			}
-			//initVisualization(decorator);
 			searchModules(decorator);
 
 			Configurator configurator = new Opt4J();
 			configurator.start(args);
-		}
-	}
-
-	protected static void initVisualization(SplashDecorator splash) {
-		if (splash != null) {
-			splash.print("Initialize Visualization", Color.GRAY.darker());
-		}
-		/*if (DefaultFonts.LABElFONT == null) {
-			throw new IllegalStateException();
-		}*/
-		if (splash != null) {
-			splash.print("Initialized Visualization", Color.GRAY.darker());
 		}
 	}
 
