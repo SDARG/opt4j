@@ -29,10 +29,8 @@ import org.opt4j.config.ModuleListUser;
 import org.opt4j.config.Task;
 import org.opt4j.config.visualization.About;
 import org.opt4j.config.visualization.Configurator;
+import org.opt4j.config.visualization.DelayTask;
 import org.opt4j.config.visualization.TasksPanel;
-import org.opt4j.viewer.DelayTask;
-
-import ptolemy.plot.DefaultFonts;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -132,7 +130,7 @@ public class Opt4J extends Configurator {
 				decorateVersionDate(splash);
 				decorator = new SplashDecorator(splash);
 			}
-			initVisualization(decorator);
+			//initVisualization(decorator);
 			searchModules(decorator);
 
 			Configurator configurator = new Opt4J();
@@ -144,9 +142,9 @@ public class Opt4J extends Configurator {
 		if (splash != null) {
 			splash.print("Initialize Visualization", Color.GRAY.darker());
 		}
-		if (DefaultFonts.LABElFONT == null) {
+		/*if (DefaultFonts.LABElFONT == null) {
 			throw new IllegalStateException();
-		}
+		}*/
 		if (splash != null) {
 			splash.print("Initialized Visualization", Color.GRAY.darker());
 		}

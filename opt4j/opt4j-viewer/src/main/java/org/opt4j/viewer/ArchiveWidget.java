@@ -44,6 +44,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 
 import org.opt4j.config.Icons;
+import org.opt4j.config.visualization.DelayTask;
 import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualSet;
 import org.opt4j.core.IndividualSetListener;

@@ -9,7 +9,7 @@
  * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
  * http://www.gnu.org/licenses/.
  */
-package org.opt4j.viewer;
+package org.opt4j.start;
 
 import org.opt4j.core.optimizer.MaxIterations;
 import org.opt4j.core.optimizer.Optimizer;

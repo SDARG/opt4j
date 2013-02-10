@@ -44,7 +44,6 @@ import org.opt4j.config.visualization.Format;
 import org.opt4j.config.visualization.SelectedModules;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.Optimizer;
-import org.opt4j.viewer.Progress;
 
 import com.google.inject.Inject;
 import com.google.inject.Module;

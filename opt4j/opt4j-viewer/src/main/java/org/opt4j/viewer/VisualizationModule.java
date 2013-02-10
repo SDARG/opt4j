@@ -15,7 +15,6 @@
 package org.opt4j.viewer;
 
 import org.opt4j.config.Icons;
-import org.opt4j.config.annotations.Category;
 import org.opt4j.config.annotations.Icon;
 import org.opt4j.start.Opt4JModule;
 
@@ -29,7 +28,6 @@ import com.google.inject.multibindings.Multibinder;
  * 
  */
 @Icon(Icons.APPLICATION)
-@Category
 public abstract class VisualizationModule extends Opt4JModule {
 
 	/**
@@ -81,6 +79,19 @@ public abstract class VisualizationModule extends Opt4JModule {
 		Multibinder<IndividualMouseListener> multibinder = Multibinder.newSetBinder(binder,
 				IndividualMouseListener.class);
 		multibinder.addBinding().to(individualMouseListener);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.inject.AbstractModule#configure()
+	 */
+	@Override
+	protected void configure() {
+		super.configure();
+
+		multi(ToolBarService.class);
+		multi(IndividualMouseListener.class);
 	}
 
 }

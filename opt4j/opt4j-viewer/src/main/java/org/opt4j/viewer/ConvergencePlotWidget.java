@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import org.opt4j.config.Icons;
+import org.opt4j.config.visualization.DelayTask;
 import org.opt4j.core.Objective;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerIterationListener;

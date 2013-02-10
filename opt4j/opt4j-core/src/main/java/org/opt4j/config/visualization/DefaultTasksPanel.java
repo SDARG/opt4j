@@ -30,7 +30,6 @@ import javax.swing.table.TableCellRenderer;
 import org.opt4j.config.ExecutionEnvironment;
 import org.opt4j.config.Task;
 import org.opt4j.config.TaskListener;
-import org.opt4j.viewer.DelayTask;
 
 import com.google.inject.Inject;
 

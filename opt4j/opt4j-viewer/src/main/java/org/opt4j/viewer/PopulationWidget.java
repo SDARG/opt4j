@@ -34,6 +34,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import org.opt4j.config.Icons;
+import org.opt4j.config.visualization.DelayTask;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Individual.State;
 import org.opt4j.core.IndividualFactory;

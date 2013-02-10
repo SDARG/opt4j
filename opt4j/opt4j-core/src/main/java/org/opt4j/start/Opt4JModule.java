@@ -24,8 +24,6 @@ import org.opt4j.core.IndividualStateListener;
 import org.opt4j.core.optimizer.ControlListener;
 import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.core.optimizer.OptimizerStateListener;
-import org.opt4j.viewer.IndividualMouseListener;
-import org.opt4j.viewer.ToolBarService;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
@@ -126,8 +124,6 @@ public abstract class Opt4JModule extends AbstractModule {
 		multi(OptimizerStateListener.class);
 		multi(OptimizerIterationListener.class);
 		multi(IndividualStateListener.class);
-		multi(ToolBarService.class);
-		multi(IndividualMouseListener.class);
 
 		config();
 	}

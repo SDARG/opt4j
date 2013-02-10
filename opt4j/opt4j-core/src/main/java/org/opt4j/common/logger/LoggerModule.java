@@ -19,7 +19,6 @@ import org.opt4j.config.annotations.Info;
 import org.opt4j.config.annotations.Order;
 import org.opt4j.config.annotations.Required;
 import org.opt4j.start.Constant;
-import org.opt4j.viewer.VisualizationModule;
 
 /**
  * Module for logging.
@@ -30,7 +29,7 @@ import org.opt4j.viewer.VisualizationModule;
  */
 @Icon(Icons.TEXT)
 @Info("Logs the contents of the archive to a file.")
-public class LoggerModule extends VisualizationModule {
+public class LoggerModule extends OutputModule {
 
 	@Info("The name of the output file.")
 	@Order(0)

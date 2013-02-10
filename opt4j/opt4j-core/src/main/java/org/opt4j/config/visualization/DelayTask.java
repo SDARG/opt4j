@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
  */
-package org.opt4j.viewer;
+package org.opt4j.config.visualization;
 
 /**
  * The {@link DelayTask} executes tasks immediately or delayed if they arrive

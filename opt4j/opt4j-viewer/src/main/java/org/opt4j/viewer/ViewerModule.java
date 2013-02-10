@@ -19,6 +19,7 @@ import org.opt4j.config.annotations.Icon;
 import org.opt4j.config.annotations.Info;
 import org.opt4j.start.Constant;
 import org.opt4j.start.Opt4J;
+import org.opt4j.start.Progress;
 import org.opt4j.viewer.Viewer.CloseEvent;
 
 /**
