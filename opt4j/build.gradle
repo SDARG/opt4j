@@ -1,7 +1,5 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'application'
-apply plugin: 'maven'
+apply plugin: 'base'
 
 mainClassName = 'org.opt4j.start.Opt4J'
 
@@ -16,15 +14,40 @@ allprojects {
     }
 }
 
+subprojects {
+    apply plugin: 'maven'
+	apply plugin: 'maven-publish'
+	apply plugin: 'signing'
+	
+	task sourcesJar(type: Jar, dependsOn:classes) { 
+		classifier = 'sources' 
+		from sourceSets.main.allSource 
+	} 
+
+	task javadocJar(type: Jar, dependsOn:javadoc) { 
+		classifier = 'javadoc' 
+		from javadoc.destinationDir 
+	} 
+
+	artifacts { 
+		archives sourcesJar 
+		archives javadocJar 
+	} 
+	
+	signing {
+		sign configurations.archives
+	}
+}
+
 compileJava  {
    	def currentJvm = org.gradle.internal.jvm.Jvm.current()
 	println "current JVM: "+currentJvm
 }
 
-dependencies {
+/*dependencies {
 	compile project(':opt4j-core')
 	compile project(':opt4j-satdecoding')
 	compile project(':opt4j-optimizers')
 	compile project(':opt4j-benchmarks')
 	compile project(':ptplot')
-}
+}*/
