@@ -5,6 +5,8 @@ import org.apache.tools.ant.filters.ReplaceTokens
 dependencies {
 	compile group: 'com.google.inject', 			name: 'guice', 					version: '3.0'
 	compile group: 'com.google.inject.extensions', 	name: 'guice-multibindings', 	version: '3.0'
+	
+	testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
 processResources {

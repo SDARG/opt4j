@@ -16,7 +16,8 @@ allprojects {
 
 subprojects {
     apply plugin: 'maven'
-	apply plugin: 'maven-publish'
+
+	//apply plugin: 'maven-publish'
 	
 	/*apply plugin: 'signing'
 	
