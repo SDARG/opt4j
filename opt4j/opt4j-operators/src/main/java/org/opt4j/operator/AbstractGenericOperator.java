@@ -32,6 +32,7 @@ import org.opt4j.core.Genotype;
 import org.opt4j.core.optimizer.IncompatibilityException;
 import org.opt4j.core.optimizer.Operator;
 import org.opt4j.genotype.CompositeGenotype;
+import org.opt4j.start.Parameters;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

@@ -14,7 +14,6 @@ import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.core.problem.Creator;
 import org.opt4j.core.problem.Decoder;
 import org.opt4j.core.problem.Evaluator;
-import org.opt4j.operator.Parameters;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;

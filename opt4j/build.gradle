@@ -17,7 +17,8 @@ allprojects {
 subprojects {
     apply plugin: 'maven'
 	apply plugin: 'maven-publish'
-	apply plugin: 'signing'
+	
+	/*apply plugin: 'signing'
 	
 	task sourcesJar(type: Jar, dependsOn:classes) { 
 		classifier = 'sources' 
@@ -36,7 +37,7 @@ subprojects {
 	
 	signing {
 		sign configurations.archives
-	}
+	}*/
 }
 
 compileJava  {
