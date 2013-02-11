@@ -14,8 +14,6 @@ import javax.swing.JFrame;
  * 
  */
 public class DefaultFonts {
-	private static final long serialVersionUID = 1L;
-
 	public static final Font LABElFONT;
 	public static final FontMetrics LABElFONtMETRICS;
 	public static final Font SUPErSCRIPtFONT;
