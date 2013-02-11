@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+      <meta http-equiv="Refresh" content="0; URL=@VERSION@/index.html">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+      <title>Opt4J &mdash; A Modular Framework for Meta-heuristic Optimization</title>
+      <style type="text/css">
+        @import url("../style.css");
+      </style>
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      <meta property="og:title" content="Opt4J" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://opt4j.sourceforge.net/" />
+<meta property="og:image" content="http://opt4j.sourceforge.net/design/img/top_logo.png" />
+<meta property="og:site_name" content="Opt4J - A Modular Framework for Meta-heuristic Optimization" />
+<meta property="fb:admins" content="100001453849519" />
+      <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    </head>
+     
+    <body>
+      <div id="top">
+        <h1>Opt4J</h1>
+        <h2>A Modular Framework for Meta-heuristic Optimization</h2> 
+        <hr/>
+      </div>      
+    
+      <div id="container">
+              
+        <div id="navigation">
+          <h4 class="hide">Menu:</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../features.html">Features</a></li>
+            <li><a href="../download.html">Download</a></li>
+            <li><a href="../documentation.html">Documentation</a></li>
+            <li><a href="../about.html">About</a></li>            
+          </ul>
+          <a href="http://sourceforge.net/projects/opt4j">
+          <img src="../design/img/sflogo.png" alt="Opt4J hosted by SourceForge.net" /></a>
+          <div id="social">
+          	<p><g:plusone size="medium" href="http://opt4j.sourceforge.net/"></g:plusone></p>
+          	<p><iframe src="http://www.facebook.com/plugins/like.php?app_id=187635137961911&amp;href=http%3A%2F%2Fopt4j.sourceforge.net%2F&amp;send=false&amp;layout=button_count&amp;width=130&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:21px;" allowTransparency="true"></iframe>          </p>
+          </div>
+        </div>
+        
+        <div id="content">
+        	
+          The JavaDocs of the current version @VERSION@ can be found <a href="@VERSION@/index.html">here</a>.</p> 		  
+        </div>
+        
+      </div>
+      
+      <div id="footer">
+        <hr/>
+        <a href="../copyright.html">Copyright</a>
+        <a href="mailto:info@opt4j.org">Contact</a>         
+      </div>
+      
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3445704-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>    
+  </body>
+  </html>
