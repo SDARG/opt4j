@@ -1,0 +1,5 @@
+The Mersenne Twister random number generator by David Beaumont
+is licensed under the  GNU LGPL (http://www.gnu.org/copyleft/lesser.html).
+
+http://goui.net/
+
