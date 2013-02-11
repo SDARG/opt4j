@@ -27,7 +27,7 @@ public class RandomTest {
 
 	public void testConsistency(Rand r0, Rand r1) {
 		for (int i = 0; i < SAMPLES; i++) {
-			assertEquals(r0.nextDouble(), r1.nextDouble());
+			assertEquals(r0.nextDouble(), r1.nextDouble(), 0.0);
 		}
 		for (int i = 0; i < SAMPLES; i++) {
 			assertEquals(r0.nextBoolean(), r1.nextBoolean());
@@ -39,14 +39,13 @@ public class RandomTest {
 			assertEquals(r0.nextInt(100), r1.nextInt(100));
 		}
 		for (int i = 0; i < SAMPLES; i++) {
-			assertEquals(r0.nextFloat(), r1.nextFloat());
+			assertEquals(r0.nextFloat(), r1.nextFloat(), 0.0);
 		}
 		for (int i = 0; i < SAMPLES; i++) {
 			assertEquals(r0.nextLong(), r1.nextLong());
 		}
 		for (int i = 0; i < SAMPLES; i++) {
-			assertEquals(r0.nextGaussian(), r1.nextGaussian());
+			assertEquals(r0.nextGaussian(), r1.nextGaussian(), 0.0);
 		}
 	}
-
 }
