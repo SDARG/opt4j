@@ -127,3 +127,24 @@ jar {
 boolean isSnapshot() {
 	project.version.contains('SNAPSHOT')
 }
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+task website(dependsOn: ":opt4j-tutorial:makeDocbook") {
+	copy {
+		from('src/main/website/') {
+	        include '**/*.html'
+			filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
+		}
+		from('src/main/website/') {
+	        exclude '**/*.html'
+		}
+		into 'build/website/'
+	}
+	def docpath=''+project(':opt4j-tutorial').buildDir+'/docbook'
+	copy {
+		from docpath+'/pdf' 
+		from docpath+'/html'
+		into 'build/website/documentation/'+version
+	}
+}
