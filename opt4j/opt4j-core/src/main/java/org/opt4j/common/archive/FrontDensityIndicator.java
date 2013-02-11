@@ -17,7 +17,6 @@ package org.opt4j.common.archive;
 import java.util.Collection;
 import java.util.Map;
 
-import org.opt4j.common.archive.Crowding;
 import org.opt4j.core.Individual;
 
 import com.google.inject.ImplementedBy;
@@ -26,11 +25,9 @@ import com.google.inject.ImplementedBy;
  * The {@code FrontDensityIndicator} is an interface for the determination of
  * density values of a front of {@link Individual}s. It is required that the
  * front consists of non-dominated {@code Individuals} only. This density
- * indicator is used for instance in the {@link Nsga2}.
+ * indicator is used for instance in the {@code Nsga2}.
  * 
- * @see Nsga2
  * @see Crowding
- * @see Hypervolume
  * @author lukasiewycz
  * 
  */

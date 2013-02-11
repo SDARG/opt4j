@@ -23,7 +23,7 @@
  * is typically used at the beginning of an optimization by the {@link org.opt4j.core.optimizer.Optimizer} to create the
  * initial {@link org.opt4j.core.optimizer.Population}. The size of the {@link org.opt4j.core.Genotype}s, the
  * {@link org.opt4j.core.problem.Creator} creates, define the search space for the
- * {@link org.opt4j.core.optimizer.Optimizer}. The package {@link org.opt4j.genotype} contains predefined
+ * {@link org.opt4j.core.optimizer.Optimizer}. The package {@code org.opt4j.genotype} contains predefined
  * {@link org.opt4j.core.Genotype} classes that allow a modular assembly. Thus, usually you do not have to write your
  * custom {@link org.opt4j.core.Genotype}.</dd>
  * 

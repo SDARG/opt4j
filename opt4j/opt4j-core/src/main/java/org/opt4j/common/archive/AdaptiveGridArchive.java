@@ -10,13 +10,14 @@ import java.util.Set;
 
 import org.opt4j.common.random.Rand;
 import org.opt4j.core.Individual;
+import org.opt4j.core.optimizer.Archive;
 import org.opt4j.start.Constant;
 
 import com.google.inject.Inject;
 
 /**
  * The {@link AdaptiveGridArchive} uses an adaptive grid in order to bound the
- * size of the {@link org.opt4j.core.optimizer.Archive}.
+ * size of the {@link Archive}.
  * 
  * @author lukasiewycz, helwig
  * 
@@ -256,7 +257,7 @@ public class AdaptiveGridArchive extends BoundedArchive {
 
 	/**
 	 * Adds all {@link Individual}s to theirs {@link Cell}s and the {@link Cell}
-	 * s to the {@link core.optimizer.Archive}.
+	 * s to the {@link Archive}.
 	 * 
 	 * @param individuals
 	 *            the individuals to be added

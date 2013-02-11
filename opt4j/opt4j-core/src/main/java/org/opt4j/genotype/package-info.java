@@ -68,23 +68,21 @@
  * The classes {@link org.opt4j.genotype.BooleanMapGenotype}, {@link org.opt4j.genotype.DoubleMapGenotype}, {@link
  * org.opt4j.genotype.IntegerMapGenotype}, {@link org.opt4j.genotype.SelectGenotype}, and {@link org.opt4j.genotype.SelectMapGenotype}
  * are extended from {@link org.opt4j.genotype.BooleanGenotype}, {@link org.opt4j.genotype.DoubleGenotype}, and {@link
- * org.opt4j.genotype.IntegerGenotype}, respectively. Therefore, the default operators (
- * {@link org.opt4j.operator}) for the simple {@link org.opt4j.core.Genotype} classes are
+ * org.opt4j.genotype.IntegerGenotype}, respectively. Therefore, the default operators (in package 
+ * {@code org.opt4j.operator}) for the simple {@link org.opt4j.core.Genotype} classes are
  * applied on their {@link org.opt4j.genotype.MapGenotype} and {@link org.opt4j.genotype.SelectGenotype} classes.
  * </p>
  * <p>
  * Custom genotypes have to implement the
  * {@link org.opt4j.core.Genotype} interface. If these classes are not
  * extended from existing {@link org.opt4j.core.Genotype} classes, appropriate operators have
- * to be implemented (see {@link org.opt4j.operator}).
+ * to be implemented (see package {@code org.opt4j.operator}).
  * </p>
  * <p>
  * The initialization of the genotypes is done in the
  * {@link org.opt4j.core.problem.Creator}. Each genotype class has an appropriate
  * {@code init} method to simplify the initialization.
  * </p>
- * 
- * @see org.opt4j.operator
  * 
  */
 package org.opt4j.genotype;

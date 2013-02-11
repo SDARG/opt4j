@@ -90,7 +90,7 @@ public class ZDT1 extends ZDTEvaluator<DoubleString> {
 
 	/**
 	 * Creates a list of doubles from an arbitrary genotype (
-	 * {@link DoubleVectorPhenotype} or {@link BooleanGenotype}).
+	 * {@code DoubleVectorPhenotype} or {@code BooleanGenotype}).
 	 * 
 	 * @param phenotype
 	 *            the phenotype

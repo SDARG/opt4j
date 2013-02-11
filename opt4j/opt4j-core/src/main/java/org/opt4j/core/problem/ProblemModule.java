@@ -30,7 +30,6 @@ import com.google.inject.multibindings.Multibinder;
  * @see Decoder
  * @see Evaluator
  * @author lukasiewycz
- * @see org.opt4j.core.problem
  * 
  */
 @Icon(Icons.PROBLEM)

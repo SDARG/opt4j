@@ -21,7 +21,6 @@ package org.opt4j.core;
  * Thus, a {@link Genotype} can be decoded to a {@link Phenotype} with an
  * appropriate {@link org.opt4j.core.problem.Decoder}.
  * 
- * @see org.opt4j.genotype
  * @author glass, lukasiewycz
  * 
  */

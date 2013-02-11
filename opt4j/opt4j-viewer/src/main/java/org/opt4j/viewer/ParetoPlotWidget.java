@@ -221,7 +221,7 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 	}
 
 	/**
-	 * Returns the two dimensional representation of the given {@link IndividualCollection}.
+	 * Returns the two dimensional representation of the given {@code IndividualCollection}.
 	 * 
 	 * @param indivualCollection
 	 *            the {IndividualCollection

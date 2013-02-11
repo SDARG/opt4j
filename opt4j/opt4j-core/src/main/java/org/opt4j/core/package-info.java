@@ -24,7 +24,7 @@
  * <dl>
  * <dt>{@link org.opt4j.core.Genotype}</dt>
  * <dd>The {@link org.opt4j.core.Genotype} is the genetic representation of an {@link org.opt4j.core.Individual}. The
- * package {@link org.opt4j.genotype} contains predefined {@link org.opt4j.core.Genotype} classes like for binary
+ * package {@code org.opt4j.genotype} contains predefined {@link org.opt4j.core.Genotype} classes like for binary
  * strings or {@link java.lang.Double} vectors that allow a modular assembly. For each optimization problem, the user
  * needs to choose the genetic representation which fits the search space best.</dd>
  * 

@@ -58,8 +58,8 @@ public class Spea2 implements Selector {
 	protected final Rand random;
 	protected final int tournament;
 
-	protected final Map<Individual, IndividualSet> map = new LinkedHashMap<Individual, IndividualSet>();
-	protected final Set<IndividualSet> individualSets = new LinkedHashSet<IndividualSet>();
+	protected final Map<Individual, Spea2IndividualSet> map = new LinkedHashMap<Individual, Spea2IndividualSet>();
+	protected final Set<Spea2IndividualSet> individualSets = new LinkedHashSet<Spea2IndividualSet>();
 
 	protected final LinkedList<Integer> freeIDs = new LinkedList<Integer>();
 	protected double[][] distance;
@@ -72,7 +72,7 @@ public class Spea2 implements Selector {
 	 * @author lukasiewycz
 	 * 
 	 */
-	private class IndividualSet extends LinkedHashSet<Individual> implements Comparable<IndividualSet> {
+	private class Spea2IndividualSet extends LinkedHashSet<Individual> implements Comparable<Spea2IndividualSet> {
 
 		private static final long serialVersionUID = 1L;
 		protected final int id;
@@ -81,7 +81,7 @@ public class Spea2 implements Selector {
 		protected final Objectives objectives;
 		protected double nextDistance = 0;
 
-		IndividualSet(Individual individual, int id) {
+		Spea2IndividualSet(Individual individual, int id) {
 			this.id = id;
 			this.add(individual);
 			this.objectives = individual.getObjectives();
@@ -133,16 +133,16 @@ public class Spea2 implements Selector {
 
 		@Override
 		public boolean equals(Object obj) {
-			IndividualSet other = (IndividualSet) obj;
+			Spea2IndividualSet other = (Spea2IndividualSet) obj;
 			return (id == other.id);
 		}
 
-		public boolean dominates(IndividualSet individualSet) {
+		public boolean dominates(Spea2IndividualSet individualSet) {
 			return this.getObjectives().dominates(individualSet.getObjectives());
 		}
 
 		@Override
-		public int compareTo(IndividualSet o) {
+		public int compareTo(Spea2IndividualSet o) {
 			return o.fitness - this.fitness;
 		}
 
@@ -198,8 +198,8 @@ public class Spea2 implements Selector {
 			for (int j = 0; j < tournament; j++) {
 				Individual opponent = candidates.get(random.nextInt(size));
 
-				IndividualSet wWinner = map.get(winner);
-				IndividualSet wOpponent = map.get(opponent);
+				Spea2IndividualSet wWinner = map.get(winner);
+				Spea2IndividualSet wOpponent = map.get(opponent);
 
 				double oFitness = wWinner.getFitness();
 				double wFitness = wOpponent.getFitness();
@@ -238,7 +238,7 @@ public class Spea2 implements Selector {
 		Set<Individual> lames = new LinkedHashSet<Individual>();
 
 		if (lambda > 0) {
-			List<IndividualSet> dominated = getDominated();
+			List<Spea2IndividualSet> dominated = getDominated();
 
 			if (countIndividuals(dominated) >= lambda) {
 
@@ -254,7 +254,7 @@ public class Spea2 implements Selector {
 
 			} else {
 
-				for (IndividualSet w0 : dominated) {
+				for (Spea2IndividualSet w0 : dominated) {
 					lames.addAll(w0);
 				}
 
@@ -284,8 +284,8 @@ public class Spea2 implements Selector {
 		while (set.size() < count) {
 			int maxsize = 0;
 
-			List<IndividualSet> candidates = new ArrayList<IndividualSet>();
-			for (IndividualSet individualSet : getNonDominated()) {
+			List<Spea2IndividualSet> candidates = new ArrayList<Spea2IndividualSet>();
+			for (Spea2IndividualSet individualSet : getNonDominated()) {
 				if (individualSet.size() > maxsize) {
 					maxsize = individualSet.size();
 					candidates.clear();
@@ -296,13 +296,13 @@ public class Spea2 implements Selector {
 			}
 
 			if (candidates.size() <= (count - set.size())) {
-				for (IndividualSet individualSet : candidates) {
+				for (Spea2IndividualSet individualSet : candidates) {
 					Individual individual = individualSet.first();
 					remove(individual);
 					set.add(individual);
 				}
 			} else { // candidates.size() > (count - set.size())
-				for (IndividualSet individualSet : getNearest(count - set.size(), candidates)) {
+				for (Spea2IndividualSet individualSet : getNearest(count - set.size(), candidates)) {
 					Individual individual = individualSet.first();
 					remove(individual);
 					set.add(individual);
@@ -326,25 +326,25 @@ public class Spea2 implements Selector {
 	 *            the candidate IndividualSets
 	 * @return the n nearest neighbors
 	 */
-	protected List<IndividualSet> getNearest(int n, Collection<IndividualSet> candidates) {
+	protected List<Spea2IndividualSet> getNearest(int n, Collection<Spea2IndividualSet> candidates) {
 
 		assert (candidates.size() > n);
 
-		List<IndividualSet> lames = new ArrayList<IndividualSet>();
+		List<Spea2IndividualSet> lames = new ArrayList<Spea2IndividualSet>();
 
-		Map<IndividualSet, List<IndividualSet>> orderedLists = new LinkedHashMap<IndividualSet, List<IndividualSet>>();
+		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = new LinkedHashMap<Spea2IndividualSet, List<Spea2IndividualSet>>();
 
-		for (IndividualSet w0 : candidates) {
-			List<IndividualSet> list = new ArrayList<IndividualSet>();
-			for (IndividualSet w1 : candidates) {
+		for (Spea2IndividualSet w0 : candidates) {
+			List<Spea2IndividualSet> list = new ArrayList<Spea2IndividualSet>();
+			for (Spea2IndividualSet w1 : candidates) {
 				if (w0 != w1) {
 					w1.setNextDistance(distance(w0, w1));
 					list.add(w1);
 				}
 			}
-			Collections.sort(list, new Comparator<IndividualSet>() {
+			Collections.sort(list, new Comparator<Spea2IndividualSet>() {
 				@Override
-				public int compare(IndividualSet o1, IndividualSet o2) {
+				public int compare(Spea2IndividualSet o1, Spea2IndividualSet o2) {
 					double v = o1.getNextDistance() - o2.getNextDistance();
 					if (v < 0) {
 						return -1;
@@ -360,20 +360,20 @@ public class Spea2 implements Selector {
 		}
 
 		while (lames.size() < n) {
-			List<IndividualSet> lcandidates = new ArrayList<IndividualSet>(orderedLists.keySet());
+			List<Spea2IndividualSet> lcandidates = new ArrayList<Spea2IndividualSet>(orderedLists.keySet());
 
 			int size = lcandidates.size();
 
 			for (int k = 0; k < size - 1; k++) {
 				double min = Double.MAX_VALUE;
 
-				for (IndividualSet candidate : lcandidates) {
+				for (Spea2IndividualSet candidate : lcandidates) {
 					double value = distance(candidate, orderedLists.get(candidate).get(k));
 					min = Math.min(min, value);
 				}
 
-				for (Iterator<IndividualSet> it = lcandidates.iterator(); it.hasNext();) {
-					IndividualSet candidate = it.next();
+				for (Iterator<Spea2IndividualSet> it = lcandidates.iterator(); it.hasNext();) {
+					Spea2IndividualSet candidate = it.next();
 					double value = distance(candidate, orderedLists.get(candidate).get(k));
 					if (value > min) {
 						it.remove();
@@ -385,11 +385,11 @@ public class Spea2 implements Selector {
 				}
 			}
 
-			IndividualSet lame = lcandidates.get(0);
+			Spea2IndividualSet lame = lcandidates.get(0);
 			lames.add(lame);
 			orderedLists.remove(lame);
 
-			for (List<IndividualSet> list : orderedLists.values()) {
+			for (List<Spea2IndividualSet> list : orderedLists.values()) {
 				list.remove(lame);
 			}
 
@@ -400,9 +400,9 @@ public class Spea2 implements Selector {
 		return lames;
 	}
 
-	protected double getMinDistance(IndividualSet w0) {
+	protected double getMinDistance(Spea2IndividualSet w0) {
 		double min = Double.MAX_VALUE;
-		for (IndividualSet w1 : individualSets) {
+		for (Spea2IndividualSet w1 : individualSets) {
 			if (w0 != w1) {
 				min = Math.min(min, distance(w0, w1));
 			}
@@ -446,7 +446,7 @@ public class Spea2 implements Selector {
 	}
 
 	/**
-	 * Return the distance of two {@link IndividualSet}s.
+	 * Return the distance of two {@code Spea2IndividualSet}s.
 	 * 
 	 * @param w0
 	 *            first set
@@ -454,7 +454,7 @@ public class Spea2 implements Selector {
 	 *            second set
 	 * @return the distance
 	 */
-	protected double distance(IndividualSet w0, IndividualSet w1) {
+	protected double distance(Spea2IndividualSet w0, Spea2IndividualSet w1) {
 		return distance[w0.getId()][w1.getId()];
 	}
 
@@ -466,11 +466,11 @@ public class Spea2 implements Selector {
 	 */
 	protected void add(Individual individual) {
 		int id0 = freeIDs.removeFirst();
-		IndividualSet w0 = new IndividualSet(individual, id0);
+		Spea2IndividualSet w0 = new Spea2IndividualSet(individual, id0);
 
-		IndividualSet eq = null;
+		Spea2IndividualSet eq = null;
 
-		for (IndividualSet w1 : individualSets) {
+		for (Spea2IndividualSet w1 : individualSets) {
 			int id1 = w1.getId();
 			double dist = calculateDistance(w0, w1);
 			if (dist == 0.0) {
@@ -500,7 +500,7 @@ public class Spea2 implements Selector {
 	 *            the individual to remove
 	 */
 	protected void remove(Individual individual) {
-		IndividualSet individualSet = map.remove(individual);
+		Spea2IndividualSet individualSet = map.remove(individual);
 
 		if (individualSet.size() == 1) {
 			individualSets.remove(individualSet);
@@ -513,7 +513,7 @@ public class Spea2 implements Selector {
 	}
 
 	/**
-	 * Calculate the distance between two {@link IndividualSet}s.
+	 * Calculate the distance between two {@code Spea2IndividualSet}s.
 	 * 
 	 * @param w0
 	 *            the first set
@@ -521,7 +521,7 @@ public class Spea2 implements Selector {
 	 *            the second set
 	 * @return the distance
 	 */
-	protected double calculateDistance(IndividualSet w0, IndividualSet w1) {
+	protected double calculateDistance(Spea2IndividualSet w0, Spea2IndividualSet w1) {
 		return w0.getObjectives().distance(w1.getObjectives());
 	}
 
@@ -529,9 +529,9 @@ public class Spea2 implements Selector {
 	 * Calculate the fitness.
 	 */
 	protected void calculateFitness() {
-		for (IndividualSet individual : individualSets) {
+		for (Spea2IndividualSet individual : individualSets) {
 			int s = 0;
-			for (IndividualSet other : individualSets) {
+			for (Spea2IndividualSet other : individualSets) {
 				if (individual != other && individual.dominates(other)) {
 					s += other.size();
 				}
@@ -539,9 +539,9 @@ public class Spea2 implements Selector {
 			individual.setStrength(s);
 		}
 
-		for (IndividualSet individual : individualSets) {
+		for (Spea2IndividualSet individual : individualSets) {
 			int f = 0;
-			for (IndividualSet other : individualSets) {
+			for (Spea2IndividualSet other : individualSets) {
 				if (individual != other && other.dominates(individual)) {
 					f += other.getStrength() * other.size();
 				}
@@ -551,14 +551,14 @@ public class Spea2 implements Selector {
 	}
 
 	/**
-	 * Returns all dominated {@link IndividualSet}s (fitness > 0).
+	 * Returns all dominated {@code Spea2IndividualSet}s (fitness > 0).
 	 * 
 	 * @return all dominated IndividualSets
 	 */
-	protected List<IndividualSet> getDominated() {
-		List<IndividualSet> dominated = new ArrayList<IndividualSet>();
+	protected List<Spea2IndividualSet> getDominated() {
+		List<Spea2IndividualSet> dominated = new ArrayList<Spea2IndividualSet>();
 
-		for (IndividualSet w0 : individualSets) {
+		for (Spea2IndividualSet w0 : individualSets) {
 			if (w0.getFitness() > 0.0) {
 				dominated.add(w0);
 			}
@@ -568,14 +568,14 @@ public class Spea2 implements Selector {
 	}
 
 	/**
-	 * Returns all non-dominated {@link IndividualSet}s (fitness == 0).
+	 * Returns all non-dominated {@code Spea2IndividualSet}s (fitness == 0).
 	 * 
 	 * @return all non-dominated individualSets
 	 */
-	protected List<IndividualSet> getNonDominated() {
-		List<IndividualSet> dominated = new ArrayList<IndividualSet>();
+	protected List<Spea2IndividualSet> getNonDominated() {
+		List<Spea2IndividualSet> dominated = new ArrayList<Spea2IndividualSet>();
 
-		for (IndividualSet w0 : individualSets) {
+		for (Spea2IndividualSet w0 : individualSets) {
 			if (w0.getFitness() == 0.0) {
 				dominated.add(w0);
 			}
@@ -586,15 +586,15 @@ public class Spea2 implements Selector {
 
 	/**
 	 * Returns the total number of {@link Individual}s in a collection of
-	 * {@link IndividualSet}s.
+	 * {@code Spea2IndividualSet}s.
 	 * 
 	 * @param collection
 	 *            the collection of IndividualSets
 	 * @return the total number of Individuals
 	 */
-	private int countIndividuals(Collection<IndividualSet> collection) {
+	private int countIndividuals(Collection<Spea2IndividualSet> collection) {
 		int c = 0;
-		for (IndividualSet w : collection) {
+		for (Spea2IndividualSet w : collection) {
 			c += w.size();
 		}
 		return c;

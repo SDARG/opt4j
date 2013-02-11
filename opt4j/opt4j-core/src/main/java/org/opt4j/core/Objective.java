@@ -28,12 +28,8 @@ import static org.opt4j.core.Objective.Sign.MIN;
  * Moreover, each {@link org.opt4j.core.problem.Evaluator} has to set the same {@link Objective}s for all
  * {@link Phenotype}s.
  * </p>
- * <p>
- * Use the {@link org.opt4j.viewer.ObjectivesMonitor} to get all {@link Objective}s of the optimization task.
- * </p>
  * 
  * @see Objectives
- * @see org.opt4j.viewer.ObjectivesMonitor
  * @author lukasiewycz
  * 
  */
