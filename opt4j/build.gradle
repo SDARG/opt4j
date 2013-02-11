@@ -140,28 +140,30 @@ boolean isSnapshot() {
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
-task website(dependsOn: [":opt4j-tutorial:makeDocbook", 'alldocs']) {
-	copy {
-		from('src/main/website/') {
-	        include '**/*.html'
-			filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
-		}
-		from('src/main/website/') {
-	        exclude '**/*.html'
-		}
-		into 'build/website/'
+task copyWebsite(type: Copy){
+	from('src/main/website/') {
+		include '**/*.html'
+		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
 	}
-	def docpath=new File(project(':opt4j-tutorial').buildDir,'docbook')
-	copy {
-		from new File(docpath,'pdf')
-		from new File(docpath,'html')
-		into 'build/website/documentation/'+version
+	from('src/main/website/') {
+		exclude '**/*.html'
 	}
-	copy {
-		from new File(project.buildDir, 'docs/javadoc')
-		into 'build/website/javadoc/'+version
-	}
+	into 'build/website/'
 }
+
+task copyJavadoc(type: Copy, dependsOn: 'alldocs'){
+	from new File(project.buildDir, 'docs/javadoc')
+	into 'build/website/javadoc/'+version
+}
+
+task copyDocbook(type: Copy, dependsOn: ":opt4j-tutorial:makeDocbook"){
+	def docpath=new File(project(':opt4j-tutorial').buildDir,'docbook')
+	from new File(docpath,'pdf')
+	from new File(docpath,'html')
+	into 'build/website/documentation/'+version
+}
+
+task website(dependsOn: [copyWebsite, copyJavadoc, copyDocbook]) {}
 
 
 task alldocs(type: Javadoc) {
