@@ -1,0 +1,1131 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+			[
+			<!ENTITY HelloWorldModule SYSTEM "org/opt4j/tutorial/HelloWorldModule.java">
+			<!ENTITY SalesmanProblem SYSTEM "org/opt4j/tutorial/SalesmanProblem.java">
+			<!ENTITY SalesmanCreator SYSTEM "org/opt4j/tutorial/SalesmanCreator.java">	
+			<!ENTITY SalesmanDecoder SYSTEM "org/opt4j/tutorial/SalesmanDecoder.java">
+			<!ENTITY SalesmanEvaluator SYSTEM "org/opt4j/tutorial/SalesmanEvaluator.java">
+			<!ENTITY SalesmanModule SYSTEM "org/opt4j/tutorial/SalesmanModule.java">
+			<!ENTITY MinOnesEvaluator SYSTEM "org/opt4j/tutorial/MinOnesEvaluator.java">
+			<!ENTITY MinOnesDecoder SYSTEM "org/opt4j/tutorial/MinOnesDecoder.java">
+			<!ENTITY MinOnesModule SYSTEM "org/opt4j/tutorial/MinOnesModule.java">
+			<!ENTITY SalesmanWidgetService SYSTEM "org/opt4j/tutorial/SalesmanWidgetService.java">
+			<!ENTITY MutateOptimizer SYSTEM "org/opt4j/tutorial/MutateOptimizer.java">
+			<!ENTITY MutateOptimizerModule SYSTEM "org/opt4j/tutorial/MutateOptimizerModule.java">
+			<!ENTITY HelloWordCreator SYSTEM "org/opt4j/tutorial/HelloWorldCreator.java">
+			<!ENTITY HelloWordDecoder SYSTEM "org/opt4j/tutorial/HelloWorldDecoder.java">
+			<!ENTITY HelloWordEvaluator SYSTEM "org/opt4j/tutorial/HelloWorldEvaluator.java">
+			<!ENTITY HelloWordModule SYSTEM "org/opt4j/tutorial/HelloWorldModule.java">
+			<!ENTITY MyOperator SYSTEM "org/opt4j/tutorial/MyOperator.java">
+			<!ENTITY MyOperatorModule SYSTEM "org/opt4j/tutorial/MyOperatorModule.java">
+			<!ENTITY Version "@version@">
+			<!ENTITY Date "@date@">
+			<!ENTITY Opt4J "<application>Opt4J</application>">
+			]
+			>
+<book>
+	<title>
+		<inlinemediaobject>
+			<imageobject>
+				<imagedata contentwidth="40pt" fileref="logo.png" format="PNG" />
+			</imageobject>
+		</inlinemediaobject>
+		&Opt4J;
+		Documentation 
+	</title>
+	<subtitle>The
+		Optimization Framework for Java – Version &Version;
+	</subtitle>
+	<titleabbrev>&Opt4J;
+		Doc 
+	</titleabbrev>
+	<bookinfo>
+		<author>
+			<personname>
+				<firstname>Martin</firstname>
+				<surname>Lukasiewycz</surname>
+			</personname>
+		</author>
+		<author>
+			<personname>
+				<firstname>Michael</firstname>
+				<surname>Glaß</surname>
+			</personname>
+		</author>
+		<author>
+			<personname>
+				<firstname>Felix</firstname>
+				<surname>Reimann</surname>
+			</personname>
+		</author>
+		<pubdate>&Date;
+		</pubdate>
+	</bookinfo>
+	<preface id="preface">
+		<title>Preface</title>
+		<para>This
+			documentation consists of six sections: The first section is the introduction
+			containing an installation guide that introduces the graphical configurator
+			interface and the optimization viewer. The second section outlines the
+			structure of &Opt4J;.
+			A tutorial for the implementation of two problems (Hello World and Traveling
+			Salesman) and one optimizer (MutateOptimizer) are given in the following four
+			sections. The last section shows how &Opt4J;
+			can be started from command line for testcases or integrated into third party
+			software. 
+		</para>
+	</preface>
+	<chapter id="installation">
+		<title>Installation, Configuration, and Viewer</title>
+		<para>
+			To install &Opt4J;,
+			the first step is to ensure that at least Java 6 Runtime Environment (JRE) is
+			installed on your system. (You can use
+			<command>java --version</command>
+			on the command line (console) to check the version of your JRE.) If this is
+			not the case, download and install the latest JRE for your operating system
+			from
+			<ulink url="http://java.sun.com">http://java.sun.com</ulink>
+			.
+		</para>
+		<para>
+			Next, you have to download &Opt4J;
+			from
+			<ulink url="http://www.opt4j.org">http://www.opt4j.org</ulink>
+			. Download the latest release (currently, the ZIP file
+			<filename>opt4j-&Version;.zip 
+			</filename>
+			or with additional sources
+			<filename>opt4j-&Version;-sources.zip 
+			</filename>
+			). Unzip all files.
+		</para>
+		<figure>
+			<title>
+				Run &Opt4J;
+				using
+				<filename>start.bat</filename>
+				on Windows systems.
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="intro-installation.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The full release contains
+			<itemizedlist>
+				<listitem>
+					<para>
+						the
+						<filename>opt4j-&Version;.jar 
+						</filename>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the documentation as a
+						<filename>pdf</filename>
+						file
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the tutorial as sources and as a compiled
+						<filename>jar</filename>
+						in the
+						<filename>tutorial</filename>
+						folder
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						the
+						<filename>plugins</filename>
+						folder from which
+						<filename>jar</filename>
+						files are automatically added to the classpath.
+					</para>
+				</listitem>
+			</itemizedlist>
+			Use the command
+			<command>java
+				-jar opt4j-&Version;.jar 
+			</command>
+			to start &Opt4J;.
+			Alternatively, on Windows systems, you can start the &Opt4J;
+			configurator interface with the
+			<filename>start.bat</filename>
+			file (or double-click the
+			<filename>opt4j-&Version;.jar 
+			</filename>
+			file). On UNIX systems, use
+			<filename>start.sh</filename>
+			.
+		</para>
+		<para>
+			The
+			<filename>opt4j-&Version;-sources.zip 
+			</filename>
+			also contains the sources and the javadocs. Moreover, the
+			<filename>libsrc</filename>
+			folder contains an
+			<filename>opt4j-&Version;.jar 
+			</filename>
+			that also includes the sources for simplified debugging.
+		</para>
+		<para>
+			For a first test of &Opt4J;,
+			you can select the following modules or you can load the
+			<filename>test.config.xml</filename>
+			file:
+		</para>
+		<figure>
+			<title>
+				The
+				<emphasis>Configurator</emphasis>
+				is a comfortable GUI for the configuration of the optimization runs.
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="intro-configurator.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The
+						<emphasis>Configurator</emphasis>
+						shows the available modules on the left side, the selected modules on the
+						right side, and the configured tasks at the bottom of the window.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Finally, click the
+			<emphasis>run</emphasis>
+			button to start the optimization:
+		</para>
+		<figure>
+			<title>
+				The
+				<emphasis>Viewer</emphasis>
+				shows the progress of an optimization run.
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="intro-viewer.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The &Opt4J;
+			configuration files are XML files that define the used modules and adjusted
+			parameters. Starting these configuration files without the configurator
+			interfaces can be done using the command
+			<command>java
+				-jar opt4j-&Version;.jar
+				-s test.config.xml 
+			</command>
+			with
+			<filename>test.config.xml</filename>
+			being the XML configuration.
+		</para>
+		<tip>
+			<para>
+				Using the
+				<command>-s</command>
+				parameter, you can specify multiple configurations that are executed
+				subsequently.
+			</para>
+		</tip>
+	</chapter>
+	<chapter id="understanding">
+		<title>Understanding &Opt4J;
+		</title>
+		<para>
+			<emphasis>The Interfaces Concept:</emphasis> &Opt4J;
+			consists of many interfaces. By default these interfaces are implemented by
+			predefined default classes. However, the user can implement custom
+			implementations of these interfaces. A schematic overview of the most
+			important &Opt4J;
+			interfaces and classes can be found in the following figure: 
+		</para>
+		<figure>
+			<title>
+				A schematic overview of the most important &Opt4J;
+				interfaces and classes. 
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="opt4j-architecture.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para> The most important interfaces of the framework are explained in the
+			following.
+		</para>
+		<para>
+			<emphasis>Optimizer (Singleton):</emphasis>
+			All
+			<classname>Optimizers</classname>
+			implement the
+			<classname>Optimizer</classname>
+			interface. Usually all
+			<classname>Optimizers</classname>
+			are derived from the
+			<classname>AbstractOptimizer</classname>
+			that already implements some essential methods.
+		</para>
+		<para>
+			<emphasis>Creator, Decoder, Evaluator (Singletons):</emphasis>
+			The
+			<classname>Creator</classname>
+			,
+			<classname>Decoder</classname>
+			, and
+			<classname>Evaluator</classname>
+			interfaces are interfaces for the
+			<classname>Problem</classname>
+			. The
+			<classname>Creator</classname>
+			is responsible for the construction of random
+			<classname>Genotypes</classname>
+			, the
+			<classname>Decoder</classname>
+			converts the
+			<classname>Genotype</classname>
+			into a
+			<classname>Phenotype</classname>
+			, and the
+			<classname>Evaluator</classname>
+			calculates the
+			<classname>Objectives</classname>
+			for a
+			<classname>Phenotype</classname>
+			.
+		</para>
+		<para>
+			<emphasis>Genotype, Phenotype, Objectives:</emphasis>
+			The
+			<classname>Genotype</classname>
+			,
+			<classname>Phenotype</classname>
+			, and
+			<classname>Objectives</classname>
+			define one
+			<classname>Individual</classname>
+			. The
+			<classname>Genotype</classname>
+			is the genetic representation of an
+			<classname>Individual</classname>
+			. There are many predefined
+			<classname>Genotypes</classname>
+			classes like for binary strings or double vectors. The
+			<classname>Phenotype</classname>
+			is the decoded representation of an
+			<classname>Individual</classname>
+			. The
+			<classname>Objectives</classname>
+			contain the results of the evaluated objective for a
+			<classname>Phenotype</classname>
+			.
+		</para>
+		<para>
+			<emphasis>Population (Singleton):</emphasis>
+			The
+			<classname>Population</classname>
+			is the interface and the implementation in one class. The
+			<classname>Population</classname>
+			contains all current
+			<classname>Individuals</classname>
+			.
+		</para>
+		<para>
+			<emphasis>Archive (Singleton):</emphasis>
+			The
+			<classname>Archive</classname>
+			interface is by default bound to the
+			<classname>CrowdingArchive</classname>
+			with a maximum size of 100. The
+			<classname>Archive</classname>
+			contains the best
+			<classname>Individuals</classname>
+			that were found so far.
+		</para>
+		<para>
+			<emphasis>Operator: Copy, Mutate, Neighbor, Crossover (Singletons):
+			</emphasis>
+			The
+			<classname>Operators</classname>
+			like
+			<classname>Copy</classname>
+			,
+			<classname>Mutate</classname>
+			,
+			<classname>Neighbor</classname>
+			, and
+			<classname>Crossover</classname>
+			are interfaces that are by default bound to generic types that can handle
+			different types of
+			<classname>Genotypes</classname>
+			.
+			<classname>Operators</classname>
+			can change or create
+			<classname>Genotypes</classname>
+			.
+		</para>
+		<para>
+			<emphasis>Completer (Singleton):</emphasis>
+			The
+			<classname>Completer</classname>
+			is responsible for decoding and evaluating
+			<classname>Individuals</classname>
+			. By default, the
+			<classname>Completer</classname>
+			is bound to the
+			<classname>SequentialCompleter</classname>
+			that completes
+			<classname>Individuals</classname>
+			subsequently.
+		</para>
+		<para>
+			<emphasis>Using the Guice Dependency Injection:</emphasis>
+				&Opt4J;
+			is using the
+			<application>Google Guice Dependency Injection</application>
+			to wire everything together. As mentioned, the framework consists of many
+			interfaces and the user has to set the implementations for these interfaces.
+			For instance, the
+			<classname>Optimizer</classname>
+			interface can be implemented by the
+			<classname>EvolutionaryAlgorithm</classname>
+			. Which interface is bound to which implementation is defined in the
+			<classname>Modules</classname>
+			.
+		</para>
+	</chapter>
+	<chapter id="hello">
+		<title>Tutorial (Problem I): HelloWorld</title>
+		<para>
+			This tutorial is inspired by the
+			<application>Watchmaker framework</application>
+			<footnote>
+				<para>
+					<application>Watchmaker Framework for Evolutionary Computation
+					</application>
+					:
+					<ulink url="http://watchmaker.uncommons.org/" />
+				</para>
+			</footnote>
+			. The goal is to vary a string of 11 characters such that the word
+			<constant>HELLO WORLD</constant>
+			is found. It introduces the basic structure of the &Opt4J;
+			framework using the
+			<classname>Creator</classname>
+			,
+			<classname>Decoder</classname>
+			, and
+			<classname>Evaluator</classname>
+			classes as well as the
+			<classname>Genotype</classname>
+			and
+			<classname>Phenotype</classname>
+			classes. The Genotype is a list of 11 characters. Here, a random
+			<classname>SelectGenotype</classname>
+			is created by the
+			<classname>HelloWordCreator</classname>
+			:
+		</para>
+		<example>
+			<title>
+				<filename>HelloWordCreator.java</filename>
+			</title>
+			<programlisting language="java" linenumbering="numbered">&HelloWordCreator;</programlisting>
+		</example>
+		<para>
+			Since the
+			<classname>Phenotype</classname>
+			interface cannot be added to the
+			<classname>String</classname>
+			class, the
+			<classname>PhenotypeWrapper</classname>
+			is used. The
+			<classname>HelloWordDecoder</classname>
+			decodes the
+			<classname>Genotype</classname>
+			into a
+			<classname>Phenotype</classname>
+			:
+		</para>
+		<example>
+			<title>
+				<filename>HelloWordDecoder.java</filename>
+			</title>
+			<programlisting language="java" linenumbering="numbered">&HelloWordDecoder;</programlisting>
+		</example>
+		<para>
+			Finally, the
+			<classname>Phenotype</classname>
+			has to be evaluated. Here, the number of matches in compared to
+			<constant>HELLO WORLD</constant>
+			are counted and maximized in the
+			<classname>HelloWordEvaluator</classname>
+			:
+		</para>
+		<example>
+			<title>
+				<filename>HelloWordEvaluator.java</filename>
+			</title>
+			<programlisting language="java" linenumbering="numbered">&HelloWordEvaluator;</programlisting>
+		</example>
+		<para>
+			A
+			<classname>ProblemModule</classname>
+			for this problem is defined by the
+			<classname>HelloWorldModule</classname>
+			:
+		</para>
+		<example>
+			<title>
+				<filename>HelloWordModule.java</filename>
+			</title>
+			<programlisting language="java" linenumbering="numbered">&HelloWordModule;</programlisting>
+		</example>
+		<para>The result looks as follows:</para>
+		<figure>
+			<title>
+				The Archive Monitor shows the best individuals found so far. It is the
+				optimal result which is identical to
+				<constant>HELLO WORLD</constant>
+				. The Convergence Plot shows the optimization progress over time.
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="helloworld.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</chapter>
+	<chapter id="tsp">
+		<title>Tutorial (Problem II): Traveling Salesman</title>
+		<para>
+			The Traveling Salesman Problem (
+			<ulink url="http://en.wikipedia.org/wiki/Traveling_salesman_problem" />
+			) is a classic single objective optimization problem. Given a set of
+			<classname>Cities</classname>
+			, the goal is to find the shortest round trip (
+			<classname>Route</classname>
+			) that contains all cities. In this tutorial, it is shown first how to
+			implement the TSP as an
+			<emphasis>optimization problem</emphasis>
+			for
+			<emphasis>&Opt4J;
+			</emphasis>
+			. Afterwards, a simple visualization for the TSP is presented and included in
+			the &Opt4J;
+			viewer. 
+		</para>
+		<section id="tsproblem">
+			<title>Problem</title>
+			<para>
+				To compile the following code, you have to ensure that
+				<filename>opt4j-&Version;.jar 
+				</filename>
+				is on the classpath.
+			</para>
+			<para>
+				Put simply, an
+				<emphasis>optimization problem</emphasis>
+				is defined by the
+				<classname>Creator</classname>
+				,
+				<classname>Decoder</classname>
+				, and
+				<classname>Evaluator</classname>
+				. The
+				<classname>Creator</classname>
+				creates a new
+				<classname>Genotype</classname>
+				and passes it to the
+				<classname>Decoder</classname>
+				. The
+				<classname>Decoder</classname>
+				translates the
+				<classname>Genotype</classname>
+				into a
+				<classname>Phenotype</classname>
+				. The
+				<classname>Evaluator</classname>
+				evaluates the
+				<classname>Objectives</classname>
+				.
+			</para>
+			<figure>
+				<title>
+					The processing steps of a single
+					<classname>Individual</classname>
+					performed by the
+					<classname>Completer</classname>
+					.
+				</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="completer-steps.png" format="PNG" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				In the Traveling Salesman Problem, the
+				<classname>Genotype</classname>
+				is a
+				<classname>PermutationGenotype</classname>
+				of the cities representing one round trip (
+				<classname>Route</classname>
+				). The
+				<classname>Phenotype</classname>
+				is a
+				<classname>Route</classname>
+				. The
+				<classname>Creator</classname>
+				,
+				<classname>Decoder</classname>
+				, and
+				<classname>Evaluator</classname>
+				interfaces are, thus, implemented by the
+				<classname>SalesmanCreator</classname>
+				, the
+				<classname>SalesmanDecoder</classname>
+				, and the
+				<classname>SalesmanEvaluator</classname>
+				.
+			</para>
+			<para>
+				The
+				<classname>SalesmanProblem</classname>
+				contains the problem description. It is defined as a set of
+				<code>n</code>
+				cities over the area 100 times 100. The class offers a public method (
+				<code>getCities()</code>
+				) to retrieve these
+				<classname>Cities</classname>
+				:
+			</para>
+			<example>
+				<title>
+					<filename>SalesmanProblem.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">&SalesmanProblem;</programlisting>
+			</example>
+			<para>
+				The number of the cities is passed in the constructor. Note that the
+				constructor has to be annotated with
+				<code>@Inject</code>
+				to show the dependency injection which constructor to use. The parameter
+				size of the constructor is annotated with
+				<code>@Constant(value="size")</code>
+				. We will show later how this parameter is set in a module.
+			</para>
+			<para>
+				The
+				<classname>SalesmanCreator</classname>
+				has to create
+				<classname>PermutationGenotypes</classname>
+				. Each of them contains all cities in a randomized order. The randomization
+				is done using the
+				<code>shuffle()</code>
+				method of the
+				<classname>Collections</classname>
+				class:
+			</para>
+			<example>
+				<title>
+					<filename>SalesmanCreator.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">&SalesmanCreator;</programlisting>
+			</example>
+			<para>
+				Since the
+				<classname>SalesmanGenotype</classname>
+				is already given as a permutation of all cities, the
+				<classname>SalesmanDecoder</classname>
+				is a straightforward copy operation of the elements of the
+				<classname>PermutationGenotype</classname>
+				to the
+				<classname> Route</classname>
+				.
+			</para>
+			<example>
+				<title>
+					<filename>SalesmanDecoder.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">&SalesmanDecoder;</programlisting>
+			</example>
+			<para>
+				The next task is to evaluate the distance of a
+				<classname>SalesmanRoute</classname>
+				. The
+				<classname>SalesmanEvaluator</classname>
+				sums up the Euclidean
+				<code>distances</code>
+				between each point (
+				<classname>City</classname>
+				) of the route. The result is returned as the
+				<classname>Objectives</classname>
+				that consist of the distance
+				<classname>Objective</classname>
+				and the calculated distance
+				<classname>Value</classname>
+				. Note that the
+				<classname>Objectives</classname>
+				can contain multiple
+				<classname>Objective</classname>
+				-
+				<classname>Value</classname>
+				pairs.
+			</para>
+			<example>
+				<title>
+					<filename>SalesmanEvaluator.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">&SalesmanEvaluator;</programlisting>
+			</example>
+			<para>
+				This TSP has a single objective that has to be minimized. Thus, the
+				<code>distance</code>
+				<classname>Objective</classname>
+				is the only objective with the name
+				<code>"distance"</code>
+				which has to be minimized (
+				<code>Sign.MIN</code>
+				).
+			</para>
+			<para>
+				At this point the
+				<classname>Creator</classname>
+				,
+				<classname>Decoder</classname>
+				,
+				<classname>Evaluator</classname>
+				,
+				<classname>Genotype</classname>
+				, and
+				<classname>Phenotype</classname>
+				interfaces are implemented by the introduced classes for the TSP. Whats left
+				to do is
+				<emphasis>binding</emphasis>
+				the implementations to the interfaces. Therefore, we need a so-called
+				<classname>Module</classname>
+				. Constructing and wiring the implemented classes is accomplished within the
+				Guice framework which is integrated in &Opt4J;
+				(
+				<ulink url="http://code.google.com/p/google-guice/" />
+				). The following class is also understandable without knowledge of Guice.
+				The
+				<classname>SalesmanModule</classname>
+				is derived from the
+				<classname>ProblemModule</classname>
+				that identifies this as a configurable problem-related &Opt4J;
+				module. 
+			</para>
+			<example id="tspmodule">
+				<title>
+					<filename>SalesmanModule.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">&SalesmanModule;</programlisting>
+			</example>
+			<para>
+				The number of the cities is defined as an integer property
+				<code>size</code>
+				. Ensure that the property
+				<code>size</code>
+				has a getter and setter in the module, otherwise it will be ignored. The
+				<code>@Constant(value="size")</code>
+				is the same as in the constructor of the
+				<classname>SalesmanProblem</classname>
+				and, thus, this value is injected into the constructor. Note that the
+				<classname>Constant</classname>
+				annotation also allows to define a
+				<code>namespace</code>
+				as a class to prevent conflicts for constant values.
+			</para>
+			<para>
+				Now, we can start &Opt4J;
+				and if the
+				<classname>SalesmanModule</classname>
+				is on the classpath it will appear in the configurator. You can simply
+				export the classes into one jar and put this into the
+				<filename>plugins</filename>
+				folder of &Opt4J;.
+				All classes in the
+				<filename>plugins</filename>
+				folder are added automatically to the classpath. You can use the following
+				configuration to start the optimization process.
+			</para>
+			<figure>
+				<title>
+					Run &Opt4J;
+					using
+					<filename>start.bat</filename>
+					on Windows systems.
+				</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="salesman-configurator-1.png" format="PNG" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>You can start the optimization and see how the route is iteratively
+				improved.
+			</para>
+		</section>
+		<section id="visualization">
+			<title>Visualization</title>
+			<para>
+				Loading the
+				<classname>Viewer</classname>
+				gives the user the opportunity to monitor the optimization process. In the
+				following, this tutorial will show how you can implement a visualization of
+				the current optimal
+				<classname>Route</classname>
+				and it to the viewer.
+			</para>
+			<para>
+				The
+				<classname>SalesmanWidget</classname>
+				shows the route graphically by double clicking the
+				<emphasis>route</emphasis>
+				in the
+				<classname>ArchiveViewer</classname>
+				or right clicking and selecting
+				<emphasis>show route</emphasis>
+				:
+			</para>
+			<example>
+				<title>
+					<filename>SalesmanWidgetService.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">&SalesmanWidgetService;</programlisting>
+			</example>
+			<para>
+				The
+				<classname>SalesmanModule</classname>
+				has to be extended with a single line that tells the
+				<classname>ArchiveWidget</classname>
+				that there is a new
+				<classname>IndividualMouseListener</classname>
+				, cf. the last line of the
+				<link linkend="tspmodule">SalesmanModule</link>
+				.
+			</para>
+			<para>The result if an individual is double-clicked in the archive widget is
+				the following:
+			</para>
+			<figure>
+				<title>
+					For each double-clicked
+					<classname>Individual</classname>
+					, the corresponding
+					<classname>Route</classname>
+					is visualized.
+				</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="salesman-viewer-1.png" format="PNG" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+	</chapter>
+	<chapter>
+		<title>Tutorial (Optimizer): Mutate Optimizer</title>
+		<para>
+			This Tutorial shows how to write an
+			<classname>Optimizer</classname>
+			that is based on
+			<emphasis>mutation</emphasis>
+			only. The presented
+			<classname>Optimizer</classname>
+			has a population size of $100$ and creates $25$ offspring
+			<classname>Individuals</classname>
+			from $25$ parents
+			<classname>Individuals</classname>
+			each generation by a
+			<classname>Mutate</classname>
+			operation. Afterwards, the worst
+			<classname>Individuals</classname>
+			are sorted out by a
+			<classname>Selector</classname>
+			. Fortunately, &Opt4J;
+			already offers the
+			<classname>Mutate</classname>
+			operator as well as the
+			<classname>Selector</classname>
+			, making this
+			<classname>Optimizer</classname>
+			quite simple to implement.
+		</para>
+		<para>
+			We recommend to derive each
+			<classname>Optimizer</classname>
+			from the
+			<classname>IterativeOptimizer</classname>
+			interface. The main objective of an optimizer is to vary the
+			<classname>Population</classname>
+			. To create new individuals, our optimizer needs an
+			<classname>IndividualFactory</classname>
+			. To interfere with the genotypes, our
+			<classname>MutateOptimizer</classname>
+			uses a
+			<classname>Copy</classname>
+			and a
+			<classname>Mutate</classname>
+			operator. Lames are choosen using an arbitrary
+			<classname>Selector</classname>
+			.
+		</para>
+		<example>
+			<title>
+				<filename>MutateOptimizer.java</filename>
+			</title>
+			<programlisting language="java" linenumbering="numbered">&MutateOptimizer;</programlisting>
+		</example>
+		<para>
+			The constructor expects all objects our
+			<classname>MutateOptimizer</classname>
+			needs: The
+			<classname>Population</classname>
+			, the
+			<classname>IndividualFactory</classname>
+			, the
+			<classname>Selector</classname>
+			, and the
+			<classname>Copy</classname>
+			and
+			<classname>Mutate</classname>
+			operators.
+		</para>
+		<para>
+			Before the optimization starts, the
+			<code>initalize()</code>
+			method is called. We can now initialize the
+			<classname>Population</classname>
+			with 125 randomly generated
+			<classname>Individuals</classname>
+			using the
+			<classname>IndividualFactory</classname>
+			. After this method the framework (more precisely, the
+			<classname>OptimizationMediator</classname>
+			) automatically evaluates all
+			<classname>Individuals</classname>
+			and updates the
+			<classname>Archive</classname>
+			.
+		</para>
+		<para>
+			Now, the optimization is running and the
+			<code>next()</code>
+			method is called in a loop. The current size of the
+			<classname>Population</classname>
+			is 125, thus, 25 low quality
+			<classname>Individuals</classname>
+			have to be removed from the
+			<classname>Population</classname>
+			. They are selected by the
+			<code>getLames()</code>
+			method of the
+			<classname>Selector</classname>
+			and we remove them from the population. Then, the
+			<classname>Selector</classname>
+			selects 25 parent
+			<classname>Individuals</classname>
+			from the remaining population. The
+			<classname>Genotype</classname>
+			of each
+			<classname>Individual</classname>
+			is copied and mutated. A new offspring
+			<classname>Individual</classname>
+			with this genotype is created by the
+			<classname>IndividualFactory</classname>
+			and added to the
+			<classname>Population</classname>
+			. Now, the framework (more precisely, the
+			<classname>Completer</classname>
+			) evaluates all new individuals we added and the next iteration is launched.
+		</para>
+		<para>
+			Next, we show how to write a
+			<classname>Module</classname>
+			for the
+			<classname>MutateOptimizer</classname>
+			. The
+			<classname>MutateOptimizerModule</classname>
+			has to be derived from the
+			<classname>OptimizerModule</classname>
+			.
+		</para>
+		<example>
+			<title>
+				<filename>MutateOptimizerModule.java</filename>
+			</title>
+			<programlisting language="java" linenumbering="numbered">&MutateOptimizerModule;</programlisting>
+		</example>
+		<para>
+			The
+			<classname>Optimizer</classname>
+			interface is bound to our
+			<classname>MutateOptimizer</classname>
+			. The framework needs to know how often it should call the
+			<code>next()</code>
+			method. Thus, the
+			<code>iterations</code>
+			are wired as in the TSP tutorial.
+		</para>
+		<para>
+			Now, we can test our new
+			<classname>MutateOptimizerModule</classname>
+			:
+		</para>
+		<figure>
+			<title>
+				Use the
+				<emphasis>Configurator</emphasis>
+				to choose the implemented
+				<classname>MutateOptimizerModule</classname>
+				. Besides, as the problem to optimize the
+				<emphasis>ZDT benchmark</emphasis>
+				is selected. The
+				<emphasis>ViewerModule</emphasis>
+				activated the GUI.
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="mutate-configurator-1.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>And after starting the optimization:</para>
+		<figure>
+			<title>
+				The
+				<emphasis>Viewer</emphasis>
+				shows the
+				<classname>Population</classname>
+				of the 2671th iteration of the configured optmization run.
+			</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="mutate-viewer-1.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</chapter>
+	<chapter id="integration">
+		<title>Integration</title>
+		<para>
+			This section describes how &Opt4J;
+			can be embedded into third party software by starting it from the command
+			line or directly from Java. 
+		</para>
+		<section>
+			<title>Start Optimization from Command Line</title>
+			<para>
+				To start an optimization without the configurator directly from the command
+				you need a valid configuration XML file. A configuration file can be created
+				with the configurator by saving a configuration. In order to start a
+				configuration
+				<filename>config.xml</filename>
+				directly from the command line, you simply call one of the following
+				commands:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<command>java
+							-jar opt4j-&Version;.jar
+							-s config.xml 
+						</command>
+						or
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<command>java
+							-cp opt4j-&Version;.jar
+							org.opt4j.start.Opt4JStarter config.xml 
+						</command>
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>In contrast to the latter case, in the first case the splash screen
+				will appear for a few milliseconds.
+			</para>
+		</section>
+		<section>
+			<title>Start Optimization from Java</title>
+			<para>To
+				embedd &Opt4J;
+				in another application, the modules can be configured from within Java, i.e.
+				without the usage of the configurator. The following code snippet shows how
+				to optimize the first DTLZ test function with an Evolutionary Algorithm from
+				Java and, finally, how to obtain the best found solutions: 
+			</para>
+			<example>
+				<title>
+					<filename>MinOnesResult.java</filename>
+				</title>
+				<programlisting language="java" linenumbering="numbered">
+EvolutionaryAlgorithmModule ea = new EvolutionaryAlgorithmModule();
+ea.setGenerations(500);
+ea.setAlpha(100);
+
+DTLZModule dtlz = new DTLZModule();
+dtlz.setFunction(DTLZModule.Function.DTLZ1);
+
+ViewerModule viewer = new ViewerModule();
+viewer.setCloseOnStop(true);
+		
+Collection&lt;Module&gt; modules = new ArrayList&lt;Module&gt;();
+modules.add(ea);
+modules.add(dtlz);
+modules.add(viewer);
+
+Opt4JTask task = new Opt4JTask(false);
+task.init(modules);
+
+try {
+	task.execute();
+	Archive archive = task.getInstance(Archive.class);
+
+	for (Individual individual : archive) {
+		//...
+	}
+} catch (Exception e) {
+	e.printStackTrace();
+} finally {
+	task.close();
+} 
+</programlisting>
+			</example>
+			<para>
+				First, you have to fill a collection with the desired modules for the
+				optimization. The
+				<classname>Opt4JTask</classname>
+				is constructed with the parameter
+				<code>false</code>
+				that indicates that the task is closed manually and not automatically once
+				the optimization stops. The
+				<classname>Opt4JTask</classname>
+				is initialized with the modules. Now, it is possible to execute the task
+				(which is blocking in this case, but you can also start it in a separate
+				thread) and once the optimization is finished you can obtain the
+				<classname>Archive</classname>
+				to iterate over the best solutions. After closing the task, obtaining
+				instances like the
+				<classname>Archive</classname>
+				is not possible anymore.
+			</para>
+		</section>
+	</chapter>
+</book>

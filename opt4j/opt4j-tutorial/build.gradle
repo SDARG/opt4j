@@ -8,6 +8,17 @@ dependencies {
 	compile project(':opt4j-viewer')
 }
 
+configurations {
+    docbook
+}
+
+dependencies {
+    docbook group: 'avalon-framework', 			name: 'avalon-framework-api', 	version: '4.2.0'
+	docbook group: 'avalon-framework', 			name: 'avalon-framework-impl', 	version: '4.2.0'
+	docbook group: 'org.apache.xmlgraphics', 	name: 'fop', 					version: '1.0'
+}
+
+ant.path(id:'classpath', location:configurations.docbook.asPath)
 
 task copyDocbookSources(type: Copy) {
 	from('src/main/docbook/src') {
