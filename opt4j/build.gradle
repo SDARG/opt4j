@@ -22,6 +22,16 @@ allprojects {
     }
 }
 
+def descriptions = [
+	'opt4j-core' : 'The core module of Opt4J', 
+	'opt4j-benchmarks' : 'A set of benchmarks for Opt4J',
+	'opt4j-operators' : 'A set of operators for Opt4J', 
+	'opt4j-optimizers' : 'A set of optimizers for Opt4J',
+	'opt4j-satdecoding' : 'The SAT decoding module for Opt4J', 
+	'opt4j-tutorial' : 'The tutorial classes for Opt4J',
+	'opt4j-viewer' : 'The viewer module for Opt4J'
+]
+
 subprojects {
 	apply plugin: 'java'
     apply plugin: 'maven'
@@ -61,7 +71,7 @@ subprojects {
 	            pom.project {
 	               name 'Opt4J'
 	               packaging 'jar'
-	               description 'Opt4J is a modular framework for meta-heuristic optimization.'
+	               description descriptions[project.name]
 	               url 'http://www.opt4j.org'
 	 
 	               scm {
