@@ -16,8 +16,9 @@
 			<classpath path="${toString:classpath}" />
 			<include name="book.xml" />
 		</xslt>
-		<replace file="${docbuild}/html/book.xhtml" token="&lt;/head"
-			value="&lt;link href='prettify/prettify.css' type='text/css' rel='stylesheet' /&gt;&lt;script type='text/javascript' src='prettify/prettify.js'&gt;&lt;/script&gt;&lt;/head" />
+		<replace file="${docbuild}/html/book.xhtml" token="&lt;link href='prettify/prettify.css' type='text/css' rel='stylesheet' /&gt;&lt;script type='text/javascript' src='prettify/prettify.js'&gt;&lt;/script&gt;" value="" />
+		<replace file="${docbuild}/html/book.xhtml" token="onload='prettyPrint()'" value="" />
+		<replace file="${docbuild}/html/book.xhtml" token="&lt;/head" value="&lt;link href='prettify/prettify.css' type='text/css' rel='stylesheet' /&gt;&lt;script type='text/javascript' src='prettify/prettify.js'&gt;&lt;/script&gt;&lt;/head" />
 		<replace file="${docbuild}/html/book.xhtml" token="&lt;body" value="&lt;body onload='prettyPrint()' " />
 	</target>
 
@@ -29,14 +30,5 @@
 		<mkdir dir="${docbuild}/pdf" />
 		<fop format="application/pdf" fofile="${docbuild}/fo/book.fo" outfile="${docbuild}/pdf/book.pdf" force="true" />
 	</target>
-	
-	<target name="show">
-		<echo message="CLASSPATH=${classpath}"/>
-		<echo message="CLASSPATH=${toString:classpath}"/>
-        <echo message="JAVA CLASSPATH=${java.class.path}"/>
-	</target>
-	
-	<!--<target name="docxhtml">
-	</target>-->
 
 </project>
