@@ -41,6 +41,7 @@ public class KnapsackProfitEvaluator implements Evaluator<ItemSelection> {
 	 * Creates a new {@link KnapsackProfitEvaluator}.
 	 * 
 	 * @param problem
+	 *            the problem instance
 	 */
 	@Inject
 	public KnapsackProfitEvaluator(KnapsackProblem problem) {

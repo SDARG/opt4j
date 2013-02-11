@@ -30,7 +30,8 @@ import com.google.inject.Inject;
  * The {@link KnapsackProblemFile} is a {@link KnapsackProblem} that is initialized by a file. The format can be found
  * on the referenced website.
  * 
- * @link http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/
+ * @see <a
+ *      href="http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
  * 
  * @author lukasiewycz
  * 
@@ -60,7 +61,7 @@ public class KnapsackProblemFile implements KnapsackProblem {
 		} catch (FileNotFoundException e1) {
 			throw new IllegalArgumentException("Knapsack problem file not found " + filename, e1);
 		}
-		
+
 		BufferedReader reader = new BufferedReader(fileReader);
 		try {
 
