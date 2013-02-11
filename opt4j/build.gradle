@@ -183,3 +183,7 @@ task alldocs(type: Javadoc) {
 }
 
 task release(dependsOn: [distZip,website] ){}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.4'
+}
