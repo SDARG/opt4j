@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 dependencies {
 	compile project(':opt4j-core')
 	compile project(':opt4j-satdecoding')
@@ -5,3 +7,29 @@ dependencies {
 	compile project(':opt4j-operators')
 	compile project(':opt4j-viewer')
 }
+
+
+task copyDocbookSources(type: Copy) {
+	from('src/main/docbook/src') {
+        include '**/*.xml'
+		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
+	}
+	from('src/main/java') {
+        include '**/*.java'
+		filter { String line -> line.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;") }
+	}
+	into 'build/docbook/src'
+}
+
+task copyDocbookHtml(type: Copy) {
+	from 'src/main/docbook/html'
+	into 'build/docbook/html'
+}
+
+ant.importBuild 'build.xml'
+
+task makeDocbookHtml(dependsOn: [copyDocbookHtml,copyDocbookSources,docxhtml] ) {}
+
+task makeDocbookPDF(dependsOn: [copyDocbookSources,docpdf]) {}
+
+task makeDocbook(dependsOn: [makeDocbookPDF, makeDocbookHtml]) {}

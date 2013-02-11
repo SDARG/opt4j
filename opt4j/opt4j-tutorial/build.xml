@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project name="opt4j-tutorial">
+
+    <property name="docsrc" value="src/main/docbook" />
+    <property name="doclib" value="src/main/docbook/util/lib" />
+    <property name="docbuild" value="build/docbook/" />
+	<property name="doc.xhtml.stylesheet" value="${docsrc}/xhtml.xsl" />
+	<property name="doc.fo.stylesheet" value="${docsrc}/pdf.xsl" />
+
+	<path id="doc.classpath">
+		<fileset dir="${doclib}" includes="*.jar" />
+	</path>
+
+	<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop" classpath="${doclib}/fop.jar">
+		<classpath refid="doc.classpath" />
+	</taskdef>
+
+	<target name="docxhtml">
+		<xslt style="${doc.xhtml.stylesheet}" extension=".xhtml" basedir="${docbuild}/src" destdir="${docbuild}/html">
+			<classpath refid="doc.classpath" />
+			<include name="book.xml" />
+		</xslt>
+		<replace file="${docbuild}/html/book.xhtml" token="&lt;/head"
+			value="&lt;link href='prettify/prettify.css' type='text/css' rel='stylesheet' /&gt;&lt;script type='text/javascript' src='prettify/prettify.js'&gt;&lt;/script&gt;&lt;/head" />
+		<replace file="${docbuild}/html/book.xhtml" token="&lt;body" value="&lt;body onload='prettyPrint()' " />
+	</target>
+
+	<target name="docpdf">
+		<xslt style="${doc.fo.stylesheet}" extension=".fo" basedir="${docbuild}/src" destdir="${docbuild}/fo">
+			<classpath refid="doc.classpath" />
+			<include name="book.xml" />
+		</xslt>
+		<mkdir dir="${docbuild}/pdf" />
+		<fop format="application/pdf" fofile="${docbuild}/fo/book.fo" outfile="${docbuild}/pdf/book.pdf" force="true" />
+	</target>
+
+</project>

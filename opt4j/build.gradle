@@ -1,6 +1,7 @@
 apply plugin: 'base'
 apply plugin: 'application'
 
+
 mainClassName = 'org.opt4j.start.Opt4J'
 
 version = '3.0'
