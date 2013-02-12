@@ -161,6 +161,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 * @author lukasiewycz
 	 * 
 	 */
+	@SuppressWarnings("all")
 	static class ConstantImpl implements Serializable, Constant {
 
 		private final String value;
