@@ -15,7 +15,6 @@
 
 package org.opt4j.benchmark;
 
-import org.opt4j.core.Phenotype;
 import org.opt4j.genotype.BooleanGenotype;
 
 /**
@@ -25,7 +24,7 @@ import org.opt4j.genotype.BooleanGenotype;
  * 
  */
 @SuppressWarnings("serial")
-public class BinaryString extends BooleanGenotype implements Phenotype {
+public class BinaryString extends BooleanGenotype {
 
 	/*
 	 * (non-Javadoc)

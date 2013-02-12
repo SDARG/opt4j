@@ -22,7 +22,6 @@ import java.util.concurrent.Future;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
-import org.opt4j.core.Phenotype;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerStateListener;
@@ -98,8 +97,8 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	 *            the maximal number of parallel threads (using namespace {@link ParallelIndividualCompleter})
 	 */
 	@Inject
-	public ParallelIndividualCompleter(Control control, Decoder<Genotype, Phenotype> decoder,
-			Evaluator<Phenotype> evaluator,
+	public ParallelIndividualCompleter(Control control, Decoder<Genotype, Object> decoder,
+			Evaluator<Object> evaluator,
 			@Constant(value = "maxThreads", namespace = ParallelIndividualCompleter.class) int maxThreads) {
 		super(control, decoder, evaluator);
 

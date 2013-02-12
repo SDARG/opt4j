@@ -12,7 +12,6 @@ import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualFactory;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
-import org.opt4j.core.Phenotype;
 import org.opt4j.core.problem.Creator;
 import org.opt4j.core.problem.Decoder;
 import org.opt4j.core.problem.Evaluator;
@@ -29,19 +28,19 @@ public class CrowdingArchiveTest {
 	Set<Individual> set = new HashSet<Individual>();
 	CrowdingArchive crowdingArchive = null;
 
-	protected static class MockProblem implements Creator<Genotype>, Decoder<Genotype, Phenotype>, Evaluator<Phenotype> {
+	protected static class MockProblem implements Creator<Genotype>, Decoder<Genotype, Object>, Evaluator<Object> {
 		@Override
 		public Genotype create() {
 			return new BooleanGenotype();
 		}
 
 		@Override
-		public Phenotype decode(Genotype genotype) {
+		public Object decode(Genotype genotype) {
 			return null;
 		}
 
 		@Override
-		public Objectives evaluate(Phenotype phenotype) {
+		public Objectives evaluate(Object phenotype) {
 			return new Objectives();
 		}
 	}

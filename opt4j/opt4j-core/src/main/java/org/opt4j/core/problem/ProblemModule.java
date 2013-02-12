@@ -19,7 +19,6 @@ import org.opt4j.config.Icons;
 import org.opt4j.config.annotations.Category;
 import org.opt4j.config.annotations.Icon;
 import org.opt4j.core.Genotype;
-import org.opt4j.core.Phenotype;
 import org.opt4j.start.Opt4JModule;
 
 import com.google.inject.TypeLiteral;
@@ -58,8 +57,8 @@ public abstract class ProblemModule extends Opt4JModule {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void bindProblem(final Class<? extends Creator<? extends Genotype>> creator,
-			final Class<? extends Decoder<? extends Genotype, ? extends Phenotype>> decoder,
-			final Class<? extends Evaluator<? extends Phenotype>> evaluator) {
+			final Class<? extends Decoder<? extends Genotype, ? extends Object>> decoder,
+			final Class<? extends Evaluator<? extends Object>> evaluator) {
 
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 		if (creator != null) {
@@ -78,8 +77,8 @@ public abstract class ProblemModule extends Opt4JModule {
 			}).to((Class<? extends Creator<Genotype>>) creator);
 		}
 		if (decoder != null) {
-			bind(new TypeLiteral<Decoder<Genotype, Phenotype>>() {
-			}).to((Class<? extends Decoder<Genotype, Phenotype>>) decoder);
+			bind(new TypeLiteral<Decoder<Genotype, Object>>() {
+			}).to((Class<? extends Decoder<Genotype, Object>>) decoder);
 		}
 		if (evaluator != null) {
 			addEvaluator(evaluator);
@@ -93,10 +92,10 @@ public abstract class ProblemModule extends Opt4JModule {
 	 *            the evaluator to use
 	 */
 	@SuppressWarnings({ "unchecked" })
-	protected void addEvaluator(final Class<? extends Evaluator<? extends Phenotype>> evaluator) {
-		Multibinder<Evaluator<Phenotype>> multibinder = Multibinder.newSetBinder(binder(),
-				new TypeLiteral<Evaluator<Phenotype>>() {
+	protected void addEvaluator(final Class<? extends Evaluator<? extends Object>> evaluator) {
+		Multibinder<Evaluator<Object>> multibinder = Multibinder.newSetBinder(binder(),
+				new TypeLiteral<Evaluator<Object>>() {
 				});
-		multibinder.addBinding().to((Class<? extends Evaluator<Phenotype>>) evaluator);
+		multibinder.addBinding().to((Class<? extends Evaluator<Object>>) evaluator);
 	}
 }

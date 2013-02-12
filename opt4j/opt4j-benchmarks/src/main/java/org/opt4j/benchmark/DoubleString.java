@@ -15,7 +15,6 @@
 
 package org.opt4j.benchmark;
 
-import org.opt4j.core.Phenotype;
 import org.opt4j.genotype.Bounds;
 import org.opt4j.genotype.DoubleGenotype;
 
@@ -26,7 +25,7 @@ import org.opt4j.genotype.DoubleGenotype;
  * 
  */
 @SuppressWarnings("serial")
-public class DoubleString extends DoubleGenotype implements Phenotype {
+public class DoubleString extends DoubleGenotype {
 
 	static class DefaultBounds implements Bounds<Double> {
 		@Override

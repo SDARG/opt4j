@@ -12,7 +12,6 @@
 
 package org.opt4j.benchmark.queens;
 
-import org.opt4j.core.Phenotype;
 
 /**
  * A {@link QueensBoard} represents a chessboard with a given side length on which with queens can be placed.
@@ -20,7 +19,7 @@ import org.opt4j.core.Phenotype;
  * @author lukasiewycz
  * 
  */
-public class QueensBoard implements Phenotype {
+public class QueensBoard {
 
 	protected final boolean[][] board;
 

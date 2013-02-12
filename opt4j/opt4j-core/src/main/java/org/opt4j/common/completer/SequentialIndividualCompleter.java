@@ -19,7 +19,6 @@ import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Individual.State;
 import org.opt4j.core.Objectives;
-import org.opt4j.core.Phenotype;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.IndividualCompleter;
 import org.opt4j.core.optimizer.TerminationException;
@@ -43,8 +42,8 @@ import com.google.inject.Inject;
  */
 public class SequentialIndividualCompleter implements IndividualCompleter {
 
-	protected final Decoder<Genotype, Phenotype> decoder;
-	protected final Evaluator<Phenotype> evaluator;
+	protected final Decoder<Genotype, Object> decoder;
+	protected final Evaluator<Object> evaluator;
 	protected final Control control;
 
 	/**
@@ -58,8 +57,8 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	 *            the evaluator
 	 */
 	@Inject
-	public SequentialIndividualCompleter(Control control, Decoder<Genotype, Phenotype> decoder,
-			Evaluator<Phenotype> evaluator) {
+	public SequentialIndividualCompleter(Control control, Decoder<Genotype, Object> decoder,
+			Evaluator<Object> evaluator) {
 		super();
 		this.control = control;
 		this.decoder = decoder;
@@ -100,7 +99,7 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 
 		if (state == State.PHENOTYPED) {
 			individual.setState(State.EVALUATING);
-			Phenotype phenotype = individual.getPhenotype();
+			Object phenotype = individual.getPhenotype();
 
 			Objectives objectives = evaluator.evaluate(phenotype);
 			individual.setObjectives(objectives);
@@ -115,7 +114,7 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 		if (state == State.GENOTYPED) {
 			individual.setState(State.DECODING);
 			Genotype genotype = individual.getGenotype();
-			Phenotype phenotype = decoder.decode(genotype);
+			Object phenotype = decoder.decode(genotype);
 			individual.setPhenotype(phenotype);
 		} else {
 			throw new IllegalStateException("Cannot decode Individual, current state: " + state);

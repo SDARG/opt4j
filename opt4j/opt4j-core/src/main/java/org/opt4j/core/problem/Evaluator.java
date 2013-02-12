@@ -13,7 +13,6 @@
 package org.opt4j.core.problem;
 
 import org.opt4j.core.Objectives;
-import org.opt4j.core.Phenotype;
 
 import com.google.inject.ImplementedBy;
 
@@ -31,7 +30,7 @@ import com.google.inject.ImplementedBy;
  *            the type of the phenotype that is evaluated
  */
 @ImplementedBy(MultiEvaluator.class)
-public interface Evaluator<P extends Phenotype> {
+public interface Evaluator<P extends Object> {
 
 	/**
 	 * Evaluates a {@link Phenotype} and returns the results in the {@link Objectives}.

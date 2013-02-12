@@ -26,7 +26,6 @@ import java.util.Set;
 
 import org.opt4j.common.random.Rand;
 import org.opt4j.core.Genotype;
-import org.opt4j.core.Phenotype;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.problem.Creator;
 import org.opt4j.core.problem.Decoder;
@@ -55,7 +54,7 @@ import com.google.inject.Inject;
  * @param <P>
  *            The phenotype
  */
-public abstract class AbstractSATDecoder<G extends Genotype, P extends Phenotype> implements Decoder<G, P>, Creator<G> {
+public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> implements Decoder<G, P>, Creator<G> {
 
 	private final List<Constraint> constraints = new ArrayList<Constraint>();
 	private final List<Object> variables = new ArrayList<Object>();

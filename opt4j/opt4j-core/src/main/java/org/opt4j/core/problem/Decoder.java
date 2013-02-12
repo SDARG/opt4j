@@ -16,7 +16,6 @@
 package org.opt4j.core.problem;
 
 import org.opt4j.core.Genotype;
-import org.opt4j.core.Phenotype;
 
 /**
  * The {@link Decoder} decodes {@link Genotype}s into {@link Phenotype}s.
@@ -29,7 +28,7 @@ import org.opt4j.core.Phenotype;
  * @param <P>
  *            the type of the resulting phenotype}
  */
-public interface Decoder<G extends Genotype, P extends Phenotype> {
+public interface Decoder<G extends Genotype, P extends Object> {
 
 	/**
 	 * Decodes a given {@link Genotype} to the corresponding {@link Phenotype}.

@@ -13,15 +13,13 @@ package org.opt4j.benchmark.knapsack;
 
 import java.util.HashSet;
 
-import org.opt4j.core.Phenotype;
-
 /**
  * The set of selected items.
  * 
  * @author reimann
  * 
  */
-public class ItemSelection extends HashSet<Item> implements Phenotype {
+public class ItemSelection extends HashSet<Item> {
 	private static final long serialVersionUID = 1L;
 
 	private boolean feasible = false;

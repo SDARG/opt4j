@@ -15,12 +15,10 @@ package org.opt4j.benchmark.zdt;
 import static org.opt4j.core.Objective.Sign.MIN;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
-import org.opt4j.core.Phenotype;
 import org.opt4j.core.problem.Evaluator;
 
 /**
@@ -42,7 +40,7 @@ import org.opt4j.core.problem.Evaluator;
  *            the type of the phenotype
  * 
  */
-abstract class ZDTEvaluator<A extends Phenotype> implements Evaluator<A> {
+abstract class ZDTEvaluator<A extends Object> implements Evaluator<A> {
 
 	protected final Objective f1obj = new Objective("f1", MIN);
 	protected final Objective f2obj = new Objective("f2", MIN);
@@ -93,7 +91,7 @@ abstract class ZDTEvaluator<A extends Phenotype> implements Evaluator<A> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.problem.Evaluator#evaluate(org.opt4j.core.Phenotype)
+	 * @see org.opt4j.core.problem.Evaluator#evaluate(java.lang.Object)
 	 */
 	@Override
 	public Objectives evaluate(A x) {
@@ -108,13 +106,5 @@ abstract class ZDTEvaluator<A extends Phenotype> implements Evaluator<A> {
 		return objectives;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.opt4j.core.problem.Evaluator#getObjectives()
-	 */
-	public Collection<Objective> getObjectives() {
-		return objectives;
-	}
 
 }

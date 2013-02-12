@@ -36,7 +36,7 @@ public class Individual {
 
 	protected Genotype genotype;
 
-	protected Phenotype phenotype;
+	protected Object phenotype;
 
 	protected Objectives objectives;
 
@@ -156,7 +156,7 @@ public class Individual {
 	 * @see #setPhenotype
 	 * @return the phenotype
 	 */
-	public Phenotype getPhenotype() {
+	public Object getPhenotype() {
 		return phenotype;
 	}
 
@@ -199,7 +199,7 @@ public class Individual {
 	 * @param phenotype
 	 *            the phenotype to be set
 	 */
-	public void setPhenotype(Phenotype phenotype) {
+	public void setPhenotype(Object phenotype) {
 		this.phenotype = phenotype;
 		setState(State.PHENOTYPED);
 	}

@@ -14,11 +14,7 @@ package org.opt4j.benchmark.zdt;
 
 import static java.lang.Math.sqrt;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.opt4j.benchmark.DoubleString;
-import org.opt4j.core.Phenotype;
 
 /**
  * Function ZDT 1.
@@ -62,70 +58,6 @@ public class ZDT1 extends ZDTEvaluator<DoubleString> {
 	protected double h(double f1, double g) {
 		double h = 1.0 - sqrt(f1 / g);
 		return h;
-	}
-
-	protected List<Double> convert(Phenotype phenotype) {
-		List<Double> list = toDoubleList(phenotype);
-
-		List<Double> x = new ArrayList<Double>();
-
-		for (double v : list) {
-			double value = v;
-
-			if (value < 0) {
-				value = 0;
-			} else if (value > 1) {
-				value = 1;
-			}
-
-			x.add(value);
-
-		}
-		return x;
-	}
-
-	/**
-	 * Creates a list of doubles from an arbitrary genotype ( {@code DoubleVectorPhenotype} or {@code BooleanGenotype}).
-	 * 
-	 * @param phenotype
-	 *            the phenotype
-	 * @return the list of doubles
-	 */
-	@SuppressWarnings("unchecked")
-	protected List<Double> toDoubleList(Phenotype phenotype) {
-		List<Double> list;
-		if (phenotype instanceof List) {
-			list = (List<Double>) phenotype;
-		} else {
-			List<Boolean> blist = (List<Boolean>) phenotype;
-			list = new ArrayList<Double>();
-			for (int i = 0; i < (blist.size() / 30); i++) {
-				double value = toDouble(blist, i * 30, 30);
-				list.add(value);
-			}
-		}
-		return list;
-	}
-
-	/**
-	 * Converts a binary representation of a double to a double value.
-	 * 
-	 * @param list
-	 *            the complete list of doubles
-	 * @param offset
-	 *            the offset to the first bit
-	 * @param bits
-	 *            the number of bits for one double
-	 * @return the double value
-	 */
-	protected double toDouble(List<Boolean> list, int offset, int bits) {
-		double value = 0;
-		for (int i = 0; i < bits; i++) {
-			if (list.get(i + offset)) {
-				value += Math.pow(0.5, i + 1);
-			}
-		}
-		return value;
 	}
 
 }

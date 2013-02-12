@@ -6,7 +6,6 @@ import java.util.Set;
 import org.opt4j.config.Task;
 import org.opt4j.config.TaskStateListener;
 import org.opt4j.core.Genotype;
-import org.opt4j.core.Phenotype;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.ControlListener;
 import org.opt4j.core.optimizer.Optimizer;
@@ -178,15 +177,15 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	private void check(Injector injector) {
 
 		Creator<Genotype> creator = null;
-		Decoder<Genotype, Phenotype> decoder = null;
-		Set<Evaluator<Phenotype>> evaluators = null;
+		Decoder<Genotype, Object> decoder = null;
+		Set<Evaluator<Object>> evaluators = null;
 
 		try {
 			creator = injector.getInstance(Key.get(new TypeLiteral<Creator<Genotype>>() {
 			}));
-			decoder = injector.getInstance(Key.get(new TypeLiteral<Decoder<Genotype, Phenotype>>() {
+			decoder = injector.getInstance(Key.get(new TypeLiteral<Decoder<Genotype, Object>>() {
 			}));
-			evaluators = injector.getInstance(Key.get(new TypeLiteral<Set<Evaluator<Phenotype>>>() {
+			evaluators = injector.getInstance(Key.get(new TypeLiteral<Set<Evaluator<Object>>>() {
 			}));
 		} catch (Exception e) {
 			throw new RuntimeException("Problem configuration Exception: \n" + e.getLocalizedMessage(), e);
@@ -216,10 +215,10 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 				decoderGenotype = Genotype.class;
 			}
 			if (decoderPhenotype == null) {
-				decoderPhenotype = Phenotype.class;
+				decoderPhenotype = Object.class;
 			}
 			if (evaluatorPhenotype == null) {
-				evaluatorPhenotype = Phenotype.class;
+				evaluatorPhenotype = Object.class;
 			}
 
 			boolean a = decoderGenotype.isAssignableFrom(creatorGenotype);

@@ -19,11 +19,7 @@ import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.opt4j.benchmark.DoubleString;
-import org.opt4j.core.Phenotype;
 
 /**
  * Function ZDT 4.
@@ -46,36 +42,6 @@ public class ZDT4 extends ZDT1 {
 		}
 		double g = 1 + 10 * (x.size() - 1) + sum;
 		return g;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.opt4j.benchmark.zdt.ZDT1#convert(org.opt4j.core.Phenotype)
-	 */
-	@Override
-	protected List<Double> convert(Phenotype phenotype) {
-		List<Double> list = toDoubleList(phenotype);
-		List<Double> x = new ArrayList<Double>();
-
-		boolean first = true;
-		for (double v : list) {
-			double value = v;
-
-			if (value < 0) {
-				value = 0;
-			} else if (value > 1) {
-				value = 1;
-			}
-
-			if (first) {
-				x.add(value);
-				first = false;
-			} else {
-				x.add(value * 10 - 5);
-			}
-		}
-		return x;
 	}
 
 }
