@@ -1,0 +1,5 @@
+Documentation:
+https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+
+Sonatype URL:
+https://oss.sonatype.org/
