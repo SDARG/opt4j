@@ -1,16 +1,13 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
+ * http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.operator;
@@ -51,8 +48,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 		GenericOperator<O> {
 
 	/**
-	 * Comparator for a specific order: Superclasses always are sorted after
-	 * subclasses.
+	 * Comparator for a specific order: Superclasses always are sorted after subclasses.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -88,8 +84,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	protected List<Class<? extends Q>> cldef = new ArrayList<Class<? extends Q>>();
 
 	/**
-	 * Constructs an {@link AbstractGenericOperator} class with the given
-	 * clazzes of default operators.
+	 * Constructs an {@link AbstractGenericOperator} class with the given clazzes of default operators.
 	 * 
 	 * @param clazzes
 	 *            the default operators
@@ -124,8 +119,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	 * (non-Javadoc)
 	 * 
 	 * @see org.opt4j.operator.GenericOperator#addOperator(org.opt4j.operator.
-	 * AbstractGenericOperator.OperatorPredicate,
-	 * org.opt4j.core.optimizer.Operator)
+	 * AbstractGenericOperator.OperatorPredicate, org.opt4j.core.optimizer.Operator)
 	 */
 	@Override
 	public void addOperator(OperatorPredicate predicate, O operator) {
@@ -140,9 +134,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opt4j.operator.GenericOperator#getOperator(org.opt4j.core.problem
-	 * .Genotype)
+	 * @see org.opt4j.operator.GenericOperator#getOperator(org.opt4j.core.problem .Genotype)
 	 */
 	@Override
 	public O getOperator(Genotype genotype) {
@@ -184,12 +176,12 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	}
 
 	/**
-	 * Returns the target {@link Genotype} for an operator based on the
-	 * {@link Apply} annotation.
+	 * Returns the target {@link Genotype} for an operator based on the {@link Apply} annotation.
 	 * 
 	 * @param <O>
 	 *            the type of operator
 	 * @param operator
+	 *            the operator
 	 * @return the target genotype
 	 */
 	protected static <O> Class<? extends Genotype> getTarget(O operator) {
@@ -263,8 +255,8 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	}
 
 	/**
-	 * The {@link OperatorVoidPredicate} interface is used as marker for
-	 * {@link Operator}s for which the predicate is not explicitly defined.
+	 * The {@link OperatorVoidPredicate} interface is used as marker for {@link Operator}s for which the predicate is
+	 * not explicitly defined.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -273,9 +265,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.opt4j.operator.AbstractGenericOperator.OperatorPredicate#evaluate
-		 * (org.opt4j.core.problem.Genotype)
+		 * @see org.opt4j.operator.AbstractGenericOperator.OperatorPredicate#evaluate (org.opt4j.core.problem.Genotype)
 		 */
 		@Override
 		public boolean evaluate(Genotype genotype) {
@@ -295,8 +285,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	}
 
 	/**
-	 * The {@link OperatorClassPredicate} returns {@code true} for a given
-	 * specific class.
+	 * The {@link OperatorClassPredicate} returns {@code true} for a given specific class.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -306,8 +295,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 		protected final Class<? extends Genotype> clazz;
 
 		/**
-		 * Creates a new {@link OperatorClassPredicate} for the given
-		 * {@link Genotype} class.
+		 * Creates a new {@link OperatorClassPredicate} for the given {@link Genotype} class.
 		 * 
 		 * @param clazz
 		 *            the class of the genotype
@@ -319,9 +307,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.opt4j.operator.AbstractGenericOperator.OperatorPredicate#evaluate
-		 * (org.opt4j.core.problem.Genotype)
+		 * @see org.opt4j.operator.AbstractGenericOperator.OperatorPredicate#evaluate (org.opt4j.core.problem.Genotype)
 		 */
 		@Override
 		public boolean evaluate(Genotype genotype) {

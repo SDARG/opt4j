@@ -1,12 +1,12 @@
 package org.opt4j.genotype;
 
 /**
- * The {@link FixedBounds} are {@link Bounds} that return a fixed lower and
- * upper bound for each index.
+ * The {@link FixedBounds} are {@link Bounds} that return a fixed lower and upper bound for each index.
  * 
  * @author lukasiewycz
  * 
  * @param <E>
+ *            the type of the bounds
  */
 class FixedBounds<E extends Number> implements Bounds<E> {
 
