@@ -43,6 +43,7 @@ public class KnapsackOverloadEvaluator implements Evaluator<ItemSelection> {
 	 * Creates a new {@link KnapsackOverloadEvaluator}.
 	 * 
 	 * @param problem
+	 *            the problem instance
 	 */
 	@Inject
 	public KnapsackOverloadEvaluator(KnapsackProblem problem) {

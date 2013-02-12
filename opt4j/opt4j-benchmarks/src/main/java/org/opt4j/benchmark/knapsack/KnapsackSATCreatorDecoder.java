@@ -35,6 +35,16 @@ public class KnapsackSATCreatorDecoder extends AbstractSATDecoder<Genotype, Item
 
 	private final KnapsackProblem problem;
 
+	/**
+	 * Creates a new {@link KnapsackSATCreatorDecoder}.
+	 * 
+	 * @param manager
+	 *            the sat manager
+	 * @param problem
+	 *            the problem instance
+	 * @param random
+	 *            the random number generator
+	 */
 	@Inject
 	public KnapsackSATCreatorDecoder(SATManager manager, KnapsackProblem problem, Rand random) {
 		super(manager, random);
