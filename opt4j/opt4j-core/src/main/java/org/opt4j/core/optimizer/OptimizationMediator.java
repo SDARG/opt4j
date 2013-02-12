@@ -29,6 +29,8 @@ public class OptimizationMediator extends AbstractOptimizer {
 	/**
 	 * Creates a new {@link OptimizationMediator}.
 	 * 
+	 * @param iterativeOptimizer
+	 *            the iterative optimizer to use
 	 * @param population
 	 *            the specified population
 	 * @param archive
