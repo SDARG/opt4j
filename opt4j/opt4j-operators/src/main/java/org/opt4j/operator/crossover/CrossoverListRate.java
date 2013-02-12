@@ -1,16 +1,13 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
+ * http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.operator.crossover;
@@ -24,15 +21,16 @@ import com.google.inject.Inject;
 
 /**
  * <p>
- * The {@link CrossoverListRate} performs a crossover on
- * {@link org.opt4j.core.Genotype} objects that are lists of values.
+ * The {@link CrossoverListRate} performs a crossover on {@link org.opt4j.core.Genotype} objects that are lists of
+ * values.
  * </p>
  * <p>
  * A point of crossover of the list is selected with a given {@code rate}.
  * </p>
  * 
  * @author lukasiewycz
- * 
+ * @param <G>
+ *            the type of the values
  */
 public abstract class CrossoverListRate<G extends ListGenotype<?>> implements Crossover<G> {
 
@@ -57,9 +55,7 @@ public abstract class CrossoverListRate<G extends ListGenotype<?>> implements Cr
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opt4j.operator.crossover.Crossover#crossover(org.opt4j.core.Genotype,
-	 * org.opt4j.core.Genotype)
+	 * @see org.opt4j.operator.crossover.Crossover#crossover(org.opt4j.core.Genotype, org.opt4j.core.Genotype)
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
