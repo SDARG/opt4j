@@ -1,99 +1,115 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-      <title>Opt4J &mdash; A Modular Framework for Meta-heuristic Optimization</title>
-      <style type="text/css">
-        @import url("style.css");
-      </style>
-      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-      <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    </head>
-     
-    <body>
-      <div id="top">
-        <h1>Opt4J</h1>
-        <h2>A Modular Framework for Meta-heuristic Optimization</h2>
-        <hr/>
-      </div>      
-    
-      <div id="container">
-              
-        <div id="navigation">
-          <h4 class="hide">Menu:</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a id="current" href="features.html">Features</a></li>
-            <li><a href="download.html">Download</a></li>
-            <li><a href="documentation.html">Documentation</a></li>
-            <li><a href="about.html">About</a></li>            
-          </ul>
-          <a href="http://sourceforge.net/projects/opt4j">
-          <img src="design/img/sflogo.png" alt="Opt4J hosted by SourceForge.net" /></a>
-          
-          <div id="social">
-          	<p><g:plusone size="medium" href="http://opt4j.sourceforge.net/"></g:plusone></p>
-          	<p><iframe src="http://www.facebook.com/plugins/like.php?app_id=187635137961911&amp;href=http%3A%2F%2Fopt4j.sourceforge.net%2F&amp;send=false&amp;layout=button_count&amp;width=130&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:21px;" allowTransparency="true"></iframe>          </p>
-          </div>
-        </div>
-        
-        <div id="content">
-        <h2>Features</h2>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Opt4J &mdash; A Modular Framework for Meta-heuristic
+	Optimization</title>
+<style type="text/css">
+@import url("style.css");
+</style>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<script type="text/javascript"
+	src="https://apis.google.com/js/plusone.js"></script>
+</head>
+
+<body>
+	<div id="top">
+		<h1>Opt4J</h1>
+		<h2>A Modular Framework for Meta-heuristic Optimization</h2>
+		<hr />
+	</div>
+
+	<div id="container">
+
+		<div id="navigation">
+			<h4 class="hide">Menu:</h4>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a id="current" href="features.html">Features</a></li>
+				<li><a href="download.html">Download</a></li>
+				<li><a href="documentation.html">Documentation</a></li>
+				<li><a href="about.html">About</a></li>
+			</ul>
+			<a href="http://sourceforge.net/projects/opt4j"> <img
+				src="design/img/sflogo.png" alt="Opt4J hosted by SourceForge.net" /></a>
+
+			<div id="social">
+				<p>
+					<g:plusone size="medium" href="http://opt4j.sourceforge.net/"></g:plusone>
+				</p>
+				<p>
+					<iframe
+						src="http://www.facebook.com/plugins/like.php?app_id=187635137961911&amp;href=http%3A%2F%2Fopt4j.sourceforge.net%2F&amp;send=false&amp;layout=button_count&amp;width=130&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21"
+						scrolling="no" frameborder="0"
+						style="border: none; overflow: hidden; width: 130px; height: 21px;"
+						allowTransparency="true"></iframe>
+				</p>
+			</div>
+		</div>
+
+		<div id="content">
+			<h2>Features</h2>
 			<p></p>
-			<h4>High Flexibility</h4>
-				<p>The loose coupling provided by the usage of 
-				<a href="http://code.google.com/p/google-guice/">Google Guice</a>
-				allows a separated development of optimizers and problems.
-				By using a module structure, the combination of optimizers and problems is 
-				highly simplified.
-				</p>
-				<p>
-				The <em>Opt4J</em> framework already ships with several optimizers such as an Evolutionary 
-				Algorithm (SPEA2 and NSGA2), Differential Evolution, a Particle Swarm Optimizer, and Simulated Annealing.
-				The following benchmarks are also included: ZDT, DTLZ, WFG, and LOTZ.
-				</p>
-			<h4>Easy Development</h4>
-				<p>The latest <a href="http://java.sun.com/">Java</a> features like 
-				Generics and Annotations simplify the development of new optimizers, 
-				problems, operators, and modules.
-				The code is pure Java and free of any text-based configuration files or boilerplate code.
-				</p>
-			<h4>Comfortable Use</h4>
-				<p>The configuration of the modules and parameters is 
-				done comfortably with a graphical user interface.
-				This interface allows saving and loading configurations as an XML file as 
-				well as directly starting and monitoring the optimization tasks.
-				Each module is listed automatically and can be selected and configured 
-				with its parameters in the <em>configurator</em>:</p>
-				<p>
-				<img src="images/feature1.png"/>
-				</p>
-			<h4>Demonstrative Visualization</h4>
-				<p>The framework contains visualization panels for the illustration of the 
-				optimization process. These panels are included in a <em>viewer</em>:</p>
-				<p>
-				<img src="images/feature2.png"/>
-				</p>
+			<h4>Development</h4>
+			<p>
+				The goal of <em>Opt4J</em> is to make the development and usage of
+				user-defined problems and new optimization algorithms as simple as
+				possible. For this purpose, an interface-based approach is used that
+				enables a modular development. As a result, the code is pure Java
+				and free of any text-based configuration files or boilerplate code.
+				A tutorial is available under the following link: <a
+					href="documentation/@version@/book.xhtml">Tutorial</a>
+			</p>
+			<h4>Optimizers and Benchmarks</h4>
+			<p>
+				<em>Opt4J</em> already contains a large set of (multi-objective)
+				optimization algorithms such as evolutionary algorithms (including
+				SPEA2 and NSGA2), differential evolution, particle swarm
+				optimization, and simulated annealing. The benchmarks that are
+				included comprise ZDT, DTLZ, WFG, LOTZ, and the knapsack problem.
+			</p>
+			<h4>Graphical User Interfaces</h4>
+			<p>
+				<em>Opt4J</em> contains graphical user interfaces (GUIs) for the
+				configuration of the optimization parameters as well as for the
+				visualization of the optimization process. The <em>configuration</em>
+				GUI allows saving and loading configurations as XML file as well as
+				directly starting and monitoring the optimization tasks. The <em>viewer</em>
+				GUI contains visualization panels for the illustration of the
+				optimization process. The <em>configuration</em> and <em>viewer</em>
+				GUIs are illustrated below (click picture to enlarge):
+			</p>
+			<p>
+				<a href="images/feature2.png"><img src=alt= "GUI1" align="top" /><img
+					src="images/feature2-small.png" /></a> <a href="images/feature1.png"><img
+					src=alt= "GUI1" align="top" /><img src="images/feature1-small.png" /></a>
+			</p>
+			<p>Using the GUIs for user-defined problems or optimization
+				algorithms does not require any additional code as modules are
+				automatically detected.</p>
+
 			<h4>Open Source</h4>
-				<p>The framework is <a href="http://sourceforge.net/projects/opt4j">open source</a> 
-				and released under the LGPL license allowing the integration into scientific, 
-				educational, and commercial projects.</p>
-      </div>
-      
-      <div id="footer">
-        <hr/>
-        <a href="copyright.html">Copyright</a>
-        <a href="mailto:info@opt4j.org">Contact</a>         
-      </div>
-      
-<script type="text/javascript">
+			<p>
+				The framework is <a href="http://sourceforge.net/projects/opt4j">open
+					source</a> and released under the LGPL license, allowing the
+				integration into scientific, educational, and commercial projects.
+			</p>
+		</div>
+
+		<div id="footer">
+			<hr />
+			<a href="copyright.html">Copyright</a> <a
+				href="mailto:info@opt4j.org">Contact</a>
+		</div>
+
+		<script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
-<script type="text/javascript">
+		<script type="text/javascript">
 var pageTracker = _gat._getTracker("UA-3445704-1");
 pageTracker._initData();
 pageTracker._trackPageview();
-</script>      
-  </body>
+</script>
+</body>
 </html>
