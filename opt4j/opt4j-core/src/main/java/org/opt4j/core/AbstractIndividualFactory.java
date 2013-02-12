@@ -51,8 +51,7 @@ public class AbstractIndividualFactory<I extends Individual> implements Individu
 	 * @param creator
 	 *            the creator that creates random genotypes
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public AbstractIndividualFactory(Provider<I> individualProvider, Creator creator) {
+	public AbstractIndividualFactory(Provider<I> individualProvider, Creator<Genotype> creator) {
 		this.individualProvider = individualProvider;
 		this.creator = creator;
 	}
