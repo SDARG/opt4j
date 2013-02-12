@@ -65,6 +65,9 @@ public class ObjectivesMonitor implements IndividualStateListener {
 	 * Constructs the {@link ObjectivesMonitor}.
 	 * 
 	 * @param individualFactory
+	 *            the individual factory
+	 * @param archive
+	 *            the archive
 	 */
 	@Inject
 	public ObjectivesMonitor(IndividualFactory individualFactory, Archive archive) {

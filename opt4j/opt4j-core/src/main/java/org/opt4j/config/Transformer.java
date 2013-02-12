@@ -6,7 +6,9 @@ package org.opt4j.config;
  * @author reimann
  * 
  * @param <I>
+ *            the type of the source object
  * @param <O>
+ *            the type of the target object
  */
 public interface Transformer<I, O> {
 	/**
