@@ -57,9 +57,9 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	 * @param evaluator
 	 *            the evaluator
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Inject
-	public SequentialIndividualCompleter(Control control, Decoder decoder, Evaluator evaluator) {
+	public SequentialIndividualCompleter(Control control, Decoder<Genotype, Phenotype> decoder,
+			Evaluator<Phenotype> evaluator) {
 		super();
 		this.control = control;
 		this.decoder = decoder;

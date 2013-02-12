@@ -177,14 +177,16 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	 */
 	private void check(Injector injector) {
 
-		Creator<?> creator = null;
-		Decoder<?, ?> decoder = null;
-		Set<Evaluator> evaluators = null;
+		Creator<Genotype> creator = null;
+		Decoder<Genotype, Phenotype> decoder = null;
+		Set<Evaluator<Phenotype>> evaluators = null;
 
 		try {
-			creator = injector.getInstance(Creator.class);
-			decoder = injector.getInstance(Decoder.class);
-			evaluators = injector.getInstance(Key.get(new TypeLiteral<Set<Evaluator>>() {
+			creator = injector.getInstance(Key.get(new TypeLiteral<Creator<Genotype>>() {
+			}));
+			decoder = injector.getInstance(Key.get(new TypeLiteral<Decoder<Genotype, Phenotype>>() {
+			}));
+			evaluators = injector.getInstance(Key.get(new TypeLiteral<Set<Evaluator<Phenotype>>>() {
 			}));
 		} catch (Exception e) {
 			throw new RuntimeException("Problem configuration Exception: \n" + e.getLocalizedMessage(), e);

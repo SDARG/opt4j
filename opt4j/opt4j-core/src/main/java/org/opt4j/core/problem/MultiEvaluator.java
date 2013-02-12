@@ -20,9 +20,8 @@ import com.google.inject.Inject;
  * @author reimann
  * 
  */
-@SuppressWarnings("rawtypes")
-public class MultiEvaluator implements Evaluator {
-	protected final Set<Evaluator> evaluators = new TreeSet<Evaluator>(new PriorityComparator());
+public class MultiEvaluator implements Evaluator<Phenotype> {
+	protected final Set<Evaluator<Phenotype>> evaluators = new TreeSet<Evaluator<Phenotype>>(new PriorityComparator());
 
 	/**
 	 * Creates a new {@link MultiEvaluator}.
@@ -31,7 +30,7 @@ public class MultiEvaluator implements Evaluator {
 	 *            the registered evaluators
 	 */
 	@Inject
-	public MultiEvaluator(Set<Evaluator> evaluators) {
+	public MultiEvaluator(Set<Evaluator<Phenotype>> evaluators) {
 		this.evaluators.addAll(evaluators);
 	}
 
@@ -40,21 +39,20 @@ public class MultiEvaluator implements Evaluator {
 	 * 
 	 * @see org.opt4j.core.problem.Evaluator#evaluate(org.opt4j.core.Phenotype)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Objectives evaluate(Phenotype phenotype) {
 		Objectives objectives = new Objectives();
-		for (Evaluator evaluator : evaluators) {
+		for (Evaluator<Phenotype> evaluator : evaluators) {
 			Objectives obj = evaluator.evaluate(phenotype);
 			objectives.addAll(obj);
 		}
 		return objectives;
 	}
 
-	private static class PriorityComparator implements Comparator<Evaluator> {
+	private static class PriorityComparator implements Comparator<Evaluator<Phenotype>> {
 
 		@Override
-		public int compare(Evaluator o1, Evaluator o2) {
+		public int compare(Evaluator<Phenotype> o1, Evaluator<Phenotype> o2) {
 			int p1 = getPriority(o1);
 			int p2 = getPriority(o2);
 			if (p1 == p2) {
@@ -63,7 +61,7 @@ public class MultiEvaluator implements Evaluator {
 			return p1 - p2;
 		}
 
-		protected int getPriority(Evaluator evaluator) {
+		protected int getPriority(Evaluator<Phenotype> evaluator) {
 			if (evaluator.getClass().isAnnotationPresent(Priority.class)) {
 				Priority priority = evaluator.getClass().getAnnotation(Priority.class);
 				return priority.value();
