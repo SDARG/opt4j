@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
 			[
-			<!ENTITY HelloWorldModule SYSTEM "org/opt4j/tutorial/HelloWorldModule.java">
-			<!ENTITY SalesmanProblem SYSTEM "org/opt4j/tutorial/SalesmanProblem.java">
-			<!ENTITY SalesmanCreator SYSTEM "org/opt4j/tutorial/SalesmanCreator.java">	
-			<!ENTITY SalesmanDecoder SYSTEM "org/opt4j/tutorial/SalesmanDecoder.java">
-			<!ENTITY SalesmanEvaluator SYSTEM "org/opt4j/tutorial/SalesmanEvaluator.java">
-			<!ENTITY SalesmanModule SYSTEM "org/opt4j/tutorial/SalesmanModule.java">
-			<!ENTITY MinOnesEvaluator SYSTEM "org/opt4j/tutorial/MinOnesEvaluator.java">
-			<!ENTITY MinOnesDecoder SYSTEM "org/opt4j/tutorial/MinOnesDecoder.java">
-			<!ENTITY MinOnesModule SYSTEM "org/opt4j/tutorial/MinOnesModule.java">
-			<!ENTITY SalesmanWidgetService SYSTEM "org/opt4j/tutorial/SalesmanWidgetService.java">
-			<!ENTITY MutateOptimizer SYSTEM "org/opt4j/tutorial/MutateOptimizer.java">
-			<!ENTITY MutateOptimizerModule SYSTEM "org/opt4j/tutorial/MutateOptimizerModule.java">
-			<!ENTITY HelloWordCreator SYSTEM "org/opt4j/tutorial/HelloWorldCreator.java">
-			<!ENTITY HelloWordDecoder SYSTEM "org/opt4j/tutorial/HelloWorldDecoder.java">
-			<!ENTITY HelloWordEvaluator SYSTEM "org/opt4j/tutorial/HelloWorldEvaluator.java">
-			<!ENTITY HelloWordModule SYSTEM "org/opt4j/tutorial/HelloWorldModule.java">
-			<!ENTITY MyOperator SYSTEM "org/opt4j/tutorial/MyOperator.java">
-			<!ENTITY MyOperatorModule SYSTEM "org/opt4j/tutorial/MyOperatorModule.java">
+			<!ENTITY HelloWorldModule SYSTEM "org/opt4j/tutorial/helloworld/HelloWorldModule.java">
+			<!ENTITY SalesmanProblem SYSTEM "org/opt4j/tutorial/salesman/SalesmanProblem.java">
+			<!ENTITY SalesmanCreator SYSTEM "org/opt4j/tutorial/salesman/SalesmanCreator.java">	
+			<!ENTITY SalesmanDecoder SYSTEM "org/opt4j/tutorial/salesman/SalesmanDecoder.java">
+			<!ENTITY SalesmanEvaluator SYSTEM "org/opt4j/tutorial/salesman/SalesmanEvaluator.java">
+			<!ENTITY SalesmanModule SYSTEM "org/opt4j/tutorial/salesman/SalesmanModule.java">
+			<!ENTITY SalesmanWidgetService SYSTEM "org/opt4j/tutorial/salesman/SalesmanWidgetService.java">
+			<!ENTITY MinOnesEvaluator SYSTEM "org/opt4j/tutorial/minones/MinOnesEvaluator.java">
+			<!ENTITY MinOnesDecoder SYSTEM "org/opt4j/tutorial/minones/MinOnesDecoder.java">
+			<!ENTITY MinOnesModule SYSTEM "org/opt4j/tutorial/minones/MinOnesModule.java">
+			<!ENTITY MutateOptimizer SYSTEM "org/opt4j/tutorial/optimizer/MutateOptimizer.java">
+			<!ENTITY MutateOptimizerModule SYSTEM "org/opt4j/tutorial/optimizer/MutateOptimizerModule.java">
+			<!ENTITY HelloWordCreator SYSTEM "org/opt4j/tutorial/helloworld/HelloWorldCreator.java">
+			<!ENTITY HelloWordDecoder SYSTEM "org/opt4j/tutorial/helloworld/HelloWorldDecoder.java">
+			<!ENTITY HelloWordEvaluator SYSTEM "org/opt4j/tutorial/helloworld/HelloWorldEvaluator.java">
+			<!ENTITY HelloWordModule SYSTEM "org/opt4j/tutorial/helloworld/HelloWorldModule.java">
+			<!ENTITY MyOperator SYSTEM "org/opt4j/tutorial/operator/MyOperator.java">
+			<!ENTITY MyOperatorModule SYSTEM "org/opt4j/tutorial/operator/MyOperatorModule.java">
 			<!ENTITY Version "@version@">
 			<!ENTITY Date "@date@">
 			<!ENTITY Opt4J "<application>Opt4J</application>">

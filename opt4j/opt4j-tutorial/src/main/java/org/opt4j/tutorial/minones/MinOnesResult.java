@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.minones;
 
 import java.util.ArrayList;
 

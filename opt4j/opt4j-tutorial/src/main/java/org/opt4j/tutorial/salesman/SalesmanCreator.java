@@ -1,10 +1,10 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.salesman;
 
 import java.util.Collections;
 
 import org.opt4j.core.problem.Creator;
 import org.opt4j.genotype.PermutationGenotype;
-import org.opt4j.tutorial.SalesmanProblem.City;
+import org.opt4j.tutorial.salesman.SalesmanProblem.City;
 
 import com.google.inject.Inject;
 

@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.salesman;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.problem.Evaluator;
-import org.opt4j.tutorial.SalesmanProblem.City;
+import org.opt4j.tutorial.salesman.SalesmanProblem.City;
 
 public class SalesmanEvaluator implements Evaluator<SalesmanRoute> {
 

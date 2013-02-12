@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.optimizer;
 
 import java.util.Collection;
 

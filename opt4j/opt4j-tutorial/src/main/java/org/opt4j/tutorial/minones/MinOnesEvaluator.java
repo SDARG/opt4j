@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.minones;
 
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
