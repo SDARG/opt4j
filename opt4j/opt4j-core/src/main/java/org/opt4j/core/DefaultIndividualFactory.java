@@ -40,9 +40,8 @@ public class DefaultIndividualFactory extends AbstractIndividualFactory<Individu
 	 * @param creator
 	 *            the creator
 	 */
-	@SuppressWarnings({ "rawtypes" })
 	@Inject
-	public DefaultIndividualFactory(Provider<Individual> individualProvider, Creator creator) {
+	public DefaultIndividualFactory(Provider<Individual> individualProvider, Creator<Genotype> creator) {
 		super(individualProvider, creator);
 	}
 

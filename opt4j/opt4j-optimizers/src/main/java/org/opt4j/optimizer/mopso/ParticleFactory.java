@@ -39,9 +39,8 @@ public class ParticleFactory extends AbstractIndividualFactory<Particle> {
 	 * @param creator
 	 *            the creator
 	 */
-	@SuppressWarnings("rawtypes")
 	@Inject
-	public ParticleFactory(Provider<Particle> particleProvider, Creator creator) {
+	public ParticleFactory(Provider<Particle> particleProvider, Creator<Genotype> creator) {
 		super(particleProvider, creator);
 	}
 
