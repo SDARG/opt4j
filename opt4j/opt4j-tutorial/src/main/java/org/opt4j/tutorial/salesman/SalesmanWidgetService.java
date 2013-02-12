@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.salesman;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import org.opt4j.core.Individual;
-import org.opt4j.tutorial.SalesmanProblem.City;
+import org.opt4j.tutorial.salesman.SalesmanProblem.City;
 import org.opt4j.viewer.IndividualMouseListener;
 import org.opt4j.viewer.Viewport;
 import org.opt4j.viewer.Widget;

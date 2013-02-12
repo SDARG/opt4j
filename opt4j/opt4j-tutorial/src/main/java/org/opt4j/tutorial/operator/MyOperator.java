@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.operator;
 
 import org.opt4j.genotype.BooleanGenotype;
 import org.opt4j.operator.crossover.Crossover;

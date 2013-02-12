@@ -1,4 +1,4 @@
-package org.opt4j.tutorial;
+package org.opt4j.tutorial.salesman;
 
 import java.util.HashSet;
 import java.util.Random;
