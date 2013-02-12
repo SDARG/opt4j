@@ -15,6 +15,7 @@
 package org.opt4j.genotype;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.List;
 
 import org.opt4j.core.Genotype;
@@ -43,6 +44,16 @@ public class SelectGenotype<V> extends IntegerGenotype {
 	public SelectGenotype(List<V> values) {
 		super(0, values.size() - 1);
 		this.values = values;
+	}
+	
+	/**
+	 * Constructs a {@link SelectGenotype}.
+	 * 
+	 * @param values
+	 *            the elements to be selected
+	 */
+	public SelectGenotype(V[] values) {
+		this(Arrays.asList(values));
 	}
 
 	/**
