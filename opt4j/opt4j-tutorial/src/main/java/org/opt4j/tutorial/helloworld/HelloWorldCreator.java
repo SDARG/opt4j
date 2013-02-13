@@ -2,8 +2,8 @@ package org.opt4j.tutorial.helloworld;
 
 import java.util.Random;
 
+import org.opt4j.core.genotype.SelectGenotype;
 import org.opt4j.core.problem.Creator;
-import org.opt4j.genotype.SelectGenotype;
 
 public class HelloWorldCreator implements Creator<SelectGenotype<Character>> {
 

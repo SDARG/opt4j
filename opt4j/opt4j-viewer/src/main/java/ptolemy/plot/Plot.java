@@ -1,20 +1,24 @@
 /*
  * A signal plotter.
  * 
- * @Copyright (c) 1997-2007 The Regents of the University of California. All rights reserved.
+ * @Copyright (c) 1997-2007 The Regents of the University of California. All
+ * rights reserved.
  * 
- * Permission is hereby granted, without written agreement and without license or royalty fees, to use, copy, modify,
- * and distribute this software and its documentation for any purpose, provided that the above copyright notice and the
- * following two paragraphs appear in all copies of this software.
+ * Permission is hereby granted, without written agreement and without license
+ * or royalty fees, to use, copy, modify, and distribute this software and its
+ * documentation for any purpose, provided that the above copyright notice and
+ * the following two paragraphs appear in all copies of this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -51,20 +55,27 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
 // // Plot
 
 /**
- * A flexible signal plotter. The plot can be configured and data can be provided either through a file with commands or
- * through direct invocation of the public methods of the class.
+ * A flexible signal plotter. The plot can be configured and data can be
+ * provided either through a file with commands or through direct invocation of
+ * the public methods of the class.
  * <p>
- * When calling the public methods, in most cases the changes will not be visible until paintComponent() is called. To
- * request that this be done, call repaint(). One exception is addPoint(), which makes the new point visible immediately
- * if the plot is visible on the screen and addPoint() is called from the event dispatching thread.
+ * When calling the public methods, in most cases the changes will not be
+ * visible until paintComponent() is called. To request that this be done, call
+ * repaint(). One exception is addPoint(), which makes the new point visible
+ * immediately if the plot is visible on the screen and addPoint() is called
+ * from the event dispatching thread.
  * <p>
- * This base class supports a simple file syntax that has largely been replaced by the XML-based PlotML syntax. To read
- * a file or a URL in this older syntax, use the read() method. This older syntax contains any number commands, one per
- * line. Unrecognized commands and commands with syntax errors are ignored. Comments are denoted by a line starting with
- * a pound sign "#". The recognized commands include those supported by the base class, plus a few more. The commands
- * are case insensitive, but are usually capitalized. The number of data sets to be plotted does not need to be
- * specified. Data sets are added as needed. Each dataset can be optionally identified with color (see the base class)
- * or with unique marks. The style of marks used to denote a data point is defined by one of the following commands:
+ * This base class supports a simple file syntax that has largely been replaced
+ * by the XML-based PlotML syntax. To read a file or a URL in this older syntax,
+ * use the read() method. This older syntax contains any number commands, one
+ * per line. Unrecognized commands and commands with syntax errors are ignored.
+ * Comments are denoted by a line starting with a pound sign "#". The recognized
+ * commands include those supported by the base class, plus a few more. The
+ * commands are case insensitive, but are usually capitalized. The number of
+ * data sets to be plotted does not need to be specified. Data sets are added as
+ * needed. Each dataset can be optionally identified with color (see the base
+ * class) or with unique marks. The style of marks used to denote a data point
+ * is defined by one of the following commands:
  * 
  * <pre>
  * Marks: none
@@ -74,12 +85,15 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  *  Marks: pixels
  * </pre>
  * 
- * Here, "points" are small dots, while "dots" are larger. If "various" is specified, then unique marks are used for the
- * first ten data sets, and then recycled. If "pixels" are specified, then each point is drawn as one pixel. Using no
- * marks is useful when lines connect the points in a plot, which is done by default. However, if persistence is set,
- * then you may want to choose "pixels" because the lines may overlap, resulting in annoying gaps in the drawn line. If
- * the above directive appears before any DataSet directive, then it specifies the default for all data sets. If it
- * appears after a DataSet directive, then it applies only to that data set.
+ * Here, "points" are small dots, while "dots" are larger. If "various" is
+ * specified, then unique marks are used for the first ten data sets, and then
+ * recycled. If "pixels" are specified, then each point is drawn as one pixel.
+ * Using no marks is useful when lines connect the points in a plot, which is
+ * done by default. However, if persistence is set, then you may want to choose
+ * "pixels" because the lines may overlap, resulting in annoying gaps in the
+ * drawn line. If the above directive appears before any DataSet directive, then
+ * it specifies the default for all data sets. If it appears after a DataSet
+ * directive, then it applies only to that data set.
  * <p>
  * To disable connecting lines, use:
  * 
@@ -93,8 +107,9 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  * Lines: on
  * </pre>
  * 
- * You can also specify "impulses", which are lines drawn from a plotted point down to the x axis. Plots with impulses
- * are often called "stem plots." These are off by default, but can be turned on with the command:
+ * You can also specify "impulses", which are lines drawn from a plotted point
+ * down to the x axis. Plots with impulses are often called "stem plots." These
+ * are off by default, but can be turned on with the command:
  * 
  * <pre>
  * Impulses: on
@@ -106,8 +121,9 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  * Impulses: off
  * </pre>
  * 
- * If that command appears before any DataSet directive, then the command applies to all data sets. Otherwise, it
- * applies only to the current data set. To create a bar graph, turn off lines and use any of the following commands:
+ * If that command appears before any DataSet directive, then the command
+ * applies to all data sets. Otherwise, it applies only to the current data set.
+ * To create a bar graph, turn off lines and use any of the following commands:
  * 
  * <pre>
  * Bars: on
@@ -115,10 +131,11 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  *  Bars: &lt;i&gt;width, offset&lt;/i&gt;
  * </pre>
  * 
- * The <i>width</i> is a real number specifying the width of the bars in the units of the x axis. The <i>offset</i> is a
- * real number specifying how much the bar of the <i>i</i><sup>th</sup> data set is offset from the previous one. This
- * allows bars to "peek out" from behind the ones in front. Note that the frontmost data set will be the first one. To
- * turn off bars, use
+ * The <i>width</i> is a real number specifying the width of the bars in the
+ * units of the x axis. The <i>offset</i> is a real number specifying how much
+ * the bar of the <i>i</i><sup>th</sup> data set is offset from the previous
+ * one. This allows bars to "peek out" from behind the ones in front. Note that
+ * the frontmost data set will be the first one. To turn off bars, use
  * 
  * <pre>
  * Bars: off
@@ -130,23 +147,26 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  * DataSet: &lt;i&gt;string&lt;/i&gt;
  * </pre>
  * 
- * Here, <i>string</i> is a label that will appear in the legend. It is not necessary to enclose the string in quotation
- * marks. To start a new dataset without giving it a name, use:
+ * Here, <i>string</i> is a label that will appear in the legend. It is not
+ * necessary to enclose the string in quotation marks. To start a new dataset
+ * without giving it a name, use:
  * 
  * <pre>
  * DataSet:
  * </pre>
  * 
- * In this case, no item will appear in the legend. New datasets are plotted <i>behind</i> the previous ones. If the
- * following directive occurs:
+ * In this case, no item will appear in the legend. New datasets are plotted
+ * <i>behind</i> the previous ones. If the following directive occurs:
  * 
  * <pre>
  * ReuseDataSets: on
  * </pre>
  * 
- * Then datasets with the same name will be merged. This makes it easier to combine multiple datafiles that contain the
- * same datasets into one file. By default, this capability is turned off, so datasets with the same name are not
- * merged. The data itself is given by a sequence of commands with one of the following forms:
+ * Then datasets with the same name will be merged. This makes it easier to
+ * combine multiple datafiles that contain the same datasets into one file. By
+ * default, this capability is turned off, so datasets with the same name are
+ * not merged. The data itself is given by a sequence of commands with one of
+ * the following forms:
  * 
  * <pre>
  * &lt;i&gt;x&lt;/i&gt;, &lt;i&gt;y&lt;/i&gt;
@@ -157,15 +177,19 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  *  move: &lt;i&gt;x&lt;/i&gt;, &lt;i&gt;y&lt;/i&gt;, &lt;i&gt;yLowErrorBar&lt;/i&gt;, &lt;i&gt;yHighErrorBar&lt;/i&gt;
  * </pre>
  * 
- * The "draw" command is optional, so the first two forms are equivalent. The "move" command causes a break in connected
- * points, if lines are being drawn between points. The numbers <i>x</i> and <i>y</i> are arbitrary numbers as supported
- * by the Double parser in Java. If there are four numbers, then the last two numbers are assumed to be the lower and
- * upper values for error bars. The numbers can be separated by commas, spaces or tabs.
+ * The "draw" command is optional, so the first two forms are equivalent. The
+ * "move" command causes a break in connected points, if lines are being drawn
+ * between points. The numbers <i>x</i> and <i>y</i> are arbitrary numbers as
+ * supported by the Double parser in Java. If there are four numbers, then the
+ * last two numbers are assumed to be the lower and upper values for error bars.
+ * The numbers can be separated by commas, spaces or tabs.
  * <p>
- * Some of the methods, such as those that add points a plot, are executed in the event thread, possibly some time after
- * they are called. If they are called from a thread different from the event thread, then the order in which changes to
- * the plot take effect may be surprising. We recommend that any code you write that changes the plot in visible ways be
- * executed in the event thread. You can accomplish this using the following template:
+ * Some of the methods, such as those that add points a plot, are executed in
+ * the event thread, possibly some time after they are called. If they are
+ * called from a thread different from the event thread, then the order in which
+ * changes to the plot take effect may be surprising. We recommend that any code
+ * you write that changes the plot in visible ways be executed in the event
+ * thread. You can accomplish this using the following template:
  * 
  * <pre>
  * Runnable doAction = new Runnable() {
@@ -178,10 +202,12 @@ import ptolemy.plot.zoomBox.ZoomRectangle;
  * <p>
  * This plotter has some <A NAME="ptplot limitations">limitations</a>:
  * <ul>
- * <li>If you zoom in far enough, the plot becomes unreliable. In particular, if the total extent of the plot is more
- * than 2<sup>32</sup> times extent of the visible area, quantization errors can result in displaying points or lines.
+ * <li>If you zoom in far enough, the plot becomes unreliable. In particular, if
+ * the total extent of the plot is more than 2<sup>32</sup> times extent of the
+ * visible area, quantization errors can result in displaying points or lines.
  * Note that 2<sup>32</sup> is over 4 billion.
- * <li>The limitations of the log axis facility are listed in the <code>_gridInit()</code> method in the PlotBox class.
+ * <li>The limitations of the log axis facility are listed in the
+ * <code>_gridInit()</code> method in the PlotBox class.
  * </ul>
  * 
  * @author Edward A. Lee, Christopher Brooks
@@ -201,8 +227,9 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Add a legend (displayed at the upper right) for the specified data set with the specified string. Short strings
-	 * generally fit better than long strings.
+	 * Add a legend (displayed at the upper right) for the specified data set
+	 * with the specified string. Short strings generally fit better than long
+	 * strings.
 	 * 
 	 * @param dataset
 	 *            The dataset index.
@@ -227,15 +254,19 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * In the specified data set, add the specified x, y point to the plot. Data set indices begin with zero. If the
-	 * data set does not exist, create it. The fourth argument indicates whether the point should be connected by a line
-	 * to the previous point. Regardless of the value of this argument, a line will not drawn if either there has been
-	 * no previous point for this dataset or setConnected() has been called with a false argument.
+	 * In the specified data set, add the specified x, y point to the plot. Data
+	 * set indices begin with zero. If the data set does not exist, create it.
+	 * The fourth argument indicates whether the point should be connected by a
+	 * line to the previous point. Regardless of the value of this argument, a
+	 * line will not drawn if either there has been no previous point for this
+	 * dataset or setConnected() has been called with a false argument.
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the point will not be added immediately (unless you
-	 * call this method from within the event dispatch thread). All the methods that do this deferring coordinate so
-	 * that they are executed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the point will not be added immediately
+	 * (unless you call this method from within the event dispatch thread). All
+	 * the methods that do this deferring coordinate so that they are executed
+	 * in the order that you called them.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -258,16 +289,21 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * In the specified data set, add the specified x, y point to the plot with error bars. Data set indices begin with
-	 * zero. If the dataset does not exist, create it. yLowEB and yHighEB are the lower and upper error bars. The sixth
-	 * argument indicates whether the point should be connected by a line to the previous point. The new point will be
-	 * made visible if the plot is visible on the screen. Otherwise, it will be drawn the next time the plot is drawn on
-	 * the screen. This method is based on a suggestion by Michael Altmann <michael@email.labmed.umn.edu>.
+	 * In the specified data set, add the specified x, y point to the plot with
+	 * error bars. Data set indices begin with zero. If the dataset does not
+	 * exist, create it. yLowEB and yHighEB are the lower and upper error bars.
+	 * The sixth argument indicates whether the point should be connected by a
+	 * line to the previous point. The new point will be made visible if the
+	 * plot is visible on the screen. Otherwise, it will be drawn the next time
+	 * the plot is drawn on the screen. This method is based on a suggestion by
+	 * Michael Altmann <michael@email.labmed.umn.edu>.
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the point will not be added immediately (unless you
-	 * call this method from within the event dispatch thread). All the methods that do this deferring coordinate so
-	 * that they are executed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the point will not be added immediately
+	 * (unless you call this method from within the event dispatch thread). All
+	 * the methods that do this deferring coordinate so that they are executed
+	 * in the order that you called them.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -295,17 +331,21 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Clear the plot of all data points. If the argument is true, then reset all parameters to their initial
-	 * conditions, including the persistence, plotting format, and axes formats. For the change to take effect, you must
-	 * call repaint().
+	 * Clear the plot of all data points. If the argument is true, then reset
+	 * all parameters to their initial conditions, including the persistence,
+	 * plotting format, and axes formats. For the change to take effect, you
+	 * must call repaint().
 	 * 
 	 * @param format
 	 *            If true, clear the format controls as well.
 	 *            <p>
-	 *            In order to work well with swing and be thread safe, this method actually defers execution to the
-	 *            event dispatch thread, where all user interface actions are performed. Thus, the clear will not be
-	 *            executed immediately (unless you call this method from within the event dispatch thread). All the
-	 *            methods that do this deferring coordinate so that they are executed in the order that you called them.
+	 *            In order to work well with swing and be thread safe, this
+	 *            method actually defers execution to the event dispatch thread,
+	 *            where all user interface actions are performed. Thus, the
+	 *            clear will not be executed immediately (unless you call this
+	 *            method from within the event dispatch thread). All the methods
+	 *            that do this deferring coordinate so that they are executed in
+	 *            the order that you called them.
 	 */
 	@Override
 	public synchronized void clear(final boolean format) {
@@ -320,12 +360,16 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Clear the plot of data points in the specified dataset. This calls repaint() to request an update of the display.
+	 * Clear the plot of data points in the specified dataset. This calls
+	 * repaint() to request an update of the display.
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the point will not be added immediately (unless you
-	 * call this method from within the event dispatch thread). If you call this method, the addPoint() method, and the
-	 * erasePoint() method in any order, they are assured of being processed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the point will not be added immediately
+	 * (unless you call this method from within the event dispatch thread). If
+	 * you call this method, the addPoint() method, and the erasePoint() method
+	 * in any order, they are assured of being processed in the order that you
+	 * called them.
 	 * 
 	 * @param dataset
 	 *            The dataset to clear.
@@ -342,14 +386,17 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Erase the point at the given index in the given dataset. If lines are being drawn, also erase the line to the
-	 * next points (note: not to the previous point). The point is not checked to see whether it is in range, so care
-	 * must be taken by the caller to ensure that it is.
+	 * Erase the point at the given index in the given dataset. If lines are
+	 * being drawn, also erase the line to the next points (note: not to the
+	 * previous point). The point is not checked to see whether it is in range,
+	 * so care must be taken by the caller to ensure that it is.
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the point will not be erased immediately (unless
-	 * you call this method from within the event dispatch thread). All the methods that do this deferring coordinate so
-	 * that they are executed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the point will not be erased immediately
+	 * (unless you call this method from within the event dispatch thread). All
+	 * the methods that do this deferring coordinate so that they are executed
+	 * in the order that you called them.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -368,14 +415,17 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Rescale so that the data that is currently plotted just fits. This overrides the base class method to ensure that
-	 * the protected variables _xBottom, _xTop, _yBottom, and _yTop are valid. This method calls repaint(), which
-	 * eventually causes the display to be updated.
+	 * Rescale so that the data that is currently plotted just fits. This
+	 * overrides the base class method to ensure that the protected variables
+	 * _xBottom, _xTop, _yBottom, and _yTop are valid. This method calls
+	 * repaint(), which eventually causes the display to be updated.
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the fill will not occur immediately (unless you
-	 * call this method from within the event dispatch thread). All the methods that do this deferring coordinate so
-	 * that they are executed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the fill will not occur immediately (unless
+	 * you call this method from within the event dispatch thread). All the
+	 * methods that do this deferring coordinate so that they are executed in
+	 * the order that you called them.
 	 */
 	@Override
 	public synchronized void fillPlot() {
@@ -390,25 +440,27 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Return whether the default is to connect subsequent points with a line. If the result is false, then points are
-	 * not connected. When points are by default connected, individual points can be not connected by giving the
-	 * appropriate argument to addPoint(). Also, a different default can be set for each dataset, overriding this global
-	 * default.
+	 * Return whether the default is to connect subsequent points with a line.
+	 * If the result is false, then points are not connected. When points are by
+	 * default connected, individual points can be not connected by giving the
+	 * appropriate argument to addPoint(). Also, a different default can be set
+	 * for each dataset, overriding this global default.
 	 */
 	public boolean getConnected() {
 		return _connected;
 	}
 
 	/**
-	 * Return whether a line will be drawn from any plotted point down to the x axis. A plot with such lines is also
-	 * known as a stem plot.
+	 * Return whether a line will be drawn from any plotted point down to the x
+	 * axis. A plot with such lines is also known as a stem plot.
 	 */
 	public boolean getImpulses() {
 		return _impulses;
 	}
 
 	/**
-	 * Get the marks style, which is one of "none", "points", "dots", or "various".
+	 * Get the marks style, which is one of "none", "points", "dots", or
+	 * "various".
 	 * 
 	 * @return A string specifying the style for points.
 	 */
@@ -429,7 +481,8 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Return the maximum number of data sets. This method is deprecated, since there is no longer an upper bound.
+	 * Return the maximum number of data sets. This method is deprecated, since
+	 * there is no longer an upper bound.
 	 * 
 	 * @deprecated
 	 */
@@ -448,9 +501,11 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Return false if setReuseDatasets() has not yet been called or if setReuseDatasets(false) has been called.
+	 * Return false if setReuseDatasets() has not yet been called or if
+	 * setReuseDatasets(false) has been called.
 	 * 
-	 * @return false if setReuseDatasets() has not yet been called or if setReuseDatasets(false) has been called.
+	 * @return false if setReuseDatasets() has not yet been called or if
+	 *         setReuseDatasets(false) has been called.
 	 * @since Ptplot 5.3
 	 * @see #setReuseDatasets(boolean)
 	 */
@@ -459,9 +514,10 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Override the base class to indicate that a new data set is being read. This method is deprecated. Use read()
-	 * instead (to read the old file format) or one of the classes in the plotml package to read the new (XML) file
-	 * format.
+	 * Override the base class to indicate that a new data set is being read.
+	 * This method is deprecated. Use read() instead (to read the old file
+	 * format) or one of the classes in the plotml package to read the new (XML)
+	 * file format.
 	 * 
 	 * @deprecated
 	 */
@@ -474,8 +530,8 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Read a file with the old syntax (non-XML). Override the base class to register that we are reading a new data
-	 * set.
+	 * Read a file with the old syntax (non-XML). Override the base class to
+	 * register that we are reading a new data set.
 	 * 
 	 * @param inputStream
 	 *            The input stream.
@@ -490,10 +546,11 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Create a sample plot. This is not actually done immediately unless the calling thread is the event dispatch
-	 * thread. Instead, it is deferred to the event dispatch thread. It is important that the calling thread not hold a
-	 * synchronize lock on the Plot object, or deadlock will result (unless the calling thread is the event dispatch
-	 * thread).
+	 * Create a sample plot. This is not actually done immediately unless the
+	 * calling thread is the event dispatch thread. Instead, it is deferred to
+	 * the event dispatch thread. It is important that the calling thread not
+	 * hold a synchronize lock on the Plot object, or deadlock will result
+	 * (unless the calling thread is the event dispatch thread).
 	 */
 	@Override
 	public synchronized void samplePlot() {
@@ -555,7 +612,8 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Turn bars on or off (for bar charts). Note that this is a global property, not per dataset.
+	 * Turn bars on or off (for bar charts). Note that this is a global
+	 * property, not per dataset.
 	 * 
 	 * @param on
 	 *            If true, turn bars on.
@@ -567,9 +625,10 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Turn bars on and set the width and offset. Both are specified in units of the x axis. The offset is the amount by
-	 * which the i < sup>th</sup> data set is shifted to the right, so that it peeks out from behind the earlier data
-	 * sets.
+	 * Turn bars on and set the width and offset. Both are specified in units of
+	 * the x axis. The offset is the amount by which the i < sup>th</sup> data
+	 * set is shifted to the right, so that it peeks out from behind the earlier
+	 * data sets.
 	 * 
 	 * @param width
 	 *            The width of the bars.
@@ -585,10 +644,12 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * If the argument is true, then the default is to connect subsequent points with a line. If the argument is false,
-	 * then points are not connected. When points are by default connected, individual points can be not connected by
-	 * giving the appropriate argument to addPoint(). Also, a different default can be set for each dataset, overriding
-	 * this global default.
+	 * If the argument is true, then the default is to connect subsequent points
+	 * with a line. If the argument is false, then points are not connected.
+	 * When points are by default connected, individual points can be not
+	 * connected by giving the appropriate argument to addPoint(). Also, a
+	 * different default can be set for each dataset, overriding this global
+	 * default.
 	 * 
 	 * @param on
 	 *            If true, draw lines between points.
@@ -601,10 +662,12 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * If the first argument is true, then by default for the specified dataset, points will be connected by a line.
-	 * Otherwise, the points will not be connected. When points are by default connected, individual points can be not
-	 * connected by giving the appropriate argument to addPoint(). Note that this method should be called before adding
-	 * any points. Note further that this method should probably be called from the event thread.
+	 * If the first argument is true, then by default for the specified dataset,
+	 * points will be connected by a line. Otherwise, the points will not be
+	 * connected. When points are by default connected, individual points can be
+	 * not connected by giving the appropriate argument to addPoint(). Note that
+	 * this method should be called before adding any points. Note further that
+	 * this method should probably be called from the event thread.
 	 * 
 	 * @param on
 	 *            If true, draw lines between points.
@@ -623,8 +686,9 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * If the argument is true, then a line will be drawn from any plotted point down to the x axis. Otherwise, this
-	 * feature is disabled. A plot with such lines is also known as a stem plot.
+	 * If the argument is true, then a line will be drawn from any plotted point
+	 * down to the x axis. Otherwise, this feature is disabled. A plot with such
+	 * lines is also known as a stem plot.
 	 * 
 	 * @param on
 	 *            If true, draw a stem plot.
@@ -636,8 +700,9 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * If the first argument is true, then a line will be drawn from any plotted point in the specified dataset down to
-	 * the x axis. Otherwise, this feature is disabled. A plot with such lines is also known as a stem plot.
+	 * If the first argument is true, then a line will be drawn from any plotted
+	 * point in the specified dataset down to the x axis. Otherwise, this
+	 * feature is disabled. A plot with such lines is also known as a stem plot.
 	 * 
 	 * @param on
 	 *            If true, draw a stem plot.
@@ -655,8 +720,10 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Set the marks style to "none", "points", "dots", or "various". In the last case, unique marks are used for the
-	 * first ten data sets, then recycled. This method should be called only from the event dispatch thread.
+	 * Set the marks style to "none", "points", "dots", or "various". In the
+	 * last case, unique marks are used for the first ten data sets, then
+	 * recycled. This method should be called only from the event dispatch
+	 * thread.
 	 * 
 	 * @param style
 	 *            A string specifying the style for points.
@@ -679,8 +746,9 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Set the marks style to "none", "points", "dots", "various", or "pixels" for the specified dataset. In the last
-	 * case, unique marks are used for the first ten data sets, then recycled.
+	 * Set the marks style to "none", "points", "dots", "various", or "pixels"
+	 * for the specified dataset. In the last case, unique marks are used for
+	 * the first ten data sets, then recycled.
 	 * 
 	 * @param style
 	 *            A string specifying the style for points.
@@ -710,8 +778,9 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Specify the number of data sets to be plotted together. This method is deprecated, since it is no longer
-	 * necessary to specify the number of data sets ahead of time.
+	 * Specify the number of data sets to be plotted together. This method is
+	 * deprecated, since it is no longer necessary to specify the number of data
+	 * sets ahead of time.
 	 * 
 	 * @param numSets
 	 *            The number of data sets.
@@ -741,15 +810,19 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Calling this method with a positive argument sets the persistence of the plot to the given number of points.
-	 * Calling with a zero argument turns off this feature, reverting to infinite memory (unless sweeps persistence is
-	 * set). If both sweeps and points persistence are set then sweeps take precedence.
+	 * Calling this method with a positive argument sets the persistence of the
+	 * plot to the given number of points. Calling with a zero argument turns
+	 * off this feature, reverting to infinite memory (unless sweeps persistence
+	 * is set). If both sweeps and points persistence are set then sweeps take
+	 * precedence.
 	 * <p>
-	 * Setting the persistence greater than zero forces the plot to be drawn in XOR mode, which allows points to be
-	 * quickly and efficiently erased. However, there is a bug in Java (as of version 1.3), where XOR mode does not work
-	 * correctly with double buffering. Thus, if you call this with an argument greater than zero, then we turn off
-	 * double buffering for this panel <i>and all of its parents</i>. This actually happens on the next call to
-	 * addPoint().
+	 * Setting the persistence greater than zero forces the plot to be drawn in
+	 * XOR mode, which allows points to be quickly and efficiently erased.
+	 * However, there is a bug in Java (as of version 1.3), where XOR mode does
+	 * not work correctly with double buffering. Thus, if you call this with an
+	 * argument greater than zero, then we turn off double buffering for this
+	 * panel <i>and all of its parents</i>. This actually happens on the next
+	 * call to addPoint().
 	 */
 	public void setPointsPersistence(int persistence) {
 		// Ensure replot of offscreen buffer.
@@ -760,7 +833,8 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * If the argument is true, then datasets with the same name are merged into a single dataset.
+	 * If the argument is true, then datasets with the same name are merged into
+	 * a single dataset.
 	 * 
 	 * @param on
 	 *            If true, then merge datasets.
@@ -773,16 +847,20 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Calling this method with a positive argument sets the persistence of the plot to the given width in units of the
-	 * horizontal axis. Calling with a zero argument turns off this feature, reverting to infinite memory (unless points
-	 * persistence is set). If both X and points persistence are set then both are applied, meaning that points that are
-	 * old by either criterion will be erased.
+	 * Calling this method with a positive argument sets the persistence of the
+	 * plot to the given width in units of the horizontal axis. Calling with a
+	 * zero argument turns off this feature, reverting to infinite memory
+	 * (unless points persistence is set). If both X and points persistence are
+	 * set then both are applied, meaning that points that are old by either
+	 * criterion will be erased.
 	 * <p>
-	 * Setting the X persistence greater than zero forces the plot to be drawn in XOR mode, which allows points to be
-	 * quickly and efficiently erased. However, there is a bug in Java (as of version 1.3), where XOR mode does not work
-	 * correctly with double buffering. Thus, if you call this with an argument greater than zero, then we turn off
-	 * double buffering for this panel <i>and all of its parents</i>. This actually happens on the next call to
-	 * addPoint().
+	 * Setting the X persistence greater than zero forces the plot to be drawn
+	 * in XOR mode, which allows points to be quickly and efficiently erased.
+	 * However, there is a bug in Java (as of version 1.3), where XOR mode does
+	 * not work correctly with double buffering. Thus, if you call this with an
+	 * argument greater than zero, then we turn off double buffering for this
+	 * panel <i>and all of its parents</i>. This actually happens on the next
+	 * call to addPoint().
 	 */
 	public void setXPersistence(double persistence) {
 		// Ensure replot of offscreen buffer.
@@ -881,7 +959,8 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Write plot format information to the specified output stream in PlotML, an XML scheme.
+	 * Write plot format information to the specified output stream in PlotML,
+	 * an XML scheme.
 	 * 
 	 * @param output
 	 *            A buffered print writer.
@@ -936,10 +1015,11 @@ public class Plot extends PlotBox {
 	// // protected methods ////
 
 	/**
-	 * Check the argument to ensure that it is a valid data set index. If it is less than zero, throw an
-	 * IllegalArgumentException (which is a runtime exception). If it does not refer to an existing data set, then fill
-	 * out the _points Vector so that it does refer to an existing data set. All other dataset-related vectors are
-	 * similarly filled out.
+	 * Check the argument to ensure that it is a valid data set index. If it is
+	 * less than zero, throw an IllegalArgumentException (which is a runtime
+	 * exception). If it does not refer to an existing data set, then fill out
+	 * the _points Vector so that it does refer to an existing data set. All
+	 * other dataset-related vectors are similarly filled out.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -959,10 +1039,13 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Draw bar from the specified point to the y axis. If the specified point is below the y axis or outside the x
-	 * range, do nothing. If the <i>clip</i> argument is true, then do not draw above the y range. Note that
-	 * paintComponent() should be called before calling this method so that _xscale and _yscale are properly set. This
-	 * method should be called only from the event dispatch thread. It is not synchronized, so its caller should be.
+	 * Draw bar from the specified point to the y axis. If the specified point
+	 * is below the y axis or outside the x range, do nothing. If the
+	 * <i>clip</i> argument is true, then do not draw above the y range. Note
+	 * that paintComponent() should be called before calling this method so that
+	 * _xscale and _yscale are properly set. This method should be called only
+	 * from the event dispatch thread. It is not synchronized, so its caller
+	 * should be.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1026,9 +1109,11 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Draw an error bar for the specified yLowEB and yHighEB values. If the specified point is below the y axis or
-	 * outside the x range, do nothing. If the <i>clip</i> argument is true, then do not draw above the y range. This
-	 * method should be called only from the event dispatch thread. It is not synchronized, so its caller should be.
+	 * Draw an error bar for the specified yLowEB and yHighEB values. If the
+	 * specified point is below the y axis or outside the x range, do nothing.
+	 * If the <i>clip</i> argument is true, then do not draw above the y range.
+	 * This method should be called only from the event dispatch thread. It is
+	 * not synchronized, so its caller should be.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1053,9 +1138,11 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Draw a line from the specified point to the y axis. If the specified point is below the y axis or outside the x
-	 * range, do nothing. If the <i>clip</i> argument is true, then do not draw above the y range. This method should be
-	 * called only from the event dispatch thread. It is not synchronized, so its caller should be.
+	 * Draw a line from the specified point to the y axis. If the specified
+	 * point is below the y axis or outside the x range, do nothing. If the
+	 * <i>clip</i> argument is true, then do not draw above the y range. This
+	 * method should be called only from the event dispatch thread. It is not
+	 * synchronized, so its caller should be.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1095,10 +1182,12 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Draw a line from the specified starting point to the specified ending point. The current color is used. If the
-	 * <i>clip</i> argument is true, then draw only that portion of the line that lies within the plotting rectangle.
-	 * This method draws a line one pixel wide. This method should be called only from the event dispatch thread. It is
-	 * not synchronized, so its caller should be.
+	 * Draw a line from the specified starting point to the specified ending
+	 * point. The current color is used. If the <i>clip</i> argument is true,
+	 * then draw only that portion of the line that lies within the plotting
+	 * rectangle. This method draws a line one pixel wide. This method should be
+	 * called only from the event dispatch thread. It is not synchronized, so
+	 * its caller should be.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1121,10 +1210,12 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Draw a line from the specified starting point to the specified ending point. The current color is used. If the
-	 * <i>clip</i> argument is true, then draw only that portion of the line that lies within the plotting rectangle.
-	 * The width argument is ignored if the graphics argument is not an instance of Graphics2D. This method should be
-	 * called only from the event dispatch thread. It is not synchronized, so its caller should be.
+	 * Draw a line from the specified starting point to the specified ending
+	 * point. The current color is used. If the <i>clip</i> argument is true,
+	 * then draw only that portion of the line that lies within the plotting
+	 * rectangle. The width argument is ignored if the graphics argument is not
+	 * an instance of Graphics2D. This method should be called only from the
+	 * event dispatch thread. It is not synchronized, so its caller should be.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1211,12 +1302,14 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Draw the axes and then plot all points. If the second argument is true, clear the display first. This method is
-	 * called by paintComponent(). To cause it to be called you would normally call repaint(), which eventually causes
-	 * paintComponent() to be called.
+	 * Draw the axes and then plot all points. If the second argument is true,
+	 * clear the display first. This method is called by paintComponent(). To
+	 * cause it to be called you would normally call repaint(), which eventually
+	 * causes paintComponent() to be called.
 	 * <p>
-	 * Note that this is synchronized so that points are not added by other threads while the drawing is occurring. This
-	 * method should be called only from the event dispatch thread, consistent with swing policy.
+	 * Note that this is synchronized so that points are not added by other
+	 * threads while the drawing is occurring. This method should be called only
+	 * from the event dispatch thread, consistent with swing policy.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1266,10 +1359,12 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Put a mark corresponding to the specified dataset at the specified x and y position. The mark is drawn in the
-	 * current color. What kind of mark is drawn depends on the _marks variable and the dataset argument. If the fourth
-	 * argument is true, then check the range and plot only points that are in range. This method should be called only
-	 * from the event dispatch thread. It is not synchronized, so its caller should be.
+	 * Put a mark corresponding to the specified dataset at the specified x and
+	 * y position. The mark is drawn in the current color. What kind of mark is
+	 * drawn depends on the _marks variable and the dataset argument. If the
+	 * fourth argument is true, then check the range and plot only points that
+	 * are in range. This method should be called only from the event dispatch
+	 * thread. It is not synchronized, so its caller should be.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1466,8 +1561,9 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Parse a line that gives plotting information. Return true if the line is recognized. Lines with syntax errors are
-	 * ignored. It is not synchronized, so its caller should be.
+	 * Parse a line that gives plotting information. Return true if the line is
+	 * recognized. Lines with syntax errors are ignored. It is not synchronized,
+	 * so its caller should be.
 	 * 
 	 * @param line
 	 *            A command line.
@@ -1737,8 +1833,8 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * If the graphics argument is an instance of Graphics2D, then set the current stroke to the specified width.
-	 * Otherwise, do nothing.
+	 * If the graphics argument is an instance of Graphics2D, then set the
+	 * current stroke to the specified width. Otherwise, do nothing.
 	 * 
 	 * @param graphics
 	 *            The graphics object.
@@ -1761,9 +1857,11 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Write plot information to the specified output stream in the "old syntax," which predates PlotML. Derived classes
-	 * should override this method to first call the parent class method, then add whatever additional information they
-	 * wish to add to the stream. It is not synchronized, so its caller should be.
+	 * Write plot information to the specified output stream in the
+	 * "old syntax," which predates PlotML. Derived classes should override this
+	 * method to first call the parent class method, then add whatever
+	 * additional information they wish to add to the stream. It is not
+	 * synchronized, so its caller should be.
 	 * 
 	 * @param output
 	 *            A buffered print writer.
@@ -1884,7 +1982,8 @@ public class Plot extends PlotBox {
 	protected Vector<Vector<PlotPoint>> _points = new Vector<Vector<PlotPoint>>();
 
 	/**
-	 * @serial An indicator of the marks style. See _parseLine method for interpretation.
+	 * @serial An indicator of the marks style. See _parseLine method for
+	 *         interpretation.
 	 */
 	protected int _marks;
 
@@ -1920,16 +2019,21 @@ public class Plot extends PlotBox {
 	}
 
 	/*
-	 * In the specified data set, add the specified x, y point to the plot. Data set indices begin with zero. If the
-	 * dataset argument is less than zero, throw an IllegalArgumentException (a runtime exception). If it refers to a
-	 * data set that does not exist, create the data set. The fourth argument indicates whether the point should be
-	 * connected by a line to the previous point. However, this argument is ignored if setConnected() has been called
-	 * with a false argument. In that case, a point is never connected to the previous point. That argument is also
-	 * ignored if the point is the first in the specified dataset. The point is drawn on the screen only if is visible.
-	 * Otherwise, it is drawn the next time paintComponent() is called.
+	 * In the specified data set, add the specified x, y point to the plot. Data
+	 * set indices begin with zero. If the dataset argument is less than zero,
+	 * throw an IllegalArgumentException (a runtime exception). If it refers to
+	 * a data set that does not exist, create the data set. The fourth argument
+	 * indicates whether the point should be connected by a line to the previous
+	 * point. However, this argument is ignored if setConnected() has been
+	 * called with a false argument. In that case, a point is never connected to
+	 * the previous point. That argument is also ignored if the point is the
+	 * first in the specified dataset. The point is drawn on the screen only if
+	 * is visible. Otherwise, it is drawn the next time paintComponent() is
+	 * called.
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called via deferIfNecessary().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called via
+	 * deferIfNecessary().
 	 */
 	private void _addPoint(int dataset, double x, double y, double yLowEB, double yHighEB, boolean connected,
 			boolean errorBar) {
@@ -2095,12 +2199,14 @@ public class Plot extends PlotBox {
 	}
 
 	/*
-	 * Clear the plot of all data points. If the argument is true, then reset all parameters to their initial
-	 * conditions, including the persistence, plotting format, and axes formats. For the change to take effect, you must
-	 * call repaint().
+	 * Clear the plot of all data points. If the argument is true, then reset
+	 * all parameters to their initial conditions, including the persistence,
+	 * plotting format, and axes formats. For the change to take effect, you
+	 * must call repaint().
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called via deferIfNecessary().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called via
+	 * deferIfNecessary().
 	 */
 	private void _clear(boolean format) {
 		// Ensure replot of offscreen buffer.
@@ -2133,10 +2239,12 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Clear the plot of data points in the specified dataset. This calls repaint() to request an update of the display.
+	 * Clear the plot of data points in the specified dataset. This calls
+	 * repaint() to request an update of the display.
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called via deferIfNecessary().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called via
+	 * deferIfNecessary().
 	 */
 	private void _clear(int dataset) {
 		// Ensure replot of offscreen buffer.
@@ -2157,12 +2265,14 @@ public class Plot extends PlotBox {
 	}
 
 	/*
-	 * Draw the specified point and associated lines, if any. Note that paintComponent() should be called before calling
-	 * this method so that it calls _drawPlot(), which sets _xscale and _yscale. Note that this does not check the
-	 * dataset index. It is up to the caller to do that.
+	 * Draw the specified point and associated lines, if any. Note that
+	 * paintComponent() should be called before calling this method so that it
+	 * calls _drawPlot(), which sets _xscale and _yscale. Note that this does
+	 * not check the dataset index. It is up to the caller to do that.
 	 * 
-	 * Note that this method is not synchronized, so the caller should be. Moreover this method should always be called
-	 * from the event thread when being used to write to the screen.
+	 * Note that this method is not synchronized, so the caller should be.
+	 * Moreover this method should always be called from the event thread when
+	 * being used to write to the screen.
 	 */
 	private void _drawPlotPoint(Graphics graphics, int dataset, int index) {
 		if ((_pointsPersistence > 0) || (_xPersistence > 0.0)) {
@@ -2255,11 +2365,13 @@ public class Plot extends PlotBox {
 	}
 
 	/*
-	 * Erase the point at the given index in the given dataset. If lines are being drawn, also erase the line to the
-	 * next points (note: not to the previous point).
+	 * Erase the point at the given index in the given dataset. If lines are
+	 * being drawn, also erase the line to the next points (note: not to the
+	 * previous point).
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called via deferIfNecessary().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called via
+	 * deferIfNecessary().
 	 */
 	private void _erasePoint(int dataset, int index) {
 		// Ensure replot of offscreen buffer.
@@ -2372,12 +2484,14 @@ public class Plot extends PlotBox {
 	}
 
 	/*
-	 * Rescale so that the data that is currently plotted just fits. This overrides the base class method to ensure that
-	 * the protected variables _xBottom, _xTop, _yBottom, and _yTop are valid. This method calls repaint(), which causes
-	 * the display to be updated.
+	 * Rescale so that the data that is currently plotted just fits. This
+	 * overrides the base class method to ensure that the protected variables
+	 * _xBottom, _xTop, _yBottom, and _yTop are valid. This method calls
+	 * repaint(), which causes the display to be updated.
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called via deferIfNecessary().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called via
+	 * deferIfNecessary().
 	 */
 	private void _fillPlot() {
 		if (_xyInvalid) {
@@ -2523,7 +2637,8 @@ public class Plot extends PlotBox {
 	private Vector<Format> _formats = new Vector<Format>();
 
 	/**
-	 * Initial value for elements in _prevx and _prevy that indicate we have not yet seen data.
+	 * Initial value for elements in _prevx and _prevy that indicate we have not
+	 * yet seen data.
 	 */
 	private static final Long _initialPreviousValue = Long.MIN_VALUE;
 

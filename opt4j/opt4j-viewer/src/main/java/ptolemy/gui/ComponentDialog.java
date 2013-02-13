@@ -1,19 +1,23 @@
 /*
  * A top-level dialog window containing an arbitrary component.
  * 
- * Copyright (c) 1998-2005 The Regents of the University of California. All rights reserved. Permission is hereby
- * granted, without written agreement and without license or royalty fees, to use, copy, modify, and distribute this
- * software and its documentation for any purpose, provided that the above copyright notice and the following two
- * paragraphs appear in all copies of this software.
+ * Copyright (c) 1998-2005 The Regents of the University of California. All
+ * rights reserved. Permission is hereby granted, without written agreement and
+ * without license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the above
+ * copyright notice and the following two paragraphs appear in all copies of
+ * this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -40,16 +44,19 @@ import javax.swing.JTextArea;
 // // ComponentDialog
 
 /**
- * This class is a modal dialog box that contains an arbitrary component. It can be used, for example, to put an
- * instance of Query in a top-level dialog box. The general way to use this class is to create the component that you
- * wish to have contained in the dialog. Then pass that component to the constructor of this class. The dialog is modal,
- * so the statement that creates the dialog will not return until the user dismisses the dialog. The method
- * buttonPressed() can then be called to find out whether the user clicked the OK button or the Cancel button (or any
- * other button specified in the constructor). Then you can access the component to determine what values were set by
- * the user.
+ * This class is a modal dialog box that contains an arbitrary component. It can
+ * be used, for example, to put an instance of Query in a top-level dialog box.
+ * The general way to use this class is to create the component that you wish to
+ * have contained in the dialog. Then pass that component to the constructor of
+ * this class. The dialog is modal, so the statement that creates the dialog
+ * will not return until the user dismisses the dialog. The method
+ * buttonPressed() can then be called to find out whether the user clicked the
+ * OK button or the Cancel button (or any other button specified in the
+ * constructor). Then you can access the component to determine what values were
+ * set by the user.
  * <p>
- * If the component that is added implements the CloseListener interface, then that component is notified when this
- * dialog closes.
+ * If the component that is added implements the CloseListener interface, then
+ * that component is notified when this dialog closes.
  * 
  * @see CloseListener
  * @author Edward A. Lee
@@ -62,11 +69,13 @@ public class ComponentDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Construct a dialog with the specified owner, title, and component. An "OK" and a "Cancel" button are added to the
-	 * dialog. The dialog is placed relative to the owner.
+	 * Construct a dialog with the specified owner, title, and component. An
+	 * "OK" and a "Cancel" button are added to the dialog. The dialog is placed
+	 * relative to the owner.
 	 * 
 	 * @param owner
-	 *            The object that, per the user, appears to be generating the dialog.
+	 *            The object that, per the user, appears to be generating the
+	 *            dialog.
 	 * @param title
 	 *            The title of the dialog.
 	 * @param component
@@ -77,12 +86,15 @@ public class ComponentDialog extends JDialog {
 	}
 
 	/**
-	 * Construct a dialog with the specified owner, title, component, and buttons. The first button is the "default" in
-	 * that it is the one activated by "Enter" or "Return" keys. If the last argument is null, then an "OK" and a
-	 * "Cancel" button will be created. The dialog is placed relative to the owner.
+	 * Construct a dialog with the specified owner, title, component, and
+	 * buttons. The first button is the "default" in that it is the one
+	 * activated by "Enter" or "Return" keys. If the last argument is null, then
+	 * an "OK" and a "Cancel" button will be created. The dialog is placed
+	 * relative to the owner.
 	 * 
 	 * @param owner
-	 *            The object that, per the user, appears to be generating the dialog.
+	 *            The object that, per the user, appears to be generating the
+	 *            dialog.
 	 * @param title
 	 *            The title of the dialog.
 	 * @param component
@@ -95,13 +107,15 @@ public class ComponentDialog extends JDialog {
 	}
 
 	/**
-	 * Construct a dialog with the specified owner, title, component, buttons, and message. The message is placed above
-	 * the component. The first button is the "default" in that it is the one activated by "Enter" or "Return" keys. If
-	 * the <i>buttons</i> argument is null, then an "OK" and a "Cancel" button will be created. The dialog is placed
-	 * relative to the owner.
+	 * Construct a dialog with the specified owner, title, component, buttons,
+	 * and message. The message is placed above the component. The first button
+	 * is the "default" in that it is the one activated by "Enter" or "Return"
+	 * keys. If the <i>buttons</i> argument is null, then an "OK" and a "Cancel"
+	 * button will be created. The dialog is placed relative to the owner.
 	 * 
 	 * @param owner
-	 *            The object that, per the user, appears to be generating the dialog.
+	 *            The object that, per the user, appears to be generating the
+	 *            dialog.
 	 * @param title
 	 *            The title of the dialog.
 	 * @param component
@@ -109,7 +123,8 @@ public class ComponentDialog extends JDialog {
 	 * @param buttons
 	 *            An array of labels for buttons at the bottom of the dialog.
 	 * @param message
-	 *            A message to place above the component, or null if no message is needed.
+	 *            A message to place above the component, or null if no message
+	 *            is needed.
 	 */
 	public ComponentDialog(Frame owner, String title, Component component, String[] buttons, String message) {
 		super(owner, title, true);
@@ -230,7 +245,8 @@ public class ComponentDialog extends JDialog {
 	// // public methods ////
 
 	/**
-	 * Return the label of the button that triggered closing the dialog, or an empty string if none.
+	 * Return the label of the button that triggered closing the dialog, or an
+	 * empty string if none.
 	 * 
 	 * @return The label of the button pressed.
 	 */
@@ -239,8 +255,9 @@ public class ComponentDialog extends JDialog {
 	}
 
 	/**
-	 * Change the message that was specified in the constructor to read as specified. If no message was specified in the
-	 * constructor, then do nothing.
+	 * Change the message that was specified in the constructor to read as
+	 * specified. If no message was specified in the constructor, then do
+	 * nothing.
 	 * 
 	 * @param message
 	 *            The new message.
@@ -255,8 +272,9 @@ public class ComponentDialog extends JDialog {
 	// // protected methods ////
 
 	/**
-	 * If the contents of this dialog implements the CloseListener interface, then notify it that the window has closed,
-	 * unless notification has already been done (it is guaranteed to be done only once).
+	 * If the contents of this dialog implements the CloseListener interface,
+	 * then notify it that the window has closed, unless notification has
+	 * already been done (it is guaranteed to be done only once).
 	 */
 	protected void _handleClosing() {
 		if ((contents instanceof CloseListener) && !_doneHandleClosing) {

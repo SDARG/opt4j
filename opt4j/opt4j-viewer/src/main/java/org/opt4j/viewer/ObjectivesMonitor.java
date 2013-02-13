@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.viewer;
 
@@ -29,8 +32,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The {@link ObjectivesMonitor} informs its listeners about the {@link Objective}s of the optimization problem as soon
- * as it is available.
+ * The {@link ObjectivesMonitor} informs its listeners about the
+ * {@link Objective}s of the optimization problem as soon as it is available.
  * 
  * @author lukasiewycz
  * 
@@ -45,7 +48,8 @@ public class ObjectivesMonitor implements IndividualStateListener {
 	protected Set<ObjectivesListener> listeners = new CopyOnWriteArraySet<ObjectivesListener>();
 
 	/**
-	 * The {@link ObjectivesListener} is an interface for classes that need the objectives.
+	 * The {@link ObjectivesListener} is an interface for classes that need the
+	 * objectives.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -53,7 +57,8 @@ public class ObjectivesMonitor implements IndividualStateListener {
 	public interface ObjectivesListener {
 
 		/**
-		 * Callback method that passes the objectives of the optimization problem.
+		 * Callback method that passes the objectives of the optimization
+		 * problem.
 		 * 
 		 * @param objectives
 		 *            the objectives
@@ -108,7 +113,9 @@ public class ObjectivesMonitor implements IndividualStateListener {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.IndividualStateListener#inidividualStateChanged(org.opt4j .core.Individual)
+	 * @see
+	 * org.opt4j.core.IndividualStateListener#inidividualStateChanged(org.opt4j
+	 * .core.Individual)
 	 */
 	@Override
 	public void inidividualStateChanged(Individual individual) {

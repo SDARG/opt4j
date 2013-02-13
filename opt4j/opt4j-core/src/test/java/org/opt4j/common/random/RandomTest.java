@@ -3,9 +3,9 @@ package org.opt4j.common.random;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.opt4j.common.random.Rand;
-import org.opt4j.common.random.RandomJava;
-import org.opt4j.common.random.RandomMersenneTwister;
+import org.opt4j.core.common.random.Rand;
+import org.opt4j.core.common.random.RandomJava;
+import org.opt4j.core.common.random.RandomMersenneTwister;
 
 public class RandomTest {
 

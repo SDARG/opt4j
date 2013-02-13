@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.viewer;
@@ -33,8 +33,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.visualization.DelayTask;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Individual.State;
 import org.opt4j.core.IndividualFactory;
@@ -43,6 +41,8 @@ import org.opt4j.core.IndividualSetListener;
 import org.opt4j.core.IndividualStateListener;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
+import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.visualization.DelayTask;
 import org.opt4j.core.optimizer.Archive;
 import org.opt4j.core.optimizer.Population;
 import org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener;

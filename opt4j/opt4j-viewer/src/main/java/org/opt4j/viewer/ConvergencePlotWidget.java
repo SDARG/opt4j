@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.viewer;
 
@@ -32,9 +35,9 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.visualization.DelayTask;
 import org.opt4j.core.Objective;
+import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.visualization.DelayTask;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener;
@@ -44,7 +47,8 @@ import ptolemy.plot.Plot;
 import com.google.inject.Inject;
 
 /**
- * The {@link ConvergencePlotWidget} plots the convergence for each {@link Objective}.
+ * The {@link ConvergencePlotWidget} plots the convergence for each
+ * {@link Objective}.
  * 
  * @author lukasiewycz
  * 
@@ -69,7 +73,8 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	 * @param data
 	 *            the data
 	 * @param objectivesMonitor
-	 *            the objective monitor that determine the objective of the optimization problem
+	 *            the objective monitor that determine the objective of the
+	 *            optimization problem
 	 */
 	@Inject
 	public ConvergencePlotWidget(Optimizer optimizer, ConvergencePlotData data, ObjectivesMonitor objectivesMonitor,
@@ -204,8 +209,9 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete (org.opt4j.core.optimizer.Optimizer,
-	 * int)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete
+	 * (org.opt4j.core.optimizer.Optimizer, int)
 	 */
 	@Override
 	public void iterationComplete(final int iteration) {
@@ -225,7 +231,8 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	}
 
 	/**
-	 * Repaints the plot. Do not call this method directly, call {@link #doPaint()} instead.
+	 * Repaints the plot. Do not call this method directly, call
+	 * {@link #doPaint()} instead.
 	 */
 	protected void paint() {
 		final Objective objective = selection.getSelected();
@@ -277,7 +284,9 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener#objectives(java .util.Collection)
+	 * @see
+	 * org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener#objectives(java
+	 * .util.Collection)
 	 */
 	@Override
 	public void objectives(Collection<Objective> objectives) {

@@ -1,19 +1,23 @@
 /*
  * Top-level window containing a plotter.
  * 
- * Copyright (c) 1998-2005 The Regents of the University of California. All rights reserved. Permission is hereby
- * granted, without written agreement and without license or royalty fees, to use, copy, modify, and distribute this
- * software and its documentation for any purpose, provided that the above copyright notice and the following two
- * paragraphs appear in all copies of this software.
+ * Copyright (c) 1998-2005 The Regents of the University of California. All
+ * rights reserved. Permission is hereby granted, without written agreement and
+ * without license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the above
+ * copyright notice and the following two paragraphs appear in all copies of
+ * this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -56,13 +60,16 @@ import ptolemy.util.StringUtilities;
 // // PlotFrame
 
 /**
- * PlotFrame is a versatile two-dimensional data plotter that runs as part of an application, but in its own window. It
- * can read files compatible with the old Ptolemy plot file format (currently only ASCII). It is extended with the
- * capability to read PlotML files in PlotMLFrame. An application can also interact directly with the contained Plot
- * object, which is visible as a public member, by invoking its methods.
+ * PlotFrame is a versatile two-dimensional data plotter that runs as part of an
+ * application, but in its own window. It can read files compatible with the old
+ * Ptolemy plot file format (currently only ASCII). It is extended with the
+ * capability to read PlotML files in PlotMLFrame. An application can also
+ * interact directly with the contained Plot object, which is visible as a
+ * public member, by invoking its methods.
  * <p>
- * An application that uses this class should set up the handling of window-closing events. Presumably, the application
- * will exit when all windows have been closed. This is done with code something like:
+ * An application that uses this class should set up the handling of
+ * window-closing events. Presumably, the application will exit when all windows
+ * have been closed. This is done with code something like:
  * 
  * <pre>
  * plotFrameInstance.addWindowListener(new WindowAdapter() {
@@ -72,9 +79,10 @@ import ptolemy.util.StringUtilities;
  * });
  * </pre>
  * <p>
- * PlotFrame contains an instance of PlotBox. PlotBox is the base class for classes with drawing capability, e.g. Plot,
- * LogicAnalyzer. If not specified in the constructor, the default is to contain a Plot object. This field is set once
- * in the constructor and immutable afterwards.
+ * PlotFrame contains an instance of PlotBox. PlotBox is the base class for
+ * classes with drawing capability, e.g. Plot, LogicAnalyzer. If not specified
+ * in the constructor, the default is to contain a Plot object. This field is
+ * set once in the constructor and immutable afterwards.
  * 
  * @see Plot
  * @see PlotBox
@@ -88,16 +96,18 @@ public class PlotFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Construct a plot frame with a default title and by default contains an instance of Plot. After constructing this,
-	 * it is necessary to call setVisible(true) to make the plot appear.
+	 * Construct a plot frame with a default title and by default contains an
+	 * instance of Plot. After constructing this, it is necessary to call
+	 * setVisible(true) to make the plot appear.
 	 */
 	public PlotFrame() {
 		this("Ptolemy Plot Frame");
 	}
 
 	/**
-	 * Construct a plot frame with the specified title and by default contains an instance of Plot. After constructing
-	 * this, it is necessary to call setVisible(true) to make the plot appear.
+	 * Construct a plot frame with the specified title and by default contains
+	 * an instance of Plot. After constructing this, it is necessary to call
+	 * setVisible(true) to make the plot appear.
 	 * 
 	 * @param title
 	 *            The title to put on the window.
@@ -107,13 +117,15 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Construct a plot frame with the specified title and the specified instance of PlotBox. After constructing this,
-	 * it is necessary to call setVisible(true) to make the plot appear.
+	 * Construct a plot frame with the specified title and the specified
+	 * instance of PlotBox. After constructing this, it is necessary to call
+	 * setVisible(true) to make the plot appear.
 	 * 
 	 * @param title
 	 *            The title to put on the window.
 	 * @param plotArg
-	 *            the plot object to put in the frame, or null to create an instance of Plot.
+	 *            the plot object to put in the frame, or null to create an
+	 *            instance of Plot.
 	 */
 	public PlotFrame(String title, PlotBox plotArg) {
 		super(title);
@@ -217,10 +229,12 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Set the visibility. As a side effect, this method sets the background of the menus.
+	 * Set the visibility. As a side effect, this method sets the background of
+	 * the menus.
 	 * 
 	 * @param visible
-	 *            True if the Frame is to be visible, false if it is not visible.
+	 *            True if the Frame is to be visible, false if it is not
+	 *            visible.
 	 */
 	@Override
 	public void setVisible(boolean visible) {
@@ -286,7 +300,8 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Query the user for a filename and export the plot to that file. Currently, the only supported format is EPS.
+	 * Query the user for a filename and export the plot to that file.
+	 * Currently, the only supported format is EPS.
 	 */
 	protected void _export() {
 		JFileChooser fileDialog = new JFileChooser();
@@ -397,8 +412,9 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Print using the cross platform dialog. FIXME: this dialog is slow and is often hidden behind other windows.
-	 * However, it does honor the user's choice of portrait vs. landscape
+	 * Print using the cross platform dialog. FIXME: this dialog is slow and is
+	 * often hidden behind other windows. However, it does honor the user's
+	 * choice of portrait vs. landscape
 	 */
 	protected void _printCrossPlatform() {
 		// Build a set of attributes
@@ -417,8 +433,8 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Print using the native dialog. FIXME: This method does not seem to honor the user's choice of portrait vs.
-	 * landscape.
+	 * Print using the native dialog. FIXME: This method does not seem to honor
+	 * the user's choice of portrait vs. landscape.
 	 */
 	protected void _printNative() {
 		PrinterJob job = PrinterJob.getPrinterJob();
@@ -440,10 +456,12 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Read the specified stream. Derived classes may override this to support other file formats.
+	 * Read the specified stream. Derived classes may override this to support
+	 * other file formats.
 	 * 
 	 * @param base
-	 *            The base for relative file references, or null if there are not relative file references.
+	 *            The base for relative file references, or null if there are
+	 *            not relative file references.
 	 * @param in
 	 *            The input stream.
 	 * @exception IOException
@@ -454,7 +472,8 @@ public class PlotFrame extends JFrame {
 	}
 
 	/**
-	 * Save the plot to the current file, determined by the and _file protected variable.
+	 * Save the plot to the current file, determined by the and _file protected
+	 * variable.
 	 */
 	protected void _save() {
 		if (_file != null) {
@@ -605,8 +624,8 @@ public class PlotFrame extends JFrame {
 		/**
 		 * Accept only .eps files.
 		 * 
-		 * @param file
-		 *            The file to be checked.
+		 * @param fileOrDirectory
+		 *            The file or directory to be checked.
 		 * @return true if the file is a directory, a .eps file
 		 */
 		@Override
@@ -647,8 +666,8 @@ public class PlotFrame extends JFrame {
 		/**
 		 * Accept only .plt or .xml files.
 		 * 
-		 * @param file
-		 *            The file to be checked.
+		 * @param fileOrDirectory
+		 *            The file or directory to be checked.
 		 * @return true if the file is a directory, a .plot or a .xml file.
 		 */
 		@Override

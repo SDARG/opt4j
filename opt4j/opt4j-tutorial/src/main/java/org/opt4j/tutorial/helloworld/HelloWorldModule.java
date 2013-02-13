@@ -1,6 +1,6 @@
 package org.opt4j.tutorial.helloworld;
 
-import org.opt4j.config.annotations.Parent;
+import org.opt4j.core.config.annotations.Parent;
 import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.tutorial.TutorialModule;
 

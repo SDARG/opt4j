@@ -1,19 +1,23 @@
 /*
  * A standalone plot application.
  * 
- * Copyright (c) 1998-2008 The Regents of the University of California. All rights reserved. Permission is hereby
- * granted, without written agreement and without license or royalty fees, to use, copy, modify, and distribute this
- * software and its documentation for any purpose, provided that the above copyright notice and the following two
- * paragraphs appear in all copies of this software.
+ * Copyright (c) 1998-2008 The Regents of the University of California. All
+ * rights reserved. Permission is hereby granted, without written agreement and
+ * without license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the above
+ * copyright notice and the following two paragraphs appear in all copies of
+ * this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -38,40 +42,46 @@ import ptolemy.util.StringUtilities;
 // // PlotApplication
 
 /**
- * PlotApplication is a versatile two-dimensional data plotter application. It can read files compatible with the
- * Ptolemy plot file format (currently only ASCII). For a description of the file format, see the Plot and PlotBox
+ * PlotApplication is a versatile two-dimensional data plotter application. It
+ * can read files compatible with the Ptolemy plot file format (currently only
+ * ASCII). For a description of the file format, see the Plot and PlotBox
  * classes. Command-line options include:
  * <dl>
  * 
  * <dt><code>-help</code></a>
- * <dt>Print the usage, including all command-line options that exist for backward compatibility and then exit. The help
- * menu choice will display the same information.
+ * <dt>Print the usage, including all command-line options that exist for
+ * backward compatibility and then exit. The help menu choice will display the
+ * same information.
  * <dt><code>-test</code></a>
  * <dt>Display the plot, then exit after 2 seconds.
  * 
  * <dt><code>-version</code></a>
- * <dt>Print the program version and then exit. While ptplot is running, the version menu choice will display the same
- * information.
+ * <dt>Print the program version and then exit. While ptplot is running, the
+ * version menu choice will display the same information.
  * <dt><code>-</code></a>
  * <dt>Read the plot data from standard in.
  * </dl>
  * 
  * <p>
- * For compatibility with historical applications, this application has a limited ability to read pxgraph files. The
- * command line arguments must be used, and the options that are understood are exactly those of the pxgraph
- * application, plus some more to allow for cross-platform reading. It is not possible to read pxgraph files using the
- * "Open" menu command (because of the cross-platform problems). The additional command-line arguments are:
+ * For compatibility with historical applications, this application has a
+ * limited ability to read pxgraph files. The command line arguments must be
+ * used, and the options that are understood are exactly those of the pxgraph
+ * application, plus some more to allow for cross-platform reading. It is not
+ * possible to read pxgraph files using the "Open" menu command (because of the
+ * cross-platform problems). The additional command-line arguments are:
  * <dl>
  * 
  * <dt><code>-bigendian</code></a>
- * <dt>Data files are in big-endian, or network binary format. If you are on a little-endian machine, such as a machine
- * with an Intel x86 chip, and you would like to read a binary format file created on a big-endian machine, such as a
- * Sun SPARC, use the <code>-bigendian</code> flag.
+ * <dt>Data files are in big-endian, or network binary format. If you are on a
+ * little-endian machine, such as a machine with an Intel x86 chip, and you
+ * would like to read a binary format file created on a big-endian machine, such
+ * as a Sun SPARC, use the <code>-bigendian</code> flag.
  * 
  * <dt><code>-littleendian</code></a>
- * <dt>Data files are in little-endian, or x86 binary format. If you are on a big-endian machine, such as a Sun Sparc,
- * and you would like to read a binary format file created on a little-endian machine, such as Intel x86 machine, then
- * use the <code>-littleendian</code> flag.
+ * <dt>Data files are in little-endian, or x86 binary format. If you are on a
+ * big-endian machine, such as a Sun Sparc, and you would like to read a binary
+ * format file created on a little-endian machine, such as Intel x86 machine,
+ * then use the <code>-littleendian</code> flag.
  * </dl>
  * <p>
  * To compile and run this application, do the following:
@@ -81,7 +91,8 @@ import ptolemy.util.StringUtilities;
  *  java -classpath ../.. ptolemy.plot.PlotApplication
  * </pre>
  * <p>
- * This assumes a particular directory structure. If this is not what you have, then alter the above accordingly.
+ * This assumes a particular directory structure. If this is not what you have,
+ * then alter the above accordingly.
  * 
  * @see Plot
  * @see PlotBox
@@ -95,7 +106,8 @@ public class PlotApplication extends PlotFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Construct a plot with no command-line arguments. It initially displays a sample plot.
+	 * Construct a plot with no command-line arguments. It initially displays a
+	 * sample plot.
 	 * 
 	 * @exception Exception
 	 *                Not thrown in this base class.
@@ -117,8 +129,9 @@ public class PlotApplication extends PlotFrame {
 	}
 
 	/**
-	 * Construct a plot with the specified command-line arguments and instance of plot. If there are no command-line
-	 * arguments, then display a sample plot.
+	 * Construct a plot with the specified command-line arguments and instance
+	 * of plot. If there are no command-line arguments, then display a sample
+	 * plot.
 	 * 
 	 * @param plot
 	 *            The instance of Plot to use.
@@ -154,8 +167,9 @@ public class PlotApplication extends PlotFrame {
 	}
 
 	/**
-	 * Display the given plot. Unlike the two argument constructor, this does not take command-line arguments, and does
-	 * not fill the plot with a sample plot.
+	 * Display the given plot. Unlike the two argument constructor, this does
+	 * not take command-line arguments, and does not fill the plot with a sample
+	 * plot.
 	 * 
 	 * @param plot
 	 *            The instance of Plot to display.
@@ -249,7 +263,8 @@ public class PlotApplication extends PlotFrame {
 	}
 
 	/**
-	 * Parse the command-line arguments and make calls to the Plot class accordingly.
+	 * Parse the command-line arguments and make calls to the Plot class
+	 * accordingly.
 	 * 
 	 * @return The number of arguments read.
 	 * @exception CmdLineArgException

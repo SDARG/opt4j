@@ -1,19 +1,23 @@
 /*
  * Graphics class supporting EPS export from plots.
  * 
- * Copyright (c) 1998-2006 The Regents of the University of California. All rights reserved. Permission is hereby
- * granted, without written agreement and without license or royalty fees, to use, copy, modify, and distribute this
- * software and its documentation for any purpose, provided that the above copyright notice and the following two
- * paragraphs appear in all copies of this software.
+ * Copyright (c) 1998-2006 The Regents of the University of California. All
+ * rights reserved. Permission is hereby granted, without written agreement and
+ * without license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the above
+ * copyright notice and the following two paragraphs appear in all copies of
+ * this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -43,11 +47,13 @@ import ptolemy.util.StringUtilities;
 // // EPSGraphics
 
 /**
- * Graphics class supporting EPS export from plots. If this is used from within an applet, then the output goes to the
- * standard output. Unfortunately, with standard browsers, this is not useful. With MS Internet Explorer, standard
- * output is not available. With Netscape Navigator, standard output is available in the Java console, but is limited to
- * fewer lines than what is usually generated. Thus, we recommend using this within Sun's appletviewer, and redirecting
- * its standard output to a file.
+ * Graphics class supporting EPS export from plots. If this is used from within
+ * an applet, then the output goes to the standard output. Unfortunately, with
+ * standard browsers, this is not useful. With MS Internet Explorer, standard
+ * output is not available. With Netscape Navigator, standard output is
+ * available in the Java console, but is limited to fewer lines than what is
+ * usually generated. Thus, we recommend using this within Sun's appletviewer,
+ * and redirecting its standard output to a file.
  * 
  * @author Edward A. Lee
  * @version $Id: EPSGraphics.java,v 1.41 2006/03/30 16:36:39 cxh Exp $
@@ -57,9 +63,10 @@ import ptolemy.util.StringUtilities;
  */
 public class EPSGraphics extends Graphics {
 	/**
-	 * Constructor for a graphics object that writes encapsulated PostScript to the specified output stream. If the out
-	 * argument is null, then it writes to standard output (it would write it to the clipboard, but as of this writing,
-	 * writing to the clipboard does not work in Java).
+	 * Constructor for a graphics object that writes encapsulated PostScript to
+	 * the specified output stream. If the out argument is null, then it writes
+	 * to standard output (it would write it to the clipboard, but as of this
+	 * writing, writing to the clipboard does not work in Java).
 	 * 
 	 * @param out
 	 *            The stream to write to, or null to write to standard out.
@@ -140,8 +147,8 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Draw a line, using the current color, between the points (x1, y1) and (x2, y2) in this graphics context's
-	 * coordinate system.
+	 * Draw a line, using the current color, between the points (x1, y1) and
+	 * (x2, y2) in this graphics context's coordinate system.
 	 * 
 	 * @param x1
 	 *            the x coordinate of the first point.
@@ -166,9 +173,11 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Draw a closed polygon defined by arrays of x and y coordinates. Each pair of (x, y) coordinates defines a vertex.
-	 * The third argument gives the number of vertices. If the arrays are not long enough to define this many vertices,
-	 * or if the third argument is less than three, then nothing is drawn.
+	 * Draw a closed polygon defined by arrays of x and y coordinates. Each pair
+	 * of (x, y) coordinates defines a vertex. The third argument gives the
+	 * number of vertices. If the arrays are not long enough to define this many
+	 * vertices, or if the third argument is less than three, then nothing is
+	 * drawn.
 	 * 
 	 * @param xPoints
 	 *            An array of x coordinates.
@@ -232,7 +241,8 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Draw a string. "(" is converted to "\(" and ")" is converted to "\) so as to avoid EPS Syntax errors.
+	 * Draw a string. "(" is converted to "\(" and ")" is converted to "\) so as
+	 * to avoid EPS Syntax errors.
 	 * 
 	 * @param str
 	 *            The string to draw.
@@ -262,9 +272,11 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Draw a filled polygon defined by arrays of x and y coordinates. Each pair of (x, y) coordinates defines a vertex.
-	 * The third argument gives the number of vertices. If the arrays are not long enough to define this many vertices,
-	 * or if the third argument is less than three, then nothing is drawn.
+	 * Draw a filled polygon defined by arrays of x and y coordinates. Each pair
+	 * of (x, y) coordinates defines a vertex. The third argument gives the
+	 * number of vertices. If the arrays are not long enough to define this many
+	 * vertices, or if the third argument is less than three, then nothing is
+	 * drawn.
 	 * 
 	 * @param xPoints
 	 *            An array of x coordinates.
@@ -305,10 +317,11 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Fill the specified rectangle and draw a thin outline around it. The left and right edges of the rectangle are at
-	 * x and x + width - 1. The top and bottom edges are at y and y + height - 1. The resulting rectangle covers an area
-	 * width pixels wide by height pixels tall. The rectangle is filled using the brightness of the current color to set
-	 * the level of gray.
+	 * Fill the specified rectangle and draw a thin outline around it. The left
+	 * and right edges of the rectangle are at x and x + width - 1. The top and
+	 * bottom edges are at y and y + height - 1. The resulting rectangle covers
+	 * an area width pixels wide by height pixels tall. The rectangle is filled
+	 * using the brightness of the current color to set the level of gray.
 	 * 
 	 * @param x
 	 *            The x coordinate of the top left corner.
@@ -392,8 +405,8 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Set the current color. Since we are generating gray scale postscript, set a line style. Set the gray level to
-	 * zero (black).
+	 * Set the current color. Since we are generating gray scale postscript, set
+	 * a line style. Set the gray level to zero (black).
 	 * 
 	 * @param c
 	 *            The desired current color.
@@ -443,8 +456,9 @@ public class EPSGraphics extends Graphics {
 	}
 
 	/**
-	 * Issue the PostScript showpage command, then write and flush the output. If the output argument of the constructor
-	 * was null, then write to the clipboard.
+	 * Issue the PostScript showpage command, then write and flush the output.
+	 * If the output argument of the constructor was null, then write to the
+	 * clipboard.
 	 */
 	public void showpage() {
 		_buffer.append("showpage\n");

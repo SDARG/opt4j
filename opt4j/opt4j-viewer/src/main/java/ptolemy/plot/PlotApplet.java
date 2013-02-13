@@ -5,20 +5,24 @@
  * 
  * @Version: $Id: PlotApplet.java,v 1.76 2005/07/30 05:30:56 cxh Exp $
  * 
- * @Copyright (c) 1997-2005 The Regents of the University of California. All rights reserved.
+ * @Copyright (c) 1997-2005 The Regents of the University of California. All
+ * rights reserved.
  * 
- * Permission is hereby granted, without written agreement and without license or royalty fees, to use, copy, modify,
- * and distribute this software and its documentation for any purpose, provided that the above copyright notice and the
- * following two paragraphs appear in all copies of this software.
+ * Permission is hereby granted, without written agreement and without license
+ * or royalty fees, to use, copy, modify, and distribute this software and its
+ * documentation for any purpose, provided that the above copyright notice and
+ * the following two paragraphs appear in all copies of this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -39,8 +43,9 @@ import javax.swing.SwingUtilities;
 // // PlotApplet
 
 /**
- * An Applet that can plot data from a URL. The URL should be specified using the dataurl applet parameter. The
- * formatting commands are included in the file with the the data. If no URL is given, then a sample plot is generated.
+ * An Applet that can plot data from a URL. The URL should be specified using
+ * the dataurl applet parameter. The formatting commands are included in the
+ * file with the the data. If no URL is given, then a sample plot is generated.
  * 
  * @author Edward A. Lee, Christopher Hylands, Contributor: Roger Robins
  * @version $Id: PlotApplet.java,v 1.76 2005/07/30 05:30:56 cxh Exp $
@@ -80,7 +85,8 @@ public class PlotApplet extends JApplet {
 	/**
 	 * Return information about parameters.
 	 * 
-	 * @return A array of arrays giving parameter names, the type, and the default value or description.
+	 * @return A array of arrays giving parameter names, the type, and the
+	 *         default value or description.
 	 */
 	@Override
 	public String[][] getParameterInfo() {
@@ -94,10 +100,13 @@ public class PlotApplet extends JApplet {
 	/**
 	 * Initialize the applet. Read the applet parameters.
 	 * 
-	 * Subclasses that extend this method and call Swing UI methods should do so in the Swing Event thread by calling
-	 * SwingUtilities.invokeAndWait(). Note that some Plot methods will automatically run in the Swing Event thread,
+	 * Subclasses that extend this method and call Swing UI methods should do so
+	 * in the Swing Event thread by calling SwingUtilities.invokeAndWait(). Note
+	 * that some Plot methods will automatically run in the Swing Event thread,
 	 * some will not. For details about SwingUtilities.invokeAndWait(), see <a
-	 * href="http://java.sun.com/docs/books/tutorial/uiswing/components/applet.html#thread">The Sun Applet Tutorial</a>
+	 * href=
+	 * "http://java.sun.com/docs/books/tutorial/uiswing/components/applet.html#thread"
+	 * >The Sun Applet Tutorial</a>
 	 */
 	@Override
 	public void init() {
@@ -200,8 +209,8 @@ public class PlotApplet extends JApplet {
 	}
 
 	/**
-	 * Create a new Plot object for the applet. Derived classes can redefine this method to return a different type of
-	 * plot object.
+	 * Create a new Plot object for the applet. Derived classes can redefine
+	 * this method to return a different type of plot object.
 	 * 
 	 * @return A new instance of PlotBox.
 	 */
@@ -235,7 +244,8 @@ public class PlotApplet extends JApplet {
 	// // protected methods ////
 
 	/**
-	 * Read the specified stream. Derived classes may override this to support other file formats.
+	 * Read the specified stream. Derived classes may override this to support
+	 * other file formats.
 	 * 
 	 * @param in
 	 *            The input stream.
@@ -247,8 +257,8 @@ public class PlotApplet extends JApplet {
 	}
 
 	/**
-	 * Given the size of the applet, set the size of the plot. Derived classes may override this to allow room for other
-	 * widgets below the plot.
+	 * Given the size of the applet, set the size of the plot. Derived classes
+	 * may override this to allow room for other widgets below the plot.
 	 * 
 	 * @param appletWidth
 	 *            The width of the applet.
