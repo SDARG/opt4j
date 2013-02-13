@@ -15,10 +15,10 @@
 
 package org.opt4j.core.optimizer;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.annotations.Category;
-import org.opt4j.config.annotations.Icon;
-import org.opt4j.start.Opt4JModule;
+import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.annotations.Category;
+import org.opt4j.core.config.annotations.Icon;
+import org.opt4j.core.start.Opt4JModule;
 
 /**
  * Abstract module class for the {@link Optimizer} modules.

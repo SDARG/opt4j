@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import org.opt4j.config.Icons;
+import org.opt4j.core.config.Icons;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

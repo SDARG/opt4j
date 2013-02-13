@@ -21,7 +21,7 @@ import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.opt4j.config.Icons;
+import org.opt4j.core.config.Icons;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.Control.State;
 import org.opt4j.core.optimizer.ControlListener;

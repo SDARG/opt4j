@@ -15,8 +15,8 @@
 
 package org.opt4j.core.optimizer;
 
-import org.opt4j.common.completer.SequentialIndividualCompleter;
 import org.opt4j.core.Individual;
+import org.opt4j.core.common.completer.SequentialIndividualCompleter;
 import org.opt4j.core.problem.Decoder;
 import org.opt4j.core.problem.Evaluator;
 

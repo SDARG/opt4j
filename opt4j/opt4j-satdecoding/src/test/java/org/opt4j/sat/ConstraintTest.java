@@ -17,7 +17,9 @@ package org.opt4j.sat;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.opt4j.sat.Constraint.Operator;
+import org.opt4j.satdecoding.Constraint;
+import org.opt4j.satdecoding.Literal;
+import org.opt4j.satdecoding.Constraint.Operator;
 
 public class ConstraintTest {
 

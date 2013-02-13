@@ -8,9 +8,9 @@ import org.opt4j.core.IndividualFactory;
 import org.opt4j.core.optimizer.IterativeOptimizer;
 import org.opt4j.core.optimizer.Population;
 import org.opt4j.core.optimizer.TerminationException;
-import org.opt4j.operator.copy.Copy;
-import org.opt4j.operator.mutate.Mutate;
-import org.opt4j.optimizer.ea.Selector;
+import org.opt4j.operators.copy.Copy;
+import org.opt4j.operators.mutate.Mutate;
+import org.opt4j.optimizers.ea.Selector;
 
 import com.google.inject.Inject;
 

@@ -14,12 +14,12 @@
  */
 package org.opt4j.viewer;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.annotations.Icon;
-import org.opt4j.config.annotations.Info;
-import org.opt4j.start.Constant;
-import org.opt4j.start.Opt4J;
-import org.opt4j.start.Progress;
+import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.annotations.Icon;
+import org.opt4j.core.config.annotations.Info;
+import org.opt4j.core.start.Constant;
+import org.opt4j.core.start.Opt4J;
+import org.opt4j.core.start.Progress;
 import org.opt4j.viewer.Viewer.CloseEvent;
 
 import ptolemy.plot.DefaultFonts;

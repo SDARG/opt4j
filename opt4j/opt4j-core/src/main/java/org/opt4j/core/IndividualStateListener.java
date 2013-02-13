@@ -21,7 +21,7 @@ import org.opt4j.core.Individual.State;
  * The {@link IndividualStateListener} receives notifications of an
  * {@link Individual} changing its {@link State}. To add an
  * {@link IndividualStateListener} use the method
- * {@link org.opt4j.start.Opt4JModule#addIndividualStateListener(Class)}.
+ * {@link org.opt4j.core.start.Opt4JModule#addIndividualStateListener(Class)}.
  * 
  * @author lukasiewycz
  * 

@@ -28,11 +28,11 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import org.opt4j.config.visualization.DelayTask;
+import org.opt4j.core.config.visualization.DelayTask;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.core.optimizer.OptimizerStateListener;
-import org.opt4j.start.Progress;
+import org.opt4j.core.start.Progress;
 
 import com.google.inject.Inject;
 

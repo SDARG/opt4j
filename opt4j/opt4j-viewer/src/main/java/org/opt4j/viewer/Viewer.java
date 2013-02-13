@@ -26,12 +26,12 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.annotations.Info;
+import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerStateListener;
-import org.opt4j.start.Constant;
+import org.opt4j.core.start.Constant;
 
 import com.google.inject.Inject;
 

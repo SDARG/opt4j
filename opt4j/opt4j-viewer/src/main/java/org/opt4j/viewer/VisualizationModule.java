@@ -14,7 +14,7 @@
  */
 package org.opt4j.viewer;
 
-import org.opt4j.common.logger.OutputModule;
+import org.opt4j.core.common.logger.OutputModule;
 
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;

@@ -19,9 +19,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.opt4j.common.archive.DefaultArchive;
 import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualSet;
+import org.opt4j.core.common.archive.DefaultArchive;
 
 import com.google.inject.ImplementedBy;
 

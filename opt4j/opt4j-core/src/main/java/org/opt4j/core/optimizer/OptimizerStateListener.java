@@ -17,7 +17,7 @@ package org.opt4j.core.optimizer;
 /**
  * The {@link OptimizerStateListener} is used to monitor the state of the
  * {@link Optimizer}. To add an {@link OptimizerStateListener} use the method
- * {@link org.opt4j.start.Opt4JModule#addOptimizerStateListener(Class)}.
+ * {@link org.opt4j.core.start.Opt4JModule#addOptimizerStateListener(Class)}.
  * 
  * @author lukasiewycz
  * 

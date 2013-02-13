@@ -37,7 +37,7 @@
  * </p>
  * <p>
  * The {@code org.opt4j.tutorial.optimizer} example shows the implementation of
- * a simple optimizer which uses the {@link org.opt4j.operator.mutate.Mutate}
+ * a simple optimizer which uses the {@link org.opt4j.operators.mutate.Mutate}
  * operator.
  * </p>
  * <p>

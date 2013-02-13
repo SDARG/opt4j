@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import org.opt4j.config.Icons;
+import org.opt4j.core.config.Icons;
 
 /**
  * The {@link Viewport} is a desktop for {@link Widget}s.

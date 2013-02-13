@@ -15,7 +15,7 @@
 
 package org.opt4j.core.optimizer;
 
-import org.opt4j.start.Opt4JModule;
+import org.opt4j.core.start.Opt4JModule;
 
 /**
  * The {@link ControlListener} is an interface of classes that listen to the

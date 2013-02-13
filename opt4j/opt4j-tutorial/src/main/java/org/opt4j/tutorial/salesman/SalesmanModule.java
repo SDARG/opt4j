@@ -1,8 +1,8 @@
 package org.opt4j.tutorial.salesman;
 
-import org.opt4j.config.annotations.Parent;
+import org.opt4j.core.config.annotations.Parent;
 import org.opt4j.core.problem.ProblemModule;
-import org.opt4j.start.Constant;
+import org.opt4j.core.start.Constant;
 import org.opt4j.tutorial.TutorialModule;
 import org.opt4j.viewer.VisualizationModule;
 

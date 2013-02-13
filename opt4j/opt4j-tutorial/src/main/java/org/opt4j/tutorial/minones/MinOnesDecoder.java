@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.opt4j.common.random.Rand;
 import org.opt4j.core.Genotype;
-import org.opt4j.sat.AbstractSATDecoder;
-import org.opt4j.sat.Constraint;
-import org.opt4j.sat.Literal;
-import org.opt4j.sat.Model;
-import org.opt4j.sat.SATManager;
+import org.opt4j.core.common.random.Rand;
+import org.opt4j.satdecoding.AbstractSATDecoder;
+import org.opt4j.satdecoding.Constraint;
+import org.opt4j.satdecoding.Literal;
+import org.opt4j.satdecoding.Model;
+import org.opt4j.satdecoding.SATManager;
 
 import com.google.inject.Inject;
 

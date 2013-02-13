@@ -18,11 +18,11 @@ package org.opt4j.core.problem;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.opt4j.config.Icons;
-import org.opt4j.config.annotations.Category;
-import org.opt4j.config.annotations.Icon;
 import org.opt4j.core.Genotype;
-import org.opt4j.start.Opt4JModule;
+import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.annotations.Category;
+import org.opt4j.core.config.annotations.Icon;
+import org.opt4j.core.start.Opt4JModule;
 
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
@@ -101,6 +101,6 @@ public abstract class ProblemModule extends Opt4JModule {
 		Multibinder<Evaluator<Object>> multibinder = Multibinder.newSetBinder(binder(),
 				new TypeLiteral<Evaluator<Object>>() {
 				});
-		multibinder.addBinding().to((Class<? extends Evaluator<Object>>) evaluator);
+		multibinder.addBinding().to((Class<Evaluator<Object>>) evaluator);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.opt4j.start.Constant;
+import org.opt4j.core.start.Constant;
 
 import com.google.inject.Inject;
 
