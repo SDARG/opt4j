@@ -805,54 +805,6 @@ public class Query extends JPanel {
 	 * 
 	 * @param name
 	 *            The name of the entry.
-	 * @deprecated Use getBooleanValue(String name) instead.
-	 * @return The state of the checkbox.
-	 * @exception NoSuchElementException
-	 *                If there is no item with the specified name. Note that
-	 *                this is a runtime exception, so it need not be declared
-	 *                explicitly.
-	 * @exception IllegalArgumentException
-	 *                If the entry is not a checkbox. This is a runtime
-	 *                exception, so it need not be declared explicitly.
-	 */
-	@Deprecated
-	public boolean booleanValue(String name) throws NoSuchElementException, IllegalArgumentException {
-		return getBooleanValue(name);
-	}
-
-	/**
-	 * Get the current value in the entry with the given name and return as a
-	 * double value. If the entry is not a line, then throw an exception. If the
-	 * value of the entry is not a double, then throw an exception.
-	 * 
-	 * @param name
-	 *            The name of the entry.
-	 * @deprecated Use getDoubleValue(String name) instead.
-	 * @return The value currently in the entry as a double.
-	 * @exception NoSuchElementException
-	 *                If there is no item with the specified name. Note that
-	 *                this is a runtime exception, so it need not be declared
-	 *                explicitly.
-	 * @exception NumberFormatException
-	 *                If the value of the entry cannot be converted to a double.
-	 *                This is a runtime exception, so it need not be declared
-	 *                explicitly.
-	 * @exception IllegalArgumentException
-	 *                If the entry is not a line. This is a runtime exception,
-	 *                so it need not be declared explicitly.
-	 */
-	@Deprecated
-	public double doubleValue(String name) throws IllegalArgumentException, NoSuchElementException,
-			NumberFormatException {
-		return getDoubleValue(name);
-	}
-
-	/**
-	 * Get the current value in the entry with the given name and return as a
-	 * boolean. If the entry is not a checkbox, then throw an exception.
-	 * 
-	 * @param name
-	 *            The name of the entry.
 	 * @return The state of the checkbox.
 	 * @exception NoSuchElementException
 	 *                If there is no item with the specified name. Note that
@@ -1131,33 +1083,6 @@ public class Query extends JPanel {
 	 */
 	public int getTextWidth() {
 		return _width;
-	}
-
-	/**
-	 * Get the current value in the entry with the given name and return as an
-	 * integer. If the entry is not a line, choice, or slider, then throw an
-	 * exception. If it is a choice or radio button, then return the index of
-	 * the first selected item.
-	 * 
-	 * @param name
-	 *            The name of the entry.
-	 * @deprecated Use getIntValue(String name) instead.
-	 * @return The value currently in the entry as an integer.
-	 * @exception NoSuchElementException
-	 *                If there is no item with the specified name. Note that
-	 *                this is a runtime exception, so it need not be declared
-	 *                explicitly.
-	 * @exception NumberFormatException
-	 *                If the value of the entry cannot be converted to an
-	 *                integer. This is a runtime exception, so it need not be
-	 *                declared explicitly.
-	 * @exception IllegalArgumentException
-	 *                If the entry is not a choice, line, or slider. This is a
-	 *                runtime exception, so it need not be declared explicitly.
-	 */
-	@Deprecated
-	public int intValue(String name) throws IllegalArgumentException, NoSuchElementException, NumberFormatException {
-		return getIntValue(name);
 	}
 
 	/**
@@ -1631,30 +1556,6 @@ public class Query extends JPanel {
 			// Ignore and use default color.
 		}
 		return new Color(red, green, blue, alpha);
-	}
-
-	/**
-	 * Get the current value in the entry with the given name, and return as a
-	 * String. All entry types support this. Note that this method should be
-	 * called from the event dispatch thread, since it needs to query to UI
-	 * widgets for their current values. If it is called from another thread,
-	 * there is no assurance that the value returned will be the current value.
-	 * 
-	 * @param name
-	 *            The name of the entry.
-	 * @deprecated Use getStringValue(String name) instead.
-	 * @return The value currently in the entry as a String.
-	 * @exception NoSuchElementException
-	 *                If there is no item with the specified name. Note that
-	 *                this is a runtime exception, so it need not be declared
-	 *                explicitly.
-	 * @exception IllegalArgumentException
-	 *                If the entry type does not have a string representation
-	 *                (this should not be thrown).
-	 */
-	@Deprecated
-	public String stringValue(String name) throws NoSuchElementException, IllegalArgumentException {
-		return getStringValue(name);
 	}
 
 	// /////////////////////////////////////////////////////////////////

@@ -78,33 +78,6 @@ public abstract class PlotLive extends Plot implements Runnable {
 	public abstract void addPoints();
 
 	/**
-	 * Make start and stop buttons. This method is deprecated. Use setButtons()
-	 * instead.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public void makeButtons() {
-		if (_startButton == null) {
-			_startButton = new JButton("start");
-			_startButton.addActionListener(new StartButtonListener());
-			add(_startButton);
-		}
-
-		_startButton.setVisible(true);
-
-		if (_stopButton == null) {
-			_stopButton = new JButton("stop");
-			_stopButton.addActionListener(new StopButtonListener());
-			add(_stopButton);
-		}
-
-		_stopButton.setVisible(true);
-		_stopButton.setEnabled(false);
-		_startButton.setEnabled(true);
-	}
-
-	/**
 	 * Pause the plot. To resume, call start().
 	 */
 	public void pause() {

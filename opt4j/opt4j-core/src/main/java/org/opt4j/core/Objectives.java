@@ -196,19 +196,6 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	 * 
 	 * @param objectives
 	 *            the objectives
-	 * @deprecated renamed to {@link #addAll(Objectives)}
-	 */
-	@Deprecated
-	public void add(Objectives objectives) {
-		addAll(objectives);
-	}
-
-	/**
-	 * Adds all objective with the specified value specified in
-	 * {@link Objectives}.
-	 * 
-	 * @param objectives
-	 *            the objectives
 	 */
 	public void addAll(Objectives objectives) {
 		map.putAll(objectives.map);

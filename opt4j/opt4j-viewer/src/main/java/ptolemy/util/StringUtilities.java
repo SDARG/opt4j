@@ -680,36 +680,6 @@ public class StringUtilities {
 	}
 
 	/**
-	 * Given a file or URL name, return as a URL. If the file name is relative,
-	 * then it is interpreted as being relative to the specified base directory.
-	 * If the name begins with "xxxxxxCLASSPATHxxxxxx" or "$CLASSPATH" then
-	 * search for the file relative to the classpath. Note that this is the
-	 * value of the globally defined constant $CLASSPATH available in the
-	 * expression language. If no file is found, then throw an exception.
-	 * 
-	 * @param name
-	 *            The name of a file or URL.
-	 * @param baseDirectory
-	 *            The base directory for relative file names, or null to specify
-	 *            none.
-	 * @param classLoader
-	 *            The class loader to use to locate system resources, or null to
-	 *            use the system class loader.
-	 * @return A URL, or null if no file name or URL has been specified.
-	 * @exception IOException
-	 *                If the file cannot be read, or if the file cannot be
-	 *                represented as a URL (e.g. System.in), or the name
-	 *                specification cannot be parsed.
-	 * @exception MalformedURLException
-	 *                If the URL is malformed.
-	 * @deprecated Use FileUtilities.nameToURL instead.
-	 */
-	@Deprecated
-	public static URL stringToURL(String name, URI baseDirectory, ClassLoader classLoader) throws IOException {
-		return FileUtilities.nameToURL(name, baseDirectory, classLoader);
-	}
-
-	/**
 	 * Replace all occurrences of <i>pattern</i> in the specified string with
 	 * <i>replacement</i>. Note that the pattern is NOT a regular expression,
 	 * and that relative to the String.replaceAll() method in jdk1.4, this

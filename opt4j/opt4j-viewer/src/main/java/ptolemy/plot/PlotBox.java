@@ -686,28 +686,6 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the file specification that was given by setDataurl. This method is
-	 * deprecated. Use read() instead.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public String getDataurl() {
-		return _filespec;
-	}
-
-	/**
-	 * Get the document base that was set by setDocumentBase. This method is
-	 * deprecated. Use read() instead.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public URL getDocumentBase() {
-		return _documentBase;
-	}
-
-	/**
 	 * Return whether the grid is drawn.
 	 * 
 	 * @return True if a grid is drawn.
@@ -984,22 +962,6 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Initialize the component, creating the fill button and parsing an input
-	 * file, if one has been specified. This is deprecated. Call setButtons()
-	 * and read() instead.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public void init() {
-		setButtons(true);
-
-		if (_filespec != null) {
-			parseFile(_filespec, _documentBase);
-		}
-	}
-
-	/**
 	 * Paint the component contents, which in this base class is only the axes.
 	 * 
 	 * @param graphics
@@ -1029,102 +991,6 @@ public class PlotBox extends JPanel implements Printable {
 		// Acquire the focus so that key bindings work.
 		// NOTE: no longer needed?
 		// requestFocus();
-	}
-
-	/**
-	 * Syntactic sugar for parseFile(filespec, documentBase). This method is
-	 * deprecated. Use read() to read the old file format, or use one of the
-	 * classes in the plotml package to read the XML-based file format.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public void parseFile(String filespec) {
-		parseFile(filespec, (URL) null);
-	}
-
-	/**
-	 * Open up the input file, which could be stdin, a URL, or a file.
-	 * 
-	 * @deprecated This method is deprecated. Use read() instead.
-	 */
-	@Deprecated
-	public synchronized void parseFile(String filespec, URL documentBase) {
-		DataInputStream in = null;
-
-		if ((filespec == null) || (filespec.length() == 0)) {
-			// Open up stdin
-			in = new DataInputStream(System.in);
-		} else {
-			try {
-				URL url = null;
-
-				if ((documentBase == null) && (_documentBase != null)) {
-					documentBase = _documentBase;
-				}
-
-				if (documentBase == null) {
-					url = new URL(filespec);
-				} else {
-					try {
-						url = new URL(documentBase, filespec);
-					} catch (NullPointerException e) {
-						// If we got a NullPointerException, then perhaps we
-						// are calling this as an application, not as an applet
-						url = new URL(filespec);
-					}
-				}
-
-				in = new DataInputStream(url.openStream());
-			} catch (MalformedURLException e) {
-				try {
-					// Just try to open it as a file.
-					in = new DataInputStream(new FileInputStream(filespec));
-				} catch (FileNotFoundException me) {
-					_errorMsg = new String[2];
-					_errorMsg[0] = "File not found: " + filespec;
-					_errorMsg[1] = me.getMessage();
-					return;
-				} catch (SecurityException me) {
-					_errorMsg = new String[2];
-					_errorMsg[0] = "Security Exception: " + filespec;
-					_errorMsg[1] = me.getMessage();
-					return;
-				}
-			} catch (IOException ioe) {
-				_errorMsg = new String[3];
-				_errorMsg[0] = "Failure opening URL: ";
-				_errorMsg[1] = " " + filespec;
-				_errorMsg[2] = ioe.getMessage();
-				return;
-			}
-		}
-
-		// At this point, we've opened the data source, now read it in
-		try {
-			BufferedReader din = new BufferedReader(new InputStreamReader(in));
-			String line = din.readLine();
-
-			while (line != null) {
-				_parseLine(line);
-				line = din.readLine();
-			}
-		} catch (MalformedURLException e) {
-			_errorMsg = new String[2];
-			_errorMsg[0] = "Malformed URL: " + filespec;
-			_errorMsg[1] = e.getMessage();
-			return;
-		} catch (IOException e) {
-			_errorMsg = new String[2];
-			_errorMsg[0] = "Failure reading data: " + filespec;
-			_errorMsg[1] = e.getMessage();
-			_errorMsg[1] = e.getMessage();
-		} finally {
-			try {
-				in.close();
-			} catch (IOException me) {
-			}
-		}
 	}
 
 	/**
@@ -1522,28 +1388,6 @@ public class PlotBox extends JPanel implements Printable {
 		_plotImage = null;
 
 		_colors = colors;
-	}
-
-	/**
-	 * Set the file to read when init() is called. This method is deprecated.
-	 * Use read() instead.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public void setDataurl(String filespec) {
-		_filespec = filespec;
-	}
-
-	/**
-	 * Set the document base to used when init() is called to read a URL. This
-	 * method is deprecated. Use read() instead.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public void setDocumentBase(URL documentBase) {
-		_documentBase = documentBase;
 	}
 
 	/**
@@ -1955,29 +1799,6 @@ public class PlotBox extends JPanel implements Printable {
 
 		if (!_usecolor) {
 			output.println("<noColor/>");
-		}
-	}
-
-	/**
-	 * Write the current data and plot configuration to the specified stream in
-	 * the old PtPlot syntax. The output is buffered, and is flushed and closed
-	 * before exiting. Derived classes should override _writeOldSyntax() rather
-	 * than this method.
-	 * 
-	 * @param out
-	 *            An output stream.
-	 * @deprecated
-	 */
-	@Deprecated
-	public synchronized void writeOldSyntax(OutputStream out) {
-		// Auto-flush is disabled.
-		PrintWriter output = new PrintWriter(new BufferedOutputStream(out), false);
-		_writeOldSyntax(output);
-		output.flush();
-
-		// Avoid closing standard out.
-		if (out != System.out) {
-			output.close();
 		}
 	}
 
@@ -2888,23 +2709,6 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the visibility of the Fill button. This is deprecated. Use
-	 * setButtons().
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	protected void _setButtonsVisibility(boolean vis) {
-		// Changing legend means we need to repaint the offscreen buffer.
-		_plotImage = null;
-
-		_printButton.setVisible(vis);
-		_fillButton.setVisible(vis);
-		_formatButton.setVisible(vis);
-		_resetButton.setVisible(vis);
-	}
-
-	/**
 	 * Set the padding multiple. The plot rectangle can be "padded" in each
 	 * direction -x, +x, -y, and +y. If the padding is set to 0.05 (and the
 	 * padding is used), then there is 10% more length on each axis than set by
@@ -2918,85 +2722,6 @@ public class PlotBox extends JPanel implements Printable {
 		_plotImage = null;
 
 		_padding = padding;
-	}
-
-	/**
-	 * Write plot information to the specified output stream in the old PtPlot
-	 * syntax. Derived classes should override this method to first call the
-	 * parent class method, then add whatever additional information they wish
-	 * to add to the stream. It is not synchronized, so its caller should be.
-	 * 
-	 * @param output
-	 *            A buffered print writer.
-	 * @deprecated
-	 */
-	@Deprecated
-	protected void _writeOldSyntax(PrintWriter output) {
-		output.println("# Ptolemy plot, version 2.0");
-
-		if (_title != null) {
-			output.println("TitleText: " + _title);
-		}
-
-		if (_xlabel != null) {
-			output.println("XLabel: " + _xlabel);
-		}
-
-		if (_ylabel != null) {
-			output.println("YLabel: " + _ylabel);
-		}
-
-		if (_xRangeGiven) {
-			output.println("XRange: " + _xlowgiven + ", " + _xhighgiven);
-		}
-
-		if (_yRangeGiven) {
-			output.println("YRange: " + _ylowgiven + ", " + _yhighgiven);
-		}
-
-		if ((_xticks != null) && (_xticks.size() > 0)) {
-			output.print("XTicks: ");
-
-			int last = _xticks.size() - 1;
-
-			for (int i = 0; i < last; i++) {
-				output.print("\"" + _xticklabels.elementAt(i) + "\" " + _xticks.elementAt(i) + ", ");
-			}
-
-			output.println("\"" + _xticklabels.elementAt(last) + "\" " + _xticks.elementAt(last));
-		}
-
-		if ((_yticks != null) && (_yticks.size() > 0)) {
-			output.print("YTicks: ");
-
-			int last = _yticks.size() - 1;
-
-			for (int i = 0; i < last; i++) {
-				output.print("\"" + _yticklabels.elementAt(i) + "\" " + _yticks.elementAt(i) + ", ");
-			}
-
-			output.println("\"" + _yticklabels.elementAt(last) + "\" " + _yticks.elementAt(last));
-		}
-
-		if (_xlog) {
-			output.println("XLog: on");
-		}
-
-		if (_ylog) {
-			output.println("YLog: on");
-		}
-
-		if (!_grid) {
-			output.println("Grid: off");
-		}
-
-		if (_wrap) {
-			output.println("Wrap: on");
-		}
-
-		if (!_usecolor) {
-			output.println("Color: off");
-		}
 	}
 
 	// /////////////////////////////////////////////////////////////////
@@ -3203,14 +2928,6 @@ public class PlotBox extends JPanel implements Printable {
 	/** @serial Indicator that size has been set. */
 
 	// protected boolean _sizeHasBeenSet = false;
-	/**
-	 * @serial The document base we use to find the _filespec. NOTE: Use of this
-	 *         variable is deprecated. But it is made available to derived
-	 *         classes for backward compatibility. FIXME: Sun's appletviewer
-	 *         gives an exception if this is protected. Why?? So we make it
-	 *         temporarily public.
-	 */
-	public URL _documentBase = null;
 
 	// /////////////////////////////////////////////////////////////////
 	// // private methods ////

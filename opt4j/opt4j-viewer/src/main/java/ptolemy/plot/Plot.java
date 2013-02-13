@@ -481,17 +481,6 @@ public class Plot extends PlotBox {
 	}
 
 	/**
-	 * Return the maximum number of data sets. This method is deprecated, since
-	 * there is no longer an upper bound.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public int getMaxDataSets() {
-		return Integer.MAX_VALUE;
-	}
-
-	/**
 	 * Return the actual number of data sets.
 	 * 
 	 * @return The number of data sets that have been created.
@@ -511,22 +500,6 @@ public class Plot extends PlotBox {
 	 */
 	public boolean getReuseDatasets() {
 		return _reuseDatasets;
-	}
-
-	/**
-	 * Override the base class to indicate that a new data set is being read.
-	 * This method is deprecated. Use read() instead (to read the old file
-	 * format) or one of the classes in the plotml package to read the new (XML)
-	 * file format.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void parseFile(String filespec, URL documentBase) {
-		_firstInSet = true;
-		_sawFirstDataSet = false;
-		super.parseFile(filespec, documentBase);
 	}
 
 	/**
@@ -775,38 +748,6 @@ public class Plot extends PlotBox {
 		}
 
 		fmt.marksUseDefault = false;
-	}
-
-	/**
-	 * Specify the number of data sets to be plotted together. This method is
-	 * deprecated, since it is no longer necessary to specify the number of data
-	 * sets ahead of time.
-	 * 
-	 * @param numSets
-	 *            The number of data sets.
-	 * @deprecated
-	 */
-	@Deprecated
-	public void setNumSets(int numSets) {
-		// Ensure replot of offscreen buffer.
-		_plotImage = null;
-
-		if (numSets < 1) {
-			throw new IllegalArgumentException("Number of data sets (" + numSets + ") must be greater than 0.");
-		}
-
-		_currentdataset = -1;
-		_points.removeAllElements();
-		_formats.removeAllElements();
-		_prevx.removeAllElements();
-		_prevy.removeAllElements();
-
-		for (int i = 0; i < numSets; i++) {
-			_points.addElement(new Vector<PlotPoint>());
-			_formats.addElement(new Format());
-			_prevx.addElement(_initialPreviousValue);
-			_prevy.addElement(_initialPreviousValue);
-		}
 	}
 
 	/**
@@ -1852,122 +1793,6 @@ public class Plot extends PlotBox {
 				((Graphics2D) graphics).setStroke(_lineStroke2);
 			} else {
 				((Graphics2D) graphics).setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-			}
-		}
-	}
-
-	/**
-	 * Write plot information to the specified output stream in the
-	 * "old syntax," which predates PlotML. Derived classes should override this
-	 * method to first call the parent class method, then add whatever
-	 * additional information they wish to add to the stream. It is not
-	 * synchronized, so its caller should be.
-	 * 
-	 * @param output
-	 *            A buffered print writer.
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	protected void _writeOldSyntax(PrintWriter output) {
-		super._writeOldSyntax(output);
-
-		// NOTE: NumSets is obsolete, so we don't write it.
-		if (_reuseDatasets) {
-			output.println("ReuseDatasets: on");
-		}
-
-		if (!_connected) {
-			output.println("Lines: off");
-		}
-
-		if (_bars) {
-			output.println("Bars: " + barWidth + ", " + _barOffset);
-		}
-
-		// Write the defaults for formats that can be controlled by dataset
-		if (_impulses) {
-			output.println("Impulses: on");
-		}
-
-		switch (_marks) {
-		case 1:
-			output.println("Marks: points");
-			break;
-
-		case 2:
-			output.println("Marks: dots");
-			break;
-
-		case 3:
-			output.println("Marks: various");
-			break;
-
-		case 4:
-			output.println("Marks: pixels");
-			break;
-		}
-
-		for (int dataset = 0; dataset < _points.size(); dataset++) {
-			// Write the dataset directive
-			String legend = getLegend(dataset);
-
-			if (legend != null) {
-				output.println("DataSet: " + getLegend(dataset));
-			} else {
-				output.println("DataSet:");
-			}
-
-			// Write dataset-specific format information
-			Format fmt = _formats.elementAt(dataset);
-
-			if (!fmt.impulsesUseDefault) {
-				if (fmt.impulses) {
-					output.println("Impulses: on");
-				} else {
-					output.println("Impulses: off");
-				}
-			}
-
-			if (!fmt.marksUseDefault) {
-				switch (fmt.marks) {
-				case 0:
-					output.println("Marks: none");
-					break;
-
-				case 1:
-					output.println("Marks: points");
-					break;
-
-				case 2:
-					output.println("Marks: dots");
-					break;
-
-				case 3:
-					output.println("Marks: various");
-					break;
-
-				case 4:
-					output.println("Marks: pixels");
-					break;
-				}
-			}
-
-			// Write the data
-			Vector<PlotPoint> pts = _points.elementAt(dataset);
-
-			for (int pointnum = 0; pointnum < pts.size(); pointnum++) {
-				PlotPoint pt = pts.elementAt(pointnum);
-
-				if (!pt.connected) {
-					output.print("move: ");
-				}
-
-				if (pt.errorBar) {
-					output.println(pt.x + ", " + pt.y + ", " + pt.yLowEB + ", " + pt.yHighEB);
-				} else {
-					output.println(pt.x + ", " + pt.y);
-				}
 			}
 		}
 	}

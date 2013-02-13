@@ -58,39 +58,6 @@ public abstract class Archive extends IndividualSet {
 	 */
 	public abstract boolean update(Set<? extends Individual> individuals);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.opt4j.core.IndividualSet#add(org.opt4j.core.Individual)
-	 */
-	@Deprecated
-	@Override
-	public final boolean add(Individual individual) {
-		throw new UnsupportedOperationException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.opt4j.core.IndividualSet#addAll(java.util.Collection)
-	 */
-	@Deprecated
-	@Override
-	public final boolean addAll(Collection<? extends Individual> c) {
-		throw new UnsupportedOperationException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.opt4j.core.IndividualSet#addAll(org.opt4j.core.Individual[])
-	 */
-	@Deprecated
-	@Override
-	public final boolean addAll(Individual... c) {
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * Adds the {@link Individual} to this {@link Archive} without further
 	 * checks. Must be used only if the {@link Individual} is checked to be
