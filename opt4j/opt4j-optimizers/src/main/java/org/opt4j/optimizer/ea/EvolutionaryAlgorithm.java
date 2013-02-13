@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.optimizer.ea;
 
@@ -26,8 +29,9 @@ import org.opt4j.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link EvolutionaryAlgorithm} is an implementation of an Evolutionary Algorithm based on the operators
- * {@link Crossover} and {@link Mutate}. It uses a {@link Selector} for the mating and environmental selection.
+ * The {@link EvolutionaryAlgorithm} is an implementation of an Evolutionary
+ * Algorithm based on the operators {@link Crossover} and {@link Mutate}. It
+ * uses a {@link Selector} for the mating and environmental selection.
  * 
  * @author lukasiewycz, glass
  * 
@@ -51,9 +55,11 @@ public class EvolutionaryAlgorithm implements IterativeOptimizer {
 	private final IndividualCompleter completer;
 
 	/**
-	 * Constructs an {@link EvolutionaryAlgorithm} with a {@link Population}, an {@link IndividualFactory}, a
-	 * {@link IndividualCompleter}, a {@link Selector}, a {@link Mating}, the number of generations, the population
-	 * size, the number of parents, the number of offspring, and a random number generator.
+	 * Constructs an {@link EvolutionaryAlgorithm} with a {@link Population}, an
+	 * {@link IndividualFactory}, a {@link IndividualCompleter}, a
+	 * {@link Selector}, a {@link Mating}, the number of generations, the
+	 * population size, the number of parents, the number of offspring, and a
+	 * random number generator.
 	 * 
 	 * @param population
 	 *            the population

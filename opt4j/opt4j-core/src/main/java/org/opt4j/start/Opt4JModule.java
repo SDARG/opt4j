@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.start;
 
@@ -282,7 +282,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 * @param listener
 	 *            the listener to be added
 	 */
-	protected void addOptimizerStateListener(Class<? extends OptimizerStateListener> listener) {
+	public void addOptimizerStateListener(Class<? extends OptimizerStateListener> listener) {
 		Multibinder<OptimizerStateListener> multibinder = Multibinder.newSetBinder(binder(),
 				OptimizerStateListener.class);
 		multibinder.addBinding().to(listener);
@@ -294,7 +294,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 * @param listener
 	 *            the listener to be added
 	 */
-	protected void addOptimizerIterationListener(Class<? extends OptimizerIterationListener> listener) {
+	public void addOptimizerIterationListener(Class<? extends OptimizerIterationListener> listener) {
 		assert binder() != null;
 		Multibinder<OptimizerIterationListener> multibinder = Multibinder.newSetBinder(binder(),
 				OptimizerIterationListener.class);
@@ -307,7 +307,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 * @param listener
 	 *            the listener to be added
 	 */
-	protected void addIndividualStateListener(Class<? extends IndividualStateListener> listener) {
+	public void addIndividualStateListener(Class<? extends IndividualStateListener> listener) {
 		Multibinder<IndividualStateListener> multibinder = Multibinder.newSetBinder(binder(),
 				IndividualStateListener.class);
 		multibinder.addBinding().to(listener);
@@ -319,7 +319,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 * @param listener
 	 *            the listener to be added
 	 */
-	protected void addControlListener(Class<? extends ControlListener> listener) {
+	public void addControlListener(Class<? extends ControlListener> listener) {
 		Multibinder<ControlListener> multibinder = Multibinder.newSetBinder(binder(), ControlListener.class);
 		multibinder.addBinding().to(listener);
 	}

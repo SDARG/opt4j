@@ -1,20 +1,24 @@
 /*
  * A histogram plotter.
  * 
- * @Copyright (c) 1997-2007 The Regents of the University of California. All rights reserved.
+ * @Copyright (c) 1997-2007 The Regents of the University of California. All
+ * rights reserved.
  * 
- * Permission is hereby granted, without written agreement and without license or royalty fees, to use, copy, modify,
- * and distribute this software and its documentation for any purpose, provided that the above copyright notice and the
- * following two paragraphs appear in all copies of this software.
+ * Permission is hereby granted, without written agreement and without license
+ * or royalty fees, to use, copy, modify, and distribute this software and its
+ * documentation for any purpose, provided that the above copyright notice and
+ * the following two paragraphs appear in all copies of this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -33,17 +37,22 @@ import java.util.Vector;
 // // Histogram
 
 /**
- * A histogram plotter. The plot can be configured and data can be provided either through a file with commands or
- * through direct invocation of the public methods of the class. To read a file or a URL, use the read() method.
+ * A histogram plotter. The plot can be configured and data can be provided
+ * either through a file with commands or through direct invocation of the
+ * public methods of the class. To read a file or a URL, use the read() method.
  * <p>
- * When calling the public methods, in most cases the changes will not be visible until paint() has been called. To
- * request that this be done, call repaint(). One exception is addPoint(), which makes the affect of the new point
- * visible immediately (or nearly immediately) if the plot is visible on the screen.
+ * When calling the public methods, in most cases the changes will not be
+ * visible until paint() has been called. To request that this be done, call
+ * repaint(). One exception is addPoint(), which makes the affect of the new
+ * point visible immediately (or nearly immediately) if the plot is visible on
+ * the screen.
  * <p>
- * The ASCII format for the file file contains any number commands, one per line. Unrecognized commands and commands
- * with syntax errors are ignored. Comments are denoted by a line starting with a pound sign "#". The recognized
- * commands include those supported by the base class, plus a few more. The commands are case insensitive, but are
- * usually capitalized. The number of data sets to be plotted does not need to be specified. Data sets are added as
+ * The ASCII format for the file file contains any number commands, one per
+ * line. Unrecognized commands and commands with syntax errors are ignored.
+ * Comments are denoted by a line starting with a pound sign "#". The recognized
+ * commands include those supported by the base class, plus a few more. The
+ * commands are case insensitive, but are usually capitalized. The number of
+ * data sets to be plotted does not need to be specified. Data sets are added as
  * needed. Each dataset is identified with a color (see the base class).
  * <P>
  * The appearance of the histogram can be altered by the following commands:
@@ -53,10 +62,12 @@ import java.util.Vector;
  *  Bars: <i>width, offset</i>
  * </pre>
  * 
- * The <i>width</i> is a real number specifying the width of the bars as a fraction of the bin width. It usually has a
- * value less than or equal to one, and defaults to 0.5. The <i>offset</i> is a real number specifying how much the bar
- * of the <i>i </i><sup>th</sup> data set is offset from the previous one. This allows bars to "peek out" from behind
- * the ones in front. It defaults to 0.15. Note that the frontmost data set will be the first one.
+ * The <i>width</i> is a real number specifying the width of the bars as a
+ * fraction of the bin width. It usually has a value less than or equal to one,
+ * and defaults to 0.5. The <i>offset</i> is a real number specifying how much
+ * the bar of the <i>i </i><sup>th</sup> data set is offset from the previous
+ * one. This allows bars to "peek out" from behind the ones in front. It
+ * defaults to 0.15. Note that the frontmost data set will be the first one.
  * <p>
  * The width of each bin of the histogram can be specified using:
  * 
@@ -64,18 +75,21 @@ import java.util.Vector;
  *  BinWidth: <i>width</i>
  * </pre>
  * 
- * This is given in whatever units the data has. By default, each bin is centered at <i>x</i> = <i>nw</i>, where
- * <i>w</i> is the width of the bin and <i>n</i> is an integer. That bin represents values in the range (<i>x - w/2, x +
- * w/2</i>). The alignment of the bins can be changed with the following command:
+ * This is given in whatever units the data has. By default, each bin is
+ * centered at <i>x</i> = <i>nw</i>, where <i>w</i> is the width of the bin and
+ * <i>n</i> is an integer. That bin represents values in the range (<i>x - w/2,
+ * x + w/2</i>). The alignment of the bins can be changed with the following
+ * command:
  * 
  * <pre>
  *  BinOffset: <i>offset</i>
  * </pre>
  * 
- * If this method is used with argument <i>o</i>, then each bin is centered at <i>x = nw + o</i>, and represents values
- * in the range (<i>x - w/2 + o, x + w/2 + o</i>). So for example, if <i>o = w/2</i>, then each bin represents values
- * from <i>nw</i> to (<i>n</i> + 1)<i>w</i> for some integer <i>n</i>. The default offset is 0.5, half the default bin
- * width.
+ * If this method is used with argument <i>o</i>, then each bin is centered at
+ * <i>x = nw + o</i>, and represents values in the range (<i>x - w/2 + o, x +
+ * w/2 + o</i>). So for example, if <i>o = w/2</i>, then each bin represents
+ * values from <i>nw</i> to (<i>n</i> + 1)<i>w</i> for some integer <i>n</i>.
+ * The default offset is 0.5, half the default bin width.
  * <p>
  * To specify data to be plotted, start a data set with the following command:
  * 
@@ -83,18 +97,21 @@ import java.util.Vector;
  *  DataSet: <i>string</i>
  * </pre>
  * 
- * Here, <i>string</i> is a label that will appear in the legend. It is not necessary to enclose the string in quotation
- * marks. To start a new dataset without giving it a name, use:
+ * Here, <i>string</i> is a label that will appear in the legend. It is not
+ * necessary to enclose the string in quotation marks. To start a new dataset
+ * without giving it a name, use:
  * 
  * <pre>
  *  DataSet:
  * </pre>
  * 
- * In this case, no item will appear in the legend. New datasets are plotted <i>behind</i> the previous ones. The data
- * itself is given by a sequence of numbers, one per line. The numbers are specified as strings that can be parsed by
- * the Double parser in Java. It is also possible to specify the numbers using all the formats accepted by the Plot
- * class, so that the same data may be plotted by both classes. The <i>x</i> data is ignored, and only the <i>y</i> data
- * is used to calculate the histogram.
+ * In this case, no item will appear in the legend. New datasets are plotted
+ * <i>behind</i> the previous ones. The data itself is given by a sequence of
+ * numbers, one per line. The numbers are specified as strings that can be
+ * parsed by the Double parser in Java. It is also possible to specify the
+ * numbers using all the formats accepted by the Plot class, so that the same
+ * data may be plotted by both classes. The <i>x</i> data is ignored, and only
+ * the <i>y</i> data is used to calculate the histogram.
  * 
  * @author Edward A. Lee
  * @version $Id: Histogram.java,v 1.50 2007/12/06 18:23:52 cxh Exp $
@@ -108,8 +125,9 @@ public class Histogram extends PlotBox {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Add a legend (displayed at the upper right) for the specified data set with the specified string. Short strings
-	 * generally fit better than long strings.
+	 * Add a legend (displayed at the upper right) for the specified data set
+	 * with the specified string. Short strings generally fit better than long
+	 * strings.
 	 * 
 	 * @param dataset
 	 *            The dataset index.
@@ -123,14 +141,18 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * In the specified data set, add the specified value to the histogram. Data set indices begin with zero. If the
-	 * data set does not exist, create it. The new point will visibly alter the histogram if the plot is visible on the
-	 * screen. Otherwise, it will be drawn the next time the histogram is drawn on the screen.
+	 * In the specified data set, add the specified value to the histogram. Data
+	 * set indices begin with zero. If the data set does not exist, create it.
+	 * The new point will visibly alter the histogram if the plot is visible on
+	 * the screen. Otherwise, it will be drawn the next time the histogram is
+	 * drawn on the screen.
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the point will not be added immediately (unless you
-	 * call this method from within the event dispatch thread). All the methods that do this deferring coordinate so
-	 * that they are executed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the point will not be added immediately
+	 * (unless you call this method from within the event dispatch thread). All
+	 * the methods that do this deferring coordinate so that they are executed
+	 * in the order that you called them.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -149,8 +171,9 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * In the specified data set, add the specified y value to the histogram. The x value and the <i>connected</i>
-	 * arguments are ignored. Data set indices begin with zero. If the data set does not exist, create it.
+	 * In the specified data set, add the specified y value to the histogram.
+	 * The x value and the <i>connected</i> arguments are ignored. Data set
+	 * indices begin with zero. If the data set does not exist, create it.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -166,14 +189,17 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Clear the plot of all data points. If the argument is true, then reset all parameters to their initial
-	 * conditions, including the persistence, plotting format, and axes formats. For the change to take effect, you must
-	 * call repaint().
+	 * Clear the plot of all data points. If the argument is true, then reset
+	 * all parameters to their initial conditions, including the persistence,
+	 * plotting format, and axes formats. For the change to take effect, you
+	 * must call repaint().
 	 * <p>
-	 * In order to work well with swing and be thread safe, this method actually defers execution to the event dispatch
-	 * thread, where all user interface actions are performed. Thus, the clear will not be executed immediately (unless
-	 * you call this method from within the event dispatch thread). All the methods that do this deferring coordinate so
-	 * that they are executed in the order that you called them.
+	 * In order to work well with swing and be thread safe, this method actually
+	 * defers execution to the event dispatch thread, where all user interface
+	 * actions are performed. Thus, the clear will not be executed immediately
+	 * (unless you call this method from within the event dispatch thread). All
+	 * the methods that do this deferring coordinate so that they are executed
+	 * in the order that you called them.
 	 * 
 	 * @param format
 	 *            If true, clear the format controls as well.
@@ -191,9 +217,10 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Write plot data information to the specified output stream in PlotML, but in such a way that the Plot class can
-	 * read it and reproduce the histogram. The ordinary mechanism for saving the histogram records the raw data and the
-	 * configuration to be used by this class.
+	 * Write plot data information to the specified output stream in PlotML, but
+	 * in such a way that the Plot class can read it and reproduce the
+	 * histogram. The ordinary mechanism for saving the histogram records the
+	 * raw data and the configuration to be used by this class.
 	 * 
 	 * @param output
 	 *            A buffered print writer.
@@ -248,12 +275,14 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Rescale so that the data that is currently plotted just fits. This overrides the base class method to ensure that
-	 * the fill is actually performed in the event dispatch thread. In order to work well with swing and be thread safe,
-	 * this method actually defers execution to the event dispatch thread, where all user interface actions are
-	 * performed. Thus, the fill will not occur immediately (unless you call this method from within the event dispatch
-	 * thread). All the methods that do this deferring coordinate so that they are executed in the order that you called
-	 * them.
+	 * Rescale so that the data that is currently plotted just fits. This
+	 * overrides the base class method to ensure that the fill is actually
+	 * performed in the event dispatch thread. In order to work well with swing
+	 * and be thread safe, this method actually defers execution to the event
+	 * dispatch thread, where all user interface actions are performed. Thus,
+	 * the fill will not occur immediately (unless you call this method from
+	 * within the event dispatch thread). All the methods that do this deferring
+	 * coordinate so that they are executed in the order that you called them.
 	 */
 	@Override
 	public synchronized void fillPlot() {
@@ -291,9 +320,10 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Set the width and offset of the bars. Both are specified as a fraction of a bin width. The offset is the amount
-	 * by which the i < sup>th</sup> data set is shifted to the right, so that it peeks out from behind the earlier data
-	 * sets.
+	 * Set the width and offset of the bars. Both are specified as a fraction of
+	 * a bin width. The offset is the amount by which the i < sup>th</sup> data
+	 * set is shifted to the right, so that it peeks out from behind the earlier
+	 * data sets.
 	 * 
 	 * @param width
 	 *            The width of the bars.
@@ -308,12 +338,15 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Set the offset of the bins, in whatever units the data are given. Without calling this, each bin is centered at
-	 * <i>x</i> = <i>nw</i>, where <i>w</i> is the width of the bin and <i>n</i> is an integer. That bin represents
-	 * values in the range (<i>x - w/2, x + w/2</i>). If this method is called with argument <i>o</i>, then each bin is
-	 * centered at <i>x = nw + o</i>, and represents values in the range (<i>x - w/2 + o, x + w/2 + o</i>). So for
-	 * example, if <i>o = w/2</i>, then each bin represents values from <i>nw</i> to (<i>n</i> + 1)<i>w</i>) for some
-	 * integer <i>n</i>.
+	 * Set the offset of the bins, in whatever units the data are given. Without
+	 * calling this, each bin is centered at <i>x</i> = <i>nw</i>, where
+	 * <i>w</i> is the width of the bin and <i>n</i> is an integer. That bin
+	 * represents values in the range (<i>x - w/2, x + w/2</i>). If this method
+	 * is called with argument <i>o</i>, then each bin is centered at <i>x = nw
+	 * + o</i>, and represents values in the range (<i>x - w/2 + o, x + w/2 +
+	 * o</i>). So for example, if <i>o = w/2</i>, then each bin represents
+	 * values from <i>nw</i> to (<i>n</i> + 1)<i>w</i>) for some integer
+	 * <i>n</i>.
 	 * 
 	 * @param offset
 	 *            The bin offset.
@@ -337,17 +370,20 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Write the current data and plot configuration to the specified stream in PlotML syntax. This writes the
-	 * histogram, not the raw data, in such a way that the Plot class (not the Histogram class) will correctly render
-	 * it. The URL (relative or absolute) for the DTD is given as the second argument. If that argument is null, then
-	 * the PlotML PUBLIC DTD is referenced, resulting in a file that can be read by a PlotML parser without any external
-	 * file references, as long as that parser has local access to the DTD. The output is buffered, and is flushed
-	 * before exiting.
+	 * Write the current data and plot configuration to the specified stream in
+	 * PlotML syntax. This writes the histogram, not the raw data, in such a way
+	 * that the Plot class (not the Histogram class) will correctly render it.
+	 * The URL (relative or absolute) for the DTD is given as the second
+	 * argument. If that argument is null, then the PlotML PUBLIC DTD is
+	 * referenced, resulting in a file that can be read by a PlotML parser
+	 * without any external file references, as long as that parser has local
+	 * access to the DTD. The output is buffered, and is flushed before exiting.
 	 * 
 	 * @param out
 	 *            An output writer.
 	 * @param dtd
-	 *            The reference (URL) for the DTD, or null to use the PUBLIC DTD.
+	 *            The reference (URL) for the DTD, or null to use the PUBLIC
+	 *            DTD.
 	 */
 	@Override
 	public synchronized void write(Writer out, String dtd) {
@@ -412,9 +448,11 @@ public class Histogram extends PlotBox {
 	// // protected methods ////
 
 	/**
-	 * Check the argument to ensure that it is a valid data set index. If it is less than zero, throw an
-	 * IllegalArgumentException (which is a runtime exception). If it does not refer to an existing data set, then fill
-	 * out the _points and _histogram Vectors so that they refer to all existing data sets.
+	 * Check the argument to ensure that it is a valid data set index. If it is
+	 * less than zero, throw an IllegalArgumentException (which is a runtime
+	 * exception). If it does not refer to an existing data set, then fill out
+	 * the _points and _histogram Vectors so that they refer to all existing
+	 * data sets.
 	 * 
 	 * @param dataset
 	 *            The data set index.
@@ -432,9 +470,11 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Draw bar from the specified point to the y axis. If the specified point is below the y axis or outside the x
-	 * range, do nothing. If the <i>clip</i> argument is true, then do not draw above the y range. Note that paint()
-	 * should be called before calling this method so that _xscale and _yscale are properly set.
+	 * Draw bar from the specified point to the y axis. If the specified point
+	 * is below the y axis or outside the x range, do nothing. If the
+	 * <i>clip</i> argument is true, then do not draw above the y range. Note
+	 * that paint() should be called before calling this method so that _xscale
+	 * and _yscale are properly set.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -498,12 +538,14 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Draw the axes and then plot the histogram. If the second argument is true, clear the display first. This method
-	 * is called by paint(). To cause it to be called you would normally call repaint(), which eventually causes paint()
-	 * to be called.
+	 * Draw the axes and then plot the histogram. If the second argument is
+	 * true, clear the display first. This method is called by paint(). To cause
+	 * it to be called you would normally call repaint(), which eventually
+	 * causes paint() to be called.
 	 * <p>
-	 * Note that this is synchronized so that points are not added by other threads while the drawing is occurring. This
-	 * method should be called only from the event dispatch thread, consistent with swing policy.
+	 * Note that this is synchronized so that points are not added by other
+	 * threads while the drawing is occurring. This method should be called only
+	 * from the event dispatch thread, consistent with swing policy.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -533,11 +575,12 @@ public class Histogram extends PlotBox {
 	}
 
 	/**
-	 * Parse a line that gives plotting information. Return true if the line is recognized. Lines with syntax errors are
-	 * ignored.
+	 * Parse a line that gives plotting information. Return true if the line is
+	 * recognized. Lines with syntax errors are ignored.
 	 * 
 	 * @param line
-	 *            A command line. It is not synchronized, so its caller should be.
+	 *            A command line. It is not synchronized, so its caller should
+	 *            be.
 	 * @return True if the line is recognized.
 	 */
 	@Override
@@ -684,12 +727,15 @@ public class Histogram extends PlotBox {
 	// // private methods ////
 
 	/*
-	 * In the specified data set, add the specified value to the histogram. Data set indices begin with zero. If the
-	 * data set does not exist, create it. The new point will visibly alter the histogram if the plot is visible on the
-	 * screen. Otherwise, it will be drawn the next time the histogram is drawn on the screen.
+	 * In the specified data set, add the specified value to the histogram. Data
+	 * set indices begin with zero. If the data set does not exist, create it.
+	 * The new point will visibly alter the histogram if the plot is visible on
+	 * the screen. Otherwise, it will be drawn the next time the histogram is
+	 * drawn on the screen.
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called by _executeDeferredActions().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called by
+	 * _executeDeferredActions().
 	 * 
 	 * @param dataset The data set index.
 	 * 
@@ -759,9 +805,10 @@ public class Histogram extends PlotBox {
 	}
 
 	/*
-	 * Clear the plot of all data points. If the argument is true, then reset all parameters to their initial
-	 * conditions, including the persistence, plotting format, and axes formats. For the change to take effect, you must
-	 * call repaint().
+	 * Clear the plot of all data points. If the argument is true, then reset
+	 * all parameters to their initial conditions, including the persistence,
+	 * plotting format, and axes formats. For the change to take effect, you
+	 * must call repaint().
 	 * 
 	 * @param format If true, clear the format controls as well.
 	 */
@@ -785,12 +832,14 @@ public class Histogram extends PlotBox {
 	}
 
 	/*
-	 * Draw the specified histogram bar. Note that paint() should be called before calling this method so that it calls
-	 * _drawPlot(), which sets _xscale and _yscale. Note that this does not check the dataset index. It is up to the
-	 * caller to do that.
+	 * Draw the specified histogram bar. Note that paint() should be called
+	 * before calling this method so that it calls _drawPlot(), which sets
+	 * _xscale and _yscale. Note that this does not check the dataset index. It
+	 * is up to the caller to do that.
 	 * 
-	 * Note that this method is not synchronized, so the caller should be. Moreover this method should always be called
-	 * from the event thread when being used to write to the screen.
+	 * Note that this method is not synchronized, so the caller should be.
+	 * Moreover this method should always be called from the event thread when
+	 * being used to write to the screen.
 	 */
 	private void _drawPlotPoint(Graphics graphics, int dataset, int bin, int count) {
 		// Set the color
@@ -836,10 +885,12 @@ public class Histogram extends PlotBox {
 	}
 
 	/*
-	 * Rescale so that the data that is currently plotted just fits. This simply calls the base class.
+	 * Rescale so that the data that is currently plotted just fits. This simply
+	 * calls the base class.
 	 * 
-	 * This is not synchronized, so the caller should be. Moreover, this should only be called in the event dispatch
-	 * thread. It should only be called by _executeDeferredActions().
+	 * This is not synchronized, so the caller should be. Moreover, this should
+	 * only be called in the event dispatch thread. It should only be called by
+	 * _executeDeferredActions().
 	 */
 	private void _fillPlot() {
 		super.fillPlot();

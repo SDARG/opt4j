@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.benchmark.zdt;
@@ -22,18 +25,21 @@ import org.opt4j.core.Objectives;
 import org.opt4j.core.problem.Evaluator;
 
 /**
- * Base class for the ZDT evaluators. ZDT problems have two objectives: f1 and f2.
+ * Base class for the ZDT evaluators. ZDT problems have two objectives: f1 and
+ * f2.
  * 
- * Base class for the double valued ZDT problem functions: {@link ZDT1}, {@link ZDT2}, {@link ZDT3}, {@link ZDT4},
- * {@link ZDT5}, {@link ZDT6}.
+ * Base class for the double valued ZDT problem functions: {@link ZDT1},
+ * {@link ZDT2}, {@link ZDT3}, {@link ZDT4}, {@link ZDT5}, {@link ZDT6}.
  * 
- * The ZDT are based on the functions {@code f1}, {@code f2}, {@code g}, and {@code h}.
+ * The ZDT are based on the functions {@code f1}, {@code f2}, {@code g}, and
+ * {@code h}.
  * 
  * The ZDT problem is stated as following:
  * 
  * Minimize {@code (f1(x),f2(x))}
  * 
- * subject to {@code f2(x) = g(x2,...,xn)*h(f1(x1),g(x2,...,xn))} where {@code x =(x1,...,xn)}
+ * subject to {@code f2(x) = g(x2,...,xn)*h(f1(x1),g(x2,...,xn))} where
+ * {@code x =(x1,...,xn)}
  * 
  * @author lukasiewycz
  * @param <A>
@@ -105,6 +111,5 @@ abstract class ZDTEvaluator<A extends Object> implements Evaluator<A> {
 		objectives.add(f2obj, f2);
 		return objectives;
 	}
-
 
 }

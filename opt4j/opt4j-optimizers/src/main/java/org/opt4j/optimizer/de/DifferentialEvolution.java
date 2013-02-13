@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.optimizer.de;
@@ -132,8 +135,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 		Map<Individual, Individual> relation = new HashMap<Individual, Individual>();
 
 		/*
-		 * Create an offspring for each parent individual in the population and add the offspring to the population and
-		 * evaluate their objectives
+		 * Create an offspring for each parent individual in the population and
+		 * add the offspring to the population and evaluate their objectives
 		 */
 		List<Individual> list = new ArrayList<Individual>(population);
 		for (Individual parent : population) {
@@ -144,7 +147,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 		completer.complete(population);
 
 		/*
-		 * Remove those offspring individuals from the population that are dominated by their corresponding parent
+		 * Remove those offspring individuals from the population that are
+		 * dominated by their corresponding parent
 		 */
 		for (Entry<Individual, Individual> entry : relation.entrySet()) {
 			Individual parent = entry.getKey();
@@ -215,8 +219,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 	}
 
 	/**
-	 * Returns three different {@link Individual}s from the {@code individuals} list. Each {@link Individual} is not
-	 * equal to the parent.
+	 * Returns three different {@link Individual}s from the {@code individuals}
+	 * list. Each {@link Individual} is not equal to the parent.
 	 * 
 	 * @param parent
 	 *            the parent Individual

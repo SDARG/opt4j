@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.viewer;
 
@@ -35,7 +38,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The {@link ConvergencePlotData} contains information about the convergence of the current optimization.
+ * The {@link ConvergencePlotData} contains information about the convergence of
+ * the current optimization.
  * 
  * @author lukasiewycz, reimann
  * 
@@ -54,7 +58,8 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 	private boolean init = false;
 
 	/**
-	 * The {@link PlotDataObjective} contains the convergence information of a single {@link Objective}.
+	 * The {@link PlotDataObjective} contains the convergence information of a
+	 * single {@link Objective}.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -184,8 +189,9 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete (org.opt4j.core.optimizer.Optimizer,
-	 * int)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete
+	 * (org.opt4j.core.optimizer.Optimizer, int)
 	 */
 	@Override
 	public void iterationComplete(int iteration) {
@@ -256,7 +262,9 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener#objectives(java .util.Collection)
+	 * @see
+	 * org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener#objectives(java
+	 * .util.Collection)
 	 */
 	@Override
 	public void objectives(Collection<Objective> objectives) {

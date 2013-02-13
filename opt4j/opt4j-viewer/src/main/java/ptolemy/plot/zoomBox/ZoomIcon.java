@@ -14,8 +14,6 @@ public class ZoomIcon extends ImageIcon {
 	/**
 	 * Return the best vertical offset for the given icon.
 	 * 
-	 * @param filename
-	 *            the filename
 	 * @return the vertical offset to use
 	 */
 	public int getVerticalOffset() {
@@ -25,8 +23,6 @@ public class ZoomIcon extends ImageIcon {
 	/**
 	 * Return the best horizontal offset for the given icon.
 	 * 
-	 * @param filename
-	 *            the filename
 	 * @return the horizontal offset to use
 	 */
 	public int getHorizontalOffset() {

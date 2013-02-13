@@ -31,8 +31,7 @@ public class ZoomRectangle {
 	/**
 	 * A stroke of width 1.
 	 */
-	private static final BasicStroke lineStroke1 = new BasicStroke(2f,
-			BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND);
+	private static final BasicStroke lineStroke1 = new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND);
 
 	/**
 	 * Creates a {@code ZoomRectangle}.
@@ -267,22 +266,18 @@ public class ZoomRectangle {
 	 * @param graphics
 	 *            the graphics context
 	 */
-	protected void paintZoomingInRectangle(Component component,
-			Graphics graphics) {
+	protected void paintZoomingInRectangle(Component component, Graphics graphics) {
 		// draw box
-		graphics.drawRect(getX1(), getY1(), getX2() - getX1(), getY2()
-				- getY1());
+		graphics.drawRect(getX1(), getY1(), getX2() - getX1(), getY2() - getY1());
 
 		if (isShowingFancyIcons()) {
 			drawZoomInIcon(component, graphics);
 		} else {
 			// draw simple plus sign
-			graphics.drawLine(getX2() - signLength - signBorder, getY1()
-					+ signBorder + signMiddle, getX2() - signBorder, getY1()
-					+ signBorder + signMiddle);
-			graphics.drawLine(getX2() - signMiddle - signBorder, getY1()
-					+ signBorder, getX2() - signBorder - signMiddle, getY1()
-					+ signBorder + signLength);
+			graphics.drawLine(getX2() - signLength - signBorder, getY1() + signBorder + signMiddle, getX2()
+					- signBorder, getY1() + signBorder + signMiddle);
+			graphics.drawLine(getX2() - signMiddle - signBorder, getY1() + signBorder, getX2() - signBorder
+					- signMiddle, getY1() + signBorder + signLength);
 		}
 	}
 
@@ -295,22 +290,19 @@ public class ZoomRectangle {
 	 * @param graphics
 	 *            the graphics context
 	 */
-	protected void paintZoomingOutRectangle(Component component,
-			Graphics graphics) {
+	protected void paintZoomingOutRectangle(Component component, Graphics graphics) {
 		// draw box
-		graphics.drawRect(getX2(), getY2(), getX1() - getX2(), getY1()
-				- getY2());
+		graphics.drawRect(getX2(), getY2(), getX1() - getX2(), getY1() - getY2());
 		int innerBoxWidth = 5;
-		graphics.drawRect(getX2() + (getX1() - getX2()) / 2 - innerBoxWidth, getY2()
-				+ (getY1() - getY2()) / 2 - innerBoxWidth, 2 * innerBoxWidth, 2 * innerBoxWidth);
+		graphics.drawRect(getX2() + (getX1() - getX2()) / 2 - innerBoxWidth, getY2() + (getY1() - getY2()) / 2
+				- innerBoxWidth, 2 * innerBoxWidth, 2 * innerBoxWidth);
 
 		if (isShowingFancyIcons()) {
 			drawZoomOutIcon(component, graphics);
 		} else {
 			// draw simple minus sign
-			graphics.drawLine(getX1() - signLength - signBorder, getY2()
-					+ signBorder + signMiddle, getX1() - signBorder, getY2()
-					+ signBorder + signMiddle);
+			graphics.drawLine(getX1() - signLength - signBorder, getY2() + signBorder + signMiddle, getX1()
+					- signBorder, getY2() + signBorder + signMiddle);
 		}
 	}
 
@@ -325,8 +317,7 @@ public class ZoomRectangle {
 	 */
 	protected void drawZoomInIcon(Component component, Graphics graphics) {
 		ZoomIcon i = ZoomIcons.getIcon(ZOOMiN);
-		i.paintIcon(component, graphics, getX2() + i.getHorizontalOffset(),
-				getY1() + i.getVerticalOffset());
+		i.paintIcon(component, graphics, getX2() + i.getHorizontalOffset(), getY1() + i.getVerticalOffset());
 
 	}
 
@@ -341,8 +332,7 @@ public class ZoomRectangle {
 	 */
 	protected void drawZoomOutIcon(Component component, Graphics graphics) {
 		ZoomIcon i = ZoomIcons.getIcon(ZOOMoUT);
-		i.paintIcon(component, graphics, getX1() + i.getHorizontalOffset(),
-				getY2() + i.getVerticalOffset());
+		i.paintIcon(component, graphics, getX1() + i.getHorizontalOffset(), getY2() + i.getVerticalOffset());
 	}
 
 	/**

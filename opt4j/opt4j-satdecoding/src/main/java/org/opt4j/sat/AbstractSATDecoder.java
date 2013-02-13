@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.sat;
@@ -44,7 +44,7 @@ import com.google.inject.Inject;
  * {@link Order} of the variables, and solves the problem in the {@link Order}
  * using a SAT {@link Solver} . The resulting {@link Model}, which respects the
  * {@link Constraint}s, must then be converted to the problem specific
- * {@link Phenotype}.
+ * phenotype.
  * 
  * @author lukasiewycz
  * 
@@ -204,8 +204,8 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 	}
 
 	/**
-	 * Converts a {@link Model} into a {@link Phenotype}. Override this with
-	 * your custom method.
+	 * Converts a {@link Model} into a phenotype. Override this with your custom
+	 * method.
 	 * 
 	 * @param model
 	 *            the found model
@@ -256,8 +256,7 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 	}
 
 	/**
-	 * Decodes the {@link Genotype} to a {@link Phenotype} by using a SAT/PB
-	 * solver.
+	 * Decodes the {@link Genotype} to a phenotype by using a SAT/PB solver.
 	 * 
 	 * @param genotype
 	 *            the genotype

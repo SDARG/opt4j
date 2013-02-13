@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.viewer;
@@ -94,7 +97,8 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	protected static final String INDEX = "#";
 
 	/**
-	 * The {@link TableMouseListener} that listens to right and double click of the table item.
+	 * The {@link TableMouseListener} that listens to right and double click of
+	 * the table item.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -451,8 +455,9 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete (org.opt4j.core.optimizer.Optimizer,
-	 * int)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete
+	 * (org.opt4j.core.optimizer.Optimizer, int)
 	 */
 	@Override
 	public synchronized void iterationComplete(int iteration) {
@@ -465,8 +470,8 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.IndividualSetListener#individualAdded(org.opt4j.core. IndividualSet,
-	 * org.opt4j.core.Individual)
+	 * @see org.opt4j.core.IndividualSetListener#individualAdded(org.opt4j.core.
+	 * IndividualSet, org.opt4j.core.Individual)
 	 */
 	@Override
 	public synchronized void individualAdded(IndividualSet collection, Individual individual) {
@@ -476,8 +481,9 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.IndividualSetListener#individualRemoved(org.opt4j.core .IndividualSet,
-	 * org.opt4j.core.Individual)
+	 * @see
+	 * org.opt4j.core.IndividualSetListener#individualRemoved(org.opt4j.core
+	 * .IndividualSet, org.opt4j.core.Individual)
 	 */
 	@Override
 	public synchronized void individualRemoved(IndividualSet collection, Individual individual) {

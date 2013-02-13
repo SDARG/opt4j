@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.optimizer.ea;
@@ -27,8 +30,9 @@ import org.opt4j.core.Individual;
 import com.google.inject.Inject;
 
 /**
- * The {@link ElitismSelector} is a single objective elitism select. If a multi-objective problem is optimized, the
- * objectives are summed up to a single value.
+ * The {@link ElitismSelector} is a single objective elitism select. If a
+ * multi-objective problem is optimized, the objectives are summed up to a
+ * single value.
  * 
  * @author lukasiewycz
  * 
@@ -40,7 +44,8 @@ public class ElitismSelector implements Selector {
 	protected final Map<Individual, Double> fitness = new HashMap<Individual, Double>();
 
 	/**
-	 * Comparator that sorts the {@link Individual}s based on their fitness values.
+	 * Comparator that sorts the {@link Individual}s based on their fitness
+	 * values.
 	 * 
 	 * @author lukasiewycz
 	 * 
@@ -93,7 +98,8 @@ public class ElitismSelector implements Selector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.optimizer.ea.Selector#getParents(int, java.util.Collection)
+	 * @see org.opt4j.optimizer.ea.Selector#getParents(int,
+	 * java.util.Collection)
 	 */
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
@@ -108,8 +114,8 @@ public class ElitismSelector implements Selector {
 	}
 
 	/**
-	 * Calculates the fitness of the {@link Individual}s: the sum of all double values (these always have to be
-	 * minimized) of the objectives.
+	 * Calculates the fitness of the {@link Individual}s: the sum of all double
+	 * values (these always have to be minimized) of the objectives.
 	 * 
 	 * @param individuals
 	 *            the individuals to process

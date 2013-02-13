@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
@@ -86,19 +86,19 @@
  * for the other offspring.
  * 
  * <pre>
- * 	public class MyOperator implements Crossover&lt;BooleanGenotype&gt; {
- * 		public Pair&lt;BooleanGenotype&gt; crossover(BooleanGenotype parent1, BooleanGenotype parent2) {
- * 			BooleanGenotype g1 = parent1.newInstance();
- * 			BooleanGenotype g2 = parent1.newInstance();
+ * public class MyOperator implements Crossover&lt;BooleanGenotype&gt; {
+ * 	public Pair&lt;BooleanGenotype&gt; crossover(BooleanGenotype parent1, BooleanGenotype parent2) {
+ * 		BooleanGenotype g1 = parent1.newInstance();
+ * 		BooleanGenotype g2 = parent1.newInstance();
  * 
- * 			for (int i = 0; i &lt; parent1.size(); i++) {
- * 				g1.add(i, parent1.get(i) || parent2.get(i));
- * 				g2.add(i, parent1.get(i) &amp;&amp; parent2.get(i));
- * 			}
- * 
- * 			return new Pair&lt;BooleanGenotype&gt;(g1, g2);
+ * 		for (int i = 0; i &lt; parent1.size(); i++) {
+ * 			g1.add(i, parent1.get(i) || parent2.get(i));
+ * 			g2.add(i, parent1.get(i) &amp;&amp; parent2.get(i));
  * 		}
+ * 
+ * 		return new Pair&lt;BooleanGenotype&gt;(g1, g2);
  * 	}
+ * }
  * </pre>
  * 
  * To tell the framework to use this operator, implement a
@@ -106,11 +106,11 @@
  * operator.
  * 
  * <pre>
- * 	public class MyOperatorModule extends CrossoverModule {
- * 		protected void config() {
- * 			addOperator(MyOperator.class);
- * 		}
+ * public class MyOperatorModule extends CrossoverModule {
+ * 	protected void config() {
+ * 		addOperator(MyOperator.class);
  * 	}
+ * }
  * </pre>
  * 
  */

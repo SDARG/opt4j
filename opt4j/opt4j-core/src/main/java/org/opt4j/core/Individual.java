@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.core;
@@ -18,17 +21,19 @@ import com.google.inject.Inject;
 
 /**
  * <p>
- * The {@link Individual} class forms a single solution for the given optimization problem.
+ * The {@link Individual} class forms a single solution for the given
+ * optimization problem.
  * </p>
  * <p>
- * An {@link Individual} contains the {@link Genotype}, {@link Phenotype}, and {@link Objectives}: Initially, the
- * {@link Individual} contains only a {@link Genotype}. The {@link org.opt4j.core.problem.Decoder} decodes the
- * {@link Genotype} into a {@link Phenotype} and adds it to the {@link Individual}. Finally, the {@link Phenotype} is
- * evaluated and the resulting {@link Objectives} are added to the {@link Individual}.
+ * An {@link Individual} contains the {@link Genotype}, phenotype {@link Object}
+ * , and {@link Objectives}: Initially, the {@link Individual} contains only a
+ * {@link Genotype}. The {@link org.opt4j.core.problem.Decoder} decodes the
+ * {@link Genotype} into a phenotype and adds it to the {@link Individual}.
+ * Finally, the phenotype is evaluated and the resulting {@link Objectives} are
+ * added to the {@link Individual}.
  * </p>
  * 
  * @see Genotype
- * @see Phenotype
  * @see Objectives
  * @author glass, lukasiewycz
  */
@@ -114,27 +119,33 @@ public class Individual {
 		}
 
 		/**
-		 * Returns {@code true} if the individual is decoded in the current state.
+		 * Returns {@code true} if the individual is decoded in the current
+		 * state.
 		 * 
-		 * @return {@code true} if the individual is decoded in the current state
+		 * @return {@code true} if the individual is decoded in the current
+		 *         state
 		 */
 		public boolean isDecoded() {
 			return decoded;
 		}
 
 		/**
-		 * Returns {@code true} if the individual is evaluated in the current state.
+		 * Returns {@code true} if the individual is evaluated in the current
+		 * state.
 		 * 
-		 * @return {@code true} if the individual is evaluated in the current state
+		 * @return {@code true} if the individual is evaluated in the current
+		 *         state
 		 */
 		public boolean isEvaluated() {
 			return evaluated;
 		}
 
 		/**
-		 * Returns {@code true} if the individual is processing in the current state.
+		 * Returns {@code true} if the individual is processing in the current
+		 * state.
 		 * 
-		 * @return {@code true} if the individual is processing in the current state
+		 * @return {@code true} if the individual is processing in the current
+		 *         state
 		 */
 		public boolean isProcessing() {
 			return processing;
@@ -264,8 +275,8 @@ public class Individual {
 	}
 
 	/**
-	 * Sets the list of {@link IndividualStateListener}s that are called if the {@link State} of this individual
-	 * changes.
+	 * Sets the list of {@link IndividualStateListener}s that are called if the
+	 * {@link State} of this individual changes.
 	 * 
 	 * @param individualStateListeners
 	 *            the listener for a changing status.

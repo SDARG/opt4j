@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.optimizer.mopso;
 
@@ -43,12 +46,12 @@ import org.opt4j.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link MOPSO} is an implementation of a multi-objective particle swarm optimizer. This implementation is based on
- * the OMOPSO. Thus, this MOPSO is restricted to problems that are based on the {@link DoubleGenotype}.
- * 
- * @see "Improving PSO-based Multi-Objective Optimization using Crowding, Mutation and e-Dominance, M. Reyes Sierra and
- *      C. A. Coello Coello, In Proceedings of Evolutionary Multi-Criterion Optimization, 2005"
- * 
+ * The {@link MOPSO} is an implementation of a multi-objective particle swarm
+ * optimizer, see "Improving PSO-based Multi-Objective Optimization using
+ * Crowding, Mutation and e-Dominance, M. Reyes Sierra and C. A. Coello Coello,
+ * In Proceedings of Evolutionary Multi-Criterion Optimization, 2005". This
+ * implementation is based on the OMOPSO. Thus, this MOPSO is restricted to
+ * problems that are based on the {@link DoubleGenotype}.
  * 
  * @author lukasiewycz
  * 
@@ -166,7 +169,8 @@ public class MOPSO implements IterativeOptimizer {
 	}
 
 	/**
-	 * Determine the new positions for the {@link Particle}s in the {@link Population}.
+	 * Determine the new positions for the {@link Particle}s in the
+	 * {@link Population}.
 	 * 
 	 * @param population
 	 *            the population

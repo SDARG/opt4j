@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.viewer;
 
@@ -34,7 +37,8 @@ import org.opt4j.start.Progress;
 import com.google.inject.Inject;
 
 /**
- * The {@link StatusBar} contains informations about the optimization progress and time per iteration.
+ * The {@link StatusBar} contains informations about the optimization progress
+ * and time per iteration.
  * 
  * @author lukasiewycz
  * 
@@ -133,8 +137,9 @@ public class StatusBar implements OptimizerIterationListener, OptimizerStateList
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete (org.opt4j.core.optimizer.Optimizer,
-	 * int)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete
+	 * (org.opt4j.core.optimizer.Optimizer, int)
 	 */
 	@Override
 	public void iterationComplete(int iteration) {
@@ -149,7 +154,9 @@ public class StatusBar implements OptimizerIterationListener, OptimizerStateList
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerStateListener#optimizationStarted(org .opt4j.core.optimizer.Optimizer)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerStateListener#optimizationStarted(org
+	 * .opt4j.core.optimizer.Optimizer)
 	 */
 	@Override
 	public void optimizationStarted(Optimizer optimizer) {
@@ -158,7 +165,9 @@ public class StatusBar implements OptimizerIterationListener, OptimizerStateList
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerStateListener#optimizationStopped(org .opt4j.core.optimizer.Optimizer)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerStateListener#optimizationStopped(org
+	 * .opt4j.core.optimizer.Optimizer)
 	 */
 	@Override
 	public void optimizationStopped(Optimizer optimizer) {

@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.common.logger;
@@ -31,12 +34,13 @@ import org.opt4j.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link TsvLogger} writes all {@link Individual}s from the {@link Archive} to the specified file. It can be
- * configured to write the data each {@code iterationStep} iterations or each {@code evaluationStep} evaluations.
+ * The {@link TsvLogger} writes all {@link Individual}s from the {@link Archive}
+ * to the specified file. It can be configured to write the data each
+ * {@code iterationStep} iterations or each {@code evaluationStep} evaluations.
  * 
  * The file format is TSV (tab separated values), according to the <a href=
- * "http://www.iana.org/assignments/media-types/text/tab-separated-values" >Definition of tab-separated-values (tsv)</a>
- * by IANA.
+ * "http://www.iana.org/assignments/media-types/text/tab-separated-values"
+ * >Definition of tab-separated-values (tsv)</a> by IANA.
  * 
  * An infeasible Objective is printed as <it>INFEASIBLE</it>.
  * 
@@ -58,9 +62,11 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	 * @param filename
 	 *            the filename (using namespace {@link TsvLogger})
 	 * @param evaluationStep
-	 *            the number of evaluations between two logging events (using namespace {@link TsvLogger})
+	 *            the number of evaluations between two logging events (using
+	 *            namespace {@link TsvLogger})
 	 * @param iterationStep
-	 *            the number of iterations between two logging events (using namespace {@link TsvLogger})
+	 *            the number of iterations between two logging events (using
+	 *            namespace {@link TsvLogger})
 	 */
 	@Inject
 	public TsvLogger(Archive archive, @Constant(value = "filename", namespace = TsvLogger.class) String filename,
@@ -137,7 +143,8 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.common.logger.AbstractLogger#logHeader(java.util.Collection)
+	 * @see
+	 * org.opt4j.common.logger.AbstractLogger#logHeader(java.util.Collection)
 	 */
 	@Override
 	public void logHeader(Collection<Objective> objectives) {
@@ -152,7 +159,8 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * The {@link String} separating two columns.
 	 * 
-	 * The tab character ("\t") is the default, which leads to a tab separated values file format (TSV).
+	 * The tab character ("\t") is the default, which leads to a tab separated
+	 * values file format (TSV).
 	 * 
 	 * @return the delimiter
 	 */
@@ -163,11 +171,13 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * Creates a {@link String} representation of the given {@link Individual}.
 	 * 
-	 * Per default, the {@link Value}s of all {@link Objectives} of the individual, separated by
-	 * {@link #getColumnDelimiter()}, are returned. The {@link String} representation of a {@link Value} must not
-	 * contain the tab character.
+	 * Per default, the {@link Value}s of all {@link Objectives} of the
+	 * individual, separated by {@link #getColumnDelimiter()}, are returned. The
+	 * {@link String} representation of a {@link Value} must not contain the tab
+	 * character.
 	 * 
-	 * If one of the values of the {@link Objectives} is INFEASIBLE, {@code null} is returned.
+	 * If one of the values of the {@link Objectives} is INFEASIBLE,
+	 * {@code null} is returned.
 	 * 
 	 * @see Objective
 	 * @param individual
@@ -201,7 +211,8 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * Statistics for the given {@code iteration} and {@code evaluation}.
 	 * 
-	 * Per default, the iteration, the number of evaluations and the optimization run time in milliseconds, separated by
+	 * Per default, the iteration, the number of evaluations and the
+	 * optimization run time in milliseconds, separated by
 	 * {@link #getColumnDelimiter()}, are returned.
 	 * 
 	 * @param iteration

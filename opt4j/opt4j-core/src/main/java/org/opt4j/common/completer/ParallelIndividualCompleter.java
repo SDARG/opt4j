@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.common.completer;
@@ -33,7 +36,8 @@ import org.opt4j.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link ParallelIndividualCompleter} completes {@link Individual}s with multiple threads.
+ * The {@link ParallelIndividualCompleter} completes {@link Individual}s with
+ * multiple threads.
  * 
  * @author lukasiewycz
  * 
@@ -85,7 +89,8 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	}
 
 	/**
-	 * Constructs a {@link ParallelIndividualCompleter} with a specified maximal number of concurrent threads.
+	 * Constructs a {@link ParallelIndividualCompleter} with a specified maximal
+	 * number of concurrent threads.
 	 * 
 	 * @param control
 	 *            the control
@@ -94,11 +99,11 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	 * @param evaluator
 	 *            the evaluator
 	 * @param maxThreads
-	 *            the maximal number of parallel threads (using namespace {@link ParallelIndividualCompleter})
+	 *            the maximal number of parallel threads (using namespace
+	 *            {@link ParallelIndividualCompleter})
 	 */
 	@Inject
-	public ParallelIndividualCompleter(Control control, Decoder<Genotype, Object> decoder,
-			Evaluator<Object> evaluator,
+	public ParallelIndividualCompleter(Control control, Decoder<Genotype, Object> decoder, Evaluator<Object> evaluator,
 			@Constant(value = "maxThreads", namespace = ParallelIndividualCompleter.class) int maxThreads) {
 		super(control, decoder, evaluator);
 
@@ -111,7 +116,9 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.common.completer.SequentialCompleter#complete(java.lang.Iterable )
+	 * @see
+	 * org.opt4j.common.completer.SequentialCompleter#complete(java.lang.Iterable
+	 * )
 	 */
 	@Override
 	public void complete(Iterable<? extends Individual> iterable) throws TerminationException {
@@ -165,7 +172,9 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerStateListener#optimizationStarted(org .opt4j.core.optimizer.Optimizer)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerStateListener#optimizationStarted(org
+	 * .opt4j.core.optimizer.Optimizer)
 	 */
 	@Override
 	public void optimizationStarted(Optimizer optimizer) {
@@ -175,7 +184,9 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerStateListener#optimizationStopped(org .opt4j.core.optimizer.Optimizer)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerStateListener#optimizationStopped(org
+	 * .opt4j.core.optimizer.Optimizer)
 	 */
 	@Override
 	public void optimizationStopped(Optimizer optimizer) {

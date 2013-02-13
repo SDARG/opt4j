@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.common.archive;
 
@@ -25,19 +25,17 @@ import java.util.Map;
 import org.opt4j.core.Individual;
 
 /**
- * The {@link Crowding} calculates the crowding distance of {@link Individual}s
- * as used for instance in the the {@code Nsga2} algorithm. A bounding box
- * around each individual is defined and restricted by the neighboring
- * individuals in each dimension. The crowding distance is the sum of the
- * side-lengths of the bounding box. If an individual does not have neighbors on
- * all sides, the crowding distance is maximal. A normalization in each
- * dimension is applied.
+ * The {@link Crowding}, see "A fast and elitist multiobjective genetic
+ * algorithm : NSGA-II, K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan
+ * Evolutionary Computation, IEEETransactions on, vol. 6, no. 2, pp. 182-197,
+ * August 2002.", calculates the crowding distance of {@link Individual}s as
+ * used for instance in the the {@code Nsga2} algorithm. A bounding box around
+ * each individual is defined and restricted by the neighboring individuals in
+ * each dimension. The crowding distance is the sum of the side-lengths of the
+ * bounding box. If an individual does not have neighbors on all sides, the
+ * crowding distance is maximal. A normalization in each dimension is applied.
  * 
  * @author lukasiewycz
- * 
- * @see "A fast and elitist multiobjective genetic algorithm : NSGA-II, K. Deb,
- *      A. Pratap, S. Agarwal, and T. Meyarivan Evolutionary Computation,
- *      IEEETransactions on, vol. 6, no. 2, pp. 182-197, August 2002."
  * 
  */
 public class Crowding implements FrontDensityIndicator {

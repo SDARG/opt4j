@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.core;
@@ -16,17 +19,18 @@ import static org.opt4j.core.Objective.Sign.MIN;
 
 /**
  * <p>
- * The {@link Objective} is the identifier for a single objective in the {@link Objectives}. It is specified by the
- * following properties:
+ * The {@link Objective} is the identifier for a single objective in the
+ * {@link Objectives}. It is specified by the following properties:
  * </p>
  * <ul>
  * <li>Name</li>
  * <li>Minimization or Maximization</li>
  * </ul>
  * <p>
- * Each {@link org.opt4j.core.problem.Evaluator} sets a specific amount of {@link Objective}-{@link Value} pairs.
- * Moreover, each {@link org.opt4j.core.problem.Evaluator} has to set the same {@link Objective}s for all
- * {@link Phenotype}s.
+ * Each {@link org.opt4j.core.problem.Evaluator} sets a specific amount of
+ * {@link Objective}-{@link Value} pairs. Moreover, each
+ * {@link org.opt4j.core.problem.Evaluator} has to set the same
+ * {@link Objective}s for all phenotypes.
  * </p>
  * 
  * @see Objectives
@@ -59,7 +63,8 @@ public class Objective implements Comparable<Objective> {
 	protected final String name;
 
 	/**
-	 * Constructs an {@link Objective} with a given name, sign=MIN, and rank=RANK_OBJECTIVE(0).
+	 * Constructs an {@link Objective} with a given name, sign=MIN, and
+	 * rank=RANK_OBJECTIVE(0).
 	 * 
 	 * @param name
 	 *            the name
@@ -69,7 +74,8 @@ public class Objective implements Comparable<Objective> {
 	}
 
 	/**
-	 * Constructs an {@link Objective} with a given name, sign, and rank=RANK_OBJECTIVE(0).
+	 * Constructs an {@link Objective} with a given name, sign, and
+	 * rank=RANK_OBJECTIVE(0).
 	 * 
 	 * @param name
 	 *            the name

@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.common.archive;
@@ -28,15 +28,11 @@ import org.opt4j.core.optimizer.Archive;
 /**
  * This {@link AbstractArchive} provides some common methods for {@link Archive}
  * s. If one or more new {@link Individual}s are added to this {@link Archive},
- * it is assured that all {@link Individual}s in this {@link Archive} are not
- * Pareto-dominated. The methods {@link #add}, {@link #addAll(Collection)}, and
- * {@link #addAll(Individual...)} are implemented such that each dominated
- * Individual is removed from the archive and with the new (unknown)
- * non-dominated {@link Individual}s the method
- * {@link #updateWithNondominated(Collection)} is called. Actual implementations
- * of this class may still refuse or drop some {@link Individual}s. An
- * {@link Archive} can be a {@link BoundedArchive} if it has a bounded size or
- * an {@link UnboundedArchive}, otherwise.
+ * it is ensured that all {@link Individual}s in this {@link Archive} are not
+ * Pareto-dominated. Actual implementations of this class may still refuse or
+ * drop some {@link Individual}s. An {@link Archive} can be a
+ * {@link BoundedArchive} if it has a bounded size or an
+ * {@link UnboundedArchive}, otherwise.
  * 
  * @author helwig, glass, lukasiewycz
  * 

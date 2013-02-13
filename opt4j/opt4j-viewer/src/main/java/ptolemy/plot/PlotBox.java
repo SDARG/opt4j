@@ -1,20 +1,24 @@
 /*
  * A labeled box for signal plots.
  * 
- * @Copyright (c) 1997-2008 The Regents of the University of California. All rights reserved.
+ * @Copyright (c) 1997-2008 The Regents of the University of California. All
+ * rights reserved.
  * 
- * Permission is hereby granted, without written agreement and without license or royalty fees, to use, copy, modify,
- * and distribute this software and its documentation for any purpose, provided that the above copyright notice and the
- * following two paragraphs appear in all copies of this software.
+ * Permission is hereby granted, without written agreement and without license
+ * or royalty fees, to use, copy, modify, and distribute this software and its
+ * documentation for any purpose, provided that the above copyright notice and
+ * the following two paragraphs appear in all copies of this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
- * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
- * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
- * MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
+ * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
+ * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -86,15 +90,17 @@ import ptolemy.util.StringUtilities;
 // // PlotBox
 
 /**
- * This class provides a labeled box within which to place a data plot. A title, X and Y axis labels, tick marks, and a
- * legend are all supported. Zooming in and out is supported. To zoom in, drag the mouse downwards to draw a box. To
+ * This class provides a labeled box within which to place a data plot. A title,
+ * X and Y axis labels, tick marks, and a legend are all supported. Zooming in
+ * and out is supported. To zoom in, drag the mouse downwards to draw a box. To
  * zoom out, drag the mouse upward.
  * <p>
- * The box can be configured either through a file with commands or through direct invocation of the public methods of
- * the class.
+ * The box can be configured either through a file with commands or through
+ * direct invocation of the public methods of the class.
  * <p>
- * When calling the methods, in most cases the changes will not be visible until paintComponent() has been called. To
- * request that this be done, call repaint().
+ * When calling the methods, in most cases the changes will not be visible until
+ * paintComponent() has been called. To request that this be done, call
+ * repaint().
  * <p>
  * A small set of key bindings are provided for convenience. They are:
  * <ul>
@@ -105,23 +111,30 @@ import ptolemy.util.StringUtilities;
  * <li>H or ?: Display a simple help message.
  * <li>Cntrl-D or Q: quit
  * </ul>
- * These commands are provided in a menu by the PlotFrame class. Note that exporting to the clipboard is not allowed in
- * applets (it used to be), so this will result in an error message.
+ * These commands are provided in a menu by the PlotFrame class. Note that
+ * exporting to the clipboard is not allowed in applets (it used to be), so this
+ * will result in an error message.
  * <p>
- * At this time, the two export commands produce encapsulated postscript tuned for black-and-white printers. In the
- * future, more formats may supported. Exporting to the clipboard and to standard output, in theory, is allowed for
- * applets, unlike writing to a file. Thus, these key bindings provide a simple mechanism to obtain a high-resolution
- * image of the plot from an applet, suitable for incorporation in a document. However, in some browsers, exporting to
- * standard out triggers a security violation. You can use the JDK appletviewer instead.
+ * At this time, the two export commands produce encapsulated postscript tuned
+ * for black-and-white printers. In the future, more formats may supported.
+ * Exporting to the clipboard and to standard output, in theory, is allowed for
+ * applets, unlike writing to a file. Thus, these key bindings provide a simple
+ * mechanism to obtain a high-resolution image of the plot from an applet,
+ * suitable for incorporation in a document. However, in some browsers,
+ * exporting to standard out triggers a security violation. You can use the JDK
+ * appletviewer instead.
  * <p>
- * To read commands from a file or URL, the preferred technique is to use one of the classes in the plotml package. That
- * package supports both PlotML, an XML extension for plots, and a historical file format specific to ptplot. The
- * historical file format is understood by the read() method in this class. The syntax of the historical format,
- * documented below, is rudimentary, and will probably not be extended as ptplot evolves. Nonetheless, we document it
- * here since it is directly supported by this class.
+ * To read commands from a file or URL, the preferred technique is to use one of
+ * the classes in the plotml package. That package supports both PlotML, an XML
+ * extension for plots, and a historical file format specific to ptplot. The
+ * historical file format is understood by the read() method in this class. The
+ * syntax of the historical format, documented below, is rudimentary, and will
+ * probably not be extended as ptplot evolves. Nonetheless, we document it here
+ * since it is directly supported by this class.
  * <p>
- * The historical format for the file allows any number commands, one per line. Unrecognized commands and commands with
- * syntax errors are ignored. Comments are denoted by a line starting with a pound sign "#". The recognized commands
+ * The historical format for the file allows any number commands, one per line.
+ * Unrecognized commands and commands with syntax errors are ignored. Comments
+ * are denoted by a line starting with a pound sign "#". The recognized commands
  * include:
  * 
  * <pre>
@@ -130,9 +143,11 @@ import ptolemy.util.StringUtilities;
  *  YLabel: &lt;i&gt;string&lt;/i&gt;
  * </pre>
  * 
- * These commands provide a title and labels for the X (horizontal) and Y (vertical) axes. A <i>string</i> is simply a
- * sequence of characters, possibly including spaces. There is no need here to surround them with quotation marks, and
- * in fact, if you do, the quotation marks will be included in the labels.
+ * These commands provide a title and labels for the X (horizontal) and Y
+ * (vertical) axes. A <i>string</i> is simply a sequence of characters, possibly
+ * including spaces. There is no need here to surround them with quotation
+ * marks, and in fact, if you do, the quotation marks will be included in the
+ * labels.
  * <p>
  * The ranges of the X and Y axes can be optionally given by commands like:
  * 
@@ -141,22 +156,26 @@ import ptolemy.util.StringUtilities;
  *  YRange: &lt;i&gt;min&lt;/i&gt;, &lt;i&gt;max&lt;/i&gt;
  * </pre>
  * 
- * The arguments <i>min</i> and <i>max</i> are numbers, possibly including a sign and a decimal point. If they are not
- * specified, then the ranges are computed automatically from the data and padded slightly so that datapoints are not
- * plotted on the axes.
+ * The arguments <i>min</i> and <i>max</i> are numbers, possibly including a
+ * sign and a decimal point. If they are not specified, then the ranges are
+ * computed automatically from the data and padded slightly so that datapoints
+ * are not plotted on the axes.
  * <p>
- * The tick marks for the axes are usually computed automatically from the ranges. Every attempt is made to choose
- * reasonable positions for the tick marks regardless of the data ranges (powers of ten multiplied by 1, 2, or 5 are
- * used). However, they can also be specified explicitly using commands like:
+ * The tick marks for the axes are usually computed automatically from the
+ * ranges. Every attempt is made to choose reasonable positions for the tick
+ * marks regardless of the data ranges (powers of ten multiplied by 1, 2, or 5
+ * are used). However, they can also be specified explicitly using commands
+ * like:
  * 
  * <pre>
  * XTicks: &lt;i&gt;label position, label position, ...&lt;/i&gt;
  *  YTicks: &lt;i&gt;label position, label position, ...&lt;/i&gt;
  * </pre>
  * 
- * A <i>label</i> is a string that must be surrounded by quotation marks if it contains any spaces. A <i>position</i> is
- * a number giving the location of the tick mark along the axis. For example, a horizontal axis for a frequency domain
- * plot might have tick marks as follows:
+ * A <i>label</i> is a string that must be surrounded by quotation marks if it
+ * contains any spaces. A <i>position</i> is a number giving the location of the
+ * tick mark along the axis. For example, a horizontal axis for a frequency
+ * domain plot might have tick marks as follows:
  * 
  * <pre>
  * XTicks: -PI -3.14159, -PI/2 -1.570795, 0 0, PI/2 1.570795, PI 3.14159
@@ -171,8 +190,9 @@ import ptolemy.util.StringUtilities;
  *  YLog: on
  * </pre>
  * 
- * The grid labels represent powers of 10. Note that if a logarithmic scale is used, then the values must be positive.
- * Non-positive values will be silently dropped. Note further that when using logarithmic axes that the log of input
+ * The grid labels represent powers of 10. Note that if a logarithmic scale is
+ * used, then the values must be positive. Non-positive values will be silently
+ * dropped. Note further that when using logarithmic axes that the log of input
  * data is taken as the data is added to the plot. This means that
  * 
  * <pre>
@@ -185,8 +205,8 @@ import ptolemy.util.StringUtilities;
  * YLog: on
  * </pre>
  * 
- * should appear before any data. Also, the value of the XTicks, YTicks, XRange or YRange directives should be in log
- * units. So,
+ * should appear before any data. Also, the value of the XTicks, YTicks, XRange
+ * or YRange directives should be in log units. So,
  * 
  * <pre>
  * XTicks: 1K 3
@@ -200,8 +220,8 @@ import ptolemy.util.StringUtilities;
  * 
  * at the 1000 mark.
  * <p>
- * By default, tick marks are connected by a light grey background grid. This grid can be turned off with the following
- * command:
+ * By default, tick marks are connected by a light grey background grid. This
+ * grid can be turned off with the following command:
  * 
  * <pre>
  * Grid: off
@@ -213,8 +233,8 @@ import ptolemy.util.StringUtilities;
  * Grid: on
  * </pre>
  * 
- * Also, by default, the first ten data sets are shown each in a unique color. The use of color can be turned off with
- * the command:
+ * Also, by default, the first ten data sets are shown each in a unique color.
+ * The use of color can be turned off with the command:
  * 
  * <pre>
  * Color: off
@@ -232,20 +252,24 @@ import ptolemy.util.StringUtilities;
  * Wrap: on
  * </pre>
  * 
- * enables wrapping of the X (horizontal) axis, which means that if a point is added with X out of range, its X value
- * will be modified modulo the range so that it lies in range. This command only has an effect if the X range has been
- * set explicitly. It is designed specifically to support oscilloscope-like behavior, where the X value of points is
- * increasing, but the display wraps it around to left. A point that lands on the right edge of the X range is repeated
- * on the left edge to give a better sense of continuity. The feature works best when points do land precisely on the
- * edge, and are plotted from left to right, increasing in X.
+ * enables wrapping of the X (horizontal) axis, which means that if a point is
+ * added with X out of range, its X value will be modified modulo the range so
+ * that it lies in range. This command only has an effect if the X range has
+ * been set explicitly. It is designed specifically to support oscilloscope-like
+ * behavior, where the X value of points is increasing, but the display wraps it
+ * around to left. A point that lands on the right edge of the X range is
+ * repeated on the left edge to give a better sense of continuity. The feature
+ * works best when points do land precisely on the edge, and are plotted from
+ * left to right, increasing in X.
  * <p>
- * All of the above commands can also be invoked directly by calling the the corresponding public methods from some Java
- * procedure.
+ * All of the above commands can also be invoked directly by calling the the
+ * corresponding public methods from some Java procedure.
  * <p>
- * This class uses features of JDK 1.2, and hence if used in an applet, it can only be viewed by a browser that supports
- * JDK 1.2, or a plugin.
+ * This class uses features of JDK 1.2, and hence if used in an applet, it can
+ * only be viewed by a browser that supports JDK 1.2, or a plugin.
  * 
- * @author Edward A. Lee, Christopher Brooks, Contributors: Jun Wu (jwu@inin.com.au), William Wu, Robert Kroeger
+ * @author Edward A. Lee, Christopher Brooks, Contributors: Jun Wu
+ *         (jwu@inin.com.au), William Wu, Robert Kroeger
  * @version $Id: PlotBox.java,v 1.283.4.3 2008/04/01 01:19:02 cxh Exp $
  * @since Ptolemy II 0.2
  * @Pt.ProposedRating Yellow (cxh)
@@ -284,8 +308,10 @@ public class PlotBox extends JPanel implements Printable {
 	// // public methods ////
 
 	/**
-	 * Add a legend (displayed at the upper right) for the specified data set with the specified string. Short strings
-	 * generally fit better than long strings. If the string is empty, or the argument is null, then no legend is added.
+	 * Add a legend (displayed at the upper right) for the specified data set
+	 * with the specified string. Short strings generally fit better than long
+	 * strings. If the string is empty, or the argument is null, then no legend
+	 * is added.
 	 * 
 	 * @param dataset
 	 *            The dataset index.
@@ -306,9 +332,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Specify a tick mark for the X axis. The label given is placed on the axis at the position given by
-	 * <i>position</i>. If this is called once or more, automatic generation of tick marks is disabled. The tick mark
-	 * will appear only if it is within the X range.
+	 * Specify a tick mark for the X axis. The label given is placed on the axis
+	 * at the position given by <i>position</i>. If this is called once or more,
+	 * automatic generation of tick marks is disabled. The tick mark will appear
+	 * only if it is within the X range.
 	 * 
 	 * @param label
 	 *            The label for the tick mark.
@@ -329,9 +356,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Specify a tick mark for the Y axis. The label given is placed on the axis at the position given by
-	 * <i>position</i>. If this is called once or more, automatic generation of tick marks is disabled. The tick mark
-	 * will appear only if it is within the Y range.
+	 * Specify a tick mark for the Y axis. The label given is placed on the axis
+	 * at the position given by <i>position</i>. If this is called once or more,
+	 * automatic generation of tick marks is disabled. The tick mark will appear
+	 * only if it is within the Y range.
 	 * 
 	 * @param label
 	 *            The label for the tick mark.
@@ -352,8 +380,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * If the argument is true, clear the axes. I.e., set all parameters controlling the axes to their initial
-	 * conditions. For the change to take effect, call repaint(). If the argument is false, do nothing.
+	 * If the argument is true, clear the axes. I.e., set all parameters
+	 * controlling the axes to their initial conditions. For the change to take
+	 * effect, call repaint(). If the argument is false, do nothing.
 	 * 
 	 * @param axes
 	 *            If true, clear the axes parameters.
@@ -410,13 +439,16 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * If this method is called in the event thread, then simply execute the specified action. Otherwise, if there are
-	 * already deferred actions, then add the specified one to the list. Otherwise, create a list of deferred actions,
-	 * if necessary, and request that the list be processed in the event dispatch thread.
+	 * If this method is called in the event thread, then simply execute the
+	 * specified action. Otherwise, if there are already deferred actions, then
+	 * add the specified one to the list. Otherwise, create a list of deferred
+	 * actions, if necessary, and request that the list be processed in the
+	 * event dispatch thread.
 	 * 
-	 * Note that it does not work nearly as well to simply schedule the action yourself on the event thread because if
-	 * there are a large number of actions, then the event thread will not be able to keep up. By grouping these
-	 * actions, we avoid this problem.
+	 * Note that it does not work nearly as well to simply schedule the action
+	 * yourself on the event thread because if there are a large number of
+	 * actions, then the event thread will not be able to keep up. By grouping
+	 * these actions, we avoid this problem.
 	 * 
 	 * This method is not synchronized, so the caller should be.
 	 * 
@@ -462,10 +494,11 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Export a description of the plot. Currently, only EPS is supported. But in the future, this may cause a dialog
-	 * box to open to allow the user to select a format. If the argument is null, then the description goes to the
-	 * clipboard. Otherwise, it goes to the specified file. To send it to standard output, use <code>System.out</code>
-	 * as an argument.
+	 * Export a description of the plot. Currently, only EPS is supported. But
+	 * in the future, this may cause a dialog box to open to allow the user to
+	 * select a format. If the argument is null, then the description goes to
+	 * the clipboard. Otherwise, it goes to the specified file. To send it to
+	 * standard output, use <code>System.out</code> as an argument.
 	 * 
 	 * @param out
 	 *            An output stream to which to send the description.
@@ -494,9 +527,10 @@ public class PlotBox extends JPanel implements Printable {
 	// coding style.
 
 	/**
-	 * Create a BufferedImage and draw this plot to it. The size of the returned image matches the current size of the
-	 * plot. This method can be used, for example, by a servlet to produce an image, rather than requiring an applet to
-	 * instantiate a PlotBox.
+	 * Create a BufferedImage and draw this plot to it. The size of the returned
+	 * image matches the current size of the plot. This method can be used, for
+	 * example, by a servlet to produce an image, rather than requiring an
+	 * applet to instantiate a PlotBox.
 	 * 
 	 * @return An image filled by the plot.
 	 */
@@ -507,12 +541,14 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Create a BufferedImage the size of the given rectangle and draw this plot to it at the position specified by the
-	 * rectangle. The plot is rendered using anti-aliasing.
+	 * Create a BufferedImage the size of the given rectangle and draw this plot
+	 * to it at the position specified by the rectangle. The plot is rendered
+	 * using anti-aliasing.
 	 * 
 	 * @param rectangle
-	 *            The size of the plot. This method can be used, for example, by a servlet to produce an image, rather
-	 *            than requiring an applet to instantiate a PlotBox.
+	 *            The size of the plot. This method can be used, for example, by
+	 *            a servlet to produce an image, rather than requiring an applet
+	 *            to instantiate a PlotBox.
 	 * @return An image containing the plot.
 	 */
 	public synchronized BufferedImage exportImage(Rectangle rectangle) {
@@ -521,10 +557,12 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Draw this plot onto the specified image at the position of the specified rectangle with the size of the specified
-	 * rectangle. The plot is rendered using anti-aliasing. This can be used to paint a number of different plots onto a
-	 * single buffered image. This method can be used, for example, by a servlet to produce an image, rather than
-	 * requiring an applet to instantiate a PlotBox.
+	 * Draw this plot onto the specified image at the position of the specified
+	 * rectangle with the size of the specified rectangle. The plot is rendered
+	 * using anti-aliasing. This can be used to paint a number of different
+	 * plots onto a single buffered image. This method can be used, for example,
+	 * by a servlet to produce an image, rather than requiring an applet to
+	 * instantiate a PlotBox.
 	 * 
 	 * @param bufferedImage
 	 *            Image onto which the plot is drawn.
@@ -533,7 +571,8 @@ public class PlotBox extends JPanel implements Printable {
 	 * @param hints
 	 *            Rendering hints for this plot.
 	 * @param transparent
-	 *            Indicator that the background of the plot should not be painted.
+	 *            Indicator that the background of the plot should not be
+	 *            painted.
 	 * @return The modified bufferedImage.
 	 */
 	public synchronized BufferedImage exportImage(BufferedImage bufferedImage, Rectangle rectangle,
@@ -551,10 +590,12 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Draw this plot onto the provided image. This method does not paint the background, so the plot is transparent.
-	 * The plot fills the image, and is rendered using anti-aliasing. This method can be used to overlay multiple plots
-	 * on the same image, although you must use care to ensure that the axes and other labels are identical. Hence, it
-	 * is usually better to simply combine data sets into a single plot.
+	 * Draw this plot onto the provided image. This method does not paint the
+	 * background, so the plot is transparent. The plot fills the image, and is
+	 * rendered using anti-aliasing. This method can be used to overlay multiple
+	 * plots on the same image, although you must use care to ensure that the
+	 * axes and other labels are identical. Hence, it is usually better to
+	 * simply combine data sets into a single plot.
 	 * 
 	 * @param bufferedImage
 	 *            The image onto which to render the plot.
@@ -566,9 +607,11 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Rescale so that the data that is currently plotted just fits. This is done based on the protected variables
-	 * _xBottom, _xTop, _yBottom, and _yTop. It is up to derived classes to ensure that variables are valid. This method
-	 * calls repaint(), which eventually causes the display to be updated.
+	 * Rescale so that the data that is currently plotted just fits. This is
+	 * done based on the protected variables _xBottom, _xTop, _yBottom, and
+	 * _yTop. It is up to derived classes to ensure that variables are valid.
+	 * This method calls repaint(), which eventually causes the display to be
+	 * updated.
 	 */
 	public synchronized void fillPlot() {
 		// NOTE: These used to be _setXRange() and _setYRange() to avoid
@@ -604,8 +647,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Convert a color name into a Color. Currently, only a very limited set of color names is supported: black, white,
-	 * red, green, and blue.
+	 * Convert a color name into a Color. Currently, only a very limited set of
+	 * color names is supported: black, white, red, green, and blue.
 	 * 
 	 * @param name
 	 *            A color name, or null if not found.
@@ -643,7 +686,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the file specification that was given by setDataurl. This method is deprecated. Use read() instead.
+	 * Get the file specification that was given by setDataurl. This method is
+	 * deprecated. Use read() instead.
 	 * 
 	 * @deprecated
 	 */
@@ -653,7 +697,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the document base that was set by setDocumentBase. This method is deprecated. Use read() instead.
+	 * Get the document base that was set by setDocumentBase. This method is
+	 * deprecated. Use read() instead.
 	 * 
 	 * @deprecated
 	 */
@@ -672,7 +717,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the legend for a dataset, or null if there is none. The legend would have been set by addLegend().
+	 * Get the legend for a dataset, or null if there is none. The legend would
+	 * have been set by addLegend().
 	 * 
 	 * @param dataset
 	 *            The dataset index.
@@ -688,8 +734,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Given a legend string, return the corresponding dataset or -1 if no legend was added with that legend string The
-	 * legend would have been set by addLegend().
+	 * Given a legend string, return the corresponding dataset or -1 if no
+	 * legend was added with that legend string The legend would have been set
+	 * by addLegend().
 	 * 
 	 * @param legend
 	 *            The String naming the legend
@@ -707,9 +754,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * If the size of the plot has been set by setSize(), then return that size. Otherwise, return what the superclass
-	 * returns (which is undocumented, but apparently imposes no maximum size). Currently (JDK 1.3), only BoxLayout pays
-	 * any attention to this.
+	 * If the size of the plot has been set by setSize(), then return that size.
+	 * Otherwise, return what the superclass returns (which is undocumented, but
+	 * apparently imposes no maximum size). Currently (JDK 1.3), only BoxLayout
+	 * pays any attention to this.
 	 * 
 	 * @return The maximum desired size.
 	 */
@@ -722,8 +770,9 @@ public class PlotBox extends JPanel implements Printable {
 	// }
 	// }
 	/**
-	 * Get the minimum size of this component. This is simply the dimensions specified by setSize(), if this has been
-	 * called. Otherwise, return whatever the base class returns, which is undocumented.
+	 * Get the minimum size of this component. This is simply the dimensions
+	 * specified by setSize(), if this has been called. Otherwise, return
+	 * whatever the base class returns, which is undocumented.
 	 * 
 	 * @return The minimum size.
 	 */
@@ -736,9 +785,11 @@ public class PlotBox extends JPanel implements Printable {
 	// }
 	// }
 	/**
-	 * Get the current plot rectangle. Note that Rectangle returned by this method is calculated from the values of
-	 * {@link #_ulx}, {@link #_uly}, {@link #_lrx} and {@link #_lry}. The value passed in by setPlotRectangle() is not
-	 * directly used, thus calling getPlotRectangle() may not return the same rectangle that was passed in with
+	 * Get the current plot rectangle. Note that Rectangle returned by this
+	 * method is calculated from the values of {@link #_ulx}, {@link #_uly},
+	 * {@link #_lrx} and {@link #_lry}. The value passed in by
+	 * setPlotRectangle() is not directly used, thus calling getPlotRectangle()
+	 * may not return the same rectangle that was passed in with
 	 * setPlotRectangle().
 	 * 
 	 * @return Rectangle
@@ -749,8 +800,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the preferred size of this component. This is simply the dimensions specified by setSize(), if this has been
-	 * called, or the default width and height otherwise (500 by 300).
+	 * Get the preferred size of this component. This is simply the dimensions
+	 * specified by setSize(), if this has been called, or the default width and
+	 * height otherwise (500 by 300).
 	 * 
 	 * @return The preferred size.
 	 */
@@ -773,10 +825,12 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the range for X values of the data points registered so far. Usually, derived classes handle managing the
-	 * range by checking each new point against the current range.
+	 * Get the range for X values of the data points registered so far. Usually,
+	 * derived classes handle managing the range by checking each new point
+	 * against the current range.
 	 * 
-	 * @return An array of two doubles where the first element is the minimum and the second element is the maximum.
+	 * @return An array of two doubles where the first element is the minimum
+	 *         and the second element is the maximum.
 	 * @see #getXRange()
 	 */
 	public synchronized double[] getXAutoRange() {
@@ -805,11 +859,14 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the X range. If {@link #setXRange(double, double)} has been called, then this method returns the values
-	 * passed in as arguments to setXRange(double, double). If setXRange(double, double) has not been called, then this
-	 * method returns the range of the data to be plotted, which might not be all of the data due to zooming.
+	 * Get the X range. If {@link #setXRange(double, double)} has been called,
+	 * then this method returns the values passed in as arguments to
+	 * setXRange(double, double). If setXRange(double, double) has not been
+	 * called, then this method returns the range of the data to be plotted,
+	 * which might not be all of the data due to zooming.
 	 * 
-	 * @return An array of two doubles where the first element is the minimum and the second element is the maximum.
+	 * @return An array of two doubles where the first element is the minimum
+	 *         and the second element is the maximum.
 	 * @see #getXAutoRange()
 	 */
 	public synchronized double[] getXRange() {
@@ -828,9 +885,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the X ticks that have been specified, or null if none. The return value is an array with two vectors, the
-	 * first of which specifies the X tick locations (as instances of Double), and the second of which specifies the
-	 * corresponding labels.
+	 * Get the X ticks that have been specified, or null if none. The return
+	 * value is an array with two vectors, the first of which specifies the X
+	 * tick locations (as instances of Double), and the second of which
+	 * specifies the corresponding labels.
 	 * 
 	 * @return The X ticks.
 	 */
@@ -846,10 +904,12 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the range for Y values of the data points registered so far. Usually, derived classes handle managing the
-	 * range by checking each new point against the range.
+	 * Get the range for Y values of the data points registered so far. Usually,
+	 * derived classes handle managing the range by checking each new point
+	 * against the range.
 	 * 
-	 * @return An array of two doubles where the first element is the minimum and the second element is the maximum.
+	 * @return An array of two doubles where the first element is the minimum
+	 *         and the second element is the maximum.
 	 * @see #getYRange()
 	 */
 	public synchronized double[] getYAutoRange() {
@@ -878,11 +938,14 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the Y range. If {@link #setYRange(double, double)} has been called, then this method returns the values
-	 * passed in as arguments to setYRange(double, double). If setYRange(double, double) has not been called, then this
-	 * method returns the range of the data to be plotted, which might not be all of the data due to zooming.
+	 * Get the Y range. If {@link #setYRange(double, double)} has been called,
+	 * then this method returns the values passed in as arguments to
+	 * setYRange(double, double). If setYRange(double, double) has not been
+	 * called, then this method returns the range of the data to be plotted,
+	 * which might not be all of the data due to zooming.
 	 * 
-	 * @return An array of two doubles where the first element is the minimum and the second element is the maximum.
+	 * @return An array of two doubles where the first element is the minimum
+	 *         and the second element is the maximum.
 	 * @see #getYAutoRange()
 	 */
 	public synchronized double[] getYRange() {
@@ -902,9 +965,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Get the Y ticks that have been specified, or null if none. The return value is an array with two vectors, the
-	 * first of which specifies the Y tick locations (as instances of Double), and the second of which specifies the
-	 * corresponding labels.
+	 * Get the Y ticks that have been specified, or null if none. The return
+	 * value is an array with two vectors, the first of which specifies the Y
+	 * tick locations (as instances of Double), and the second of which
+	 * specifies the corresponding labels.
 	 * 
 	 * @return The Y ticks.
 	 */
@@ -920,8 +984,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Initialize the component, creating the fill button and parsing an input file, if one has been specified. This is
-	 * deprecated. Call setButtons() and read() instead.
+	 * Initialize the component, creating the fill button and parsing an input
+	 * file, if one has been specified. This is deprecated. Call setButtons()
+	 * and read() instead.
 	 * 
 	 * @deprecated
 	 */
@@ -967,8 +1032,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Syntactic sugar for parseFile(filespec, documentBase). This method is deprecated. Use read() to read the old file
-	 * format, or use one of the classes in the plotml package to read the XML-based file format.
+	 * Syntactic sugar for parseFile(filespec, documentBase). This method is
+	 * deprecated. Use read() to read the old file format, or use one of the
+	 * classes in the plotml package to read the XML-based file format.
 	 * 
 	 * @deprecated
 	 */
@@ -1062,7 +1128,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Print the plot to a printer, represented by the specified graphics object.
+	 * Print the plot to a printer, represented by the specified graphics
+	 * object.
 	 * 
 	 * @param graphics
 	 *            The context into which the page is drawn.
@@ -1070,8 +1137,8 @@ public class PlotBox extends JPanel implements Printable {
 	 *            The size and orientation of the page being drawn.
 	 * @param index
 	 *            The zero based index of the page to be drawn.
-	 * @return PAGE_EXISTS if the page is rendered successfully, or NO_SUCH_PAGE if pageIndex specifies a non-existent
-	 *         page.
+	 * @return PAGE_EXISTS if the page is rendered successfully, or NO_SUCH_PAGE
+	 *         if pageIndex specifies a non-existent page.
 	 * @exception PrinterException
 	 *                If the print job is terminated.
 	 */
@@ -1101,8 +1168,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Read commands and/or plot data from an input stream in the old (non-XML) file syntax. To update the display, call
-	 * repaint(), or make the plot visible with setVisible(true).
+	 * Read commands and/or plot data from an input stream in the old (non-XML)
+	 * file syntax. To update the display, call repaint(), or make the plot
+	 * visible with setVisible(true).
 	 * <p>
 	 * To read from standard input, use:
 	 * 
@@ -1168,7 +1236,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Read a single line command provided as a string. The commands can be any of those in the ASCII file format.
+	 * Read a single line command provided as a string. The commands can be any
+	 * of those in the ASCII file format.
 	 * 
 	 * @param command
 	 *            A command.
@@ -1178,8 +1247,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Remove the legend (displayed at the upper right) for the specified data set. If the dataset is not found, nothing
-	 * will occur. The PlotBox must be repainted in order for this to take effect.
+	 * Remove the legend (displayed at the upper right) for the specified data
+	 * set. If the dataset is not found, nothing will occur. The PlotBox must be
+	 * repainted in order for this to take effect.
 	 * 
 	 * @param dataset
 	 *            The dataset index.
@@ -1206,7 +1276,8 @@ public class PlotBox extends JPanel implements Printable {
 	 * Rename a legend.
 	 * 
 	 * @param dataset
-	 *            The dataset of the legend to be renamed. If there is no dataset with this value, then nothing happens.
+	 *            The dataset of the legend to be renamed. If there is no
+	 *            dataset with this value, then nothing happens.
 	 * @param newName
 	 *            The new name of legend.
 	 * @see #addLegend(int, String)
@@ -1223,9 +1294,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Reset the X and Y axes to the ranges that were first specified using setXRange() and setYRange(). If these
-	 * methods have not been called, then reset to the default ranges. This method calls repaint(), which eventually
-	 * causes the display to be updated.
+	 * Reset the X and Y axes to the ranges that were first specified using
+	 * setXRange() and setYRange(). If these methods have not been called, then
+	 * reset to the default ranges. This method calls repaint(), which
+	 * eventually causes the display to be updated.
 	 */
 	public synchronized void resetAxes() {
 		setXRange(_originalXlow, _originalXhigh);
@@ -1234,7 +1306,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Do nothing in this base class. Derived classes might want to override this class to give an example of their use.
+	 * Do nothing in this base class. Derived classes might want to override
+	 * this class to give an example of their use.
 	 */
 	public void samplePlot() {
 		// Empty default implementation.
@@ -1256,8 +1329,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Move and resize this component. The new location of the top-left corner is specified by x and y, and the new size
-	 * is specified by width and height. This overrides the base class method to make a record of the new size.
+	 * Move and resize this component. The new location of the top-left corner
+	 * is specified by x and y, and the new size is specified by width and
+	 * height. This overrides the base class method to make a record of the new
+	 * size.
 	 * 
 	 * @param x
 	 *            The new x-coordinate of this component.
@@ -1280,11 +1355,14 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * If the argument is true, make a fill button visible at the upper right. This button auto-scales the plot. NOTE:
-	 * The button may infringe on the title space, if the title is long. In an application, it is preferable to provide
-	 * a menu with the fill command. This way, when printing the plot, the printed plot will not have a spurious button.
-	 * Thus, this method should be used only by applets, which normally do not have menus. This method should only be
-	 * called from within the event dispatch thread, since it interacts with swing.
+	 * If the argument is true, make a fill button visible at the upper right.
+	 * This button auto-scales the plot. NOTE: The button may infringe on the
+	 * title space, if the title is long. In an application, it is preferable to
+	 * provide a menu with the fill command. This way, when printing the plot,
+	 * the printed plot will not have a spurious button. Thus, this method
+	 * should be used only by applets, which normally do not have menus. This
+	 * method should only be called from within the event dispatch thread, since
+	 * it interacts with swing.
 	 */
 	public synchronized void setButtons(boolean visible) {
 		// Changing legend means we need to repaint the offscreen buffer.
@@ -1417,8 +1495,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * If the argument is false, draw the plot without using color (in black and white). Otherwise, draw it in color
-	 * (the default).
+	 * If the argument is false, draw the plot without using color (in black and
+	 * white). Otherwise, draw it in color (the default).
 	 * 
 	 * @param useColor
 	 *            False to draw in back and white.
@@ -1431,8 +1509,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the point colors. Note that the default colors have been carefully selected to maximize readability and that
-	 * it is easy to use colors that result in a very ugly plot.
+	 * Set the point colors. Note that the default colors have been carefully
+	 * selected to maximize readability and that it is easy to use colors that
+	 * result in a very ugly plot.
 	 * 
 	 * @param colors
 	 *            Array of colors to use in succession for data sets.
@@ -1446,7 +1525,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the file to read when init() is called. This method is deprecated. Use read() instead.
+	 * Set the file to read when init() is called. This method is deprecated.
+	 * Use read() instead.
 	 * 
 	 * @deprecated
 	 */
@@ -1456,7 +1536,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the document base to used when init() is called to read a URL. This method is deprecated. Use read() instead.
+	 * Set the document base to used when init() is called to read a URL. This
+	 * method is deprecated. Use read() instead.
 	 * 
 	 * @deprecated
 	 */
@@ -1494,8 +1575,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the label font, which is used for axis labels and legend labels. The font names understood are those
-	 * understood by java.awt.Font.decode().
+	 * Set the label font, which is used for axis labels and legend labels. The
+	 * font names understood are those understood by java.awt.Font.decode().
 	 * 
 	 * @param name
 	 *            A font name.
@@ -1508,7 +1589,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the plot rectangle inside the axes. This method can be used to create two plots that share the same axes.
+	 * Set the plot rectangle inside the axes. This method can be used to create
+	 * two plots that share the same axes.
 	 * 
 	 * @param rectangle
 	 *            Rectangle space inside axes.
@@ -1522,11 +1604,13 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the size of the plot. This overrides the base class to make it work. In particular, it records the specified
-	 * size so that getMinimumSize() and getPreferredSize() return the specified value. However, it only works if the
-	 * plot is placed in its own JPanel. This is because the JPanel asks the contained component for its preferred size
-	 * before determining the size of the panel. If the plot is placed directly in the content pane of a JApplet, then,
-	 * mysteriously, this method has no effect.
+	 * Set the size of the plot. This overrides the base class to make it work.
+	 * In particular, it records the specified size so that getMinimumSize() and
+	 * getPreferredSize() return the specified value. However, it only works if
+	 * the plot is placed in its own JPanel. This is because the JPanel asks the
+	 * contained component for its preferred size before determining the size of
+	 * the panel. If the plot is placed directly in the content pane of a
+	 * JApplet, then, mysteriously, this method has no effect.
 	 * 
 	 * @param width
 	 *            The width, in pixels.
@@ -1561,7 +1645,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the title font. The font names understood are those understood by java.awt.Font.decode().
+	 * Set the title font. The font names understood are those understood by
+	 * java.awt.Font.decode().
 	 * 
 	 * @param name
 	 *            A font name.
@@ -1574,10 +1659,11 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Specify whether the X axis is wrapped. If it is, then X values that are out of range are remapped to be in range
-	 * using modulo arithmetic. The X range is determined by the most recent call to setXRange() (or the most recent
-	 * zoom). If the X range has not been set, then use the default X range, or if data has been plotted, then the
-	 * current fill range.
+	 * Specify whether the X axis is wrapped. If it is, then X values that are
+	 * out of range are remapped to be in range using modulo arithmetic. The X
+	 * range is determined by the most recent call to setXRange() (or the most
+	 * recent zoom). If the X range has not been set, then use the default X
+	 * range, or if data has been plotted, then the current fill range.
 	 * 
 	 * @param wrap
 	 *            If true, wrapping of the X axis is enabled.
@@ -1615,8 +1701,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Specify whether the X axis is drawn with a logarithmic scale. If you would like to have the X axis drawn with a
-	 * logarithmic axis, then setXLog(true) should be called before adding any data points.
+	 * Specify whether the X axis is drawn with a logarithmic scale. If you
+	 * would like to have the X axis drawn with a logarithmic axis, then
+	 * setXLog(true) should be called before adding any data points.
 	 * 
 	 * @param xlog
 	 *            If true, logarithmic axis is used.
@@ -1629,8 +1716,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the X (horizontal) range of the plot. If this is not done explicitly, then the range is computed
-	 * automatically from data available when the plot is drawn. If min and max are identical, then the range is
+	 * Set the X (horizontal) range of the plot. If this is not done explicitly,
+	 * then the range is computed automatically from data available when the
+	 * plot is drawn. If min and max are identical, then the range is
 	 * arbitrarily spread by 1.
 	 * 
 	 * @param min
@@ -1664,8 +1752,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Specify whether the Y axis is drawn with a logarithmic scale. If you would like to have the Y axis drawn with a
-	 * logarithmic axis, then setYLog(true) should be called before adding any data points.
+	 * Specify whether the Y axis is drawn with a logarithmic scale. If you
+	 * would like to have the Y axis drawn with a logarithmic axis, then
+	 * setYLog(true) should be called before adding any data points.
 	 * 
 	 * @param ylog
 	 *            If true, logarithmic axis is used.
@@ -1678,9 +1767,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the Y (vertical) range of the plot. If this is not done explicitly, then the range is computed automatically
-	 * from data available when the plot is drawn. If min and max are identical, then the range is arbitrarily spread by
-	 * 0.1.
+	 * Set the Y (vertical) range of the plot. If this is not done explicitly,
+	 * then the range is computed automatically from data available when the
+	 * plot is drawn. If min and max are identical, then the range is
+	 * arbitrarily spread by 0.1.
 	 * 
 	 * @param min
 	 *            The bottom extent of the range.
@@ -1700,11 +1790,13 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Write the current data and plot configuration to the specified stream in PlotML syntax. PlotML is an XML
-	 * extension for plot data. The written information is standalone, in that it includes the DTD (document type
-	 * definition). This makes is somewhat verbose. To get smaller files, use the two argument version of write(). The
-	 * output is buffered, and is flushed and closed before exiting. Derived classes should override writeFormat and
-	 * writeData rather than this method.
+	 * Write the current data and plot configuration to the specified stream in
+	 * PlotML syntax. PlotML is an XML extension for plot data. The written
+	 * information is standalone, in that it includes the DTD (document type
+	 * definition). This makes is somewhat verbose. To get smaller files, use
+	 * the two argument version of write(). The output is buffered, and is
+	 * flushed and closed before exiting. Derived classes should override
+	 * writeFormat and writeData rather than this method.
 	 * 
 	 * @param out
 	 *            An output stream.
@@ -1714,33 +1806,40 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Write the current data and plot configuration to the specified stream in PlotML syntax. PlotML is an XML scheme
-	 * for plot data. The URL (relative or absolute) for the DTD is given as the second argument. If that argument is
-	 * null, then the PlotML PUBLIC DTD is referenced, resulting in a file that can be read by a PlotML parser without
-	 * any external file references, as long as that parser has local access to the DTD. The output is buffered, and is
-	 * flushed and closed before exiting. Derived classes should override writeFormat and writeData rather than this
+	 * Write the current data and plot configuration to the specified stream in
+	 * PlotML syntax. PlotML is an XML scheme for plot data. The URL (relative
+	 * or absolute) for the DTD is given as the second argument. If that
+	 * argument is null, then the PlotML PUBLIC DTD is referenced, resulting in
+	 * a file that can be read by a PlotML parser without any external file
+	 * references, as long as that parser has local access to the DTD. The
+	 * output is buffered, and is flushed and closed before exiting. Derived
+	 * classes should override writeFormat and writeData rather than this
 	 * method.
 	 * 
 	 * @param out
 	 *            An output stream.
 	 * @param dtd
-	 *            The reference (URL) for the DTD, or null to use the PUBLIC DTD.
+	 *            The reference (URL) for the DTD, or null to use the PUBLIC
+	 *            DTD.
 	 */
 	public synchronized void write(OutputStream out, String dtd) {
 		write(new OutputStreamWriter(out), dtd);
 	}
 
 	/**
-	 * Write the current data and plot configuration to the specified stream in PlotML syntax. PlotML is an XML scheme
-	 * for plot data. The URL (relative or absolute) for the DTD is given as the second argument. If that argument is
-	 * null, then the PlotML PUBLIC DTD is referenced, resulting in a file that can be read by a PlotML parser without
-	 * any external file references, as long as that parser has local access to the DTD. The output is buffered, and is
-	 * flushed before exiting.
+	 * Write the current data and plot configuration to the specified stream in
+	 * PlotML syntax. PlotML is an XML scheme for plot data. The URL (relative
+	 * or absolute) for the DTD is given as the second argument. If that
+	 * argument is null, then the PlotML PUBLIC DTD is referenced, resulting in
+	 * a file that can be read by a PlotML parser without any external file
+	 * references, as long as that parser has local access to the DTD. The
+	 * output is buffered, and is flushed before exiting.
 	 * 
 	 * @param out
 	 *            An output writer.
 	 * @param dtd
-	 *            The reference (URL) for the DTD, or null to use the PUBLIC DTD.
+	 *            The reference (URL) for the DTD, or null to use the PUBLIC
+	 *            DTD.
 	 */
 	public synchronized void write(Writer out, String dtd) {
 		// Auto-flush is disabled.
@@ -1770,8 +1869,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Write plot data information to the specified output stream in PlotML. In this base class, there is no data to
-	 * write, so this method returns without doing anything.
+	 * Write plot data information to the specified output stream in PlotML. In
+	 * this base class, there is no data to write, so this method returns
+	 * without doing anything.
 	 * 
 	 * @param output
 	 *            A buffered print writer.
@@ -1780,9 +1880,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Write plot format information to the specified output stream in PlotML. Derived classes should override this
-	 * method to first call the parent class method, then add whatever additional format information they wish to add to
-	 * the stream.
+	 * Write plot format information to the specified output stream in PlotML.
+	 * Derived classes should override this method to first call the parent
+	 * class method, then add whatever additional format information they wish
+	 * to add to the stream.
 	 * 
 	 * @param output
 	 *            A buffered print writer.
@@ -1858,9 +1959,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Write the current data and plot configuration to the specified stream in the old PtPlot syntax. The output is
-	 * buffered, and is flushed and closed before exiting. Derived classes should override _writeOldSyntax() rather than
-	 * this method.
+	 * Write the current data and plot configuration to the specified stream in
+	 * the old PtPlot syntax. The output is buffered, and is flushed and closed
+	 * before exiting. Derived classes should override _writeOldSyntax() rather
+	 * than this method.
 	 * 
 	 * @param out
 	 *            An output stream.
@@ -1905,12 +2007,15 @@ public class PlotBox extends JPanel implements Printable {
 	// // protected methods ////
 
 	/**
-	 * Draw the axes using the current range, label, and title information. If the second argument is true, clear the
-	 * display before redrawing. This method is called by paintComponent(). To cause it to be called you would normally
-	 * call repaint(), which eventually causes paintComponent() to be called.
+	 * Draw the axes using the current range, label, and title information. If
+	 * the second argument is true, clear the display before redrawing. This
+	 * method is called by paintComponent(). To cause it to be called you would
+	 * normally call repaint(), which eventually causes paintComponent() to be
+	 * called.
 	 * <p>
-	 * Note that this is synchronized so that points are not added by other threads while the drawing is occurring. This
-	 * method should be called only from the event dispatch thread, consistent with swing policy.
+	 * Note that this is synchronized so that points are not added by other
+	 * threads while the drawing is occurring. This method should be called only
+	 * from the event dispatch thread, consistent with swing policy.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1923,12 +2028,15 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Draw the axes using the current range, label, and title information, at the size of the specified rectangle. If
-	 * the second argument is true, clear the display before redrawing. This method is called by paintComponent(). To
-	 * cause it to be called you would normally call repaint(), which eventually causes paintComponent() to be called.
+	 * Draw the axes using the current range, label, and title information, at
+	 * the size of the specified rectangle. If the second argument is true,
+	 * clear the display before redrawing. This method is called by
+	 * paintComponent(). To cause it to be called you would normally call
+	 * repaint(), which eventually causes paintComponent() to be called.
 	 * <p>
-	 * Note that this is synchronized so that points are not added by other threads while the drawing is occurring. This
-	 * method should be called only from the event dispatch thread, consistent with swing policy.
+	 * Note that this is synchronized so that points are not added by other
+	 * threads while the drawing is occurring. This method should be called only
+	 * from the event dispatch thread, consistent with swing policy.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -1946,10 +2054,12 @@ public class PlotBox extends JPanel implements Printable {
 		graphics.setPaintMode();
 
 		/*
-		 * NOTE: The following seems to be unnecessary with Swing... if (clearfirst) { // NOTE: calling clearRect() here
-		 * permits the background // color to show through, but it messes up printing. // Printing results in
-		 * black-on-black title and axis labels. graphics.setColor(_background); graphics.drawRect(0, 0, drawRect.width,
-		 * drawRect.height); graphics.setColor(Color.black); }
+		 * NOTE: The following seems to be unnecessary with Swing... if
+		 * (clearfirst) { // NOTE: calling clearRect() here permits the
+		 * background // color to show through, but it messes up printing. //
+		 * Printing results in black-on-black title and axis labels.
+		 * graphics.setColor(_background); graphics.drawRect(0, 0,
+		 * drawRect.width, drawRect.height); graphics.setColor(Color.black); }
 		 */
 
 		// If an error message has been set, display it and return.
@@ -2606,14 +2716,17 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Put a mark corresponding to the specified dataset at the specified x and y position. The mark is drawn in the
-	 * current color. In this base class, a point is a filled rectangle 6 pixels across. Note that marks greater than
-	 * about 6 pixels in size will not look very good since they will overlap axis labels and may not fit well in the
-	 * legend. The <i>clip</i> argument, if <code>true</code>, states that the point should not be drawn if it is out of
-	 * range.
+	 * Put a mark corresponding to the specified dataset at the specified x and
+	 * y position. The mark is drawn in the current color. In this base class, a
+	 * point is a filled rectangle 6 pixels across. Note that marks greater than
+	 * about 6 pixels in size will not look very good since they will overlap
+	 * axis labels and may not fit well in the legend. The <i>clip</i> argument,
+	 * if <code>true</code>, states that the point should not be drawn if it is
+	 * out of range.
 	 * 
-	 * Note that this method is not synchronized, so the caller should be. Moreover this method should always be called
-	 * from the event thread when being used to write to the screen.
+	 * Note that this method is not synchronized, so the caller should be.
+	 * Moreover this method should always be called from the event thread when
+	 * being used to write to the screen.
 	 * 
 	 * @param graphics
 	 *            The graphics context.
@@ -2655,9 +2768,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Parse a line that gives plotting information. In this base class, only lines pertaining to the title and labels
-	 * are processed. Everything else is ignored. Return true if the line is recognized. It is not synchronized, so its
-	 * caller should be.
+	 * Parse a line that gives plotting information. In this base class, only
+	 * lines pertaining to the title and labels are processed. Everything else
+	 * is ignored. Return true if the line is recognized. It is not
+	 * synchronized, so its caller should be.
 	 * 
 	 * @param line
 	 *            A line of text.
@@ -2774,7 +2888,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the visibility of the Fill button. This is deprecated. Use setButtons().
+	 * Set the visibility of the Fill button. This is deprecated. Use
+	 * setButtons().
 	 * 
 	 * @deprecated
 	 */
@@ -2790,9 +2905,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Set the padding multiple. The plot rectangle can be "padded" in each direction -x, +x, -y, and +y. If the padding
-	 * is set to 0.05 (and the padding is used), then there is 10% more length on each axis than set by the setXRange()
-	 * and setYRange() methods, 5% in each direction.
+	 * Set the padding multiple. The plot rectangle can be "padded" in each
+	 * direction -x, +x, -y, and +y. If the padding is set to 0.05 (and the
+	 * padding is used), then there is 10% more length on each axis than set by
+	 * the setXRange() and setYRange() methods, 5% in each direction.
 	 * 
 	 * @param padding
 	 *            The padding multiple.
@@ -2805,9 +2921,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Write plot information to the specified output stream in the old PtPlot syntax. Derived classes should override
-	 * this method to first call the parent class method, then add whatever additional information they wish to add to
-	 * the stream. It is not synchronized, so its caller should be.
+	 * Write plot information to the specified output stream in the old PtPlot
+	 * syntax. Derived classes should override this method to first call the
+	 * parent class method, then add whatever additional information they wish
+	 * to add to the stream. It is not synchronized, so its caller should be.
 	 * 
 	 * @param output
 	 *            A buffered print writer.
@@ -2915,30 +3032,38 @@ public class PlotBox extends JPanel implements Printable {
 	protected transient boolean _rangesGivenByZooming = false;
 
 	/**
-	 * @serial The given X and Y ranges. If they have been given the top and bottom of the x and y ranges. This is
-	 *         different from _xMin and _xMax, which actually represent the range of data that is plotted. This
-	 *         represents the range specified (which may be different due to zooming).
+	 * @serial The given X and Y ranges. If they have been given the top and
+	 *         bottom of the x and y ranges. This is different from _xMin and
+	 *         _xMax, which actually represent the range of data that is
+	 *         plotted. This represents the range specified (which may be
+	 *         different due to zooming).
 	 */
 	protected double _xlowgiven;
 
 	/**
-	 * @serial The given X and Y ranges. If they have been given the top and bottom of the x and y ranges. This is
-	 *         different from _xMin and _xMax, which actually represent the range of data that is plotted. This
-	 *         represents the range specified (which may be different due to zooming).
+	 * @serial The given X and Y ranges. If they have been given the top and
+	 *         bottom of the x and y ranges. This is different from _xMin and
+	 *         _xMax, which actually represent the range of data that is
+	 *         plotted. This represents the range specified (which may be
+	 *         different due to zooming).
 	 */
 	protected double _xhighgiven;
 
 	/**
-	 * @serial The given X and Y ranges. If they have been given the top and bottom of the x and y ranges. This is
-	 *         different from _xMin and _xMax, which actually represent the range of data that is plotted. This
-	 *         represents the range specified (which may be different due to zooming).
+	 * @serial The given X and Y ranges. If they have been given the top and
+	 *         bottom of the x and y ranges. This is different from _xMin and
+	 *         _xMax, which actually represent the range of data that is
+	 *         plotted. This represents the range specified (which may be
+	 *         different due to zooming).
 	 */
 	protected double _ylowgiven;
 
 	/**
-	 * @serial The given X and Y ranges. If they have been given the top and bottom of the x and y ranges. This is
-	 *         different from _xMin and _xMax, which actually represent the range of data that is plotted. This
-	 *         represents the range specified (which may be different due to zooming).
+	 * @serial The given X and Y ranges. If they have been given the top and
+	 *         bottom of the x and y ranges. This is different from _xMin and
+	 *         _xMax, which actually represent the range of data that is
+	 *         plotted. This represents the range specified (which may be
+	 *         different due to zooming).
 	 */
 	protected double _yhighgiven;
 
@@ -2982,22 +3107,26 @@ public class PlotBox extends JPanel implements Printable {
 	protected Color _foreground = Color.black;
 
 	/**
-	 * @serial Top padding. Derived classes can increment these to make space around the plot.
+	 * @serial Top padding. Derived classes can increment these to make space
+	 *         around the plot.
 	 */
 	protected int _topPadding = 10;
 
 	/**
-	 * @serial Bottom padding. Derived classes can increment these to make space around the plot.
+	 * @serial Bottom padding. Derived classes can increment these to make space
+	 *         around the plot.
 	 */
 	protected int _bottomPadding = 5;
 
 	/**
-	 * @serial Right padding. Derived classes can increment these to make space around the plot.
+	 * @serial Right padding. Derived classes can increment these to make space
+	 *         around the plot.
 	 */
 	protected int _rightPadding = 10;
 
 	/**
-	 * @serial Left padding. Derived classes can increment these to make space around the plot.
+	 * @serial Left padding. Derived classes can increment these to make space
+	 *         around the plot.
 	 */
 	protected int _leftPadding = 10;
 
@@ -3028,14 +3157,14 @@ public class PlotBox extends JPanel implements Printable {
 	protected Rectangle _specifiedPlotRectangle = null;
 
 	/**
-	 * Scaling used for the vertical axis in plotting points. The units are pixels/unit, where unit is the units of the
-	 * Y axis.
+	 * Scaling used for the vertical axis in plotting points. The units are
+	 * pixels/unit, where unit is the units of the Y axis.
 	 */
 	protected double _yscale = 1.0;
 
 	/**
-	 * Scaling used for the horizontal axis in plotting points. The units are pixels/unit, where unit is the units of
-	 * the X axis.
+	 * Scaling used for the horizontal axis in plotting points. The units are
+	 * pixels/unit, where unit is the units of the X axis.
 	 */
 	protected double _xscale = 1.0;
 
@@ -3075,9 +3204,11 @@ public class PlotBox extends JPanel implements Printable {
 
 	// protected boolean _sizeHasBeenSet = false;
 	/**
-	 * @serial The document base we use to find the _filespec. NOTE: Use of this variable is deprecated. But it is made
-	 *         available to derived classes for backward compatibility. FIXME: Sun's appletviewer gives an exception if
-	 *         this is protected. Why?? So we make it temporarily public.
+	 * @serial The document base we use to find the _filespec. NOTE: Use of this
+	 *         variable is deprecated. But it is made available to derived
+	 *         classes for backward compatibility. FIXME: Sun's appletviewer
+	 *         gives an exception if this is protected. Why?? So we make it
+	 *         temporarily public.
 	 */
 	public URL _documentBase = null;
 
@@ -3085,8 +3216,9 @@ public class PlotBox extends JPanel implements Printable {
 	// // private methods ////
 
 	/*
-	 * Draw the legend in the upper right corner and return the width (in pixels) used up. The arguments give the upper
-	 * right corner of the region where the legend should be placed.
+	 * Draw the legend in the upper right corner and return the width (in
+	 * pixels) used up. The arguments give the upper right corner of the region
+	 * where the legend should be placed.
 	 */
 	private int _drawLegend(Graphics graphics, int urx, int ury) {
 		// Ignore if there is no graphics object to draw on.
@@ -3174,9 +3306,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Return the number as a String for use as a label on a logarithmic axis. Since this is a log plot, number passed
-	 * in will not have too many digits to cause problems. If the number is an integer, then we print 1e<num>. If the
-	 * number is not an integer, then print only the fractional components.
+	 * Return the number as a String for use as a label on a logarithmic axis.
+	 * Since this is a log plot, number passed in will not have too many digits
+	 * to cause problems. If the number is an integer, then we print 1e<num>. If
+	 * the number is not an integer, then print only the fractional components.
 	 */
 	private String _formatLogNum(double num, int numfracdigits) {
 		String results;
@@ -3212,9 +3345,11 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Return a string for displaying the specified number using the specified number of digits after the decimal point.
-	 * NOTE: java.text.NumberFormat in Netscape 4.61 has a bug where it fails to round numbers instead it truncates
-	 * them. As a result, we don't use java.text.NumberFormat, instead We use the method from Ptplot1.3
+	 * Return a string for displaying the specified number using the specified
+	 * number of digits after the decimal point. NOTE: java.text.NumberFormat in
+	 * Netscape 4.61 has a bug where it fails to round numbers instead it
+	 * truncates them. As a result, we don't use java.text.NumberFormat, instead
+	 * We use the method from Ptplot1.3
 	 */
 	private String _formatNum(double num, int numfracdigits) {
 		// When java.text.NumberFormat works under Netscape,
@@ -3289,7 +3424,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Determine what values to use for log axes. Based on initGrid() from xgraph.c by David Harrison.
+	 * Determine what values to use for log axes. Based on initGrid() from
+	 * xgraph.c by David Harrison.
 	 */
 	private Vector<Double> _gridInit(double low, double step, boolean labeled, Vector<Double> oldgrid) {
 		// How log axes work:
@@ -3416,10 +3552,12 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Used to find the next value for the axis label. For non-log axes, we just return pos + step. For log axes, we
-	 * read the appropriate value in the grid Vector, add it to _gridBase and return the sum. We also take care to reset
-	 * _gridCurJuke if necessary. Note that for log axes, _gridInit() must be called before calling _gridStep(). Based
-	 * on stepGrid() from xgraph.c by David Harrison.
+	 * Used to find the next value for the axis label. For non-log axes, we just
+	 * return pos + step. For log axes, we read the appropriate value in the
+	 * grid Vector, add it to _gridBase and return the sum. We also take care to
+	 * reset _gridCurJuke if necessary. Note that for log axes, _gridInit() must
+	 * be called before calling _gridStep(). Based on stepGrid() from xgraph.c
+	 * by David Harrison.
 	 */
 	private double _gridStep(Vector<Double> grid, double pos, double step, boolean logflag) {
 		if (logflag) {
@@ -3438,8 +3576,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Return the number of fractional digits required to display the given number. No number larger than 15 is returned
-	 * (if more than 15 digits are required, 15 is returned).
+	 * Return the number of fractional digits required to display the given
+	 * number. No number larger than 15 is returned (if more than 15 digits are
+	 * required, 15 is returned).
 	 */
 	private int _numFracDigits(double num) {
 		int numdigits = 0;
@@ -3453,8 +3592,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Return the number of integer digits required to display the given number. No number larger than 15 is returned
-	 * (if more than 15 digits are required, 15 is returned).
+	 * Return the number of integer digits required to display the given number.
+	 * No number larger than 15 is returned (if more than 15 digits are
+	 * required, 15 is returned).
 	 */
 	private int _numIntDigits(double num) {
 		int numdigits = 0;
@@ -3468,10 +3608,11 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Parse a string of the form: "word num, word num, word num, ..." where the word must be enclosed in quotes if it
-	 * contains spaces, and the number is interpreted as a floating point number. Ignore any incorrectly formatted
-	 * fields. I <i>xtick</i> is true, then interpret the parsed string to specify the tick labels on the x axis.
-	 * Otherwise, do the y axis.
+	 * Parse a string of the form: "word num, word num, word num, ..." where the
+	 * word must be enclosed in quotes if it contains spaces, and the number is
+	 * interpreted as a floating point number. Ignore any incorrectly formatted
+	 * fields. I <i>xtick</i> is true, then interpret the parsed string to
+	 * specify the tick labels on the x axis. Otherwise, do the y axis.
 	 */
 	private void _parsePairs(String line, boolean xtick) {
 		// Clear current ticks first.
@@ -3532,7 +3673,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * Return a default set of rendering hints for image export, which specifies the use of anti-aliasing.
+	 * Return a default set of rendering hints for image export, which specifies
+	 * the use of anti-aliasing.
 	 */
 	private RenderingHints _defaultImageRenderingHints() {
 		RenderingHints hints = new RenderingHints(null);
@@ -3562,7 +3704,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Internal implementation of setXRange, so that it can be called when autoranging.
+	 * Internal implementation of setXRange, so that it can be called when
+	 * autoranging.
 	 */
 	private void _setXRange(double min, double max) {
 		// We check to see if the original range has been given here
@@ -3623,7 +3766,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Internal implementation of setYRange, so that it can be called when autoranging.
+	 * Internal implementation of setYRange, so that it can be called when
+	 * autoranging.
 	 */
 	private void _setYRange(double min, double max) {
 		// See comment in _setXRange() about why this is necessary.
@@ -3672,9 +3816,10 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Zoom in or out based on the box that has been drawn. The argument gives the lower right corner of the box. This
-	 * method is not synchronized because it is called within the UI thread, and making it synchronized causes a
-	 * deadlock.
+	 * Zoom in or out based on the box that has been drawn. The argument gives
+	 * the lower right corner of the box. This method is not synchronized
+	 * because it is called within the UI thread, and making it synchronized
+	 * causes a deadlock.
 	 * 
 	 * @param x The final x position.
 	 * 
@@ -3749,10 +3894,12 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Draw a box for an interactive zoom box. The starting point (the upper left corner of the box) is taken to be that
-	 * specified by the startZoom() method. The argument gives the lower right corner of the box. If a previous box has
-	 * been drawn, erase it first. This method is not synchronized because it is called within the UI thread, and making
-	 * it synchronized causes a deadlock.
+	 * Draw a box for an interactive zoom box. The starting point (the upper
+	 * left corner of the box) is taken to be that specified by the startZoom()
+	 * method. The argument gives the lower right corner of the box. If a
+	 * previous box has been drawn, erase it first. This method is not
+	 * synchronized because it is called within the UI thread, and making it
+	 * synchronized causes a deadlock.
 	 * 
 	 * @param x The x position.
 	 * 
@@ -3767,8 +3914,9 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/*
-	 * Set the starting point for an interactive zoom box (the upper left corner). This method is not synchronized
-	 * because it is called within the UI thread, and making it synchronized causes a deadlock.
+	 * Set the starting point for an interactive zoom box (the upper left
+	 * corner). This method is not synchronized because it is called within the
+	 * UI thread, and making it synchronized causes a deadlock.
 	 * 
 	 * @param x The x position.
 	 * 
@@ -3792,22 +3940,26 @@ public class PlotBox extends JPanel implements Printable {
 	private String _filespec = null;
 
 	/**
-	 * @serial The range of the plot as labeled (multiply by 10^exp for actual range.
+	 * @serial The range of the plot as labeled (multiply by 10^exp for actual
+	 *         range.
 	 */
 	private double _ytickMax = 0.0;
 
 	/**
-	 * @serial The range of the plot as labeled (multiply by 10^exp for actual range.
+	 * @serial The range of the plot as labeled (multiply by 10^exp for actual
+	 *         range.
 	 */
 	private double _ytickMin = 0.0;
 
 	/**
-	 * @serial The range of the plot as labeled (multiply by 10^exp for actual range.
+	 * @serial The range of the plot as labeled (multiply by 10^exp for actual
+	 *         range.
 	 */
 	private double _xtickMax = 0.0;
 
 	/**
-	 * @serial The range of the plot as labeled (multiply by 10^exp for actual range.
+	 * @serial The range of the plot as labeled (multiply by 10^exp for actual
+	 *         range.
 	 */
 	private double _xtickMin = 0.0;
 
@@ -3954,7 +4106,8 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseClicked(MouseEvent event) {
@@ -3964,7 +4117,8 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseEntered(MouseEvent event) {
@@ -3973,7 +4127,8 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseExited(MouseEvent event) {
@@ -3982,7 +4137,8 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mousePressed(final MouseEvent event) {
@@ -4004,7 +4160,8 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseReleased(final MouseEvent event) {
@@ -4015,7 +4172,8 @@ public class PlotBox extends JPanel implements Printable {
 	}
 
 	/**
-	 * The {@code DragListener} calls PlotBox._zoomBox whenever the mouse is moved while the left button is pressed.
+	 * The {@code DragListener} calls PlotBox._zoomBox whenever the mouse is
+	 * moved while the left button is pressed.
 	 * 
 	 * @author reimann
 	 * 
@@ -4024,7 +4182,9 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent )
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent
+		 * )
 		 */
 		@Override
 		public void mouseDragged(final MouseEvent event) {
@@ -4036,7 +4196,9 @@ public class PlotBox extends JPanel implements Printable {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent )
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent
+		 * )
 		 */
 		@Override
 		public void mouseMoved(MouseEvent event) {

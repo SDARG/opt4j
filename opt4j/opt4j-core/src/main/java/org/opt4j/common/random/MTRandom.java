@@ -1,28 +1,27 @@
 /*
- * MTRandom : A Java implementation of the MT19937 (Mersenne Twister)
- *            pseudo random number generator algorithm based upon the
- *            original C code by Makoto Matsumoto and Takuji Nishimura.
- * Author   : David Beaumont
- * Email    : mersenne-at-www.goui.net
+ * MTRandom : A Java implementation of the MT19937 (Mersenne Twister) pseudo
+ * random number generator algorithm based upon the original C code by Makoto
+ * Matsumoto and Takuji Nishimura. Author : David Beaumont Email :
+ * mersenne-at-www.goui.net
  * 
  * For the original C code, see:
- *     http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
- *
+ * http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+ * 
  * This version, Copyright (C) 2005, David Beaumont.
  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 package org.opt4j.common.random;
@@ -103,7 +102,7 @@ class MTRandom extends Rand {
 	private final static int MAGIC_MASK1 = 0x9d2c5680;
 	private final static int MAGIC_MASK2 = 0xefc60000;
 	private final static int MAGIC_SEED = 19650218;
-	//private final static long DEFAULT_SEED = 5489L;
+	// private final static long DEFAULT_SEED = 5489L;
 
 	// Internal state
 	private transient int[] mt;
@@ -122,7 +121,6 @@ class MTRandom extends Rand {
 	public MTRandom() {
 		this(System.currentTimeMillis());
 	}
-
 
 	/**
 	 * This version of the constructor simply initialises the class with the

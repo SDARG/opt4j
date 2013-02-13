@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.sat.sat4j;
@@ -55,8 +58,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The {@link SAT4JSolver} implements a {@link Solver}. It is based on the Java SAT/PB-Solver from <a
- * href="http://www.sat4j.org">Sat4J.org</a>.
+ * The {@link SAT4JSolver} implements a {@link Solver}. It is based on the Java
+ * SAT/PB-Solver from <a href="http://www.sat4j.org">Sat4J.org</a>.
  * 
  * @author lukasiewycz
  * 
@@ -89,13 +92,15 @@ public class SAT4JSolver implements Solver {
 	private boolean solverValid = false;
 
 	/**
-	 * Constructs a new {@link SAT4JSolver} with a timeout and the number of kept learning clauses. Additionally, this
-	 * constructor allows the specification of the learning and restart strategy.
+	 * Constructs a new {@link SAT4JSolver} with a timeout and the number of
+	 * kept learning clauses. Additionally, this constructor allows the
+	 * specification of the learning and restart strategy.
 	 * 
 	 * @param timeout
 	 *            timeout in seconds
 	 * @param clauseLearningLength
-	 *            clauses are learned if they have a smaller or equal number of literals per clause
+	 *            clauses are learned if they have a smaller or equal number of
+	 *            literals per clause
 	 * @param learning
 	 *            the learning strategy
 	 * @param restarts

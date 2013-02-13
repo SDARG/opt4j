@@ -24,7 +24,8 @@ import org.opt4j.viewer.WidgetParameters;
 
 import com.google.inject.Inject;
 
-// The SalesmanWidgetService is an additional feature of this tutorial. It enables the visualization
+// The SalesmanWidgetService is an additional feature of this tutorial. It
+// enables the visualization
 // of a single route in the viewer.
 public class SalesmanWidgetService implements IndividualMouseListener {
 

@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.config;
@@ -27,7 +30,8 @@ import com.google.inject.Module;
 import com.google.inject.Singleton;
 
 /**
- * The {@link ModuleRegister} contains all found modules for the {@link Configurator}.
+ * The {@link ModuleRegister} contains all found modules for the
+ * {@link Configurator}.
  * 
  * @author lukasiewycz.
  * 
@@ -80,7 +84,8 @@ public class ModuleRegister implements Iterable<Class<? extends Module>> {
 	}
 
 	/**
-	 * Returns the {@link PropertyModule} of the specified class and creates a new instance if necessary.
+	 * Returns the {@link PropertyModule} of the specified class and creates a
+	 * new instance if necessary.
 	 * 
 	 * If the property module can not be created, {@code null} is returned.
 	 * 
@@ -118,7 +123,8 @@ public class ModuleRegister implements Iterable<Class<? extends Module>> {
 			for (Class<? extends Module> clazz : finder.getModules()) {
 				set.add(clazz);
 				try {
-					// try to initialize static code of the module classes while searching modules and not later
+					// try to initialize static code of the module classes while
+					// searching modules and not later
 					clazz.newInstance();
 				} catch (InstantiationException e) {
 				} catch (IllegalAccessException e) {

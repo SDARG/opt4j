@@ -1,3 +1,17 @@
+/**
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ * 
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
+ */
 package org.opt4j.start;
 
 import java.lang.reflect.Type;
@@ -104,8 +118,8 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	}
 
 	/**
-	 * Initialize a task manually before executing it. This enables to get instances of classes before the optimization
-	 * starts.
+	 * Initialize a task manually before executing it. This enables to get
+	 * instances of classes before the optimization starts.
 	 */
 	public synchronized void open() {
 		if (injector == null && !isClosed) {
@@ -242,7 +256,9 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.ControlListener#stateChanged(org.opt4j.core. optimizer.Control.State)
+	 * @see
+	 * org.opt4j.core.optimizer.ControlListener#stateChanged(org.opt4j.core.
+	 * optimizer.Control.State)
 	 */
 	@Override
 	public void stateChanged(org.opt4j.core.optimizer.Control.State state) {
@@ -252,8 +268,9 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete (org.opt4j.core.optimizer.Optimizer,
-	 * int)
+	 * @see
+	 * org.opt4j.core.optimizer.OptimizerIterationListener#iterationComplete
+	 * (org.opt4j.core.optimizer.Optimizer, int)
 	 */
 	@Override
 	public void iterationComplete(int iteration) {

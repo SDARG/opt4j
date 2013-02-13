@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.optimizer.ea;
@@ -30,11 +33,12 @@ import org.opt4j.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link Nsga2} {@link Selector}.
+ * The {@link Nsga2} {@link Selector}, see "A Fast Elitist Non-Dominated Sorting
+ * Genetic Algorithm for Multi-Objective Optimization: NSGA-II, K. Deb, Samir
+ * Agrawal, Amrit Pratap, and T. Meyarivan, Parallel MockProblem Solving from
+ * Nature, 2000".
  * 
  * @see Nsga2Module
- * @see "A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization: NSGA-II, K. Deb, Samir
- *      Agrawal, Amrit Pratap, and T. Meyarivan, Parallel MockProblem Solving from Nature, 2000"
  * @author lukasiewycz, noorshams
  * 
  */
@@ -73,7 +77,8 @@ public class Nsga2 implements Selector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.optimizer.ea.Selector#getParents(int, java.util.Collection)
+	 * @see org.opt4j.optimizer.ea.Selector#getParents(int,
+	 * java.util.Collection)
 	 */
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {

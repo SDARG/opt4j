@@ -4,7 +4,8 @@ import org.opt4j.genotype.BooleanGenotype;
 import org.opt4j.operator.crossover.Crossover;
 import org.opt4j.operator.crossover.Pair;
 
-// By implementing CrossoverBoolean an operator is created which performs a crossover
+// By implementing CrossoverBoolean an operator is created which performs a
+// crossover
 // operation (as used by, e.g., EAs) on the BooleanGenotype.
 public class MyOperator implements Crossover<BooleanGenotype> {
 

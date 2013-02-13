@@ -1,36 +1,46 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 /**
  * <p>
- * Provides classes for using a PB solver as {@link org.opt4j.core.problem.Decoder}.
+ * Provides classes for using a PB solver as
+ * {@link org.opt4j.core.problem.Decoder}.
  * </p>
  * <p>
- * Many optimization problems with a discrete search space consist of binary variables. However, in some cases not all
- * representations of these variables are <em>feasible</em> . Common approaches deteriorate the objectives if the
- * solution is not feasible. As a matter of fact, in case that the number of feasible solutions is much lower than the
- * number of infeasible solutions, the optimization process is more focused on the search of feasible solutions than
+ * Many optimization problems with a discrete search space consist of binary
+ * variables. However, in some cases not all representations of these variables
+ * are <em>feasible</em> . Common approaches deteriorate the objectives if the
+ * solution is not feasible. As a matter of fact, in case that the number of
+ * feasible solutions is much lower than the number of infeasible solutions, the
+ * optimization process is more focused on the search of feasible solutions than
  * optimizing the objectives.
  * </p>
  * <p>
- * This package includes a specialized {@link org.opt4j.core.problem.Decoder} that gives the user the opportunity to
- * define constraints that have to be fulfilled to obtain a feasible solution.
+ * This package includes a specialized {@link org.opt4j.core.problem.Decoder}
+ * that gives the user the opportunity to define constraints that have to be
+ * fulfilled to obtain a feasible solution.
  * </p>
  * <p>
- * As an example for the <em>SAT Decoding</em> we will use the following example: Given is a vector with a fixed number
- * of binary (0/1) variables. The objective is to minimize the number of 1s of this vector. The solution of this problem
- * is quite simple: Set all variables to 0. However, in order to make this problem more difficult, we introduce the
- * following condition: A solution is only considered feasible if the variables satisfy a set of <em>constraints</em> .
- * The following example is used to illustrate this problem:
+ * As an example for the <em>SAT Decoding</em> we will use the following
+ * example: Given is a vector with a fixed number of binary (0/1) variables. The
+ * objective is to minimize the number of 1s of this vector. The solution of
+ * this problem is quite simple: Set all variables to 0. However, in order to
+ * make this problem more difficult, we introduce the following condition: A
+ * solution is only considered feasible if the variables satisfy a set of
+ * <em>constraints</em> . The following example is used to illustrate this
+ * problem:
  * 
  * <pre>
  * minimize w + x + y + z
@@ -41,14 +51,17 @@
  *     x + y + z > 0    (constraint 4)
  * </pre>
  * 
- * Solution {@code (w=1,x=1,y=0,z=1)} is feasible which fulfills all constraints and the objective is 3. On the other
- * hand, for {@code (w=0,x=0,y=0,z=0)}, the objective is 0 but this solution is not feasible and therefore invalid. A
- * good solution that fulfills all constraints would be {@code (w=0,x=1,y=0,z=1)} with the objective value 2.
+ * Solution {@code (w=1,x=1,y=0,z=1)} is feasible which fulfills all constraints
+ * and the objective is 3. On the other hand, for {@code (w=0,x=0,y=0,z=0)}, the
+ * objective is 0 but this solution is not feasible and therefore invalid. A
+ * good solution that fulfills all constraints would be
+ * {@code (w=0,x=1,y=0,z=1)} with the objective value 2.
  * </p>
  * <h2>Example</h2>
  * <p>
- * In the following, an example that minimizes the ones of a random is outlined. First, the
- * {@link org.opt4j.core.Phenotype} and {@link org.opt4j.core.problem.Evaluator} are defined.
+ * In the following, an example that minimizes the ones of a random is outlined.
+ * First, the phenotype and {@link org.opt4j.core.problem.Evaluator} are
+ * defined.
  * 
  * <pre>
  * public class MinOnesResult extends ArrayList&lt;Boolean&gt; implements Phenotype {

@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.start;
 
@@ -46,8 +49,8 @@ import com.google.inject.Inject;
 import com.google.inject.Module;
 
 /**
- * The {@link Opt4JTasksPanel} extends the {@link DefaultTasksPanel} by additional functionality: Additional control and
- * extended state.
+ * The {@link Opt4JTasksPanel} extends the {@link DefaultTasksPanel} by
+ * additional functionality: Additional control and extended state.
  * 
  * @author lukasiewycz
  * 
@@ -92,7 +95,9 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see javax.swing.JTable#prepareRenderer(javax.swing.table.TableCellRenderer , int, int)
+		 * @see
+		 * javax.swing.JTable#prepareRenderer(javax.swing.table.TableCellRenderer
+		 * , int, int)
 		 */
 		@Override
 		public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -257,7 +262,8 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -269,7 +275,8 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+		 * @see
+		 * java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -306,7 +313,8 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		}
 
 		/**
-		 * Adds an item to the given menu which allows to restore the configuration of a task.
+		 * Adds an item to the given menu which allows to restore the
+		 * configuration of a task.
 		 * 
 		 * @param menu
 		 *            the menu
@@ -337,7 +345,8 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		}
 
 		/**
-		 * Adds the control menu items to start, pause, stop and terminate the given task.
+		 * Adds the control menu items to start, pause, stop and terminate the
+		 * given task.
 		 * 
 		 * @param menu
 		 *            the menu to enhance

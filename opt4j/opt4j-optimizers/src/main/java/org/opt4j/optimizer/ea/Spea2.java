@@ -1,16 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with Opt4J. If not, see http://www.gnu.org/licenses/. 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 package org.opt4j.optimizer.ea;
 
@@ -37,7 +37,10 @@ import com.google.inject.Inject;
  * <p>
  * The {@link Spea2}-Selector is a Java implementation of the <a
  * href="http://e-collection.ethbib.ethz.ch/ecol-pool/incoll/incoll_324.pdf"
- * >SPEA2-MOEA</a>.
+ * >SPEA2-MOEA</a>, see "SPEA2: Improving the Strength Pareto Evolutionary
+ * Algorithm For Multiobjective Optimization, Eckart Zitzler, Marco Laumanns,
+ * and Lothar Thiele, In Evolutionary Methods for Design, Optimisation, and
+ * Control, pages 19&ndash;26, 2002.".
  * </p>
  * <p>
  * The {@link Spea2}-Selector will not work properly if the {@link Objectives}
@@ -46,10 +49,6 @@ import com.google.inject.Inject;
  * distances, etc. In this case, it is recommended to use the {@link Nsga2}.
  * </p>
  * 
- * @see "SPEA2: Improving the Strength Pareto Evolutionary Algorithm For
- *      Multiobjective Optimization, Eckart Zitzler, Marco Laumanns, and Lothar
- *      Thiele, In Evolutionary Methods for Design, Optimisation, and Control,
- *      pages 19&ndash;26, 2002."
  * @author lukasiewycz
  * 
  */

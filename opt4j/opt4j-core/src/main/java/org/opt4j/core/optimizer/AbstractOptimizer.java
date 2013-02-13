@@ -1,13 +1,16 @@
 /**
- * Opt4J is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later
- * version.
+ * Opt4J is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
  * 
- * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Opt4J is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU Lesser General Public License along with Opt4J. If not, see
- * http://www.gnu.org/licenses/.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Opt4J. If not, see http://www.gnu.org/licenses/.
  */
 
 package org.opt4j.core.optimizer;
@@ -20,13 +23,16 @@ import org.opt4j.core.IndividualFactory;
 import com.google.inject.Inject;
 
 /**
- * The {@link AbstractOptimizer} is an abstract implementation of a population-based {@link Optimizer}. It provides the
- * necessary coupling to the framework by informing all {@link OptimizerStateListener}s and
- * {@link OptimizerIterationListener}s, calling the {@link IndividualCompleter} to decode and evaluate new
- * {@link org.opt4j.core.Individual}s and adding them to the {@link Archive}. The {@link Control} is checked regularly
- * to allow user interaction.
+ * The {@link AbstractOptimizer} is an abstract implementation of a
+ * population-based {@link Optimizer}. It provides the necessary coupling to the
+ * framework by informing all {@link OptimizerStateListener}s and
+ * {@link OptimizerIterationListener}s, calling the {@link IndividualCompleter}
+ * to decode and evaluate new {@link org.opt4j.core.Individual}s and adding them
+ * to the {@link Archive}. The {@link Control} is checked regularly to allow
+ * user interaction.
  * 
- * To implement an iteration-based {@link Optimizer}, the {@link IterativeOptimizer} interface is available.
+ * To implement an iteration-based {@link Optimizer}, the
+ * {@link IterativeOptimizer} interface is available.
  * 
  * @author glass, lukasiewycz
  * 
@@ -50,8 +56,9 @@ public abstract class AbstractOptimizer implements Optimizer {
 	protected boolean optimizing = false;
 
 	/**
-	 * Constructs an {@link AbstractOptimizer} with a {@link Population}, an {@link Archive}, an
-	 * {@link IndividualFactory}, and a {@link IndividualCompleter}.
+	 * Constructs an {@link AbstractOptimizer} with a {@link Population}, an
+	 * {@link Archive}, an {@link IndividualFactory}, and a
+	 * {@link IndividualCompleter}.
 	 * 
 	 * @param population
 	 *            the specified population
@@ -156,7 +163,8 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.Optimizer#addOptimizerIterationListener(org.
+	 * @see
+	 * org.opt4j.core.optimizer.Optimizer#addOptimizerIterationListener(org.
 	 * opt4j.core.optimizer.OptimizerIterationListener)
 	 */
 	@Override
@@ -167,7 +175,8 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.Optimizer#addOptimizerStateListener(org.opt4j
+	 * @see
+	 * org.opt4j.core.optimizer.Optimizer#addOptimizerStateListener(org.opt4j
 	 * .core.optimizer.OptimizerStateListener)
 	 */
 	@Override
@@ -178,7 +187,8 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.Optimizer#removeOptimizerIterationListener(org
+	 * @see
+	 * org.opt4j.core.optimizer.Optimizer#removeOptimizerIterationListener(org
 	 * .opt4j.core.optimizer.OptimizerIterationListener)
 	 */
 	@Override
@@ -189,7 +199,8 @@ public abstract class AbstractOptimizer implements Optimizer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.Optimizer#removeOptimizerStateListener(org.opt4j
+	 * @see
+	 * org.opt4j.core.optimizer.Optimizer#removeOptimizerStateListener(org.opt4j
 	 * .core.optimizer.OptimizerStateListener)
 	 */
 	@Override
