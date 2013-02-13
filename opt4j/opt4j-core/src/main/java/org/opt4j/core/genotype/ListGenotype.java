@@ -19,7 +19,7 @@ import java.util.List;
 import org.opt4j.core.Genotype;
 
 /**
- * The {@link ListGenotype} is a interface for {@link Genotype}s that are
+ * The {@link ListGenotype} is an interface for {@link Genotype}s that are
  * derived from a {@link List} with basic objects.
  * 
  * @author lukasiewycz

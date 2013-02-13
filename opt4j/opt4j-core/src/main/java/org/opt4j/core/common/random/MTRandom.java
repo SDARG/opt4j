@@ -172,6 +172,7 @@ class MTRandom extends Rand {
 	 *            The 64 bit value used to initialise the random number
 	 *            generator state.
 	 */
+	@Override
 	public synchronized void setSeed(long seed) {
 		if (compat) {
 			setSeed((int) seed);
