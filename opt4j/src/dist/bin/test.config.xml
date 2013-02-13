@@ -1,21 +1,20 @@
-<application>
-  <module class="org.opt4j.optimizer.ea.EvolutionaryAlgorithmModule">
+<configuration>
+  <module class="org.opt4j.benchmarks.zdt.ZDTModule">
+    <property name="function">ZDT1</property>
+    <property name="encoding">BINARY</property>
+    <property name="bits">30</property>
+    <property name="n">30</property>
+  </module>
+  <module class="org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule">
     <property name="generations">1000</property>
     <property name="alpha">100</property>
     <property name="mu">25</property>
     <property name="lambda">25</property>
     <property name="crossoverRate">0.95</property>
   </module>
-  <module class="org.opt4j.benchmark.zdt.ZDTModule">
-    <property name="function">ZDT1</property>
-    <property name="n">30</property>
-    <property name="encoding">BINARY</property>
-    <property name="bits">30</property>
-  </module>
   <module class="org.opt4j.viewer.ViewerModule">
     <property name="closeEvent">STOP</property>
     <property name="closeOnStop">false</property>
-    <property name="title">Viewer</property>
+    <property name="title">Opt4J @version@ Viewer</property>
   </module>
-</application>
-
+</configuration>
