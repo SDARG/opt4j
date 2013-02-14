@@ -315,13 +315,11 @@ public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 	 */
 	@Inject
 	public DefaultSelectedPanel(Format format, SelectedModules selectedModules, FileChooser fileChooser) {
-		super();
 		this.format = format;
 		this.selectedModules = selectedModules;
 		this.fileChooser = fileChooser;
 
 		dropTarget = new DropTarget(this, dropListener);
-
 	}
 
 	/**
