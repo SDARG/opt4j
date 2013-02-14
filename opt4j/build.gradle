@@ -1,7 +1,6 @@
 apply plugin: 'base'
 apply plugin: 'application'
 
-
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
 version = '3.0.RC1'
@@ -188,4 +187,9 @@ task release(dependsOn: [distZip,website] ){}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.4'
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+applicationDistribution.from("src/distribution") {
+    filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
 }
