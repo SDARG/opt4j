@@ -56,7 +56,6 @@ import com.google.inject.Inject;
 @WidgetParameters(title = "Convergence Plot", icon = Icons.CONVERGENCE)
 public class ConvergencePlotWidget implements Widget, OptimizerIterationListener, ObjectivesListener {
 
-	protected final boolean isObjectivesInitialized = false;
 	protected final DelayTask task = new DelayTask(40);
 
 	protected final ConvergencePlotData data;

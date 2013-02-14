@@ -71,8 +71,7 @@ public class Spea2 implements Selector {
 	 * @author lukasiewycz
 	 * 
 	 */
-	private class Spea2IndividualSet extends LinkedHashSet<Individual> implements Comparable<Spea2IndividualSet> {
-
+	private static class Spea2IndividualSet extends LinkedHashSet<Individual> implements Comparable<Spea2IndividualSet> {
 		private static final long serialVersionUID = 1L;
 		protected final int id;
 		protected int fitness;
