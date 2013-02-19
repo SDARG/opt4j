@@ -53,8 +53,6 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 
 	protected boolean isClosed = false;
 
-	protected final boolean initializing = false;
-
 	/**
 	 * Constructs a {@link Opt4JTask}.
 	 * 

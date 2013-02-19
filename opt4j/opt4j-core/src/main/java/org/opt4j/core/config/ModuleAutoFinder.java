@@ -50,8 +50,6 @@ public class ModuleAutoFinder implements ModuleList {
 
 	protected final Set<ModuleAutoFinderListener> listeners = new CopyOnWriteArraySet<ModuleAutoFinderListener>();
 
-	protected final Collection<String> directories;
-
 	protected ClassLoader classLoader;
 
 	/**
@@ -85,7 +83,7 @@ public class ModuleAutoFinder implements ModuleList {
 	 */
 	@Inject
 	public ModuleAutoFinder() {
-		this(null, null, null);
+		this(null, null);
 	}
 
 	/**
@@ -95,15 +93,12 @@ public class ModuleAutoFinder implements ModuleList {
 	 *            the accept transformer
 	 * @param ignore
 	 *            the ignore transformer
-	 * @param directories
-	 *            additional directories for the classpath
 	 */
 	public ModuleAutoFinder(Transformer<Class<? extends Module>, Boolean> accept,
-			Transformer<Class<? extends Module>, Boolean> ignore, Collection<String> directories) {
+			Transformer<Class<? extends Module>, Boolean> ignore) {
 		super();
 		this.accept = (accept != null) ? accept : new AllTrue();
 		this.ignore = (ignore != null) ? ignore : new AllFalse();
-		this.directories = (directories != null) ? directories : new ArrayList<String>();
 	}
 
 	/*

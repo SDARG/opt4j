@@ -17,9 +17,6 @@ package org.opt4j.benchmarks.zdt;
 
 import static org.opt4j.core.Objective.Sign.MIN;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.problem.Evaluator;
@@ -50,7 +47,6 @@ abstract class ZDTEvaluator<A extends Object> implements Evaluator<A> {
 
 	protected final Objective f1obj = new Objective("f1", MIN);
 	protected final Objective f2obj = new Objective("f2", MIN);
-	protected final List<Objective> objectives = Arrays.<Objective> asList(f1obj, f2obj);
 
 	/**
 	 * Function f1.

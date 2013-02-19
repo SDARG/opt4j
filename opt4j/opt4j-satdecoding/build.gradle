@@ -1,6 +1,6 @@
 dependencies {
-	compile group: 'org.sat4j', 					name: 'org.sat4j.core', 		version: '2.3.1'
-	compile group: 'org.sat4j', 					name: 'org.sat4j.pb', 			version: '2.3.1'
+	compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: '2.3.3'
+	compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: '2.3.3'
 	
 	compile project(':opt4j-core')
 	
