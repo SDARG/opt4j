@@ -1,4 +1,5 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.filters.*
+import java.util.regex.*
 
 dependencies {
 	compile project(':opt4j-core')
@@ -27,7 +28,17 @@ task copyDocbookSources(type: Copy) {
 	}
 	from('src/main/java') {
         include '**/*.java'
-		filter { String line -> line.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;") }
+		filter { String line -> if(line.matches("(import|@Suppress|package|@Parent).*")){
+									'';
+								} else {
+									line.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+								}
+		}
+		
+		def regexp = new org.apache.tools.ant.types.RegularExpression()
+  		regexp.pattern = '[^ \n\t\r]+'
+  		
+  		filter(org.apache.tools.ant.filters.LineContainsRegExp, regexps:[regexp])
 	}
 	into 'build/docbook/src'
 }
@@ -35,6 +46,29 @@ task copyDocbookSources(type: Copy) {
 task copyDocbookHtml(type: Copy) {
 	from 'src/main/docbook/html'
 	into 'build/docbook/html'
+}
+
+task copyTutorial(type: Copy, dependsOn: copyDocbookSources) {
+	def Pattern p = Pattern.compile(".*(@file\\(([\\w/\\.]+)\\)).*");
+	from('src/main/tutorial'){
+		include '**/*html'
+		filter { String line -> 
+			Matcher m = p.matcher(line);
+			if(m.matches()){
+				String contents = new File( 'build/docbook/src/' + m.group(2) ).getText( 'UTF-8' )
+				line.substring(0, m.start(1)) + contents + line.substring(m.end(1), line.length());
+			} else {
+				line;
+			}
+		}
+	}
+	from('src/main/tutorial'){
+		exclude '**/*html'
+	}
+	into 'build/tutorial'
+	
+	
+	
 }
 
 ant.importBuild 'build.xml'
