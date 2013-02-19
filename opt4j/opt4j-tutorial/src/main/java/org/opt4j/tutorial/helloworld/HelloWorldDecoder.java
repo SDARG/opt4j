@@ -5,7 +5,6 @@ import org.opt4j.core.problem.Decoder;
 
 public class HelloWorldDecoder implements Decoder<SelectGenotype<Character>, String> {
 
-	@Override
 	public String decode(SelectGenotype<Character> genotype) {
 		String phenotype = "";
 		for (int i = 0; i < genotype.size(); i++) {

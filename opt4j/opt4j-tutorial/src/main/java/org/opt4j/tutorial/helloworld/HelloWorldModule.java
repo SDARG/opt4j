@@ -7,7 +7,6 @@ import org.opt4j.tutorial.TutorialModule;
 @Parent(TutorialModule.class)
 public class HelloWorldModule extends ProblemModule {
 
-	@Override
 	protected void config() {
 		bindProblem(HelloWorldCreator.class, HelloWorldDecoder.class, HelloWorldEvaluator.class);
 	}

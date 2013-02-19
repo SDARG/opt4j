@@ -40,14 +40,12 @@ public class MutateOptimizer implements IterativeOptimizer {
 		this.population = population;
 	}
 
-	@Override
 	public void initialize() throws TerminationException {
 		for (int i = 0; i < OFFSIZE + POPSIZE; i++) {
 			population.add(individualFactory.create());
 		}
 	}
 
-	@Override
 	public void next() throws TerminationException {
 		Collection<Individual> lames = selector.getLames(OFFSIZE, population);
 		population.removeAll(lames);
