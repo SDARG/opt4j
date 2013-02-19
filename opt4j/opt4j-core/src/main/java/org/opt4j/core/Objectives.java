@@ -23,6 +23,8 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.opt4j.core.Objective.Sign;
+
 /**
  * The {@link Objectives} contains the {@link Objective}-{@link Value}s pairs of
  * an {@link Individual}.
@@ -167,6 +169,20 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
+	 * Adds the objective with the specified value.
+	 * 
+	 * @param name
+	 *            the name of the objective
+	 * @param sign
+	 *            the optimization direction
+	 * @param value
+	 *            the value
+	 */
+	public void add(String name, Sign sign, Value<?> value) {
+		add(new Objective(name, sign), value);
+	}
+
+	/**
 	 * Adds the objective with the specified double value.
 	 * 
 	 * @param objective
@@ -176,6 +192,20 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	 */
 	public void add(Objective objective, double value) {
 		add(objective, new DoubleValue(value));
+	}
+	
+	/**
+	 * Adds the objective with the specified value.
+	 * 
+	 * @param name
+	 *            the name of the objective
+	 * @param sign
+	 *            the optimization direction
+	 * @param value
+	 *            the value
+	 */
+	public void add(String name, Sign sign, double value) {
+		add(new Objective(name, sign), value);
 	}
 
 	/**
@@ -188,6 +218,20 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	 */
 	public void add(Objective objective, int value) {
 		add(objective, new IntegerValue(value));
+	}
+	
+	/**
+	 * Adds the objective with the specified value.
+	 * 
+	 * @param name
+	 *            the name of the objective
+	 * @param sign
+	 *            the optimization direction
+	 * @param value
+	 *            the value
+	 */
+	public void add(String name, Sign sign, int value) {
+		add(new Objective(name, sign), value);
 	}
 
 	/**
