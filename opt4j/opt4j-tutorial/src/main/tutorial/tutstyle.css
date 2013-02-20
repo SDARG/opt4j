@@ -1,0 +1,133 @@
+body {
+	position: absolute;
+	background: #FFFFFF;
+	color: #111111;
+	margin: 10px;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 10pt;
+	width: 800px;
+}
+
+ul.iconlist {
+	list-style: none;
+}
+
+li.xml {
+	list-style: none;
+	background-image: url(img/page_white.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.linux {
+	list-style: none;
+	background-image: url(img/application_osx_terminal.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.bat {
+	list-style: none;
+	background-image: url(img/application_xp_terminal.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.folder {
+	list-style: none;
+	background-image: url(img/folder.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+.book>div {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.application {
+	font-variant: small-caps;
+}
+
+h1 {
+	font-size: 32pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+h2 {
+	font-size: 16pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+h3 {
+	font-size: 12pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+h4 {
+	font-size: 10pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+.footnotes {
+	text-align: right;
+	margin-right: -20px;
+}
+
+.footnotes hr {
+	display: block;
+	width: 250px;
+	border: none;
+	height: 5px;
+	margin: 0px;
+	background-color: #595959;
+	float: right;
+}
+
+.titlepage>hr {
+	margin-left: -20px;
+	margin-right: -20px;
+	display: block;
+	border: none;
+	height: 13px;
+	margin-bottom: 20px;
+	background: url(http://opt4j.sourceforge.net/design/img/top_hr.png) left
+		repeat-x;
+}
+
+.subtitle {
+	margin: 0px;
+	font-size: 12pt;
+	font-variant: small-caps;
+	color: #F28226;
+}
+
+a {
+	color: #0000CC;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #F28226;
+	text-decoration: underline;
+}
+
+p {
+	padding-left: 8px;
+}

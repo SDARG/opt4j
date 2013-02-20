@@ -61,6 +61,7 @@ task copyTutorial(type: Copy, dependsOn: copyDocbookSources) {
 				line;
 			}
 		}
+		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
 	}
 	from('src/main/tutorial'){
 		exclude '**/*html'
