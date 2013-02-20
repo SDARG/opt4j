@@ -105,8 +105,7 @@ public class Starter {
 
 			List<String> dirs = new ArrayList<String>();
 			dirs.add("plugins");
-			// dirs.add("");
-			// dirs.add("libs");
+			dirs.add("../plugins");
 			URL url = getClass().getProtectionDomain().getCodeSource().getLocation();
 			URI uri = new URI(url.toString());
 			File parent = new File(uri);
