@@ -132,7 +132,11 @@ img {
 
 #content a {
 	font-size: 10pt;
-	color: #111111;
+	color: #16C;
+	text-decoration: none;
+}
+
+#content a:hover {
 	text-decoration: underline;
 }
 
