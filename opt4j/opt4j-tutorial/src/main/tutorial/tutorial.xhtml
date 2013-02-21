@@ -23,10 +23,10 @@
 	</h2>
 
 	<p>
-		Opt4J requires Java 6 and to compile the following examples, you will
+		Opt4J requires Java 6. To compile the following examples, you will
 		need the JDK installed which can be downloaded from <a
 			href="http://www.oracle.com/technetwork/java/javase/downloads/jdk6u37-downloads-1859587.html">here</a>.
-		Opt4J is distributed as single zip-file that can be downloaded from <a
+		Opt4J is distributed as single .zip file that can be downloaded from <a
 			href="https://sourceforge.net/projects/opt4j/">here</a>. After
 		extracting the files, the folder structure looks like this:
 	</p>
@@ -47,44 +47,43 @@
 		</ul>
 
 	</ul>
-	<p>The application is started with opt4j.bat under Windows and
+	<p>The application is launched with opt4j.bat under Windows and
 		opt4j under Linux/Unix/OSX, respectively. Once started, it will appear
 		the module configurator that allows to select an optimizer and problem
 		as well as setting their parameters. For testing, load the
 		test.config.xml and start the optimization with 'run'.</p>
-	<p>In order to develop custom optimization problems and algorithms
+	<p>To develop custom optimization problems and algorithms
 		for Opt4J, the files in the lib folder have to be on the classpath for
 		compiling and starting the code. To start the module configurator
-		manually, one has to run the class org.opt4j.start.Opt4J which has a
+		manually, one has to run the class org.opt4j.start.Opt4J which contains a
 		corresponding main method.</p>
-	<p>To execute a specific configuration without the need to go via
-		the user interface, you need to pass a configuration file to the
+	<p>To execute a specific configuration without the indirection over the user
+		interface, you need to pass a configuration file to the
 		application with the additional -s parameter to start the
 		optimization. You may try this by executing the following command
 		inside the bin folder:</p>
 	<pre class="console">&gt; opt4j -s test.config.xml</pre>
 	<p>If you write custom optimization problems and algorithms, you
 		can drop a jar-file with the compiled code into the plugins folder and
-		the corresponding modules are found automatically once Opt4J starts
-		up.</p>
+		the corresponding modules are found automatically once Opt4J starts.</p>
 
 	<h2>
 		<a id="problems"></a>Define Optimization Problems
 	</h2>
 
-	<p>Custom optimization problems can be defined by providing three
+	<p>Custom optimization problems are typically defined by providing three
 		main classes: (1) The creator, (2) the decoder, and (3) the evaluator.
 		The functionality of these classes is illustrated in the following
 		figure:</p>
 	<img src="img/problem.png" />
 	<p>The decoder provides random genotypes. A genotype is the genetic
 		representation of an individual. The decoder transforms the genotype
-		into the phenotype that is the observable component of the individual.
+		into the phenotype which represents all observable characteristics and components of the individual.
 		Finally, based on the phenotype, the evaluator determines the
 		objectives that represent the quality of the current individual.</p>
 
 	<p>By defining the creator, decoder, and evalutor (and implicitly
-		the genotype and phenotype), the optimization algorithms can tackle
+		the genotype and phenotype), the optimization algorithm can tackle
 		the problem. In the following, it is shown how this can be done for
 		two simple problems.</p>
 
@@ -120,7 +119,7 @@
 	<p>In the third step, we define the evaluator:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/helloworld/HelloWorldEvaluator.java)</pre>
 	<p>The task of the evaluator is to determine the quality of one
-		phenotype, i.e., one string. In our case we count the number of
+		phenotype, i.e., one string. In our case, we count the number of
 		matching characters when it is compared to "HELLO WORLD". Here, we
 		want the number to be maximized. Note that we can add multiple
 		objectives such that the problem becomes a multi-objective
@@ -130,9 +129,9 @@
 	<pre class="prettyprint">@file(org/opt4j/tutorial/helloworld/HelloWorldModule.java)</pre>
 	<p>The problem module defines the problem and here particularly the
 		corresponding creator, decoder, and evaluator. Once the module
-		configurator is started, this problem module will be automatically
-		detected if its on the classpath and we can select it. We can also add
-		additional evaluators and implicitly additional objectives by passing
+		configurator is started, this problem module is automatically
+		detected if it is on the classpath and we can select it. We can also add
+		additional evaluators and, thus, implicitly additional objectives by passing
 		the additional evaluator class to the addEvaluator(..) method inside
 		the config method.</p>
 
@@ -142,7 +141,7 @@
 		The <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">traveling
 			salesman problem</a> is a classic optimization problem. The goal is to
 		minimize the length of a path that is required to visit a set of
-		cities. The following code show a little bit of the dependency
+		cities. The following code examples show a little bit of the dependency
 		injection capabilities that are integrated into Opt4J by using <A
 			href="http://code.google.com/p/google-guice/">Google Guice</A>. It
 		might be therefore also a good idea to have a short look at the
@@ -153,7 +152,7 @@
 
 	<p>Let us start by defining our problem instance:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/salesman/SalesmanProblem.java)</pre>
-	<p>First we define that a city is given by an x and y coordinate.
+	<p>First we define that a city is given by an x and a y coordinate.
 		In the constructor of our problem, we randomly generate a certain
 		amount of cities that can later on be obtained. Here, the constructor
 		is annotated with @Inject that is used by Guice to indicate which
@@ -183,23 +182,23 @@
 	<p>Here, we simply take the genotype and copy the cities in its
 		current order into a route. Note that for more complex problems, a
 		decoder can often do much more than just transforming the
-		representation such as repairing, etc. Moreover, the usage of a
+		representation such as repairing, etc. Moreover, the 
 		decoder allows to implement different genotype representations of the
 		same problem while the evaluator does not have to be changed at all
-		since the decoder can transform each genetic represenation into the
+		since the decoder can transform each genetic representation into the
 		same phenotype.</p>
 
 	<p>The evaluator looks as follows:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/salesman/SalesmanEvaluator.java)</pre>
 	<p>The evaluator calculates the length of the current route and
-		returns it as objective that has to be minimized.</p>
+		returns it as an objective that has to be minimized.</p>
 
 	<p>Finally we define the module as follows:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/salesman/SalesmanModule.java)</pre>
 	<p>Additionally to setting the creator, decoder, and evaluator, we
-		add a property size and annotate it as constant corresponding to the
+		add a property size and annotate it as constant, corresponding to the
 		argument in the constructor of the problem instance. Note that a
-		proper property in the modules always requires a getter and setter
+		correct property in the modules always requires a getter and setter
 		method. If we start the configurator now, we will see that
 		additionally to adding the problem module, we can also now set the
 		size of our problem. The wiring of the problem, i.e., setting the size
@@ -212,7 +211,7 @@
 	</h2>
 
 	<p>Optimization in Opt4J follows a strict iterative pattern. All
-		optimization algorithms have an initialization and a iterative
+		optimization algorithms have an initialization and an iterative
 		optimization (next). Within these methods, the population of
 		individuals has to be improved while the archive is updated in the
 		background. As discussed before, each individual consists of a
@@ -225,13 +224,13 @@
 		<li>Factories that allow to construct new individuals either
 			randomly or with a given genotype.</li>
 		<li>Operators that allow to generate new genotypes from existing
-			ones by mutation, crossover, algebraic operations, etc.</li>
+			ones by mutation, crossover, algebraic operations, and so on.</li>
 		<li>Selectors that allow to determine the worst (and parent) solutions of a
 			population based on the objectives which is particularly important
 			for multi-objective problems.</li>
 	</ul>
 
-	<p>If you want to write custom optimizers the following example
+	<p>If you want to write custom optimizers, the following example
 		will give you an idea how this is possible in Opt4J. On the other
 		hand, it might be also worth to have a look into the source code and
 		learn from reading the code of the existing algorithms.</p>
@@ -239,16 +238,16 @@
 	<h3>Example: Mutate Optimizer</h3>
 
 	<p>This example shows how to write a very simple optimizer that is
-		based on mutation only. The presented Optimizer has a population size
+		based on mutation only. The presented optimizer has a population size
 		of 100 and creates 25 offspring individuals from 25 parent individuals
 		each generation by a mutate operation. The optimizer is implemented as
 		follows:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/optimizer/MutateOptimizer.java)</pre>
 	<p>The initilization creates 100 new individuals and adds them to
 		the population. The main optimization takes place in the next method
-		in each iteration. Here, first the 25 individuals with the worst
+		in each iteration. First, the 25 individuals with the worst
 		fitness are identified and removed from the population. In the next
-		step, 25 parent individual are determined by the selector and for each
+		step, 25 parent individuals are determined by the selector and for each
 		of these individuals, one individual is created by copying the
 		genotype and mutating it. Finally, the new individuals are added to
 		the population.</p>
@@ -262,7 +261,7 @@
 	<h2>
 		<a id="integration"></a>Integration
 	</h2>
-	<p>Opt4J is designed as framework. However, it might also be
+	<p>Opt4J is designed as a framework. However, it might also be
 		comfortably used as a library in other projects. To embed Opt4J in
 		other applications, the modules can be configured in Java, i.e.,
 		without the usage of the configurator. The following code snippet
@@ -291,7 +290,7 @@ try {
         task.close();
 } </pre>
 	<p>First, you will have to construct the desired modules for the
-		optimization proces. The Opt4JTask is constructed with the parameter
+		optimization process. The Opt4JTask is constructed with the parameter
 		false that indicates that the task is closed manually and not
 		automatically once the optimization stops. The Opt4JTask is
 		initialized with the modules. Now, it is possible to execute the task
