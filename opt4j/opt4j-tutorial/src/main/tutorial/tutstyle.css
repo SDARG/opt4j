@@ -6,6 +6,7 @@ body {
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 10pt;
 	width: 800px;
+	counter-reset: h2counter;
 }
 
 ul.iconlist {
@@ -62,6 +63,7 @@ h1 {
 	font-weight: 600;
 	font-variant: small-caps;
 	margin: 0px;
+	counter-reset: h2counter;
 }
 
 h2 {
@@ -69,6 +71,16 @@ h2 {
 	font-weight: 600;
 	font-variant: small-caps;
 	margin: 0px;
+}
+
+h2:before {
+	content: counter(h2counter) ".\0000a0\0000a0";
+	counter-increment: h2counter;
+}
+
+h2.nocount:before {
+	content: none;
+	counter-increment: none;
 }
 
 h3 {
