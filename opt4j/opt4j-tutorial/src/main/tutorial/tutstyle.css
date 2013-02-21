@@ -142,3 +142,13 @@ a:hover {
 p {
 	padding-left: 8px;
 }
+
+p.tip {
+	padding-left: 40px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	position:relative;
+	background: url(img/tip.png) left no-repeat;
+	margin-left: 8px;
+	font-style: italic;
+}
