@@ -9,53 +9,31 @@ dependencies {
 	compile project(':opt4j-viewer')
 }
 
-configurations {
-    docbook
-}
-
-dependencies {
-    docbook group: 'avalon-framework', 			name: 'avalon-framework-api', 	version: '4.2.0'
-	docbook group: 'avalon-framework', 			name: 'avalon-framework-impl', 	version: '4.2.0'
-	docbook group: 'org.apache.xmlgraphics', 	name: 'fop', 					version: '1.0'
-}
-
-ant.path(id:'classpath', location:configurations.docbook.asPath)
-
-task copyDocbookSources(type: Copy) {
-	from('src/main/docbook/src') {
-        include '**/*.xml'
-		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
-	}
+task filterSources(type: Copy) {
 	from('src/main/java') {
         include '**/*.java'
-		filter { String line -> if(line.matches("(import|@Suppress|package|@Parent).*")){
-									'';
-								} else {
-									line.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-								}
+		filter { String line -> 
+			if(line.matches("(import|@Suppress|package|@Parent).*")){
+				'';
+			} else {
+				line.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+			}
 		}
-		
 		def regexp = new org.apache.tools.ant.types.RegularExpression()
   		regexp.pattern = '[^ \n\t\r]+'
-  		
   		filter(org.apache.tools.ant.filters.LineContainsRegExp, regexps:[regexp])
 	}
-	into 'build/docbook/src'
+	into new File(project.buildDir,'tutorialsrc')
 }
 
-task copyDocbookHtml(type: Copy) {
-	from 'src/main/docbook/html'
-	into 'build/docbook/html'
-}
-
-task copyTutorial(type: Copy, dependsOn: copyDocbookSources) {
+task tutorial(type: Copy, dependsOn: filterSources) {
 	def Pattern p = Pattern.compile(".*(@file\\(([\\w/\\.]+)\\)).*");
 	from('src/main/tutorial'){
 		include '**/*html'
 		filter { String line -> 
 			Matcher m = p.matcher(line);
 			if(m.matches()){
-				String contents = new File( 'build/docbook/src/' + m.group(2) ).getText( 'UTF-8' )
+				String contents = new File( project.buildDir,'tutorialsrc/' + m.group(2) ).getText( 'UTF-8' )
 				line.substring(0, m.start(1)) + contents + line.substring(m.end(1), line.length());
 			} else {
 				line;
@@ -67,15 +45,4 @@ task copyTutorial(type: Copy, dependsOn: copyDocbookSources) {
 		exclude '**/*html'
 	}
 	into 'build/tutorial'
-	
-	
-	
 }
-
-ant.importBuild 'build.xml'
-
-task makeDocbookHtml(dependsOn: [copyDocbookHtml,copyDocbookSources,docxhtml] ) {}
-
-task makeDocbookPDF(dependsOn: [copyDocbookSources,docpdf]) {}
-
-task makeDocbook(dependsOn: [makeDocbookPDF, makeDocbookHtml]) {}

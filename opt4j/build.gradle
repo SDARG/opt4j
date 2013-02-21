@@ -155,14 +155,12 @@ task copyJavadoc(type: Copy, dependsOn: 'alldocs'){
 	into 'build/website/javadoc/'+version
 }
 
-task copyDocbook(type: Copy, dependsOn: ":opt4j-tutorial:makeDocbook"){
-	def docpath=new File(project(':opt4j-tutorial').buildDir,'docbook')
-	from new File(docpath,'pdf')
-	from new File(docpath,'html')
+task copyTutorial(type: Copy, dependsOn: ":opt4j-tutorial:tutorial"){
+	from new File(project(':opt4j-tutorial').buildDir,'tutorial')
 	into 'build/website/documentation/'+version
 }
 
-task website(dependsOn: [copyWebsite, copyJavadoc, copyDocbook]) {}
+task website(dependsOn: [copyWebsite, copyJavadoc, copyTutorial]) {}
 
 
 task alldocs(type: Javadoc) {
