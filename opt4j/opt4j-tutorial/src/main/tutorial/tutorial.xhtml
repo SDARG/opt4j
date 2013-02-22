@@ -13,8 +13,8 @@
 	<h2 class="nocount">Contents</h2>
 	<ol>
 		<li><a href="#installation">Installation</a></li>
-		<li><a href="#problems">Define Optimization Problems</a></li>
-		<li><a href="#algorithms">Define Optimization Algorithms</a></li>
+		<li><a href="#problems">Defining Optimization Problems</a></li>
+		<li><a href="#algorithms">Defining Optimization Algorithms</a></li>
 		<li><a href="#integration">Integration</a></li>
 	</ol>
 
@@ -72,15 +72,17 @@
 		batch.py' to get further instructions how to use the script.</p>
 
 	<h2>
-		<a id="problems"></a>Define Optimization Problems
+		<a id="problems"></a>Defining Optimization Problems
 	</h2>
 
 	<p>Custom optimization problems are typically defined by providing
-		three main classes: (1) The creator, (2) the decoder, and (3) the
-		evaluator. The functionality of these classes is illustrated in the
-		following figure:</p>
+		three main classes:
+		(1) The <a class="jdoc" href="../../javadoc/@version@/index.html?org/opt4j/core/problem/Creator.html">Creator</a>,
+		(2) the <a class="jdoc" href="../../javadoc/@version@/index.html?org/opt4j/core/problem/Decoder.html">Decoder</a>, and
+		(3) the <a class="jdoc" href="../../javadoc/@version@/index.html?org/opt4j/core/problem/Evaluator.html">Evaluator</a>.
+		The functionality of these classes is illustrated in the following figure:</p>
 	<img src="img/problem.png" />
-	<p>The decoder provides random genotypes. A genotype is the genetic
+	<p>The creator provides random genotypes. A genotype is the genetic
 		representation of an individual. The decoder transforms the genotype
 		into the phenotype which represents all observable characteristics and
 		components of the individual. Finally, based on the phenotype, the
@@ -212,7 +214,7 @@
 		with that.</p>
 
 	<h2>
-		<a id="algorithms"></a>Define Optimization Algorithms
+		<a id="algorithms"></a>Defining Optimization Algorithms
 	</h2>
 
 	<p>Optimization in Opt4J follows a strict iterative pattern. All
