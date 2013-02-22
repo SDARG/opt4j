@@ -39,6 +39,15 @@ li.bat {
 	margin: 0 0;
 }
 
+li.python {
+	list-style: none;
+	background-image: url(img/page_white_gear.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
 li.folder {
 	list-style: none;
 	background-image: url(img/folder.png);
