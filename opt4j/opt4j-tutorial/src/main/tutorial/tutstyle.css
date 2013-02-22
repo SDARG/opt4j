@@ -58,15 +58,6 @@ li.folder {
 	margin: 0 0;
 }
 
-.book>div {
-	padding-left: 20px;
-	padding-right: 20px;
-}
-
-.application {
-	font-variant: small-caps;
-}
-
 h1 {
 	font-size: 32pt;
 	font-weight: 600;
@@ -104,39 +95,6 @@ h4 {
 	font-weight: 600;
 	font-variant: small-caps;
 	margin: 0px;
-}
-
-.footnotes {
-	text-align: right;
-	margin-right: -20px;
-}
-
-.footnotes hr {
-	display: block;
-	width: 250px;
-	border: none;
-	height: 5px;
-	margin: 0px;
-	background-color: #595959;
-	float: right;
-}
-
-.titlepage>hr {
-	margin-left: -20px;
-	margin-right: -20px;
-	display: block;
-	border: none;
-	height: 13px;
-	margin-bottom: 20px;
-	background: url(http://opt4j.sourceforge.net/design/img/top_hr.png) left
-		repeat-x;
-}
-
-.subtitle {
-	margin: 0px;
-	font-size: 12pt;
-	font-variant: small-caps;
-	color: #F28226;
 }
 
 a {
