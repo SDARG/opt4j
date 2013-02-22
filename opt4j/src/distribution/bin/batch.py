@@ -37,7 +37,7 @@ FOLDER_RESULTS = "results"
 STATS = ["avg", "dev"]
 COVSTATS = ["avg", "dev", "min", "max", "median", "lq", "uq"] 
 
-MODULESREMOVE = ['org.opt4j.common.logger.LoggerModule', 'org.opt4j.viewer.ViewerModule']
+MODULESREMOVE = ['org.opt4j.core.common.logger.LoggerModule', 'org.opt4j.viewer.ViewerModule']
 RUNS = 30
 PROCESSES = 1
 EXPROCESSES = 1
@@ -435,7 +435,8 @@ def doResults(basefolder):
     for group, groupfiles in groups.items():
         print('\tread group ' + group)
         tasks = [(doReadFile, (file, resultsfoldertmp)) for file in groupfiles]
-        result = parallel(tasks, PROCESSES)
+        result = parallel(tasks, 1)
+        
         
         '''result = [doReadFile(file,resultsfoldertmp) for file in groupfiles]; sequential '''
         
@@ -538,12 +539,12 @@ def doRuns(basefolder):
             tree.parse(config)
             application = tree.getroot()
             for module in [module for module in tree.findall("module") if module.attrib['class'] in MODULESREMOVE]: application.remove(module)         
-            logger = SubElement(application, 'module', {'class':'org.opt4j.common.logger.LoggerModule'})
+            logger = SubElement(application, 'module', {'class':'org.opt4j.core.common.logger.LoggerModule'})
             property1 = SubElement(logger, 'property', {'name':'filename'})
             property1.text = runfile
             property2 = SubElement(logger, 'property', {'name':'printInfeasible'})
             property2.text = 'true'	
-            seed = SubElement(application, 'module', {'class':'org.opt4j.common.random.RandomModule'})
+            seed = SubElement(application, 'module', {'class':'org.opt4j.core.common.random.RandomModule'})
             seedProperty1 = SubElement(seed, 'property', {'name':'type'})
             seedProperty1.text = 'MERSENNE_TWISTER'
             seedProperty2 = SubElement(seed, 'property', {'name':'usingSeed'})
@@ -575,8 +576,21 @@ def resetObjectives():
 if __name__ == '__main__':
     '''print(os.getcwd())'''
     
+    help='''usage: %prog [options] <directories>", version="%prog 1.0 
+     
+    Each directory in <directories> contains a folder configs that has to contain 
+    one or more xml configuration files which can be created from the configurator GUI.
+    Note that each configuration file has to solve a problem (usually the same problem) 
+    with identical objectives.
     
-    parser = OptionParser(usage="usage: %prog [options] <directories>", version="%prog 1.0")
+    The batch script will execute run each configuration file n times and put the
+    results in the runs folder.
+    
+    Finally, the statistics (incl. hypervolume and e-dominance) will be calculated
+    based on the runs and written in the results folder.'''
+
+    
+    parser = OptionParser(usage=help)
     parser.add_option("-c", "--clear", action="store_true", default=False, help="clear all previous runs and results")
     parser.add_option("-r", "--runs", action="store_true", default=False, help="perform the runs")
     parser.add_option("-s", "--results", action="store_true", default=False, help="determine the results")
