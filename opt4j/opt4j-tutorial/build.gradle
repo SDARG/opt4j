@@ -39,10 +39,14 @@ task tutorial(type: Copy, dependsOn: filterSources) {
 				line;
 			}
 		}
+		def myProps = new Properties()
+		file("src/main/tutorial/javadoc.properties").withInputStream{myProps.load(it);}
+    	filter(ReplaceTokens, tokens: myProps)
 		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
 	}
 	from('src/main/tutorial'){
 		exclude '**/*html'
+		exclude '**/*properties'
 	}
 	into 'build/tutorial'
 }

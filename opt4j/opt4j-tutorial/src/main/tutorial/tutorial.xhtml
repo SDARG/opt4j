@@ -77,9 +77,9 @@
 
 	<p>Custom optimization problems are typically defined by providing
 		three main classes:
-		(1) The <a class="jdoc" href="../../javadoc/@version@/index.html?org/opt4j/core/problem/Creator.html">Creator</a>,
-		(2) the <a class="jdoc" href="../../javadoc/@version@/index.html?org/opt4j/core/problem/Decoder.html">Decoder</a>, and
-		(3) the <a class="jdoc" href="../../javadoc/@version@/index.html?org/opt4j/core/problem/Evaluator.html">Evaluator</a>.
+		(1) The @Creator@,
+		(2) the @Decoder@, and
+		(3) the @Evaluator@.
 		The functionality of these classes is illustrated in the following figure:</p>
 	<img src="img/problem.png" />
 	<p>The creator provides random genotypes. A genotype is the genetic
@@ -112,7 +112,7 @@
 		classes that allows to select from a given alphabet and initialize it
 		randomly with eleven (11) characters.</p>
 	<p class="tip">Note that Opt4J contains a set of predefined
-		genotype classes (in the org.opt4j.core.genotype package) that can
+		genotype classes (in the @genotype@ package) that can
 		also be combined and one should always choose from this set if
 		possible instead of implementing custom genotypes that require an
 		implementation of custom operators.</p>
@@ -141,7 +141,7 @@
 		if it is on the classpath and we can select it. </p>
 	<p class="tip">You can also add additional evaluators and, thus,
 		implicitly additional objectives by passing the additional evaluator
-		class to the addEvaluator(..) method inside the config method.</p>
+		class to the @addEvaluator@ method inside the config method.</p>
 
 	<h3>Example: Traveling Salesman</h3>
 
