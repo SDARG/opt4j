@@ -1,9 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
 <link href="prettify.css" type="text/css" rel="stylesheet" />
 <link href="tutstyle.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="prettify.js"></script>
+<title>Opt4J &mdash; A Modular Framework for Meta-heuristic Optimization &mdash; Tutorial</title>
 </head>
 <body onload="prettyPrint()">
 
@@ -32,20 +34,18 @@
 	</p>
 	<ul class="iconlist">
 		<li class="folder">opt4j-@version@</li>
-
-		<ul class="iconlist">
+		<li><ul class="iconlist">
 			<li class="folder">bin</li>
-			<ul class="iconlist">
+			<li><ul class="iconlist">
 				<li class="linux">opt4j</li>
 				<li class="bat">opt4j.bat</li>
 				<li class="xml">test.config.xml</li>
 				<li class="python">batch.py</li>
-			</ul>
+			</ul></li>
 			<li class="folder">lib</li>
 			<li class="folder">licenses</li>
 			<li class="folder">plugins</li>
-		</ul>
-
+		</ul></li>
 	</ul>
 	<p>The application is launched with opt4j.bat under Windows and
 		opt4j under Linux/Unix/OSX, respectively. Once started, it will appear
@@ -62,7 +62,7 @@
 		application with the additional -s parameter to start the
 		optimization. You may try this by executing the following command
 		inside the bin folder:</p>
-	<pre class="console">&gt; opt4j -s test.config.xml</pre>
+	<pre class="console">&gt; ./opt4j -s test.config.xml</pre>
 	<p>If you write custom optimization problems and algorithms, you
 		can drop a jar-file with the compiled code into the plugins folder and
 		the corresponding modules are found automatically once Opt4J starts.</p>
@@ -80,8 +80,8 @@
 		(1) The @Creator@,
 		(2) the @Decoder@, and
 		(3) the @Evaluator@.
-		The functionality of these classes is illustrated in the following figure:</p>
-	<img src="img/problem.png" />
+		The functionality of these classes is illustrated in the following figure:
+		<img src="img/problem.png" alt="Creator &rarr; Genotype &rarr; Decoder &rarr; Phenotype &rarr; Evaluator &rarr; Objectives"/></p>
 	<p>The creator provides random genotypes. A genotype is the genetic
 		representation of an individual. The decoder transforms the genotype
 		into the phenotype which represents all observable characteristics and
@@ -89,7 +89,7 @@
 		evaluator determines the objectives that represent the quality of the
 		current individual.</p>
 
-	<p>By defining the creator, decoder, and evalutor (and implicitly
+	<p>By defining the creator, decoder, and evaluator (and implicitly
 		the genotype and phenotype), the optimization algorithm can tackle the
 		problem. In the following, it is shown how this can be done for two
 		simple problems.</p>
@@ -121,7 +121,7 @@
 		defines the phenotype:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/helloworld/HelloWorldDecoder.java)</pre>
 	<p>The task of the decoder is to convert our genotype into a
-		phenotype which in our case is a string. This is done straighforward
+		phenotype which in our case is a string. This is done straightforward
 		by copying the characters into a string.</p>
 
 	<p>In the third step, we define the evaluator:</p>
@@ -151,8 +151,8 @@
 		minimize the length of a path that is required to visit a set of
 		cities. The following code examples show a little bit of the
 		dependency injection capabilities that are integrated into Opt4J by
-		using <A href="http://code.google.com/p/google-guice/">Google
-			Guice</A>. It might be therefore also a good idea to have a short look at
+		using <a href="http://code.google.com/p/google-guice/">Google
+			Guice</a>. It might be therefore also a good idea to have a short look at
 		the tutorial of Guice if one plans to use dependency injection
 		extensively. For this example, a profound understanding of Guice will
 		not be necessary.
@@ -250,7 +250,7 @@
 		each generation by a mutate operation. The optimizer is implemented as
 		follows:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/optimizer/MutateOptimizer.java)</pre>
-	<p>The initilization creates 100 new individuals and adds them to
+	<p>The initialization creates 100 new individuals and adds them to
 		the population. The main optimization takes place in the next method
 		in each iteration. First, the 25 individuals with the worst fitness
 		are identified and removed from the population. In the next step, 25
