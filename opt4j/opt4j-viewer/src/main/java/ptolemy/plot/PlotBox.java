@@ -48,12 +48,8 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -61,7 +57,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -414,7 +409,6 @@ public class PlotBox extends JPanel implements Printable {
 			_usecolor = true;
 
 			// Private members next...
-			_filespec = null;
 			_xlabel = null;
 			_ylabel = null;
 			_title = null;
@@ -3652,9 +3646,6 @@ public class PlotBox extends JPanel implements Printable {
 
 	/** @serial List of deferred actions. */
 	private List<Runnable> _deferredActions;
-
-	/** @serial The file to be opened. */
-	private String _filespec = null;
 
 	/**
 	 * @serial The range of the plot as labeled (multiply by 10^exp for actual

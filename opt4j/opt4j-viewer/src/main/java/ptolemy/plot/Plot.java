@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.Enumeration;
 import java.util.Vector;
 
