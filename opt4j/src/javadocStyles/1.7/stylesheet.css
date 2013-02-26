@@ -385,9 +385,9 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
 }
 .overviewSummary caption span, .packageSummary caption span, .contentContainer ul.blockList li.blockList caption span, .summary caption span, .classUseContainer caption span, .constantValuesContainer caption span {
     white-space:nowrap;
-    padding-top:6px;
+    padding-top:7px;
     padding-left:8px;
-    padding-bottom: 6px;
+    padding-bottom: 5px;
     display:block;
     float:left;
     background-image:url(resources/titlebar.png);
@@ -486,7 +486,7 @@ h1.hidden {
 
 div.summary table.overviewSummary .block {
     display:block;
-    padding-left: 22px;
+    padding-left: 3em;
 }
 
 .strong {
