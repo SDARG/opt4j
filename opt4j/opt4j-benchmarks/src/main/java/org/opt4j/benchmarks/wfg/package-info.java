@@ -14,7 +14,7 @@
  */
 
 /**
- * Provides the classes for the WFG (Walking Fish Group) benchmarks, see "A
+ * Provides the classes for the WFG (Walking Fish Group) benchmarks. See "A
  * Scalable Multi-objective Test Problem Toolkit, Simon Huband, Luigi Barone, R.
  * Lyndon While, and Philip Hingston (EMO 2005)".
  * 

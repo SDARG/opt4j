@@ -14,7 +14,7 @@
  */
 
 /**
- * Provides the classes for the knapsack benchmark, see "E. Zitzler and L.
+ * Provides the classes for the knapsack benchmark. See "E. Zitzler and L.
  * Thiele: Multiobjective evolutionary algorithms: A comparative case study and
  * the strength Pareto approach. IEEE Transactions on Evolutionary Computation,
  * vol. 3, no. 4, pp. 257-271, Nov. 1999." .
