@@ -150,7 +150,20 @@ task copyWebsite(type: Copy){
 	into 'build/website/'
 }
 
-task copyJavadoc(type: Copy, dependsOn: 'alldocs'){
+task copyJavadocStyle(type: Copy, dependsOn: 'alldocs') {
+	if(JavaVersion.current().java6) {
+		from ('src/javadocStyles/1.6/resources') {
+			include '*.png'
+		}
+	} else {
+		from ('src/javadocStyles/1.7/resources') {
+			include '*.png'
+		}
+	}
+	into 'build/docs/javadoc/resources'
+}
+
+task copyJavadoc(type: Copy, dependsOn: 'copyJavadocStyle'){
 	from new File(project.buildDir, 'docs/javadoc')
 	into 'build/website/javadoc/'+version
 }
@@ -166,7 +179,12 @@ task website(dependsOn: [copyWebsite, copyJavadoc, copyTutorial]) {}
 task alldocs(type: Javadoc) {
 	title = "Opt4J version $version Project API Documentation"
 	destinationDir = new File(project.buildDir, 'docs/javadoc')
-	def optionsFile = new File( 'build/tmp/javadoc.txt' )
+	if(JavaVersion.current().java6) {
+	options.stylesheetFile = file('src/javadocStyles/1.6/stylesheet.css')
+	} else {
+		options.stylesheetFile = file('src/javadocStyles/1.7/stylesheet.css')
+	}
+	
 	options.linkSource = true
 
 	subprojects.each {subproject ->
