@@ -185,6 +185,7 @@ task alldocs(type: Javadoc) {
 		options.stylesheetFile = file('src/javadocStyles/1.7/stylesheet.css')
 	}
 	
+	options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PUBLIC
 	options.linkSource = true
 
 	subprojects.each {subproject ->
