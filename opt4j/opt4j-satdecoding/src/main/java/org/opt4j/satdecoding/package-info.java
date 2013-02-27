@@ -64,13 +64,12 @@
  * defined.
  * 
  * <pre>
- * public class MinOnesResult extends ArrayList&lt;Boolean&gt; implements Phenotype {
+ * public class MinOnesResult extends ArrayList&lt;Boolean&gt; {
  * }
  * </pre>
  * 
  * <pre>
  * public class MinOnesEvaluator implements Evaluator&lt;MinOnesResult&gt; {
- * 	Objective ones = new Objective(&quot;ones&quot;, Sign.MIN);
  * 
  * 	public Objectives evaluate(MinOnesResult minOnesResult) {
  * 
@@ -82,8 +81,7 @@
  * 		}
  * 
  * 		Objectives objectives = new Objectives();
- * 		objectives.add(ones, value);
- * 
+ * 		objectives.add(&quot;ones&quot;, Sign.MIN, value);
  * 		return objectives;
  * 	}
  * }
