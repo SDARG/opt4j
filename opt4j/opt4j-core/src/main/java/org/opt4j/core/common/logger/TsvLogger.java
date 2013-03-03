@@ -151,7 +151,8 @@ public class TsvLogger extends AbstractLogger implements Logger {
 		String header = getCommentDelimiter() + "iteration" + getColumnDelimiter() + "evaluations"
 				+ getColumnDelimiter() + "runtime[s]";
 		for (Objective objective : objectives) {
-			header += getColumnDelimiter() + objective.getName() + "[" + objective.getSign() + "]";
+			String name = objective.getName().replaceAll("[ \n\t\r]", "_");
+			header += getColumnDelimiter() + name + "[" + objective.getSign() + "]";
 		}
 		out.println(header);
 	}
