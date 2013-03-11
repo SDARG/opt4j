@@ -16,11 +16,15 @@
 package org.opt4j.core.common.completer;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Individual.State;
+import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.IndividualCompleter;
@@ -107,6 +111,8 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 			Object phenotype = individual.getPhenotype();
 
 			Objectives objectives = evaluator.evaluate(phenotype);
+			assert isSameLength(objectives.getKeys()) : "Objectives changed: " + objectives.getKeys();
+
 			individual.setObjectives(objectives);
 		} else {
 			throw new IllegalStateException("Cannot evaluate Individual, current state: " + state);
@@ -126,4 +132,22 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 		}
 	}
 
+	private Set<Objective> objectives = null;
+
+	/**
+	 * Check if the given {@link Objectives} have the same length as prior
+	 * evaluated ones.
+	 * 
+	 * @param objectives
+	 *            the objectives to check
+	 * @return true if the number of objectives is constant
+	 */
+	private boolean isSameLength(Collection<Objective> objectives) {
+		Set<Objective> set = new HashSet<Objective>(objectives);
+		if (this.objectives == null) {
+			this.objectives = set;
+			return true;
+		}
+		return this.objectives.equals(set);
+	}
 }
