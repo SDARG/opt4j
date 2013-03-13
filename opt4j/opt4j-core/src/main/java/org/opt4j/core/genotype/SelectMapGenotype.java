@@ -146,8 +146,11 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	public V getValue(K key) {
 		int i = getIndexOf(key);
 		int v = get(i);
+		assert v <= getUpperBound(i);
+		assert v >= getLowerBound(i);
 		List<V> valueList = values.get(key);
 
+		assert valueList.size() > v : "index " + v + " unavailable for list of key " + key + ": " + valueList;
 		return valueList.get(v);
 	}
 
