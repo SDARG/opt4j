@@ -176,7 +176,7 @@ def readRun(filename):
         run = None
         permutation = None
         for line in file:
-            parts = line.split() 
+            parts = line.split('\t') 
             if isnumber(parts[0]):
                 parts = [float(x) if isnumber(x) else None for x in parts]
                 if all([isnumber(x) for x in parts]):
@@ -186,9 +186,11 @@ def readRun(filename):
                 else:
                     run.addSample(parts[0], parts[1], parts[2], [None for i in permutation])
             else:
-                if objectives is None: objectives = Objectives(parts[3:])
-                permutation = [parts[3:].index(e) for e in objectives.values]
-                run = Run(filename)
+                if not line.isspace():
+                  parts =  [x.replace(" ", "_") for x in parts]
+                  if objectives is None: objectives = Objectives(parts[3:])
+                  permutation = [parts[3:].index(e) for e in objectives.values]
+                  run = Run(filename)
         return run
     
 def isfeasible(sample):
