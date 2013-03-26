@@ -209,6 +209,14 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.4'
 }
 
+task fatjar(dependsOn: subprojects.jar, type: Jar) {
+    destinationDir = new File(project.buildDir, 'fatjar')
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+	attributes 'Main-Class': mainClassName
+    }
+}
+
 import org.apache.tools.ant.filters.ReplaceTokens
 applicationDistribution.from("src/distribution") {
     filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
