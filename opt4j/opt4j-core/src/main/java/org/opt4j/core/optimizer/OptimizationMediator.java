@@ -62,7 +62,7 @@ public class OptimizationMediator extends AbstractOptimizer {
 	public void optimize() throws StopException, TerminationException {
 		iterativeOptimizer.initialize();
 		nextIteration();
-		while (iteration.value() < iteration.max()) {
+		while (iteration.value() <= iteration.max()) {
 			iterativeOptimizer.next();
 			nextIteration();
 		}
