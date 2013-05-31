@@ -27,6 +27,8 @@ import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualFactory;
 import org.opt4j.core.common.random.Rand;
+import org.opt4j.core.genotype.DoubleGenotype;
+import org.opt4j.core.optimizer.IncompatibilityException;
 import org.opt4j.core.optimizer.IndividualCompleter;
 import org.opt4j.core.optimizer.IterativeOptimizer;
 import org.opt4j.core.optimizer.Population;
@@ -121,7 +123,15 @@ public class DifferentialEvolution implements IterativeOptimizer {
 
 		selector.init(2 * alpha);
 		while (population.size() < alpha) {
-			population.add(individualFactory.create());
+			Individual individual = individualFactory.create();
+
+			Genotype genotype = individual.getGenotype();
+			if (!(genotype instanceof DoubleGenotype)) {
+				throw new IncompatibilityException("DifferentialEvolution is restricted to " + DoubleGenotype.class
+						+ ", current Genotype is: " + genotype.getClass());
+			}
+
+			population.add(individual);
 		}
 	}
 
