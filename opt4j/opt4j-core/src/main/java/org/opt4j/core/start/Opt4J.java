@@ -17,6 +17,7 @@ package org.opt4j.core.start;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.RenderingHints;
 import java.awt.SplashScreen;
 import java.io.IOException;
@@ -116,7 +117,12 @@ public class Opt4J extends Configurator {
 	public static void main(String[] args) throws Exception {
 		System.out.println("Starting Opt4J " + getVersion() + " (Build " + getDateISO() + ")");
 		if (args.length > 0 && args[0].equalsIgnoreCase("-s")) {
-			SplashScreen splash = SplashScreen.getSplashScreen();
+			SplashScreen splash = null;
+			try {
+				splash = SplashScreen.getSplashScreen();
+			} catch (HeadlessException e) {
+				// ignore
+			}
 			if (splash != null) {
 				splash.close();
 			}
