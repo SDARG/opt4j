@@ -283,10 +283,10 @@ def edominance(samples, reference):
     return v
 
 def coverage(a, b):
-    dominated = 0
+    dominated = 0.0
     for bsample in b:
         if any(asample.weakdominates(bsample) for asample in a):
-            dominated += 1         
+            dominated += 1.0
     return dominated / len(b) if len(b) > 0 else 1
 
 def writeSamples(samples, filename):
