@@ -24,6 +24,9 @@ import com.google.inject.TypeLiteral;
 /**
  * The {@link MutateModule} is used for modules for the {@link Mutate} operator.
  * 
+ * A new {@link Mutate} operator can be registered by implementing this module
+ * and adding the operator with {@link #addOperator}.
+ * 
  * @author lukasiewycz
  * @see Mutate
  * 

@@ -25,6 +25,9 @@ import com.google.inject.TypeLiteral;
  * The {@link DiversityModule} is used for modules for the {@link Diversity}
  * operator.
  * 
+ * A new {@link Diversity} operator can be registered by implementing this
+ * module and adding the operator with {@link #addOperator}.
+ * 
  * @author glass, lukasiewycz
  * @see Diversity
  * 

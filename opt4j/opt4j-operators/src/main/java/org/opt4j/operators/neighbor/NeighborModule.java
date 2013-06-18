@@ -18,12 +18,14 @@ package org.opt4j.operators.neighbor;
 import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.annotations.Icon;
 import org.opt4j.operators.OperatorModule;
-
 import com.google.inject.TypeLiteral;
 
 /**
  * The {@link NeighborModule} is used for modules for the {@link Neighbor}
  * operator.
+ * 
+ * A new {@link Neighbor} operator can be registered by implementing this module
+ * and adding the operator with {@link #addOperator}.
  * 
  * @author lukasiewycz
  * @see Neighbor
