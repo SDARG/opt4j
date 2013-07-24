@@ -27,7 +27,7 @@ import os
 import shutil
 
 
-PROG = 'opt4j '
+PROG = os.path.abspath('opt4j')
 
 FOLDER_CONFIGS = "configs"
 FOLDER_RUNS = "runs"
