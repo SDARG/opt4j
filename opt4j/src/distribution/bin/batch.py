@@ -25,6 +25,9 @@ from xml.etree.ElementTree import ElementTree, SubElement
 from optparse import OptionParser
 import os
 import shutil
+import subprocess
+import time
+import signal
 
 
 PROG = os.path.abspath('opt4j')
@@ -43,6 +46,7 @@ PROCESSES = 1
 EXPROCESSES = 1
 MIN = True
 MAX = False
+DEADLINE = None
 
 ''' objectives are determined in the function readRun '''
 objectives = None
@@ -514,11 +518,29 @@ def doResults(basefolder):
     print('results successful')
 
 
-
 def doRun(configfile):
     print('\texecute config ' + str(configfile))
-    os.system(PROG + " -s " + configfile)
+    if DEADLINE == None:
+      return subprocess.call([ PROG, "-s", configfile ])
+    else:
+      process = subprocess.Popen([ PROG, "-s", configfile ])
+      
+      end = time.time() + DEADLINE
+      while (True):
+        returncode = process.poll()
+        if returncode != None:
+          return returncode
+        if time.time() > end:
+          pid = process.pid
+          try:
+            os.kill(pid, signal.SIGTERM)
+          except OSError:
+            pass
+          del process
+          return -1 
+        time.sleep(max(DEADLINE / 100.0, 1.0))
         
+
 def doRuns(basefolder):        
     print('start runs')
     
@@ -600,6 +622,7 @@ if __name__ == '__main__':
     parser.add_option("-p", metavar="PROCESSES", type="int", default=PROCESSES, help="set the number of processes for the result determination [default: %default]")
     parser.add_option("-e", metavar="EXPROCESSES", type="int", default=EXPROCESSES, help="set the number of execution processes for the runs [default: %default]")
     parser.add_option("-j", metavar="PROG", default=PROG, help="set the Opt4J executable file to use [default: %default]")
+    parser.add_option("-d", metavar="DEADLINE", type="int", default=DEADLINE, help="set the deadline per run in seconds [default: %default]")
     (options, args) = parser.parse_args()
     
     if len(args) == 0:
@@ -615,6 +638,8 @@ if __name__ == '__main__':
             EXPROCESSES = options.e
         if options.j != None:
             PROG = options.j
+        if options.d != None:
+            DEADLINE = options.d
 
         for basefolder in args:
             try:
