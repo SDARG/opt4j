@@ -24,6 +24,7 @@ import org.opt4j.core.config.annotations.Category;
 import org.opt4j.core.config.annotations.Icon;
 import org.opt4j.core.start.Opt4JModule;
 
+import com.google.inject.Binder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
@@ -60,8 +61,41 @@ public abstract class ProblemModule extends Opt4JModule {
 	 * @param evaluator
 	 *            the evaluator
 	 */
-	@SuppressWarnings("unchecked")
 	protected void bindProblem(final Class<? extends Creator<? extends Genotype>> creator,
+			final Class<? extends Decoder<? extends Genotype, ? extends Object>> decoder,
+			final Class<? extends Evaluator<? extends Object>> evaluator) {
+		bindProblem(binder(), creator, decoder, evaluator);
+	}
+
+	/**
+	 * Binds an additional {@link Evaluator}.
+	 * 
+	 * @param evaluator
+	 *            the evaluator to use
+	 */
+	protected void addEvaluator(final Class<? extends Evaluator<? extends Object>> evaluator) {
+		addEvaluator(binder(), evaluator);
+	}
+
+	/**
+	 * Binds an additional {@link Evaluator} to a given {@link Binder}.
+	 * 
+	 * @param binder
+	 *            the guice binder to use
+	 * @param evaluator
+	 *            the evaluator to use
+	 * @see #binder()
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public static void addEvaluator(Binder binder, final Class<? extends Evaluator<? extends Object>> evaluator) {
+		Multibinder<Evaluator<Object>> multibinder = Multibinder.newSetBinder(binder,
+				new TypeLiteral<Evaluator<Object>>() {
+				});
+		multibinder.addBinding().to((Class<Evaluator<Object>>) evaluator);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void bindProblem(Binder binder, final Class<? extends Creator<? extends Genotype>> creator,
 			final Class<? extends Decoder<? extends Genotype, ? extends Object>> decoder,
 			final Class<? extends Evaluator<? extends Object>> evaluator) {
 
@@ -74,33 +108,19 @@ public abstract class ProblemModule extends Opt4JModule {
 		}
 
 		for (Class<?> clazz : classes) {
-			bind(clazz).in(SINGLETON);
+			binder.bind(clazz).in(SINGLETON);
 		}
 
 		if (creator != null) {
-			bind(new TypeLiteral<Creator<Genotype>>() {
+			binder.bind(new TypeLiteral<Creator<Genotype>>() {
 			}).to((Class<? extends Creator<Genotype>>) creator);
 		}
 		if (decoder != null) {
-			bind(new TypeLiteral<Decoder<Genotype, Object>>() {
+			binder.bind(new TypeLiteral<Decoder<Genotype, Object>>() {
 			}).to((Class<? extends Decoder<Genotype, Object>>) decoder);
 		}
 		if (evaluator != null) {
-			addEvaluator(evaluator);
+			addEvaluator(binder, evaluator);
 		}
-	}
-
-	/**
-	 * Binds an additional {@link Evaluator}.
-	 * 
-	 * @param evaluator
-	 *            the evaluator to use
-	 */
-	@SuppressWarnings({ "unchecked" })
-	protected void addEvaluator(final Class<? extends Evaluator<? extends Object>> evaluator) {
-		Multibinder<Evaluator<Object>> multibinder = Multibinder.newSetBinder(binder(),
-				new TypeLiteral<Evaluator<Object>>() {
-				});
-		multibinder.addBinding().to((Class<Evaluator<Object>>) evaluator);
 	}
 }
