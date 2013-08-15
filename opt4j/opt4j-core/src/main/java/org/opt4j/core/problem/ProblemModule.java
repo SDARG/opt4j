@@ -94,6 +94,27 @@ public abstract class ProblemModule extends Opt4JModule {
 		multibinder.addBinding().to((Class<Evaluator<Object>>) evaluator);
 	}
 
+	/**
+	 * <p>
+	 * Binds a problem. A value {@code null} is allowed. In this case, the
+	 * corresponding interface is not bound. Therefore, the binding for the
+	 * omitted interfaces has to be done in other modules.
+	 * </p>
+	 * <p>
+	 * Additional {@link Evaluator}s can be bound using
+	 * {@link #addEvaluator(Class)}.
+	 * </p>
+	 * 
+	 * @param binder
+	 *            the guice binder
+	 * @param creator
+	 *            the creator
+	 * @param decoder
+	 *            the decoder
+	 * @param evaluator
+	 *            the evaluator
+	 * @see #binder()
+	 */
 	@SuppressWarnings("unchecked")
 	public static void bindProblem(Binder binder, final Class<? extends Creator<? extends Genotype>> creator,
 			final Class<? extends Decoder<? extends Genotype, ? extends Object>> decoder,
