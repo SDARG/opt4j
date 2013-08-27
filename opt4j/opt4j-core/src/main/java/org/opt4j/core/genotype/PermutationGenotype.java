@@ -23,8 +23,23 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
+ * <p>
  * The {@link PermutationGenotype} can be used as a {@link Genotype}. The order
  * of these elements is to be optimized.
+ * </p>
+ * <p>
+ * Example problem: Select the order of five balls ball<sub>1</sub>,
+ * ball<sub>2</sub>, ball<sub>3</sub>, ball<sub>4</sub>, ball<sub>5</sub><br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * PermutationGenotype&lt;Ball&gt; genotype = new PermutationGenotype&lt;Ball&gt;(Arrays.asList(ball1, ball2, ball3, ball4, ball5));
+ * genotype.init(new Random());
+ * </pre>
+ * 
+ * </blockquote> Example instance: [ball5, ball2, ball1, ball3, ball4]<br/>
+ * Example search space size: 5!
+ * </p>
  * 
  * @param <E>
  *            the type of elements

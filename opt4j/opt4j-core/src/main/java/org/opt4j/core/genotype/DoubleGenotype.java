@@ -22,8 +22,23 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
+ * <p>
  * The {@link DoubleGenotype} consists of double values that can be used as a
  * {@link Genotype}.
+ * </p>
+ * <p>
+ * Example problem: Select filling level of five bottles<br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * DoubleGenotype&lt;Switch&gt; genotype = new DoubleGenotype();
+ * genotype.init(new Random(), 5);
+ * </pre>
+ * 
+ * </blockquote> Example instance: [0.5035947840006195, 0.9693492473483428,
+ * 0.12786372316728167, 0.5299369900029843, 0.8055193291478467]<br/>
+ * Example search space size: [0;1]<sup>5</sup>
+ * </p>
  * 
  * @author lukasiewycz
  * 

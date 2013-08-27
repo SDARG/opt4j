@@ -21,8 +21,22 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
+ * <p>
  * The {@link BooleanGenotype} consists of Boolean values that can be used as a
  * {@link Genotype}.
+ * </p>
+ * <p>
+ * Example problem: Select on/off state of five switches<br/>
+ * Example usage:<blockquote>
+ * 
+ * <pre>
+ * BooleanGenotype genotype = new BooleanGenotype();
+ * genotype.init(new Random(), 5);
+ * </pre>
+ * 
+ * </blockquote>Example instance: [false, true, true, true, true]<br/>
+ * Example search space size: 2<sup>5</sup>
+ * </p>
  * 
  * @author lukasiewycz
  * 

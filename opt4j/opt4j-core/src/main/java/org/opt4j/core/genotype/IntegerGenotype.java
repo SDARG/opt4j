@@ -22,8 +22,22 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
- * The {@link IntegerGenotype} is a {@link Genotype} that consists of integer
- * values.
+ * <p>
+ * The {@link IntegerGenotype} is a {@link Genotype} that consists of
+ * {@link Integer} values.
+ * </p>
+ * <p>
+ * Example problem: Select the outcome of throwing five dice<br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * IntegerGenotype genotype = new IntegerGenotype(1, 6);
+ * genotype.init(new Random(), 5);
+ * </pre>
+ * 
+ * </blockquote> Example instance: [3, 5, 6, 1, 3]<br/>
+ * Example search space size: 6<sup>5</sup>
+ * </p>
  * 
  * @author lukasiewycz
  * 
@@ -115,5 +129,4 @@ public class IntegerGenotype extends ArrayList<Integer> implements ListGenotype<
 	}
 
 	private static final long serialVersionUID = 1L;
-
 }

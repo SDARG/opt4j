@@ -23,11 +23,30 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
+ * <p>
  * The {@link DoubleMapGenotype} is a {@link DoubleGenotype} with the
  * {@link MapGenotype} functionality.
+ * </p>
+ * <p>
+ * Example problem: Select filling level of five bottles bottle<sub>1</sub>,
+ * bottle<sub>2</sub>, bottle<sub>3</sub>, bottle<sub>4</sub>,
+ * bottle<sub>5</sub><br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * DoubleMapGenotype&lt;Bottle&gt; genotype = new DoubleMapGenotype&lt;Bottle&gt;(Arrays.asList(bottle1, bottle2, bottle3, bottle4,
+ * 		bottle5));
+ * genotype.init(new Random());
+ * </pre>
+ * 
+ * </blockquote> Example instance:
+ * [bottle1=0.5035947840006195,bottle2=0.9693492473483428
+ * ,bottle3=0.12786372316728167
+ * ,bottle4=0.5299369900029843,bottle5=0.8055193291478467]<br/>
+ * Example search space size: [0;1]<sup>5</sup>
+ * </p>
  * 
  * @author lukasiewycz
- * 
  * @param <K>
  *            the type of keys
  */

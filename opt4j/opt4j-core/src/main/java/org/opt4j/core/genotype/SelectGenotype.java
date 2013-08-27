@@ -17,12 +17,27 @@ package org.opt4j.core.genotype;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.List;
-
 import org.opt4j.core.Genotype;
 
 /**
+ * <p>
  * The {@link SelectGenotype} selects for each index an element from the given
  * list.
+ * </p>
+ * <p>
+ * Example problem: Draw five times from an urn which contains three balls and
+ * return the ball after each draw.<br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * SelectGenotype&lt;Ball&gt; genotype = new SelectGenotype&lt;Ball&gt;(Arrays.asList(ball1, ball2, ball3));
+ * genotype.init(new Random(), 5);
+ * </pre>
+ * 
+ * </blockquote> Example instance: [0=ball3, 1=ball2, 2=ball2, 3=ball1, 4=ball3]
+ * <br/>
+ * Example search space size: 3<sup>5</sup>
+ * </p>
  * 
  * @author lukasiewycz
  * 

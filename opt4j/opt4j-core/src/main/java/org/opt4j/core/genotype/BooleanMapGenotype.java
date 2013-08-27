@@ -23,8 +23,26 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
+ * <p>
  * The {@link BooleanMapGenotype} is a {@link BooleanGenotype} with the
  * {@link MapGenotype} functionality.
+ * </p>
+ * <p>
+ * Example problem: Select on/off state of five switches switch<sub>1</sub>,
+ * switch<sub>2</sub>, switch<sub>3</sub>, switch<sub>4</sub>,
+ * switch<sub>5</sub><br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * BooleanMapGenotype&lt;Switch&gt; genotype = new BooleanMapGenotype&lt;Switch&gt;(Arrays.asList(switch1, switch2, switch3, switch4,
+ * 		switch5));
+ * genotype.init(new Random());
+ * </pre>
+ * 
+ * </blockquote> Example instance:
+ * [switch1=true;switch2=true;switch3=false;switch4=false;switch5=true;] <br/>
+ * Example search space size: 2<sup>5</sup>
+ * </p>
  * 
  * @author lukasiewycz
  * 
@@ -155,4 +173,5 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	public Collection<K> getKeys() {
 		return Collections.unmodifiableList(list);
 	}
+
 }

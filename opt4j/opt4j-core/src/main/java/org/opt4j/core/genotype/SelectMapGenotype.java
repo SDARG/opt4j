@@ -25,7 +25,27 @@ import java.util.Random;
 import org.opt4j.core.Genotype;
 
 /**
- * The {@link SelectGenotype} selects for each key an element from a given list.
+ * <p>
+ * The {@link SelectMapGenotype} selects for each key an element from a given
+ * list.
+ * </p>
+ * <p>
+ * Example problem: Choose for each of five balls ball<sub>1</sub>,
+ * ball<sub>2</sub>, ball<sub>3</sub>, ball<sub>4</sub>, ball<sub>5</sub> a
+ * color. Available colors are blue, green, and red.<br/>
+ * Example usage: <blockquote>
+ * 
+ * <pre>
+ * SelectMapGenotype&lt;Ball, Color&gt; genotype = new SelectMapGenotype&lt;Ball, Color&gt;(Arrays.asList(ball1, ball2, ball3, ball4,
+ * 		ball5), Arrays.asList(Color.BLUE, Color.GREEN, Color.RED));
+ * genotype.init(new Random());
+ * </pre>
+ * 
+ * </blockquote> Example instance: [ball1=green, ball2=red, ball3=red,
+ * ball4=blue, ball5=blue]<br/>
+ * Example search space size: 3<sup>5</sup>
+ * </p>
+ * 
  * 
  * @author lukasiewycz
  * 
@@ -217,5 +237,4 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	public Collection<K> getKeys() {
 		return Collections.unmodifiableList(keys);
 	}
-
 }
