@@ -73,7 +73,15 @@ class Objectives:
     def __init__(self, values):
         self.values = values
         self.names = [value[:-5] for value in values]
-        self.dirs = [MIN if value[-5:] == '[MIN]' else MAX for value in values]
+        self.dirs = []
+        for value in values:
+            string = value.strip()[-5:] # strip whitespace
+            if string == '[MIN]':
+                self.dirs.append(MIN)
+            elif string == '[MAX]':
+                self.dirs.append(MAX)
+            else:
+                raise ValueError('Invalid dir: "%s"' % string)
     def __str__(self):
         return str(self.names) + ' ' + str(['MIN' if x == True else 'MAX' for x in self.dirs])
     def normalized(self):
