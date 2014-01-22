@@ -629,7 +629,7 @@ if __name__ == '__main__':
     parser.add_option("-n", metavar="RUNS", type="int", default=RUNS, help="set the number of runs [default: %default]")
     parser.add_option("-p", metavar="PROCESSES", type="int", default=PROCESSES, help="set the number of processes for the result determination [default: %default]")
     parser.add_option("-e", metavar="EXPROCESSES", type="int", default=EXPROCESSES, help="set the number of execution processes for the runs [default: %default]")
-    parser.add_option("-j", metavar="PROG", default=PROG, help="set the Opt4J executable file to use [default: %default]")
+    parser.add_option("-j", metavar="PROG", default=PROG, help="set the command to use for the runs [default: %default]")
     parser.add_option("-d", metavar="DEADLINE", type="int", default=DEADLINE, help="set the deadline per run in seconds [default: %default]")
     (options, args) = parser.parse_args()
     
