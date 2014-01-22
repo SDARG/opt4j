@@ -30,7 +30,7 @@ import time
 import signal
 
 
-PROG = os.path.abspath('opt4j')
+PROG = [os.path.abspath('opt4j')]
 
 FOLDER_CONFIGS = "configs"
 FOLDER_RUNS = "runs"
@@ -529,9 +529,9 @@ def doResults(basefolder):
 def doRun(configfile):
     print('\texecute config ' + str(configfile))
     if DEADLINE == None:
-      return subprocess.call([ PROG, "-s", configfile ])
+      return subprocess.call(PROG + ["-s", configfile])
     else:
-      process = subprocess.Popen([ PROG, "-s", configfile ])
+      process = subprocess.Popen(PROG + ["-s", configfile])
       
       end = time.time() + DEADLINE
       while (True):
@@ -645,7 +645,7 @@ if __name__ == '__main__':
         if options.e != None:
             EXPROCESSES = options.e
         if options.j != None:
-            PROG = options.j
+            PROG = options.j.split()
         if options.d != None:
             DEADLINE = options.d
 
