@@ -410,15 +410,17 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 			Objectives obj1 = arg1.getObjectives();
 
 			for (Objective o : order) {
+				Value<?> v0 = obj0.get(o);
+				Value<?> v1 = obj1.get(o);
 
-				Value<Object> v0 = (Value<Object>) obj0.get(o);
-				Value<Object> v1 = (Value<Object>) obj1.get(o);
+				int c = 0;
 
-				if (v0 == null || v1 == null) {
-					return 0;
+				if (v0 == null) {
+					c = 1;
+				} else {
+					c = v0.getDouble().compareTo(v1.getDouble());
 				}
 
-				int c = v0.compareTo(v1);
 				if (c != 0) {
 					if (o.getSign() == Sign.MIN) {
 						return c;
