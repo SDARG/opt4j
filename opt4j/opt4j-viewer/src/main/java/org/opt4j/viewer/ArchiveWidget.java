@@ -52,7 +52,6 @@ import org.opt4j.core.IndividualSetListener;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
-import org.opt4j.core.Value;
 import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.visualization.DelayTask;
 import org.opt4j.core.optimizer.Archive;
@@ -409,8 +408,11 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 			Objectives obj1 = arg1.getObjectives();
 
 			for (Objective o : order) {
-				Value<?> v0 = obj0.get(o);
-				Value<?> v1 = obj1.get(o);
+				assert obj0.get(o) != null;
+				assert obj1.get(o) != null;
+
+				Double v0 = obj0.get(o).getDouble();
+				Double v1 = obj1.get(o).getDouble();
 
 				int c = 0;
 
@@ -419,8 +421,10 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 						continue;
 					}
 					c = 1;
+				} else if (v1 == null) {
+					c = -1;
 				} else {
-					c = v0.getDouble().compareTo(v1.getDouble());
+					c = v0.compareTo(v1);
 				}
 
 				if (c != 0) {
