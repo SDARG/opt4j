@@ -394,7 +394,6 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 
 	protected class Comp implements Comparator<Individual> {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public int compare(Individual arg0, Individual arg1) {
 			if (arg0 == null) {
@@ -416,6 +415,9 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 				int c = 0;
 
 				if (v0 == null) {
+					if (v1 == null) {
+						continue;
+					}
 					c = 1;
 				} else {
 					c = v0.getDouble().compareTo(v1.getDouble());
