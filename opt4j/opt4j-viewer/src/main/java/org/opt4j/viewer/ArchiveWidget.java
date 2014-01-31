@@ -52,7 +52,6 @@ import org.opt4j.core.IndividualSetListener;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
-import org.opt4j.core.Value;
 import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.visualization.DelayTask;
 import org.opt4j.core.optimizer.Archive;
@@ -394,7 +393,6 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 
 	protected class Comp implements Comparator<Individual> {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public int compare(Individual arg0, Individual arg1) {
 			if (arg0 == null) {
@@ -410,15 +408,25 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 			Objectives obj1 = arg1.getObjectives();
 
 			for (Objective o : order) {
+				assert obj0.get(o) != null;
+				assert obj1.get(o) != null;
 
-				Value<Object> v0 = (Value<Object>) obj0.get(o);
-				Value<Object> v1 = (Value<Object>) obj1.get(o);
+				Double v0 = obj0.get(o).getDouble();
+				Double v1 = obj1.get(o).getDouble();
 
-				if (v0 == null || v1 == null) {
-					return 0;
+				int c = 0;
+
+				if (v0 == null) {
+					if (v1 == null) {
+						continue;
+					}
+					c = 1;
+				} else if (v1 == null) {
+					c = -1;
+				} else {
+					c = v0.compareTo(v1);
 				}
 
-				int c = v0.compareTo(v1);
 				if (c != 0) {
 					if (o.getSign() == Sign.MIN) {
 						return c;
