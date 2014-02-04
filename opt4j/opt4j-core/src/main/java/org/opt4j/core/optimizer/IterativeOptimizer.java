@@ -31,8 +31,8 @@ package org.opt4j.core.optimizer;
 public interface IterativeOptimizer {
 
 	/**
-	 * Initializes the optimization process. Especially, it creates the initial
-	 * {@link Population}.
+	 * This method is called a single time before the optimization process is
+	 * started. It can be used to initialize used data structures, etc.
 	 * 
 	 * @throws TerminationException
 	 *             if the optimization is terminated

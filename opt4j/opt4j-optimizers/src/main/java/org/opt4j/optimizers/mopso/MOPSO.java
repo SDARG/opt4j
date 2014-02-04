@@ -105,8 +105,14 @@ public class MOPSO implements IterativeOptimizer {
 	 *            the size of the archive for the global leaders
 	 */
 	@Inject
-	public MOPSO(Population population, IndividualFactory individualFactory, IndividualCompleter completer,
-			Rand random, MutateDoubleUniform uniform, MutateDoubleNonUniform nonUniform, MutationRate mutationRate,
+	public MOPSO(
+			Population population,
+			IndividualFactory individualFactory,
+			IndividualCompleter completer,
+			Rand random,
+			MutateDoubleUniform uniform,
+			MutateDoubleNonUniform nonUniform,
+			MutationRate mutationRate,
 			@Constant(value = "size", namespace = MOPSO.class) int size,
 			@Constant(value = "archiveSize", namespace = MOPSO.class) int archiveSize) {
 		this.particleFactory = (ParticleFactory) individualFactory;
@@ -133,39 +139,57 @@ public class MOPSO implements IterativeOptimizer {
 		velocityTerm = new VelocityTerm(random);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#initialize()
+	 */
 	@Override
 	public void initialize() {
-		int id = 0;
-		while (population.size() < size) {
-			Particle particle = particleFactory.create();
-			particle.setId(id++);
-			Genotype genotype = particle.getGenotype();
-			if (!(genotype instanceof DoubleGenotype)) {
-				throw new IncompatibilityException("MOPSO is restricted to " + DoubleGenotype.class
-						+ ", current Genotype is: " + genotype.getClass());
-			}
-			population.add(particle);
-		}
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#next()
+	 */
 	@Override
 	public void next() throws TerminationException {
-		// determine the leaders
-		updateLeaders(leaders, population);
+		if (population.isEmpty()) {
+			// the first iteration
+			int id = 0;
+			while (population.size() < size) {
+				Particle particle = particleFactory.create();
+				particle.setId(id++);
+				Genotype genotype = particle.getGenotype();
+				if (!(genotype instanceof DoubleGenotype)) {
+					throw new IncompatibilityException(
+							"MOPSO is restricted to " + DoubleGenotype.class
+									+ ", current Genotype is: "
+									+ genotype.getClass());
+				}
+				population.add(particle);
+			}
+		} else {
+			// all iterations > 1
+			// determine the leaders
+			updateLeaders(leaders, population);
 
-		// determine one leader for each particle
-		Map<Particle, Particle> lead = getLeaders(leaders, population);
-		// determine the next position of each particle
-		Map<Particle, Particle> next = move(population, lead);
+			// determine one leader for each particle
+			Map<Particle, Particle> lead = getLeaders(leaders, population);
+			// determine the next position of each particle
+			Map<Particle, Particle> next = move(population, lead);
 
-		population.addAll(next.values());
-		completer.complete(population);
+			population.addAll(next.values());
+			completer.complete(population);
 
-		// update the personal best of each particle
-		updatePersonalBest(next);
+			// update the personal best of each particle
+			updatePersonalBest(next);
 
-		// remove the old positions
-		population.removeAll(next.keySet());
+			// remove the old positions
+			population.removeAll(next.keySet());
+		}
 	}
 
 	/**
@@ -178,7 +202,8 @@ public class MOPSO implements IterativeOptimizer {
 	 *            the map for the global leaders
 	 * @return the map of the old to the new particle
 	 */
-	protected Map<Particle, Particle> move(Population population, Map<Particle, Particle> leaders) {
+	protected Map<Particle, Particle> move(Population population,
+			Map<Particle, Particle> leaders) {
 		Map<Particle, Particle> map = new HashMap<Particle, Particle>();
 
 		for (Individual individual : population) {
@@ -190,13 +215,16 @@ public class MOPSO implements IterativeOptimizer {
 			DoubleGenotype best = (DoubleGenotype) particle.getBest();
 			int id = particle.getId();
 
-			DoubleGenotype leader = (DoubleGenotype) leaders.get(particle).getGenotype();
+			DoubleGenotype leader = (DoubleGenotype) leaders.get(particle)
+					.getGenotype();
 
 			velocityTerm.randomize();
 
-			DoubleGenotype nextVelocity = algebra.algebra(velocityTerm, position, velocity, best, leader);
+			DoubleGenotype nextVelocity = algebra.algebra(velocityTerm,
+					position, velocity, best, leader);
 
-			DoubleGenotype nextPosition = algebra.algebra(positionTerm, position, nextVelocity);
+			DoubleGenotype nextPosition = algebra.algebra(positionTerm,
+					position, nextVelocity);
 
 			for (int k = 0; k < nextPosition.size(); k++) {
 				double value = nextPosition.get(k);
@@ -285,7 +313,8 @@ public class MOPSO implements IterativeOptimizer {
 	 *            the population
 	 * @return the map of each particle to its leader
 	 */
-	protected Map<Particle, Particle> getLeaders(Archive leaders, Population population) {
+	protected Map<Particle, Particle> getLeaders(Archive leaders,
+			Population population) {
 		Map<Particle, Particle> map = new HashMap<Particle, Particle>();
 
 		Crowding crowding = new Crowding();

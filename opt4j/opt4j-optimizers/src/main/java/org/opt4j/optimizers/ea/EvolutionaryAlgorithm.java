@@ -79,8 +79,12 @@ public class EvolutionaryAlgorithm implements IterativeOptimizer {
 	 *            the number of offspring
 	 */
 	@Inject
-	public EvolutionaryAlgorithm(Population population, IndividualFactory individualFactory,
-			IndividualCompleter completer, Selector selector, Mating mating,
+	public EvolutionaryAlgorithm(
+			Population population,
+			IndividualFactory individualFactory,
+			IndividualCompleter completer,
+			Selector selector,
+			Mating mating,
 			@Constant(value = "alpha", namespace = EvolutionaryAlgorithm.class) int alpha,
 			@Constant(value = "mu", namespace = EvolutionaryAlgorithm.class) int mu,
 			@Constant(value = "lambda", namespace = EvolutionaryAlgorithm.class) int lambda) {
@@ -106,16 +110,27 @@ public class EvolutionaryAlgorithm implements IterativeOptimizer {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#initialize()
+	 */
 	@Override
 	public void initialize() {
 		selector.init(alpha + lambda);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#next()
+	 */
 	@Override
 	public void next() throws TerminationException {
 		// remove lames
 		if (population.size() > alpha) {
-			Collection<Individual> lames = selector.getLames(population.size() - alpha, population);
+			Collection<Individual> lames = selector.getLames(population.size()
+					- alpha, population);
 			population.removeAll(lames);
 		}
 		// set the number of new offspring individuals per generation
@@ -133,8 +148,10 @@ public class EvolutionaryAlgorithm implements IterativeOptimizer {
 				completer.complete(population);
 			}
 
-			Collection<Individual> parents = selector.getParents(mu, population);
-			Collection<Individual> offspring = mating.getOffspring(offspringCount, parents);
+			Collection<Individual> parents = selector
+					.getParents(mu, population);
+			Collection<Individual> offspring = mating.getOffspring(
+					offspringCount, parents);
 			population.addAll(offspring);
 		}
 	}

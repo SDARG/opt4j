@@ -82,8 +82,9 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 	 *            the cooling schedule
 	 */
 	@Inject
-	public SimulatedAnnealing(Population population, Archive archive, IndividualFactory individualFactory,
-			IndividualCompleter completer, Rand random, Neighbor<Genotype> neighbor, Copy<Genotype> copy,
+	public SimulatedAnnealing(Population population, Archive archive,
+			IndividualFactory individualFactory, IndividualCompleter completer,
+			Rand random, Neighbor<Genotype> neighbor, Copy<Genotype> copy,
 			CoolingSchedule coolingSchedule, Iteration iteration) {
 		this.random = random;
 		this.neighbor = neighbor;
@@ -96,49 +97,70 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 		this.iteration = iteration;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#initialize()
+	 */
 	@Override
 	public void initialize() throws TerminationException {
-		old = individualFactory.create();
 
-		population.add(old);
-		completer.complete(population);
-
-		fold = f(old);
 	}
 
 	private double fold;
 	private Individual old;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#next()
+	 */
 	@Override
 	public void next() throws TerminationException {
 
-		Genotype g = copy.copy(old.getGenotype());
-		neighbor.neighbor(g);
+		if (population.isEmpty()) {
+			// the first iteration
+			
+			old = individualFactory.create();
 
-		Individual y = individualFactory.create(g);
+			population.add(old);
+			completer.complete(population);
 
-		completer.complete(y);
-		archive.update(y);
-
-		double fy = f(y);
-		// boolean value that indicates a switch of the individuals
-		boolean sw = false;
-
-		if (fy <= fold) {
-			sw = true;
+			fold = f(old);
 		} else {
-			double a = (fold - fy) / coolingSchedule.getTemperature(iteration.value(), iteration.max());
-			double e = Math.exp(a);
-			if (random.nextDouble() < e) {
-				sw = true;
-			}
-		}
+			// all iterations > 1
+			
+			Genotype g = copy.copy(old.getGenotype());
+			neighbor.neighbor(g);
 
-		if (sw) {
-			population.remove(old);
-			population.add(y);
-			fold = fy;
-			old = y;
+			Individual y = individualFactory.create(g);
+
+			completer.complete(y);
+			archive.update(y);
+
+			double fy = f(y);
+			// boolean value that indicates a switch of the individuals
+			boolean sw = false;
+
+			if (fy <= fold) {
+				sw = true;
+			} else {
+				double a = (fold - fy)
+						/ coolingSchedule.getTemperature(iteration.value(),
+								iteration.max());
+				double e = Math.exp(a);
+				if (random.nextDouble() < e) {
+					sw = true;
+				}
+			}
+
+			if (sw) {
+				population.remove(old);
+				population.add(y);
+				fold = fy;
+				old = y;
+			}
+
 		}
 	}
 

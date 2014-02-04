@@ -73,6 +73,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 
 	private final IndividualCompleter completer;
 
+	private Term term;
+
 	/**
 	 * Constructs a {@link DifferentialEvolution}.
 	 * 
@@ -96,8 +98,13 @@ public class DifferentialEvolution implements IterativeOptimizer {
 	 *            the scaling factor F
 	 */
 	@Inject
-	public DifferentialEvolution(Population population, IndividualFactory individualFactory,
-			IndividualCompleter completer, Algebra<Genotype> algebra, Selector selector, Rand random,
+	public DifferentialEvolution(
+			Population population,
+			IndividualFactory individualFactory,
+			IndividualCompleter completer,
+			Algebra<Genotype> algebra,
+			Selector selector,
+			Rand random,
 			Crossover<Genotype> crossover,
 			@Constant(value = "alpha", namespace = DifferentialEvolution.class) int alpha,
 			@Constant(value = "scalingFactor", namespace = DifferentialEvolution.class) double scalingFactor) {
@@ -112,33 +119,53 @@ public class DifferentialEvolution implements IterativeOptimizer {
 		this.completer = completer;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#initialize()
+	 */
 	@Override
 	public void initialize() {
 		Index i0 = new Index(0);
 		Index i1 = new Index(1);
 		Index i2 = new Index(2);
 		Var c = new Var(scalingFactor);
-
 		term = new Add(i0, new Mult(c, new Sub(i1, i2)));
-
 		selector.init(2 * alpha);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.opt4j.core.optimizer.IterativeOptimizer#next()
+	 */
+	@Override
+	public void next() throws TerminationException {
+		if (population.isEmpty()) {
+			firstIterationNext();
+		} else {
+			followingIterationsNext();
+		}
+	}
+
+	private void firstIterationNext() {
 		while (population.size() < alpha) {
 			Individual individual = individualFactory.create();
 
 			Genotype genotype = individual.getGenotype();
 			if (!(genotype instanceof DoubleGenotype)) {
-				throw new IncompatibilityException("DifferentialEvolution is restricted to " + DoubleGenotype.class
-						+ ", current Genotype is: " + genotype.getClass());
+				throw new IncompatibilityException(
+						"DifferentialEvolution is restricted to "
+								+ DoubleGenotype.class
+								+ ", current Genotype is: "
+								+ genotype.getClass());
 			}
 
 			population.add(individual);
 		}
 	}
 
-	private Term term;
-
-	@Override
-	public void next() throws TerminationException {
+	private void followingIterationsNext() throws TerminationException {
 		/*
 		 * Map from each parent to its offspring
 		 */
@@ -164,7 +191,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 			Individual parent = entry.getKey();
 			Individual offspring = entry.getValue();
 
-			if (parent.getObjectives().weaklyDominates(offspring.getObjectives())) {
+			if (parent.getObjectives().weaklyDominates(
+					offspring.getObjectives())) {
 				population.remove(offspring);
 			}
 		}
@@ -172,11 +200,13 @@ public class DifferentialEvolution implements IterativeOptimizer {
 		/*
 		 * Truncate the population size to alpha
 		 */
-		Collection<Individual> lames = selector.getLames(population.size() - alpha, population);
+		Collection<Individual> lames = selector.getLames(population.size()
+				- alpha, population);
 		population.removeAll(lames);
 	}
 
-	protected Individual createOffspring(Individual parent, List<Individual> individuals, Term term) {
+	protected Individual createOffspring(Individual parent,
+			List<Individual> individuals, Term term) {
 		Triple triple = getTriple(parent, individuals);
 
 		Genotype g0 = triple.getFirst().getGenotype();
@@ -208,7 +238,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 
 		protected final Individual third;
 
-		public Triple(final Individual first, final Individual second, final Individual third) {
+		public Triple(final Individual first, final Individual second,
+				final Individual third) {
 			super();
 			this.first = first;
 			this.second = second;
@@ -240,9 +271,12 @@ public class DifferentialEvolution implements IterativeOptimizer {
 	 */
 	protected Triple getTriple(Individual parent, List<Individual> individuals) {
 		individuals.remove(parent);
-		Individual ind0 = individuals.remove(random.nextInt(individuals.size()));
-		Individual ind1 = individuals.remove(random.nextInt(individuals.size()));
-		Individual ind2 = individuals.remove(random.nextInt(individuals.size()));
+		Individual ind0 = individuals
+				.remove(random.nextInt(individuals.size()));
+		Individual ind1 = individuals
+				.remove(random.nextInt(individuals.size()));
+		Individual ind2 = individuals
+				.remove(random.nextInt(individuals.size()));
 
 		Triple triple = new Triple(ind0, ind1, ind2);
 
