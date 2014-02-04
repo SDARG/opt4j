@@ -31,8 +31,8 @@ public class MutateOptimizer implements IterativeOptimizer {
 	public static final int OFFSIZE = 25;
 
 	@Inject
-	public MutateOptimizer(Population population, IndividualFactory individualFactory, Selector selector,
-			Mutate<Genotype> mutate, Copy<Genotype> copy) {
+	public MutateOptimizer(Population population, IndividualFactory individualFactory,
+			Selector selector, Mutate<Genotype> mutate, Copy<Genotype> copy) {
 		this.individualFactory = individualFactory;
 		this.mutate = mutate;
 		this.copy = copy;
@@ -41,23 +41,30 @@ public class MutateOptimizer implements IterativeOptimizer {
 	}
 
 	public void initialize() throws TerminationException {
-		for (int i = 0; i < OFFSIZE + POPSIZE; i++) {
-			population.add(individualFactory.create());
-		}
+		selector.init(OFFSIZE + POPSIZE);
 	}
 
 	public void next() throws TerminationException {
-		Collection<Individual> lames = selector.getLames(OFFSIZE, population);
-		population.removeAll(lames);
+		if (population.isEmpty()) {
+			for (int i = 0; i < POPSIZE; i++) {
+				population.add(individualFactory.create());
+			}
+		} else {
+			if (population.size() > POPSIZE) {
+				Collection<Individual> lames = selector.getLames(population.size() - POPSIZE,
+						population);
+				population.removeAll(lames);
+			}
 
-		Collection<Individual> parents = selector.getParents(OFFSIZE, population);
+			Collection<Individual> parents = selector.getParents(OFFSIZE, population);
 
-		for (Individual parent : parents) {
-			Genotype genotype = copy.copy(parent.getGenotype());
-			mutate.mutate(genotype, 0.1);
+			for (Individual parent : parents) {
+				Genotype genotype = copy.copy(parent.getGenotype());
+				mutate.mutate(genotype, 0.1);
 
-			Individual child = individualFactory.create(genotype);
-			population.add(child);
+				Individual child = individualFactory.create(genotype);
+				population.add(child);
+			}
 		}
 	}
 }

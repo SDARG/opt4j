@@ -245,15 +245,16 @@
 	<h3>Example: Mutate Optimizer</h3>
 
 	<p>This example shows how to write a very simple optimizer that is
-		based on mutation only. The presented optimizer has a population size
+		based on mutation only. The presented optimizer has a fixed population size
 		of 100 and creates 25 offspring individuals from 25 parent individuals
 		each generation by a mutate operation. The optimizer is implemented as
 		follows:</p>
 	<pre class="prettyprint">@file(org/opt4j/tutorial/optimizer/MutateOptimizer.java)</pre>
-	<p>The initialization creates 100 new individuals and adds them to
-		the population. The main optimization takes place in the next method
-		in each iteration. First, the 25 individuals with the worst fitness
-		are identified and removed from the population. In the next step, 25
+	<p>The initialization ensures that the selector is initialized. The optimization 
+		process is implemented in the next method. In the first iteration, the population 
+		is still empty and 100 new individuals are created and added. 
+		In all following iterations, first, the population is reduced to 100 by 
+		removing the worst individuals that are identified by the selector. Then, 25
 		parent individuals are determined by the selector and for each of
 		these individuals, one individual is created by copying the genotype
 		and mutating it. Finally, the new individuals are added to the
