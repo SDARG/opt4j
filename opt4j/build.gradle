@@ -19,6 +19,14 @@ allprojects {
     repositories {
     	mavenCentral()
     }
+    
+    configurations {
+         deployerJars
+    }
+    
+    dependencies {
+         deployerJars "org.apache.maven.wagon:wagon-http:2.6"
+    }
 }
 
 def descriptions = [
@@ -61,6 +69,7 @@ subprojects {
 	uploadArchives {
 	    repositories {
 	        mavenDeployer {
+	            configuration = configurations.deployerJars
 	            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 	 
 	            repository(url: stagingURL) {
