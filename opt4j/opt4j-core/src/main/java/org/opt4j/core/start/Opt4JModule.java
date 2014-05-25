@@ -55,7 +55,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 *            the type of annotation of the value
 	 * @return the constant binding builder that allows a binding
 	 */
-	protected ConstantBindingBuilder bindConstant(Class<? extends Annotation> annotation) {
+	public ConstantBindingBuilder bindConstant(Class<? extends Annotation> annotation) {
 		return bindConstant().annotatedWith(annotation);
 	}
 
@@ -66,7 +66,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 *            the annotation of the value
 	 * @return the constant binding builder that allows a binding
 	 */
-	protected ConstantBindingBuilder bindConstant(Annotation annotation) {
+	public ConstantBindingBuilder bindConstant(Annotation annotation) {
 		return bindConstant().annotatedWith(annotation);
 	}
 
@@ -270,7 +270,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 *            the namespace from the {@link Constant}
 	 * @return the constant binding builder that allows a binding
 	 */
-	protected ConstantBindingBuilder bindConstant(String value, Class<?> namespace) {
+	public ConstantBindingBuilder bindConstant(String value, Class<?> namespace) {
 		assert (namespace != null);
 		Constant c = new ConstantImpl(value, namespace);
 		return bindConstant(c);
