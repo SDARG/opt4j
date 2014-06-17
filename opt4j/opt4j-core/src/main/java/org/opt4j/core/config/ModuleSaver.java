@@ -190,11 +190,11 @@ public class ModuleSaver {
 
 	protected Transformer getStandardTransformer() throws TransformerConfigurationException {
 		TransformerFactory tf = TransformerFactory.newInstance();
-		tf.setAttribute("indent-number", 2);
 		Transformer transformer = tf.newTransformer();
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 		return transformer;
 	}
 
