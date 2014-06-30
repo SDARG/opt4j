@@ -21,6 +21,17 @@ import java.util.Arrays;
 import org.opt4j.core.IndividualStateListener;
 import org.opt4j.core.config.Property;
 import org.opt4j.core.config.PropertyModule;
+import org.opt4j.core.config.annotations.Category;
+import org.opt4j.core.config.annotations.File;
+import org.opt4j.core.config.annotations.Icon;
+import org.opt4j.core.config.annotations.Ignore;
+import org.opt4j.core.config.annotations.Info;
+import org.opt4j.core.config.annotations.Multi;
+import org.opt4j.core.config.annotations.Name;
+import org.opt4j.core.config.annotations.Order;
+import org.opt4j.core.config.annotations.Panel;
+import org.opt4j.core.config.annotations.Parent;
+import org.opt4j.core.config.annotations.Required;
 import org.opt4j.core.optimizer.ControlListener;
 import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.core.optimizer.OptimizerStateListener;
@@ -36,9 +47,24 @@ import com.google.inject.multibindings.Multibinder;
 import com.google.inject.spi.Message;
 
 /**
- * The {@link Opt4JModule} is the superclass for all modules.
+ * The {@link Opt4JModule} is the superclass for all modules. The class and its
+ * fields might be extended with certain annotations. See {@link Constant} and the
+ * {@code org.opt4j.core.config.annotations} package.
  * 
+ * @see Constant
+ * @see Category
+ * @see File
+ * @see Icon
+ * @see Ignore
+ * @see Info
+ * @see Multi
+ * @see Name
+ * @see Order
+ * @see Panel
+ * @see Parent
+ * @see Required
  * @author lukasiewycz
+ * 
  * 
  */
 public abstract class Opt4JModule extends AbstractModule {
@@ -113,8 +139,8 @@ public abstract class Opt4JModule extends AbstractModule {
 					} else if (value instanceof Enum<?>) {
 						builder.to((Enum) value);
 					} else {
-						String message = "Constant type not bindable: " + type + " of field " + property.getName()
-								+ " in module " + this.getClass().getName();
+						String message = "Constant type not bindable: " + type + " of field " + property.getName() + " in module "
+								+ this.getClass().getName();
 						throw new ConfigurationException(Arrays.asList(new Message(message)));
 					}
 				}
@@ -207,8 +233,7 @@ public abstract class Opt4JModule extends AbstractModule {
 		 */
 		@Override
 		public int hashCode() {
-			return ((127 * "value".hashCode()) ^ value.hashCode())
-					+ ((127 * "namespace".hashCode()) ^ namespace.hashCode());
+			return ((127 * "value".hashCode()) ^ value.hashCode()) + ((127 * "namespace".hashCode()) ^ namespace.hashCode());
 		}
 
 		/*
@@ -283,8 +308,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 *            the listener to be added
 	 */
 	public void addOptimizerStateListener(Class<? extends OptimizerStateListener> listener) {
-		Multibinder<OptimizerStateListener> multibinder = Multibinder.newSetBinder(binder(),
-				OptimizerStateListener.class);
+		Multibinder<OptimizerStateListener> multibinder = Multibinder.newSetBinder(binder(), OptimizerStateListener.class);
 		multibinder.addBinding().to(listener);
 	}
 
@@ -296,8 +320,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 */
 	public void addOptimizerIterationListener(Class<? extends OptimizerIterationListener> listener) {
 		assert binder() != null;
-		Multibinder<OptimizerIterationListener> multibinder = Multibinder.newSetBinder(binder(),
-				OptimizerIterationListener.class);
+		Multibinder<OptimizerIterationListener> multibinder = Multibinder.newSetBinder(binder(), OptimizerIterationListener.class);
 		multibinder.addBinding().to(listener);
 	}
 
@@ -308,8 +331,7 @@ public abstract class Opt4JModule extends AbstractModule {
 	 *            the listener to be added
 	 */
 	public void addIndividualStateListener(Class<? extends IndividualStateListener> listener) {
-		Multibinder<IndividualStateListener> multibinder = Multibinder.newSetBinder(binder(),
-				IndividualStateListener.class);
+		Multibinder<IndividualStateListener> multibinder = Multibinder.newSetBinder(binder(), IndividualStateListener.class);
 		multibinder.addBinding().to(listener);
 	}
 
