@@ -22,6 +22,7 @@ import java.util.TreeSet;
 import org.opt4j.core.Objectives;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * The {@link MultiEvaluator} takes all registered {@link Evaluator}s and uses
@@ -32,21 +33,26 @@ import com.google.inject.Inject;
  * {@link Priority} annotation for the {@link Evaluator} classes.
  * 
  * 
- * @author reimann
+ * @author reimann, lukasiewycz
  * 
  */
 public class MultiEvaluator implements Evaluator<Object> {
+
 	protected final Set<Evaluator<Object>> evaluators = new TreeSet<Evaluator<Object>>(new PriorityComparator());
+	protected final Provider<Objectives> objectivesProvider;
 
 	/**
 	 * Creates a new {@link MultiEvaluator}.
 	 * 
 	 * @param evaluators
 	 *            the registered evaluators
+	 * @param objectivesProvider
+	 *            the objectives provider
 	 */
 	@Inject
-	public MultiEvaluator(Set<Evaluator<Object>> evaluators) {
+	public MultiEvaluator(Set<Evaluator<Object>> evaluators, Provider<Objectives> objectivesProvider) {
 		this.evaluators.addAll(evaluators);
+		this.objectivesProvider = objectivesProvider;
 	}
 
 	/*
@@ -56,7 +62,7 @@ public class MultiEvaluator implements Evaluator<Object> {
 	 */
 	@Override
 	public Objectives evaluate(Object phenotype) {
-		Objectives objectives = new Objectives();
+		Objectives objectives = objectivesProvider.get();
 		for (Evaluator<Object> evaluator : evaluators) {
 			Objectives obj = evaluator.evaluate(phenotype);
 			objectives.addAll(obj);
