@@ -14,9 +14,7 @@ ext {
 
 allprojects {
     group = 'org.opt4j'
-    sourceCompatibility = 1.6
-	targetCompatibility = 1.6
-    
+   
     repositories {
     	mavenCentral()
     }
@@ -44,6 +42,9 @@ subprojects {
 	apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'signing'
+
+    sourceCompatibility = 1.6 
+	targetCompatibility = 1.6
     
     version = parent.version
 	
