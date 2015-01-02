@@ -3,7 +3,7 @@ apply plugin: 'application'
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
-version = 'SNAPSHOT-' + new Date().format("yyyyMMdd")
+version = '3.1.3'
 
 def stagingURL = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 def snapshotURL = 'https://oss.sonatype.org/content/repositories/snapshots/'
