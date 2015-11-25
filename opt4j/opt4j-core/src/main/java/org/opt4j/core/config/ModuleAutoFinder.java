@@ -132,7 +132,7 @@ public class ModuleAutoFinder implements ModuleList {
 		classLoader = ClassLoader.getSystemClassLoader();
 
 		String paths = System.getProperty("java.class.path");
-		StringTokenizer st = new StringTokenizer(paths, ";\n:");
+		StringTokenizer st = new StringTokenizer(paths, ";\n");
 
 		while (st.hasMoreTokens()) {
 			String path = st.nextToken();
