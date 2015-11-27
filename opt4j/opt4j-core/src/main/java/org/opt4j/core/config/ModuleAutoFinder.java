@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config;
 
@@ -29,6 +28,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -131,22 +131,7 @@ public class ModuleAutoFinder implements ModuleList {
 
 		classLoader = ClassLoader.getSystemClassLoader();
 
-		String paths = System.getProperty("java.class.path");
-		StringTokenizer st = new StringTokenizer(paths, ";\n");
-
-		while (st.hasMoreTokens()) {
-			String path = st.nextToken();
-			File f = new File(path);
-
-			if (f.exists()) {
-				try {
-					f = f.getCanonicalFile();
-					files.add(f);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		files.addAll(getFilesFromClasspath());
 
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 
@@ -184,6 +169,35 @@ public class ModuleAutoFinder implements ModuleList {
 
 		return modules;
 
+	}
+
+	/**
+	 * Collects all {@link File}s specified in the classpath.
+	 * 
+	 * @return set of directories and jar archives given in the classpath
+	 */
+	protected Set<File> getFilesFromClasspath() {
+		Set<File> files = new HashSet<File>();
+		String paths = System.getProperty("java.class.path");
+
+		// split classpathes like a.jar;b.jar
+		// pathSeparator is ";" on Windows and ":" on Linux and MAC
+		StringTokenizer st = new StringTokenizer(paths, File.pathSeparator + "\n");
+
+		while (st.hasMoreTokens()) {
+			String path = st.nextToken();
+			File f = new File(path);
+
+			if (f.exists()) {
+				try {
+					f = f.getCanonicalFile();
+					files.add(f);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return files;
 	}
 
 	/**
