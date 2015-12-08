@@ -41,7 +41,7 @@ public class DiversityIntegerEuclidean implements DiversityInteger {
 		double diversity = 0;
 		int size = a.size();
 		for (int i = 0; i < size; i++) {
-			double diff = a.getUpperBound(i) * a.getLowerBound(i);
+			double diff = a.getUpperBound(i) - a.getLowerBound(i);
 			double dist = ((double) a.get(i) - (double) b.get(i)) / diff;
 			diversity += dist * dist;
 		}

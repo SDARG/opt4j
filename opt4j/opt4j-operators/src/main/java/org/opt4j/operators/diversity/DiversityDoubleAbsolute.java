@@ -47,7 +47,7 @@ public class DiversityDoubleAbsolute implements DiversityDouble {
 
 		double diversity = 0;
 		for (int i = 0; i < size; i++) {
-			double diff = a.getUpperBound(i) * a.getLowerBound(i);
+			double diff = a.getUpperBound(i) - a.getLowerBound(i);
 			diversity += Math.abs(a.get(i) - b.get(i)) / diff;
 		}
 
