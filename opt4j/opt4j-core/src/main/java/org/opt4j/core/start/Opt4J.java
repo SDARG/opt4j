@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.start;
 
 import java.awt.Color;
@@ -155,7 +155,7 @@ public class Opt4J extends Configurator {
 	 * Decorate the splash screen with the version and date.
 	 * 
 	 * @param splash
-	 *            the slpash screen
+	 *            the splash screen
 	 */
 	protected static void decorateVersionDate(SplashScreen splash) {
 		if (splash != null) {
