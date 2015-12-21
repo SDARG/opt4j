@@ -232,7 +232,8 @@ task fatjar(dependsOn: subprojects.jar, type: Jar) {
     destinationDir = new File(project.buildDir, 'fatjar')
     from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest {
-	attributes 'Main-Class': mainClassName
+		attributes 'Main-Class': mainClassName
+		attributes 'SplashScreen-Image': 'img/splash.png'
     }
 }
 
@@ -240,3 +241,5 @@ import org.apache.tools.ant.filters.ReplaceTokens
 applicationDistribution.from("src/distribution") {
     filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
 }
+
+applicationDefaultJvmArgs = ["-splash:opt4j-core/src/main/resources/img/splash.png"]
