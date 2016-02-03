@@ -298,13 +298,28 @@ try {
         task.close();
 } </pre>
 	<p>First, you will have to construct the desired modules for the
-		optimization process. The Opt4JTask is constructed with the parameter
-		false that indicates that the task is closed manually and not
+		optimization process. An optimization process requires at
+		least a
+		@ProblemModule@
+		which defines the Creator, Decoder, and Evaluator as described in
+		<a href="#problems">Section 2</a>. Here, the
+		@DTLZModule@
+		is used as an example. Also, an
+		@OptimizerModule@
+		is required which defines the optimization algorithm to use for the problem. In the	example, the
+		@EvolutionaryAlgorithmModule@ is chosen but also the MutateOptimizerModule as developed in <a href="#algorithms">Section 3</a> could be used here. Additionally, the optional
+		@ViewerModule@
+		is created, which provides the GUI for the optimization process.</p>
+	<p>The
+		@Opt4JTask@
+		takes these modules and controls the optimization process.
+		Here, it is constructed with the parameter <code>false</code> that
+		indicates that the task is closed manually and not
 		automatically once the optimization stops. The Opt4JTask is
 		initialized with the modules. Now, it is possible to execute the task
 		(which is blocking in this case, but you can also start it in a
 		separate thread) and once the optimization is finished, you can obtain
-		the Archive to iterate over the best solutions. After closing the
+		the @Archive@ to iterate over the best solutions. After closing the
 		task, obtaining instances like the Archive is not possible anymore.</p>
 
 </body>
