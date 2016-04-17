@@ -250,6 +250,7 @@ public class Query extends JPanel {
 	 * @param foreground
 	 *            The foreground color for the editable part.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addChoice(String name, String label, String[] values, String defaultChoice, boolean editable,
 			final Color background, final Color foreground) {
 		JLabel lbl = new JLabel(label + ": ");
@@ -824,8 +825,8 @@ public class Query extends JPanel {
 		if (result instanceof JToggleButton) {
 			return ((JToggleButton) result).isSelected();
 		} else {
-			throw new IllegalArgumentException("Item named \"" + name
-					+ "\" is not a radio button, and hence does not have " + "a boolean value.");
+			throw new IllegalArgumentException(
+					"Item named \"" + name + "\" is not a radio button, and hence does not have " + "a boolean value.");
 		}
 	}
 
@@ -884,8 +885,8 @@ public class Query extends JPanel {
 	 *                If the entry is not a line. This is a runtime exception,
 	 *                so it need not be declared explicitly.
 	 */
-	public double getDoubleValue(String name) throws IllegalArgumentException, NoSuchElementException,
-			NumberFormatException {
+	public double getDoubleValue(String name)
+			throws IllegalArgumentException, NoSuchElementException, NumberFormatException {
 		Object result = _entries.get(name);
 
 		if (result == null) {
@@ -895,9 +896,9 @@ public class Query extends JPanel {
 		if (result instanceof JPasswordField) {
 			// Note that JPasswordField extends JTextField, so
 			// we should check for JPasswordField first.
-			throw new IllegalArgumentException("For security reasons, "
-					+ "calling getDoubleValue() on a password field is "
-					+ "not permitted.  Instead, call getCharArrayValue()");
+			throw new IllegalArgumentException(
+					"For security reasons, " + "calling getDoubleValue() on a password field is "
+							+ "not permitted.  Instead, call getCharArrayValue()");
 		} else if (result instanceof JTextField) {
 			return (Double.valueOf(((JTextField) result).getText())).doubleValue();
 		} else {
@@ -927,6 +928,7 @@ public class Query extends JPanel {
 	 *                If the entry is not a choice, line, or slider. This is a
 	 *                runtime exception, so it need not be declared explicitly.
 	 */
+	@SuppressWarnings("rawtypes")
 	public int getIntValue(String name) throws IllegalArgumentException, NoSuchElementException, NumberFormatException {
 		Object result = _entries.get(name);
 
@@ -937,9 +939,9 @@ public class Query extends JPanel {
 		if (result instanceof JPasswordField) {
 			// Note that JPasswordField extends JTextField, so
 			// we should check for JPasswordField first.
-			throw new IllegalArgumentException("For security reasons, "
-					+ "calling getIntValue() on a password field is "
-					+ "not permitted.  Instead, call getCharArrayValue()");
+			throw new IllegalArgumentException(
+					"For security reasons, " + "calling getIntValue() on a password field is "
+							+ "not permitted.  Instead, call getCharArrayValue()");
 		} else if (result instanceof JTextField) {
 			return (Integer.valueOf(((JTextField) result).getText())).intValue();
 		} else if (result instanceof JSlider) {
@@ -1004,6 +1006,7 @@ public class Query extends JPanel {
 	 *                If the entry type does not have a string representation
 	 *                (this should not be thrown).
 	 */
+	@SuppressWarnings("rawtypes")
 	public String getStringValue(String name) throws NoSuchElementException, IllegalArgumentException {
 		Object result = _entries.get(name);
 
@@ -1131,6 +1134,7 @@ public class Query extends JPanel {
 	 * @exception IllegalArgumentException
 	 *                If the value does not parse to the appropriate type.
 	 */
+	@SuppressWarnings("rawtypes")
 	public void set(String name, String value) throws NoSuchElementException, IllegalArgumentException {
 		Object result = _entries.get(name);
 
@@ -1180,8 +1184,8 @@ public class Query extends JPanel {
 		} else if (result instanceof QueryFileChooser) {
 			((QueryFileChooser) result).setFileName(value);
 		} else {
-			throw new IllegalArgumentException("Query class cannot set"
-					+ " a string representation for entries of type " + result.getClass());
+			throw new IllegalArgumentException(
+					"Query class cannot set" + " a string representation for entries of type " + result.getClass());
 		}
 
 		// Record the new value as if it was the previously notified
@@ -1260,8 +1264,8 @@ public class Query extends JPanel {
 			// JRadioButton and JCheckButton are subclasses of JToggleButton
 			((JToggleButton) result).setSelected(value);
 		} else {
-			throw new IllegalArgumentException("Item named \"" + name
-					+ "\" is not a radio button, and hence does not have " + "a boolean value.");
+			throw new IllegalArgumentException(
+					"Item named \"" + name + "\" is not a radio button, and hence does not have " + "a boolean value.");
 		}
 
 		_notifyListeners(name);
@@ -1312,8 +1316,8 @@ public class Query extends JPanel {
 			JTextArea label = (JTextArea) result;
 			label.setText(value);
 		} else {
-			throw new IllegalArgumentException("Item named \"" + name
-					+ "\" is not a display, and hence cannot be set using " + "setDisplay().");
+			throw new IllegalArgumentException(
+					"Item named \"" + name + "\" is not a display, and hence cannot be set using " + "setDisplay().");
 		}
 
 		_notifyListeners(name);
@@ -1373,8 +1377,8 @@ public class Query extends JPanel {
 			JTextField line = (JTextField) result;
 			line.setText(value);
 		} else {
-			throw new IllegalArgumentException("Item named \"" + name
-					+ "\" is not a line, and hence cannot be set using " + "setLine().");
+			throw new IllegalArgumentException(
+					"Item named \"" + name + "\" is not a line, and hence cannot be set using " + "setLine().");
 		}
 
 		_notifyListeners(name);
@@ -1442,8 +1446,8 @@ public class Query extends JPanel {
 			// Set the new slider position.
 			theSlider.setValue(value);
 		} else {
-			throw new IllegalArgumentException("Item named \"" + name
-					+ "\" is not a slider, and hence cannot be set using " + "setSlider().");
+			throw new IllegalArgumentException(
+					"Item named \"" + name + "\" is not a slider, and hence cannot be set using " + "setSlider().");
 		}
 
 		_notifyListeners(name);
