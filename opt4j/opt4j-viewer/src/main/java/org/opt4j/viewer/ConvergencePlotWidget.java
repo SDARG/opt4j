@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.viewer;
 
 import java.awt.BorderLayout;
@@ -50,9 +50,9 @@ import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener;
 
-import ptolemy.plot.Plot;
-
 import com.google.inject.Inject;
+
+import ptolemy.plot.Plot;
 
 /**
  * The {@link ConvergencePlotWidget} plots the convergence for each
@@ -129,22 +129,22 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	 * @author lukasiewycz
 	 * 
 	 */
-	static class ObjectiveDropDown extends JComboBox {
+	static class ObjectiveDropDown extends JComboBox<Objective> {
 
 		private static final long serialVersionUID = 1L;
 
 		public ObjectiveDropDown() {
 			super();
 
-			setRenderer(new ListCellRenderer() {
+			setRenderer(new ListCellRenderer<Objective>() {
 				protected DefaultListCellRenderer renderer = new DefaultListCellRenderer();
 
 				@Override
-				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
-						boolean cellHasFocus) {
+				public Component getListCellRendererComponent(JList<? extends Objective> list, Objective value,
+						int index, boolean isSelected, boolean cellHasFocus) {
 					JLabel cell = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected,
 							cellHasFocus);
-					Objective objective = (Objective) value;
+					Objective objective = value;
 					cell.setText((objective != null ? "objective: " + objective.getName() : ""));
 					return cell;
 				}
@@ -153,6 +153,7 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 			setMaximumSize(getPreferredSize());
 		}
 
+		@Override
 		public void addItem(Objective objective) {
 			super.addItem(objective);
 			setMaximumSize(getPreferredSize());
