@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,19 +20,24 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.viewer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -82,6 +87,8 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 	protected int size = 0;
 
 	protected final DelayTask task = new DelayTask(40);
+
+	protected final List<IndividualMouseListener> individualMouseListeners = new CopyOnWriteArrayList<IndividualMouseListener>();
 
 	/**
 	 * The {@link Table}.
@@ -230,6 +237,7 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 	protected final JTable getTable() {
 		Model model = new Model();
 		JTable table = new Table(model);
+		table.addMouseListener(new TableMouseListener());
 
 		final TableColumnModel columnModel = table.getColumnModel();
 		columnModel.getColumn(0).setPreferredWidth(25);
@@ -334,4 +342,70 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 		paint();
 	}
 
+	/**
+	 * Set the {@link IndividualMouseListener}s to inform.
+	 * 
+	 * @param mouseListeners
+	 *            the mouse listeners
+	 */
+	@Inject(optional = true)
+	public void addMouseListeners(Set<IndividualMouseListener> mouseListeners) {
+		this.individualMouseListeners.addAll(mouseListeners);
+		sortIndividiualMouseListeners();
+	}
+
+	protected void sortIndividiualMouseListeners() {
+		List<IndividualMouseListener> list = new ArrayList<IndividualMouseListener>();
+		list.addAll(individualMouseListeners);
+		Collections.sort(list, new ToolBarOrderComparator<IndividualMouseListener>());
+		individualMouseListeners.clear();
+		individualMouseListeners.addAll(list);
+	}
+
+	/**
+	 * The {@link TableMouseListener} that listens to right and double click of
+	 * the table item.
+	 * 
+	 * @author lukasiewycz, reimann
+	 * 
+	 */
+	class TableMouseListener extends MouseAdapter {
+		private void reservTableShow(MouseEvent e, boolean released) {
+			if (table.isEnabled()) {
+				Point p = new Point(e.getX(), e.getY());
+				int row = table.rowAtPoint(p);
+
+				if (row >= 0 && row < table.getRowCount()) {
+					Individual individual = swtIndividuals.get(row);
+
+					if (individual.isEvaluated()) {
+						if (e.isPopupTrigger()) {
+							table.getSelectionModel().setSelectionInterval(row, row);
+							JPopupMenu menu = new JPopupMenu();
+							for (IndividualMouseListener listener : individualMouseListeners) {
+								listener.onPopup(individual, table, p, menu);
+							}
+							if (menu.getComponentCount() > 0) {
+								menu.show(table, p.x, p.y);
+							}
+						} else if (e.getClickCount() == 2 && released) {
+							for (IndividualMouseListener listener : individualMouseListeners) {
+								listener.onDoubleClick(individual, table, p);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			reservTableShow(e, true);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			reservTableShow(e, false);
+		}
+	}
 }
