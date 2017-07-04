@@ -2,11 +2,11 @@ import org.apache.tools.ant.filters.*
 import java.util.regex.*
 
 dependencies {
-	compile project(':opt4j-core')
-	compile project(':opt4j-satdecoding')
-	compile project(':opt4j-optimizers')
-	compile project(':opt4j-operators')
-	compile project(':opt4j-viewer')
+	compile parent.project('opt4j-core')
+	compile parent.project('opt4j-satdecoding')
+	compile parent.project('opt4j-optimizers')
+	compile parent.project('opt4j-operators')
+	compile parent.project('opt4j-viewer')
 }
 
 task filterSources(type: Copy) {
