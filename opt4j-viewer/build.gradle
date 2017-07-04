@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':opt4j-core')
+	compile parent.project('opt4j-core')
 }
 
 javadoc {
