@@ -1,5 +1,6 @@
 apply plugin: 'base'
 apply plugin: 'application'
+apply plugin: 'eclipse'
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
