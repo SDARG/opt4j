@@ -124,16 +124,16 @@ subprojects {
 	    }
 	}
 
-	    jacocoTestReport {
-        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
-        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
-        classDirectories =  files(sourceSets.main.output)
-        reports {
-            html.enabled = true
-            xml.enabled = true
-            csv.enabled = false
-        }
-}
+	jacocoTestReport {
+		additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+		sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+		classDirectories =  files(sourceSets.main.output)
+		reports {
+		    html.enabled = true
+		    xml.enabled = true
+		    csv.enabled = false
+		}
+	}
 }
 
 compileJava  {
@@ -288,4 +288,15 @@ task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
             fileTree(dir: it, exclude: ['ptolemy/**', 'org/opt4j/tutorial/**'])
         })
     }
+}
+
+coveralls {
+	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+}
+tasks.coveralls {
+  group = 'Documentation'
+  description = 'Uploads the aggregated coverage report to Coveralls'
+
+  dependsOn jacocoRootReport
+  onlyIf { System.env.'CI' && !JavaVersion.current().isJava9Compatible() }
 }

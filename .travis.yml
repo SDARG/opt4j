@@ -4,4 +4,4 @@ install: true
 dist: trusty
 
 after_success:
-- ./gradlew jacocoTestReport coveralls
+- ./gradlew coveralls
