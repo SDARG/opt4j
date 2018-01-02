@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/felixreimann/opt4j.svg?branch=master)](https://travis-ci.org/felixreimann/opt4j)
 [![Coverage Status](https://coveralls.io/repos/github/felixreimann/opt4j/badge.svg?branch=master)](https://coveralls.io/github/felixreimann/opt4j?branch=master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.opt4j/opt4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.opt4j/opt4j)
-[![Javadocs](https://javadoc.io/badge/org.opt4j/opt4j.svg)](https://javadoc.io/doc/org.opt4j/opt4j)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.opt4j/opt4j-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.opt4j/opt4j-core)
+[![Javadocs](https://javadoc.io/badge/org.opt4j/opt4j-core.svg)](https://javadoc.io/doc/org.opt4j/opt4j-core)
 
 #  Opt4J - Modular Java framework for meta-heuristic optimization 
 
