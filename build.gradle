@@ -285,7 +285,7 @@ task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['ptolemy/**', 'org/opt4j/tutorial/**'])
+            fileTree(dir: it, exclude: ['ptolemy/**', 'org/opt4j/tutorial/**', 'org/opt4j/viewer/**', 'org/opt4j/core/config/visualization/**'])
         })
     }
 }
