@@ -25,6 +25,7 @@ package org.opt4j.core.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,6 +37,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
 
 import com.google.inject.Module;
 
@@ -74,6 +77,48 @@ public class ModuleLoader {
 	}
 
 	/**
+	 * Entity resolver for replacing XML entity references inside the XML
+	 * configuration loaded by Opt4j to configure the active modules and their
+	 * parameters.
+	 */
+	public class Opt4JEntityResolver implements EntityResolver {
+
+		File configDirectory;
+
+		/**
+		 * Constructs a {@link Opt4JEntityResolver}.
+		 * 
+		 * @param configDirectory
+		 *            the directory where the configuration that is currently
+		 *            parsed resides in
+		 */
+		Opt4JEntityResolver(File configDirectory) {
+			this.configDirectory = configDirectory;
+		}
+
+		@Override
+		public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+			String result = null;
+			if (systemId.startsWith("opt4j://")) {
+				if (systemId.equals("opt4j://CONFIGDIR"))
+					result = configDirectory.getPath();
+				else
+					throw new SAXException(
+							"Entity definition " + systemId + " within protocol opt4j:// is not supported!");
+			} else if (systemId.startsWith("env://")) {
+				String var = systemId.substring(6);
+				result = System.getenv(var);
+				if (result == null)
+					throw new SAXException("Environment variable " + var + " used by entity definition " + systemId
+							+ " is not defined!");
+			} else
+				return null;
+			return new InputSource(new StringReader(result));
+		}
+
+	};
+	
+	/**
 	 * Loads all modules from a {@link File}.
 	 * 
 	 * @param file
@@ -86,10 +131,12 @@ public class ModuleLoader {
 
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			factory.setExpandEntityReferences(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setEntityResolver(new Opt4JEntityResolver(file.getParentFile().getAbsoluteFile()));
 			Document document = builder.parse(file);
 
-			modules.addAll(get(document.getFirstChild()));
+			modules.addAll(get(document.getDocumentElement()));
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
