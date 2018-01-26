@@ -64,8 +64,8 @@ Brought to you by
 * Michael Glaß
 
 This project uses
-* [https://github.com/google/guice](google/guice)
-* [https://gitlab.ow2.org/sat4j/sat4j/](sat4j) (in subproject opt4j-satdecoding)
+* [google/guice](https://github.com/google/guice)
+* [sat4j](https://gitlab.ow2.org/sat4j/sat4j/) (in subproject opt4j-satdecoding)
 
 ## License
 
