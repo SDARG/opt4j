@@ -63,6 +63,10 @@ Brought to you by
 * Felix Reimann
 * Michael Glaß
 
+This project uses
+* [https://github.com/google/guice](google/guice)
+* [https://gitlab.ow2.org/sat4j/sat4j/](sat4j) (in subproject opt4j-satdecoding)
+
 ## License
 
 Opt4J uses [MIT License](./LICENSE).
