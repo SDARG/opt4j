@@ -134,6 +134,13 @@ public class DoubleGenotype extends ArrayList<Double> implements ListGenotype<Do
 	 *            the number of elements in the resulting genotype
 	 */
 	public void init(Random random, int n) {
+		try {
+			getLowerBound(n - 1);
+			getUpperBound(n - 1);
+		} catch (IndexOutOfBoundsException outOfBoundException) {
+			throw new IllegalArgumentException(
+					"Can not initialize a genotype with " + n + " entries with the specified bounds");
+		}
 		for (int i = 0; i < n; i++) {
 			double lo = getLowerBound(i);
 			double hi = getUpperBound(i);

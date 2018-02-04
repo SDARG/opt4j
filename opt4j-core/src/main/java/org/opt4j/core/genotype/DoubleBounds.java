@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.genotype;
 
@@ -46,6 +45,9 @@ public class DoubleBounds implements Bounds<Double> {
 	 *            the upper bounds
 	 */
 	public DoubleBounds(double[] lower, double[] upper) {
+		if (lower.length != upper.length) {
+			throw new IllegalArgumentException("Lower and upper bounds arrays should have same length.");
+		}
 		this.lower = lower;
 		this.upper = upper;
 	}
@@ -59,6 +61,9 @@ public class DoubleBounds implements Bounds<Double> {
 	 *            the upper bounds
 	 */
 	public DoubleBounds(List<Double> lower, List<Double> upper) {
+		if (lower.size() != upper.size()) {
+			throw new IllegalArgumentException("Lower and upper bounds lists should have the same size.");
+		}
 		this.lower = new double[lower.size()];
 		this.upper = new double[upper.size()];
 		for (int i = 0; i < lower.size(); i++) {

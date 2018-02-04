@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.genotype;
 
@@ -124,6 +123,14 @@ public class IntegerGenotype extends ArrayList<Integer> implements ListGenotype<
 	 *            the number of elements in the resulting genotype
 	 */
 	public void init(Random random, int n) {
+		try {
+			getLowerBound(n - 1);
+			getUpperBound(n - 1);
+		} catch (IndexOutOfBoundsException outOfBoundException) {
+			throw new IllegalArgumentException(
+					"Can not initialize a genotype with " + n + " entries with the specified bounds");
+		}
+
 		for (int i = 0; i < n; i++) {
 			int lo = getLowerBound(i);
 			int hi = getUpperBound(i);
