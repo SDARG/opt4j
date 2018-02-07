@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class DoubleGenotypeTest {
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=IndexOutOfBoundsException.class)
 	public void testWrongSettingBoundList(){
 		Random rand = new Random();
 		List<Double> lowerBounds = new ArrayList<Double>();
@@ -27,7 +27,7 @@ public class DoubleGenotypeTest {
 		listGeno.init(rand, 4);
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=IndexOutOfBoundsException.class)
 	public void testWrongBoundSettingArray(){
 		Random rand = new Random();
 		double[] lowerBounds = { -1.0, -0.5, 0.0 };

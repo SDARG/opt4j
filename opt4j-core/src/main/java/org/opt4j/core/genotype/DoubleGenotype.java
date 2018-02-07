@@ -138,8 +138,9 @@ public class DoubleGenotype extends ArrayList<Double> implements ListGenotype<Do
 			getLowerBound(n - 1);
 			getUpperBound(n - 1);
 		} catch (IndexOutOfBoundsException outOfBoundException) {
-			throw new IllegalArgumentException(
-					"Can not initialize a genotype with " + n + " entries with the specified bounds");
+			String message = outOfBoundException.getMessage() == null ? "" : outOfBoundException.getMessage() + "\n";
+			message += "Can not initialize a genotype with " + n + " entries with the specified bounds";
+			throw new IndexOutOfBoundsException(message);
 		}
 		for (int i = 0; i < n; i++) {
 			double lo = getLowerBound(i);
