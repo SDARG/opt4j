@@ -46,6 +46,9 @@ public class IntegerBounds implements Bounds<Integer> {
 	 *            the upper bounds
 	 */
 	public IntegerBounds(int[] lower, int[] upper) {
+		if (lower.length != upper.length) {
+			throw new IllegalArgumentException("Lower and upper bounds arrays should have same length.");
+		}
 		this.lower = lower;
 		this.upper = upper;
 	}
@@ -59,6 +62,9 @@ public class IntegerBounds implements Bounds<Integer> {
 	 *            the upper bounds
 	 */
 	public IntegerBounds(List<Integer> lower, List<Integer> upper) {
+		if (lower.size() != upper.size()) {
+			throw new IllegalArgumentException("Lower and upper bounds lists should have the same size.");
+		}
 		this.lower = new int[lower.size()];
 		this.upper = new int[upper.size()];
 		for (int i = 0; i < lower.size(); i++) {
