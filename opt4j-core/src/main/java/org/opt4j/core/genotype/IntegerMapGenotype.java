@@ -19,14 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.genotype;
 
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.opt4j.core.Genotype;
 
@@ -68,6 +70,13 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	public IntegerMapGenotype(List<K> list, Bounds<Integer> bounds) {
 		super(bounds);
+		Set<K> uniqueKeys = new HashSet<K>();
+		for (K k : list) {
+			uniqueKeys.add(k);
+		}
+		if (uniqueKeys.size() < list.size()) {
+			throw new IllegalArgumentException("The provided key objects have to be unique");
+		}
 		this.list = list;
 	}
 
@@ -136,9 +145,16 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public void setValue(K key, Integer value) {
+		if (!list.contains(key)) {
+			throw new IllegalArgumentException("Invalid key");
+		}
 		int i = list.indexOf(key);
 		while (size() <= i) {
-			add(bounds.getLowerBound(i));
+			add(bounds.getLowerBound(size()));
+		}
+		if (bounds.getLowerBound(i) > value || bounds.getUpperBound(i) < value) {
+			throw new IllegalArgumentException(
+					"The provided value does not lie within the bounds for the provided key");
 		}
 		set(i, value);
 	}
@@ -166,13 +182,15 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public String toString() {
-		String s = "[";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[");
 		for (int i = 0; i < size(); i++) {
 			K key = list.get(i);
 			double value = this.get(i);
-			s += key + "=" + value + ";";
+			stringBuilder.append(key + "=" + value + ";");
 		}
-		return s + "]";
+		stringBuilder.append("]");
+		return stringBuilder.toString();
 	}
 
 	/*
@@ -182,6 +200,9 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public int getIndexOf(K key) {
+		if (!list.contains(key)) {
+			throw new IllegalArgumentException("Invalid key");
+		}
 		return list.indexOf(key);
 	}
 
