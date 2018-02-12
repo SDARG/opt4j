@@ -1,25 +1,19 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config;
 
@@ -38,8 +32,7 @@ import java.util.Map;
 import com.google.inject.Module;
 
 /**
- * The {@link Property} contains information about a single property of a
- * {@link PropertyModule}.
+ * The {@link Property} contains information about a single property of a {@link PropertyModule}.
  * 
  * @author lukasiewycz
  * 
@@ -185,7 +178,7 @@ public class Property {
 	}
 
 	/**
-	 * Returns {@code true} if the property is active.
+	 * Returns {@code true} if the property is active, i.e., all {@link Requirement}s must be fulfilled.
 	 * 
 	 * @return {@code true} if the property is active
 	 */
@@ -239,8 +232,7 @@ public class Property {
 	}
 
 	/**
-	 * Sets the value of the property. The property has first to be converted to
-	 * a the corresponding type.
+	 * Sets the value of the property. The property has first to be converted to a the corresponding type.
 	 * 
 	 * @param value
 	 *            the value to set
@@ -250,26 +242,26 @@ public class Property {
 	public void setValue(String value) throws InvocationTargetException {
 		Class<?> type = this.type;
 
-		try {
-			if (type.equals(Integer.TYPE)) {
-				type = Integer.class;
-			} else if (type.equals(Long.TYPE)) {
-				type = Long.class;
-			} else if (type.equals(Double.TYPE)) {
-				type = Double.class;
-			} else if (type.equals(Float.TYPE)) {
-				type = Float.class;
-			} else if (type.equals(Boolean.TYPE)) {
-				type = Boolean.class;
-			} else if (type.equals(Byte.TYPE)) {
-				type = Byte.class;
-			} else if (type.equals(Short.TYPE)) {
-				type = Short.class;
-			} else if (type.equals(String.class) && value == null) {
-				value = "";
-			}
+		if (type.equals(Integer.TYPE)) {
+			type = Integer.class;
+		} else if (type.equals(Long.TYPE)) {
+			type = Long.class;
+		} else if (type.equals(Double.TYPE)) {
+			type = Double.class;
+		} else if (type.equals(Float.TYPE)) {
+			type = Float.class;
+		} else if (type.equals(Boolean.TYPE)) {
+			type = Boolean.class;
+		} else if (type.equals(Byte.TYPE)) {
+			type = Byte.class;
+		} else if (type.equals(Short.TYPE)) {
+			type = Short.class;
+		} else if (type.equals(String.class) && value == null) {
+			value = "";
+		}
 
-			Object object = null;
+		Object object = null;
+		try {
 			if (Character.TYPE.equals(type) || Character.class.equals(type)) {
 				object = value.toCharArray()[0];
 			} else if (type.isEnum()) {
@@ -293,10 +285,7 @@ public class Property {
 				// string
 				Constructor<?> constructor = type.getConstructor(String.class);
 				object = constructor.newInstance(value.trim());
-
 			}
-
-			setValueObject(object);
 		} catch (Exception e) {
 			Throwable t = e;
 			while (t.getCause() != null) {
@@ -304,10 +293,12 @@ public class Property {
 			}
 			String message = t.getLocalizedMessage();
 
-			throw new InvocationTargetException(e, "Failed assignment: module=" + module.getClass().getName()
-					+ " property=\"" + getName() + "\" value=\"" + value + "\" (" + t.getClass().getName()
-					+ (message != null ? ": " + message : "") + ")");
+			throw new InvocationTargetException(e,
+					"Failed assignment: module=" + module.getClass().getName() + " property=\"" + getName()
+							+ "\" value=\"" + value + "\" (" + t.getClass().getName()
+							+ (message != null ? ": " + message : "") + ")");
 		}
+		setValueObject(object);
 	}
 
 	/**
