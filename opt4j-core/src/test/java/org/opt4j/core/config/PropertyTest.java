@@ -153,6 +153,15 @@ public class PropertyTest {
 		p.setValue(3.0d);
 	}
 
+	@Test(expected = InvocationTargetException.class)
+	public void setValueExceptionString() throws NoSuchMethodException, SecurityException, InvocationTargetException {
+		Method setter = MyModuleMock.class.getMethod("setMockInt", Integer.class);
+		Property p = new Property(new MyModuleMock(), null, Integer.TYPE, null, setter,
+				Collections.<Annotation> emptySet());
+
+		p.setValue("3.0");
+	}
+
 	@Test
 	public void setValueLong() throws NoSuchMethodException, SecurityException, InvocationTargetException {
 		Method setter = MyModuleMock.class.getMethod("setMockLong", Long.class);
@@ -249,7 +258,7 @@ public class PropertyTest {
 		Property p = new Property(new MyModuleMock(), null, MyEnum.class, null, setter,
 				Collections.<Annotation> emptySet());
 
-		p.setValue(MyEnum.X);
+		p.setValue("X");
 	}
 
 	enum MyEnum {
@@ -362,5 +371,11 @@ public class PropertyTest {
 				Collections.<Annotation> emptySet());
 
 		Assert.assertTrue(p.isNumber());
+	}
+
+	@Test
+	public void getAnnotations() {
+		Property p = new Property(new MyModuleMock(), null, null, null, null, Collections.<Annotation> emptySet());
+		Assert.assertTrue(p.getAnnotations().isEmpty());
 	}
 }
