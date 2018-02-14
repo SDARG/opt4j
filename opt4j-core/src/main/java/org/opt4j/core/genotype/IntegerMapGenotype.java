@@ -70,10 +70,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	public IntegerMapGenotype(List<K> list, Bounds<Integer> bounds) {
 		super(bounds);
-		Set<K> uniqueKeys = new HashSet<K>();
-		for (K k : list) {
-			uniqueKeys.add(k);
-		}
+		Set<K> uniqueKeys = new HashSet<K>(list);
 		if (uniqueKeys.size() < list.size()) {
 			throw new IllegalArgumentException("The provided key objects have to be unique");
 		}
