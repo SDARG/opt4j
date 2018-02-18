@@ -46,7 +46,7 @@ def descriptions = [
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
-    //apply plugin: 'signing'
+    apply plugin: 'signing'
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
 
@@ -143,8 +143,8 @@ compileJava  {
 
 uploadArchives.doFirst {
 	println "Sonatype Username: "+sonatypeUsername 
-	//println "Private Key: "+project.ext.get("signing.secretKeyRingFile")
-	//println "Private Key ID: "+project.ext.get("signing.keyId")
+	println "Private Key: "+project.ext.get("signing.secretKeyRingFile")
+	println "Private Key ID: "+project.ext.get("signing.keyId")
 }
 
 dependencies {
