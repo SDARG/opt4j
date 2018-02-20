@@ -1,23 +1,19 @@
 /*
  * Utilities used to manipulate files
  * 
- * Copyright (c) 2004-2008 The Regents of the University of California. All
- * rights reserved. Permission is hereby granted, without written agreement and
- * without license or royalty fees, to use, copy, modify, and distribute this
- * software and its documentation for any purpose, provided that the above
- * copyright notice and the following two paragraphs appear in all copies of
- * this software.
+ * Copyright (c) 2004-2008 The Regents of the University of California. All rights reserved. Permission is hereby
+ * granted, without written agreement and without license or royalty fees, to use, copy, modify, and distribute this
+ * software and its documentation for any purpose, provided that the above copyright notice and the following two
+ * paragraphs appear in all copies of this software.
  * 
- * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR
- * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
- * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
+ * IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
+ * CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE UNIVERSITY OF
  * CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN
- * "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE
- * MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ * THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS"
+ * BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR
+ * MODIFICATIONS.
  * 
  * PT_COPYRIGHT_VERSION_2 COPYRIGHTENDKEY
  */
@@ -46,8 +42,7 @@ import java.util.jar.JarFile;
 // // FileUtilities
 
 /**
- * A collection of utilities for manipulating files These utilities do not
- * depend on any other ptolemy.* packages.
+ * A collection of utilities for manipulating files These utilities do not depend on any other ptolemy.* packages.
  * 
  * @author Christopher Brooks
  * @version $Id: FileUtilities.java,v 1.54.4.3 2008/03/25 22:32:41 cxh Exp $
@@ -72,9 +67,8 @@ public class FileUtilities {
 	 *            The source URL
 	 * @param destinationFile
 	 *            The destination File.
-	 * @return true if the file was copied, false if the file was not copied
-	 *         because the sourceURL and the destinationFile refer to the same
-	 *         file.
+	 * @return true if the file was copied, false if the file was not copied because the sourceURL and the
+	 *         destinationFile refer to the same file.
 	 * @exception IOException
 	 *                If the source file does not exist.
 	 */
@@ -111,30 +105,30 @@ public class FileUtilities {
 	}
 
 	/**
-	 * Extract a jar file into a directory. This is a trivial implementation of
-	 * the <code>jar -xf</code> command.
+	 * Extract a jar file into a directory. This is a trivial implementation of the <code>jar -xf</code> command.
 	 * 
 	 * @param jarFileName
 	 *            The name of the jar file to extract
 	 * @param directoryName
-	 *            The name of the directory. If this argument is null, then the
-	 *            files are extracted in the current directory.
+	 *            The name of the directory. If this argument is null, then the files are extracted in the current
+	 *            directory.
 	 * @exception IOException
-	 *                If the jar file cannot be opened, or if there are problems
-	 *                extracting the contents of the jar file
+	 *                If the jar file cannot be opened, or if there are problems extracting the contents of the jar file
 	 */
 	public static void extractJarFile(String jarFileName, String directoryName) throws IOException {
-		JarFile jarFile = new JarFile(jarFileName);
-		Enumeration<JarEntry> entries = jarFile.entries();
-		while (entries.hasMoreElements()) {
-			JarEntry jarEntry = entries.nextElement();
-			File destinationFile = new File(directoryName, jarEntry.getName());
-			if (jarEntry.isDirectory()) {
-				if (!destinationFile.isDirectory() && !destinationFile.mkdirs()) {
-					throw new IOException("Warning, failed to create " + "directory for \"" + destinationFile + "\".");
+		try (JarFile jarFile = new JarFile(jarFileName)) {
+			Enumeration<JarEntry> entries = jarFile.entries();
+			while (entries.hasMoreElements()) {
+				JarEntry jarEntry = entries.nextElement();
+				File destinationFile = new File(directoryName, jarEntry.getName());
+				if (jarEntry.isDirectory()) {
+					if (!destinationFile.isDirectory() && !destinationFile.mkdirs()) {
+						throw new IOException(
+								"Warning, failed to create " + "directory for \"" + destinationFile + "\".");
+					}
+				} else {
+					_binaryCopyStream(jarFile.getInputStream(jarEntry), destinationFile);
 				}
-			} else {
-				_binaryCopyStream(jarFile.getInputStream(jarEntry), destinationFile);
 			}
 		}
 	}
@@ -143,10 +137,9 @@ public class FileUtilities {
 	 * Extract the contents of a jar file.
 	 * 
 	 * @param args
-	 *            An array of arguments. The first argument names the jar file
-	 *            to be extracted. The first argument is required. The second
-	 *            argument names the directory in which to extract the files
-	 *            from the jar file. The second argument is optional.
+	 *            An array of arguments. The first argument names the jar file to be extracted. The first argument is
+	 *            required. The second argument names the directory in which to extract the files from the jar file. The
+	 *            second argument is optional.
 	 */
 	public static void main(String[] args) {
 		if (args.length < 1 || args.length > 2) {
@@ -170,31 +163,26 @@ public class FileUtilities {
 	}
 
 	/**
-	 * Given a file name or URL, construct a java.io.File object that refers to
-	 * the file name or URL. This method first attempts to directly use the file
-	 * name to construct the File. If the resulting File is a relative pathname,
-	 * then it is resolved relative to the specified base URI, if there is one.
-	 * If there is no such base URI, then it simply returns the relative File
-	 * object. See the java.io.File documentation for a details about relative
-	 * and absolute pathnames.
+	 * Given a file name or URL, construct a java.io.File object that refers to the file name or URL. This method first
+	 * attempts to directly use the file name to construct the File. If the resulting File is a relative pathname, then
+	 * it is resolved relative to the specified base URI, if there is one. If there is no such base URI, then it simply
+	 * returns the relative File object. See the java.io.File documentation for a details about relative and absolute
+	 * pathnames.
 	 * 
 	 * <p>
-	 * The file need not exist for this method to succeed. Thus, this method can
-	 * be used to determine whether a file with a given name exists, prior to
-	 * calling openForWriting(), for example.
+	 * The file need not exist for this method to succeed. Thus, this method can be used to determine whether a file
+	 * with a given name exists, prior to calling openForWriting(), for example.
 	 * 
 	 * <p>
-	 * This method is similar to {@link #nameToURL(String, URI, ClassLoader)}
-	 * except that in this method, the file or URL must be readable. Usually,
-	 * this method is use for write a file and
+	 * This method is similar to {@link #nameToURL(String, URI, ClassLoader)} except that in this method, the file or
+	 * URL must be readable. Usually, this method is use for write a file and
 	 * {@link #nameToURL(String, URI, ClassLoader)} is used for reading.
 	 * 
 	 * @param name
 	 *            The file name or URL.
 	 * @param base
 	 *            The base for relative URLs.
-	 * @return A File, or null if the filename argument is null or an empty
-	 *         string.
+	 * @return A File, or null if the filename argument is null or an empty string.
 	 * @see #nameToURL(String, URI, ClassLoader)
 	 */
 	public static File nameToFile(String name, URI base) {
@@ -218,37 +206,33 @@ public class FileUtilities {
 	}
 
 	/**
-	 * Given a file or URL name, return as a URL. If the file name is relative,
-	 * then it is interpreted as being relative to the specified base directory.
-	 * If the name begins with "xxxxxxCLASSPATHxxxxxx" or "$CLASSPATH" then
-	 * search for the file relative to the classpath.
+	 * Given a file or URL name, return as a URL. If the file name is relative, then it is interpreted as being relative
+	 * to the specified base directory. If the name begins with "xxxxxxCLASSPATHxxxxxx" or "$CLASSPATH" then search for
+	 * the file relative to the classpath.
 	 * 
 	 * <p>
-	 * Note that "xxxxxxCLASSPATHxxxxxx" is the value of the globally defined
-	 * constant $CLASSPATH available in the Ptolemy II expression language.
+	 * Note that "xxxxxxCLASSPATHxxxxxx" is the value of the globally defined constant $CLASSPATH available in the
+	 * Ptolemy II expression language.
 	 * 
 	 * <p>
 	 * If no file is found, then throw an exception.
 	 * 
 	 * <p>
-	 * This method is similar to {@link #nameToFile(String, URI)} except that in
-	 * this method, the file or URL must be readable. Usually, this method is
-	 * use for reading a file and is used for writing
+	 * This method is similar to {@link #nameToFile(String, URI)} except that in this method, the file or URL must be
+	 * readable. Usually, this method is use for reading a file and is used for writing
 	 * {@link #nameToFile(String, URI)}.
 	 * 
 	 * @param name
 	 *            The name of a file or URL.
 	 * @param baseDirectory
-	 *            The base directory for relative file names, or null to specify
-	 *            none.
+	 *            The base directory for relative file names, or null to specify none.
 	 * @param classLoader
-	 *            The class loader to use to locate system resources, or null to
-	 *            use the system class loader that was used to load this class.
+	 *            The class loader to use to locate system resources, or null to use the system class loader that was
+	 *            used to load this class.
 	 * @return A URL, or null if the name is null or the empty string.
 	 * @exception IOException
-	 *                If the file cannot be read, or if the file cannot be
-	 *                represented as a URL (e.g. System.in), or the name
-	 *                specification cannot be parsed.
+	 *                If the file cannot be read, or if the file cannot be represented as a URL (e.g. System.in), or the
+	 *                name specification cannot be parsed.
 	 * @see #nameToFile(String, URI)
 	 */
 	public static URL nameToURL(String name, URI baseDirectory, ClassLoader classLoader) throws IOException {
@@ -284,8 +268,8 @@ public class FileUtilities {
 					classLoader = referenceClass.getClassLoader();
 				} catch (Exception ex) {
 					// IOException constructor does not take a cause
-					IOException ioException = new IOException("Cannot look up class \"" + referenceClassName
-							+ "\" or get its ClassLoader.");
+					IOException ioException = new IOException(
+							"Cannot look up class \"" + referenceClassName + "\" or get its ClassLoader.");
 					ioException.initCause(ex);
 					throw ioException;
 				}
@@ -325,9 +309,9 @@ public class FileUtilities {
 				}
 
 				if (!file.canRead()) {
-					throw new IOException("Cannot read file '" + name + "' or '"
-							+ StringUtilities.substitute(name, "%20", " ") + "'"
-							+ ((possibleJarURL == null) ? "" : (" or '" + possibleJarURL.getFile() + "")));
+					throw new IOException(
+							"Cannot read file '" + name + "' or '" + StringUtilities.substitute(name, "%20", " ") + "'"
+									+ ((possibleJarURL == null) ? "" : (" or '" + possibleJarURL.getFile() + "")));
 				}
 			}
 
@@ -351,8 +335,8 @@ public class FileUtilities {
 						newURI = baseDirectory.resolve(name2);
 						name = name2;
 					} catch (Exception ex2) {
-						IOException io = new IOException("Problem with URI format in '" + name + "'. " + "and '"
-								+ name2 + "' " + "This can happen if the file name " + "is not absolute"
+						IOException io = new IOException("Problem with URI format in '" + name + "'. " + "and '" + name2
+								+ "' " + "This can happen if the file name " + "is not absolute"
 								+ "and is not present relative to the " + "directory in which the specified model "
 								+ "was read (which was '" + baseDirectory + "')");
 						io.initCause(ex2);
@@ -417,12 +401,10 @@ public class FileUtilities {
 	}
 
 	/**
-	 * Open the specified file for reading. If the specified name is
-	 * "System.in", then a reader from standard in is returned. If the name
-	 * begins with "$CLASSPATH" or "xxxxxxCLASSPATHxxxxxx", then the name is
-	 * passed to {@link #nameToURL(String, URI, ClassLoader)} If the file name
-	 * is not absolute, the it is assumed to be relative to the specified base
-	 * URI.
+	 * Open the specified file for reading. If the specified name is "System.in", then a reader from standard in is
+	 * returned. If the name begins with "$CLASSPATH" or "xxxxxxCLASSPATHxxxxxx", then the name is passed to
+	 * {@link #nameToURL(String, URI, ClassLoader)} If the file name is not absolute, the it is assumed to be relative
+	 * to the specified base URI.
 	 * 
 	 * @see #nameToURL(String, URI, ClassLoader)
 	 * @param name
@@ -430,10 +412,9 @@ public class FileUtilities {
 	 * @param base
 	 *            The base URI for relative references.
 	 * @param classLoader
-	 *            The class loader to use to locate system resources, or null to
-	 *            use the system class loader that was used to load this class.
-	 * @return If the name is null or the empty string, then null is returned,
-	 *         otherwise a buffered reader is returned.
+	 *            The class loader to use to locate system resources, or null to use the system class loader that was
+	 *            used to load this class.
+	 * @return If the name is null or the empty string, then null is returned, otherwise a buffered reader is returned.
 	 * 
 	 * @exception IOException
 	 *                If the file cannot be opened.
@@ -490,16 +471,12 @@ public class FileUtilities {
 	}
 
 	/**
-	 * Open the specified file for writing or appending. If the specified name
-	 * is "System.out", then a writer to standard out is returned; otherwise,
-	 * pass the name and base to {@link #nameToFile(String, URI)} and create a
-	 * file writer. If the file does not exist, then create it. If the file name
-	 * is not absolute, the it is assumed to be relative to the specified base
-	 * directory. If permitted, this method will return a Writer that will
-	 * simply overwrite the contents of the file. It is up to the user of this
-	 * method to check whether this is OK (by first calling
-	 * {@link #nameToFile(String, URI)} and calling exists() on the returned
-	 * value).
+	 * Open the specified file for writing or appending. If the specified name is "System.out", then a writer to
+	 * standard out is returned; otherwise, pass the name and base to {@link #nameToFile(String, URI)} and create a file
+	 * writer. If the file does not exist, then create it. If the file name is not absolute, the it is assumed to be
+	 * relative to the specified base directory. If permitted, this method will return a Writer that will simply
+	 * overwrite the contents of the file. It is up to the user of this method to check whether this is OK (by first
+	 * calling {@link #nameToFile(String, URI)} and calling exists() on the returned value).
 	 * 
 	 * @param name
 	 *            File name.
@@ -507,8 +484,7 @@ public class FileUtilities {
 	 *            The base URI for relative references.
 	 * @param append
 	 *            If true, then append to the file rather than overwriting.
-	 * @return If the name is null or the empty string, then null is returned,
-	 *         otherwise a writer is returned.
+	 * @return If the name is null or the empty string, then null is returned, otherwise a writer is returned.
 	 * @exception IOException
 	 *                If the file cannot be opened or created.
 	 */
@@ -533,14 +509,12 @@ public class FileUtilities {
 	// // public members ////
 
 	/**
-	 * Standard in as a reader, which will be non-null only after a call to
-	 * openForReading("System.in").
+	 * Standard in as a reader, which will be non-null only after a call to openForReading("System.in").
 	 */
 	public static BufferedReader STD_IN = null;
 
 	/**
-	 * Standard out as a writer, which will be non-null only after a call to
-	 * openForWriting("System.out").
+	 * Standard out as a writer, which will be non-null only after a call to openForWriting("System.out").
 	 */
 	public static PrintWriter STD_OUT = null;
 
@@ -548,16 +522,15 @@ public class FileUtilities {
 	// // private methods ////
 
 	/**
-	 * Copy files safely. If there are problems, the streams are close
-	 * appropriately.
+	 * Copy files safely. If there are problems, the streams are close appropriately.
 	 * 
 	 * @param inputStream
 	 *            The input stream.
 	 * @param destinationFile
 	 *            The destination File.
 	 * @exception IOException
-	 *                If the input stream cannot be created or read, or * if
-	 *                there is a problem writing to the destination file.
+	 *                If the input stream cannot be created or read, or * if there is a problem writing to the
+	 *                destination file.
 	 */
 	private static void _binaryCopyStream(InputStream inputStream, File destinationFile) throws IOException {
 		// Copy the source file.
@@ -607,11 +580,9 @@ public class FileUtilities {
 	// // private members ////
 
 	/**
-	 * Tag value used by this class and registered as a parser constant for the
-	 * identifier "CLASSPATH" to indicate searching in the classpath. This is a
-	 * hack, but it deals with the fact that Java is not symmetric in how it
-	 * deals with getting files from the classpath (using getResource) and
-	 * getting files from the file system.
+	 * Tag value used by this class and registered as a parser constant for the identifier "CLASSPATH" to indicate
+	 * searching in the classpath. This is a hack, but it deals with the fact that Java is not symmetric in how it deals
+	 * with getting files from the classpath (using getResource) and getting files from the file system.
 	 */
 	private static String _CLASSPATH_VALUE = "xxxxxxCLASSPATHxxxxxx";
 }
