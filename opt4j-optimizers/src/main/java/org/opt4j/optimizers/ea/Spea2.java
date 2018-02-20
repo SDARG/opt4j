@@ -557,7 +557,7 @@ public class Spea2 implements Selector {
 	}
 
 	/**
-	 * Returns all dominated {@code Spea2IndividualSet}s (fitness > 0).
+	 * Returns all dominated {@code Spea2IndividualSet}s (fitness &gt; 0).
 	 * 
 	 * @return all dominated IndividualSets
 	 */
