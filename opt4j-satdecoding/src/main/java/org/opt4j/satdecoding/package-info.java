@@ -53,10 +53,10 @@
  * <pre>
  * minimize w + x + y + z
  * subject to:
- *     w + x + y > 0    (constraint 1)
- *     y + z > 0        (constraint 2)
- *     w + z > 0        (constraint 3)
- *     x + y + z > 0    (constraint 4)
+ *     w + x + y &gt; 0    (constraint 1)
+ *     y + z &gt; 0        (constraint 2)
+ *     w + z &gt; 0        (constraint 3)
+ *     x + y + z &gt; 0    (constraint 4)
  * </pre>
  * 
  * Solution {@code (w=1,x=1,y=0,z=1)} is feasible which fulfills all constraints
