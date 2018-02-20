@@ -50,8 +50,8 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
 
-    sourceCompatibility = 1.6 
-	targetCompatibility = 1.6
+    sourceCompatibility = 1.9
+    targetCompatibility = 1.9
     
     version = parent.version
 
