@@ -103,6 +103,29 @@ public class IntegerMapGenotypeTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	public void testGetValueMissingKey() {
+		int lower = 1;
+		int upper = 2;
+		MockObject m1 = new MockObject(1.0, 1);
+		List<MockObject> list = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		list.add(m1);
+		IntegerMapGenotype<MockObject> geno = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(list, lower,
+				upper);
+		geno.getValue(new MockObject(1.0, 2));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNonUniqueKeysBoundConstructor() {
+		int lower = 1;
+		int upper = 2;
+		MockObject m1 = new MockObject(1.0, 1);
+		List<MockObject> list = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		list.add(m1);
+		list.add(m1);
+		new IntegerMapGenotype<MockObject>(list, lower, upper);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testGetIndexInvalidKey() {
 		int[] lowerBounds = { 1, 2, 3 };
 		int[] upperBounds = { 2, 3, 4 };

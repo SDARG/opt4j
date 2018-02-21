@@ -89,6 +89,10 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	public IntegerMapGenotype(List<K> list, int lowerBound, int upperBound) {
 		super(lowerBound, upperBound);
+		Set<K> uniqueKeys = new HashSet<K>(list);
+		if (uniqueKeys.size() < list.size()) {
+			throw new IllegalArgumentException("The provided key objects have to be unique");
+		}
 		this.list = list;
 	}
 
@@ -130,6 +134,9 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public Integer getValue(K key) {
+		if (!containsKey(key)){
+			throw new IllegalArgumentException("Invalid key");
+		}
 		int i = list.indexOf(key);
 		return get(i);
 	}
@@ -142,7 +149,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public void setValue(K key, Integer value) {
-		if (!list.contains(key)) {
+		if (!containsKey(key)) {
 			throw new IllegalArgumentException("Invalid key");
 		}
 		int i = list.indexOf(key);
@@ -197,7 +204,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public int getIndexOf(K key) {
-		if (!list.contains(key)) {
+		if (!containsKey(key)) {
 			throw new IllegalArgumentException("Invalid key");
 		}
 		return list.indexOf(key);
