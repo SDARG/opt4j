@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.genotype;
 
@@ -47,7 +46,8 @@ public interface MapGenotype<K, V> {
 	public Collection<K> getKeys();
 
 	/**
-	 * Returns the value for the specified key.
+	 * Returns the value for the specified key. Throws an exception if the key
+	 * is not contained.
 	 * 
 	 * @see #setValue
 	 * @param key
@@ -57,7 +57,8 @@ public interface MapGenotype<K, V> {
 	public V getValue(K key);
 
 	/**
-	 * Sets the value for the specified key.
+	 * Sets the value for the specified key. Throws an exception if the key is
+	 * not contained.
 	 * 
 	 * @see #getValue
 	 * @param key
@@ -77,7 +78,8 @@ public interface MapGenotype<K, V> {
 	public boolean containsKey(K key);
 
 	/**
-	 * Returns the index of the key.
+	 * Returns the index of the key. Throws an exception if the key is not
+	 * contained.
 	 * 
 	 * @param key
 	 *            the key
