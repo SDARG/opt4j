@@ -76,7 +76,7 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 		super(bounds);
 		Set<K> uniqueKeys = new HashSet<K>(keys);
 		if (uniqueKeys.size() < keys.size()) {
-			throw new IllegalArgumentException("The provided key objects have to be unique");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
 		}
 		this.keys = keys;
 	}
@@ -99,7 +99,7 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	@Override
 	public void init(Random random, int n) {
-		throw new UnsupportedOperationException("Use method init(Random) instead");
+		throw new UnsupportedOperationException(MapGenotype.ERROR_MESSAGE_UNSUPPORTED_INIT);
 	}
 
 	/*
@@ -132,12 +132,11 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	@Override
 	public void setValue(K key, Double value) {
 		if (!containsKey(key)) {
-			throw new IllegalArgumentException("Invalid key");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
 		}
 		int i = keys.indexOf(key);
 		if (value < bounds.getLowerBound(i) || value > bounds.getUpperBound(i))
-			throw new IllegalArgumentException(
-					"The provided value does not lie within the bounds for the provided key");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_OUT_OF_BOUNDS);
 		while (size() <= i) {
 			add(bounds.getLowerBound(i));
 		}
@@ -186,7 +185,7 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	@Override
 	public int getIndexOf(K key) {
 		if (!containsKey(key)) {
-			throw new IllegalArgumentException("Invalid key");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
 		}
 		return keys.indexOf(key);
 	}

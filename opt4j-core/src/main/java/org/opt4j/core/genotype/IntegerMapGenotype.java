@@ -72,7 +72,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 		super(bounds);
 		Set<K> uniqueKeys = new HashSet<K>(list);
 		if (uniqueKeys.size() < list.size()) {
-			throw new IllegalArgumentException("The provided key objects have to be unique");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
 		}
 		this.list = list;
 	}
@@ -91,7 +91,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 		super(lowerBound, upperBound);
 		Set<K> uniqueKeys = new HashSet<K>(list);
 		if (uniqueKeys.size() < list.size()) {
-			throw new IllegalArgumentException("The provided key objects have to be unique");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
 		}
 		this.list = list;
 	}
@@ -114,7 +114,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public void init(Random random, int n) {
-		throw new UnsupportedOperationException("Use method init(Random) instead");
+		throw new UnsupportedOperationException(MapGenotype.ERROR_MESSAGE_UNSUPPORTED_INIT);
 	}
 
 	/*
@@ -134,8 +134,8 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	 */
 	@Override
 	public Integer getValue(K key) {
-		if (!containsKey(key)){
-			throw new IllegalArgumentException("Invalid key");
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
 		}
 		int i = list.indexOf(key);
 		return get(i);
@@ -150,15 +150,14 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	@Override
 	public void setValue(K key, Integer value) {
 		if (!containsKey(key)) {
-			throw new IllegalArgumentException("Invalid key");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
 		}
 		int i = list.indexOf(key);
 		while (size() <= i) {
 			add(bounds.getLowerBound(size()));
 		}
 		if (bounds.getLowerBound(i) > value || bounds.getUpperBound(i) < value) {
-			throw new IllegalArgumentException(
-					"The provided value does not lie within the bounds for the provided key");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_OUT_OF_BOUNDS);
 		}
 		set(i, value);
 	}
@@ -190,7 +189,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 		stringBuilder.append("[");
 		for (int i = 0; i < size(); i++) {
 			K key = list.get(i);
-			double value = this.get(i);
+			int value = this.get(i);
 			stringBuilder.append(key + "=" + value + ";");
 		}
 		stringBuilder.append("]");
@@ -205,7 +204,7 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 	@Override
 	public int getIndexOf(K key) {
 		if (!containsKey(key)) {
-			throw new IllegalArgumentException("Invalid key");
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
 		}
 		return list.indexOf(key);
 	}

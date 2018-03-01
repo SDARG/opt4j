@@ -38,6 +38,11 @@ import java.util.Map;
  */
 public interface MapGenotype<K, V> {
 
+	static final String ERROR_MESSAGE_NON_UNIQUE_KEYS = "The provided key objects have to be unique";
+	static final String ERROR_MESSAGE_INVALID_KEY = "Invalid key";
+	static final String ERROR_MESSAGE_OUT_OF_BOUNDS = "The provided value does not lie within the bounds for the provided key";
+	static final String ERROR_MESSAGE_UNSUPPORTED_INIT = "Use method init(Random) instead";
+
 	/**
 	 * Return all keys.
 	 * 

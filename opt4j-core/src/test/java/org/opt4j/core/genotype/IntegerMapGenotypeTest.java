@@ -211,7 +211,7 @@ public class IntegerMapGenotypeTest {
 		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
 				inputList, bounds);
 		integerMapGenotype.init(rand);
-		assertEquals("[mock=1.0;mock=2.0;mock=3.0;]", integerMapGenotype.toString());
+		assertEquals("[mock=1;mock=2;mock=3;]", integerMapGenotype.toString());
 	}
 
 	@Test
