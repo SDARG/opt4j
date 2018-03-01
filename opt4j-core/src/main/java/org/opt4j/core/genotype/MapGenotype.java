@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.genotype;
 
@@ -39,6 +38,11 @@ import java.util.Map;
  */
 public interface MapGenotype<K, V> {
 
+	static final String ERROR_MESSAGE_NON_UNIQUE_KEYS = "The provided key objects have to be unique";
+	static final String ERROR_MESSAGE_INVALID_KEY = "Invalid key";
+	static final String ERROR_MESSAGE_OUT_OF_BOUNDS = "The provided value does not lie within the bounds for the provided key";
+	static final String ERROR_MESSAGE_UNSUPPORTED_INIT = "Use method init(Random) instead";
+
 	/**
 	 * Return all keys.
 	 * 
@@ -47,7 +51,8 @@ public interface MapGenotype<K, V> {
 	public Collection<K> getKeys();
 
 	/**
-	 * Returns the value for the specified key.
+	 * Returns the value for the specified key. Throws an exception if the key
+	 * is not contained.
 	 * 
 	 * @see #setValue
 	 * @param key
@@ -57,7 +62,8 @@ public interface MapGenotype<K, V> {
 	public V getValue(K key);
 
 	/**
-	 * Sets the value for the specified key.
+	 * Sets the value for the specified key. Throws an exception if the key is
+	 * not contained.
 	 * 
 	 * @see #getValue
 	 * @param key
@@ -77,7 +83,8 @@ public interface MapGenotype<K, V> {
 	public boolean containsKey(K key);
 
 	/**
-	 * Returns the index of the key.
+	 * Returns the index of the key. Throws an exception if the key is not
+	 * contained.
 	 * 
 	 * @param key
 	 *            the key

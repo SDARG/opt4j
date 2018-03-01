@@ -19,14 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.genotype;
 
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.opt4j.core.Genotype;
 
@@ -42,8 +44,8 @@ import org.opt4j.core.Genotype;
  * Example usage: <blockquote>
  * 
  * <pre>
- * DoubleMapGenotype&lt;Bottle&gt; genotype = new DoubleMapGenotype&lt;Bottle&gt;(Arrays.asList(bottle1, bottle2, bottle3, bottle4,
- * 		bottle5));
+ * DoubleMapGenotype&lt;Bottle&gt; genotype = new DoubleMapGenotype&lt;Bottle&gt;(
+ * 		Arrays.asList(bottle1, bottle2, bottle3, bottle4, bottle5));
  * genotype.init(new Random());
  * </pre>
  * 
@@ -72,6 +74,10 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	public DoubleMapGenotype(List<K> keys, Bounds<Double> bounds) {
 		super(bounds);
+		Set<K> uniqueKeys = new HashSet<K>(keys);
+		if (uniqueKeys.size() < keys.size()) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
+		}
 		this.keys = keys;
 	}
 
@@ -93,7 +99,7 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	@Override
 	public void init(Random random, int n) {
-		throw new UnsupportedOperationException("Use method init(Random) instead");
+		throw new UnsupportedOperationException(MapGenotype.ERROR_MESSAGE_UNSUPPORTED_INIT);
 	}
 
 	/*
@@ -125,7 +131,12 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	@Override
 	public void setValue(K key, Double value) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
+		}
 		int i = keys.indexOf(key);
+		if (value < bounds.getLowerBound(i) || value > bounds.getUpperBound(i))
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_OUT_OF_BOUNDS);
 		while (size() <= i) {
 			add(bounds.getLowerBound(i));
 		}
@@ -155,13 +166,15 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	@Override
 	public String toString() {
-		String s = "[";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[");
 		for (int i = 0; i < size(); i++) {
 			K key = keys.get(i);
 			double value = this.get(i);
-			s += key + "=" + value + ";";
+			stringBuilder.append(key + "=" + value + ";");
 		}
-		return s + "]";
+		stringBuilder.append("]");
+		return stringBuilder.toString();
 	}
 
 	/*
@@ -171,6 +184,9 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	@Override
 	public int getIndexOf(K key) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
+		}
 		return keys.indexOf(key);
 	}
 

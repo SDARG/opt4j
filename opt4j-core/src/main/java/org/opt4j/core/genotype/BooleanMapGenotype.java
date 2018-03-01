@@ -19,14 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.genotype;
 
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.opt4j.core.Genotype;
 
@@ -42,8 +44,8 @@ import org.opt4j.core.Genotype;
  * Example usage: <blockquote>
  * 
  * <pre>
- * BooleanMapGenotype&lt;Switch&gt; genotype = new BooleanMapGenotype&lt;Switch&gt;(Arrays.asList(switch1, switch2, switch3, switch4,
- * 		switch5));
+ * BooleanMapGenotype&lt;Switch&gt; genotype = new BooleanMapGenotype&lt;Switch&gt;(
+ * 		Arrays.asList(switch1, switch2, switch3, switch4, switch5));
  * genotype.init(new Random());
  * </pre>
  * 
@@ -69,6 +71,10 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	public BooleanMapGenotype(List<K> list) {
 		super();
+		Set<K> uniqueKeys = new HashSet<K>(list);
+		if (uniqueKeys.size() < list.size()) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
+		}
 		this.list = list;
 	}
 
@@ -89,7 +95,7 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	@Override
 	public void init(Random random, int n) {
-		throw new UnsupportedOperationException("Use method init(Random) instead");
+		throw new UnsupportedOperationException(MapGenotype.ERROR_MESSAGE_UNSUPPORTED_INIT);
 	}
 
 	/*
@@ -99,6 +105,9 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	@Override
 	public Boolean getValue(K key) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
+		}
 		int i = list.indexOf(key);
 		return get(i);
 	}
@@ -111,6 +120,9 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	@Override
 	public void setValue(K key, Boolean value) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
+		}
 		int i = list.indexOf(key);
 		while (size() <= i) {
 			add(false);
@@ -151,13 +163,15 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	@Override
 	public String toString() {
-		String s = "[";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[");
 		for (int i = 0; i < size(); i++) {
 			K key = list.get(i);
 			boolean value = this.get(i);
-			s += key + "=" + value + ";";
+			stringBuilder.append(key + "=" + value + ";");
 		}
-		return s + "]";
+		stringBuilder.append("]");
+		return stringBuilder.toString();
 	}
 
 	/*
@@ -167,6 +181,9 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	@Override
 	public int getIndexOf(K key) {
+		if (!containsKey(key)){
+			throw new IllegalArgumentException(ERROR_MESSAGE_INVALID_KEY);
+		}
 		return list.indexOf(key);
 	}
 
