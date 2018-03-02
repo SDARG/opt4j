@@ -41,6 +41,10 @@ import org.opt4j.core.start.Constant;
 @Info("Multi-Objective Evolutionary Algorithm that performs a Crossover and Mutate for variation and uses a Selector for the environmental selection.")
 public class EvolutionaryAlgorithmModule extends OptimizerModule {
 
+	public enum MoeaType{
+		NSGA2, AeSeH
+	}
+	
 	@Info("The number of generations.")
 	@Order(0)
 	@MaxIterations
@@ -68,7 +72,9 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 
 	@Ignore
 	protected CrossoverRateType crossoverRateType = CrossoverRateType.CONSTANT;
-
+	
+	protected MoeaType moeaType = MoeaType.NSGA2;
+	
 	/**
 	 * The {@link CrossoverRateType} allows to choose between different types of
 	 * crossover rates.
@@ -81,6 +87,14 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 		 * Use a constant crossover rate.
 		 */
 		CONSTANT;
+	}
+	
+	public MoeaType getMoeaType() {
+		return moeaType;
+	}
+
+	public void setMoeaType(MoeaType moeaType) {
+		this.moeaType = moeaType;
 	}
 
 	/**
@@ -218,7 +232,10 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	public void config() {
 
 		bindIterativeOptimizer(EvolutionaryAlgorithm.class);
-
 		bind(CrossoverRate.class).to(ConstantCrossoverRate.class).in(SINGLETON);
+		if(moeaType.equals(MoeaType.AeSeH)){
+			bind(Selector.class).to(AeSeHSelector.class);
+			bind(Coupler.class).to(AeSeHCoupler.class);
+		}
 	}
 }
