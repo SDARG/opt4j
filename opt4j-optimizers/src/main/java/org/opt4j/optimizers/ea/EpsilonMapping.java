@@ -37,7 +37,7 @@ public interface EpsilonMapping {
 	 * the individual group under consideration.
 	 * 
 	 * @param individuals
-	 * @return
+	 * @return map mapping each objective onto ist amplitude
 	 */
 	public Map<Objective, Double> findObjectiveAmplitudes(Set<Individual> individuals);
 

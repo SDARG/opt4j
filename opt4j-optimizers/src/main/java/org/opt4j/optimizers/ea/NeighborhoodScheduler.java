@@ -1,6 +1,5 @@
 package org.opt4j.optimizers.ea;
 
-import java.util.List;
 import java.util.Set;
 
 import org.opt4j.core.Individual;
@@ -14,14 +13,6 @@ import org.opt4j.core.Individual;
  *
  */
 public interface NeighborhoodScheduler {
-
-	/**
-	 * Perform the operations specific to the current neighborhood that have to
-	 * be done before the scheduling.
-	 * 
-	 * @param neighborhoods
-	 */
-	public void init(List<Set<Individual>> neighborhoods);
 
 	/**
 	 * Return a copy of the neighborhood that shall be used for the creation of

@@ -23,15 +23,12 @@ import com.google.inject.Inject;
  */
 public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 
-	protected final NonDominatedSorting nonDominatedSorting;
 	protected final Random random;
 	protected final EpsilonMapping epsilonMapping;
 	protected final EpsilonAdaption epsilonAdaption;
 
 	@Inject
-	public DefaultSurvivorGeneration(NonDominatedSorting nonDominatedSorting, Random random,
-			EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption) {
-		this.nonDominatedSorting = nonDominatedSorting;
+	public DefaultSurvivorGeneration(Random random, EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption) {
 		this.random = random;
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
@@ -39,17 +36,17 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 
 	@Override
 	public Set<Individual> getSurvivors(Collection<Individual> population, int survivorNumber) {
-		Set<Individual> survivors = new HashSet<Individual>();
+		Set<Individual> survivors;
 		// get the non-dominated front and the extreme solutions
-		List<Collection<Individual>> fronts = nonDominatedSorting.generateFronts(population);
+		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(population);
 		Collection<Individual> paretoSolutions = fronts.get(0);
-		Set<Individual> extremeIndividuals = nonDominatedSorting.getExtremeIndividuals(paretoSolutions);
+		Set<Individual> extremeIndividuals = NonDominatedSorting.getExtremeIndividuals(paretoSolutions);
 
 		if (paretoSolutions.size() > survivorNumber) {
 			// more non-dominated solutions than survivors => apply ε-sampling
-			applyEpsilonSampling(survivors, extremeIndividuals, paretoSolutions, survivorNumber);
+			survivors = applyEpsilonSampling(extremeIndividuals, paretoSolutions, survivorNumber);
 		} else {
-			addDominatedSurvivors(survivors, survivorNumber, fronts);
+			survivors = addDominatedSurvivors(survivorNumber, fronts);
 		}
 		return survivors;
 	}
@@ -58,14 +55,13 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	 * Create the survivor pool by adding the epsilon-sampled individuals to the
 	 * extreme individuals.
 	 * 
-	 * @param survivors
 	 * @param extremeIndividuals
 	 * @param firstFront
-	 * @param extremeObjectiveValues
 	 * @param survivorNumber
 	 */
-	protected void applyEpsilonSampling(Set<Individual> survivors, Collection<Individual> extremeIndividuals,
+	protected Set<Individual> applyEpsilonSampling(Collection<Individual> extremeIndividuals,
 			Collection<Individual> firstFront, int survivorNumber) {
+		Set<Individual> survivors = new HashSet<Individual>();
 		List<Individual> nonDominatedIndividuals = new ArrayList<Individual>(firstFront);
 		// the extreme values always survive
 		survivors.addAll(extremeIndividuals);
@@ -117,6 +113,7 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 				survivors.add(survivor);
 			}
 		}
+		return survivors;
 	}
 
 	/**
@@ -124,13 +121,11 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	 * create enough survivors, dominated solutions are added to the survivor
 	 * pool.
 	 * 
-	 * @param survivors
-	 * @param paretoSolutions
 	 * @param survivorNumber
 	 * @param fronts
 	 */
-	protected void addDominatedSurvivors(Set<Individual> survivors, int survivorNumber,
-			List<Collection<Individual>> fronts) {
+	protected Set<Individual> addDominatedSurvivors(int survivorNumber, List<List<Individual>> fronts) {
+		Set<Individual> survivors = new HashSet<Individual>();
 		// non-dominated solutions do not suffice to generate the number of
 		// survivors => add dominated solutions
 		survivors.addAll(fronts.get(0));
@@ -140,12 +135,13 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 			survivors.addAll(fronts.get(frontIndex));
 			frontIndex++;
 		}
-		List<Individual> currentFront = new ArrayList<Individual>(fronts.get(frontIndex));
+		List<Individual> currentFront = fronts.get(frontIndex);
 		while (survivorNumber > survivors.size()) {
 			// choose a random survivor from the current front
 			Individual survivor = currentFront.get(random.nextInt(currentFront.size()));
 			survivors.add(survivor);
 			currentFront.remove(survivor);
 		}
+		return survivors;
 	}
 }

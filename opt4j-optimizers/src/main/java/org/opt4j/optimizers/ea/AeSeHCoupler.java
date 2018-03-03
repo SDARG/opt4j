@@ -31,20 +31,19 @@ import com.google.inject.Inject;
  *
  */
 public class AeSeHCoupler implements Coupler {
+
 	protected final EpsilonAdaption epsilonAdaption;
 	protected final EpsilonMapping epsilonMapping;
 	protected final Random random;
 	protected final int plannedNeighborhoodNumber;
-	protected final NeighborhoodScheduler scheduler;
 
 	@Inject
 	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption, Random random,
-			int plannedNeighborhoodNumber, NeighborhoodScheduler scheduler) {
+			int plannedNeighborhoodNumber) {
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
 		this.random = random;
 		this.plannedNeighborhoodNumber = plannedNeighborhoodNumber;
-		this.scheduler = scheduler;
 	}
 
 	@Override
@@ -54,22 +53,25 @@ public class AeSeHCoupler implements Coupler {
 		}
 		Collection<Pair<Individual>> result = new HashSet<Pair<Individual>>();
 		List<Set<Individual>> neighborhoods = createNeighborhoods(parents);
-		// adapt the epsilon
-		epsilonAdaption.adaptNeighborhoodEpsilon(neighborhoods.size() > plannedNeighborhoodNumber);
-		scheduler.init(neighborhoods);
-		for (int i = 0; i < size; i++){
+		RoundRobinScheduler scheduler = new RoundRobinScheduler(neighborhoods);
+		for (int i = 0; i < size; i++) {
 			result.add(pickCouple(scheduler.next()));
 		}
 		return result;
 	}
-	
+
 	/**
-	 * Pick a couple of parents from the given neighborhood. Here, we just pick two random individuals.
+	 * Pick a couple of parents from the given neighborhood. Here, we just pick
+	 * two random individuals.
 	 * 
 	 * @param neighborhood
-	 * @return
+	 * @return The pair that was picked as parents for a crossover.
 	 */
-	protected Pair<Individual> pickCouple(Set<Individual> neighborhood){
+	protected Pair<Individual> pickCouple(Set<Individual> neighborhood) {
+		if (neighborhood.size() == 1) {
+			Individual hermit = neighborhood.iterator().next();
+			return new Pair<Individual>(hermit, hermit);
+		}
 		List<Individual> individualList = new ArrayList<Individual>(neighborhood);
 		Individual first = individualList.remove(random.nextInt(individualList.size()));
 		Individual second = individualList.remove(random.nextInt(individualList.size()));
@@ -80,7 +82,8 @@ public class AeSeHCoupler implements Coupler {
 	 * Apply the epsilon neighborhood creation.
 	 * 
 	 * @param survivors
-	 * @return
+	 * @return a list of individual sets. Each set is considered as a
+	 *         neighborhood
 	 */
 	protected List<Set<Individual>> createNeighborhoods(List<Individual> survivors) {
 		List<Set<Individual>> neighborhoods = new ArrayList<Set<Individual>>();
@@ -92,15 +95,19 @@ public class AeSeHCoupler implements Coupler {
 			Individual reference = survivors.remove(idx);
 			Set<Individual> neighborhood = new HashSet<Individual>();
 			Objectives epsilonEnhancedObjectives = epsilonMapping.mapObjectives(reference.getObjectives(),
-					epsilonAdaption.getNeighborhoodEspilon(), objectiveAmplitudes);
-			// put the individuals epsilon-dominated by the reference into its neighborhood
+					epsilonAdaption.getNeighborhoodEpsilon(), objectiveAmplitudes);
+			// put the individuals epsilon-dominated by the reference into its
+			// neighborhood
 			for (Individual candidate : survivors) {
-				if (epsilonEnhancedObjectives.dominates(candidate.getObjectives()))neighborhood.add(candidate);
+				if (epsilonEnhancedObjectives.dominates(candidate.getObjectives()))
+					neighborhood.add(candidate);
 			}
 			survivors.removeAll(neighborhood);
 			neighborhood.add(reference);
 			neighborhoods.add(neighborhood);
 		}
+		// adapt the epsilon
+		epsilonAdaption.adaptNeighborhoodEpsilon(neighborhoods.size() > plannedNeighborhoodNumber);
 		return neighborhoods;
 	}
 }

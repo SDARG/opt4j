@@ -1,5 +1,7 @@
 package org.opt4j.optimizers.ea;
 
+import com.google.inject.ImplementedBy;
+
 /**
  * Interface for the classes that manage the adaptation of the epsilon value
  * used for survivor selection by {@link AeSeHSelector}.
@@ -7,6 +9,7 @@ package org.opt4j.optimizers.ea;
  * @author Fedor Smirnov
  *
  */
+@ImplementedBy(DefaultEpsilonAdaptation.class)
 public interface EpsilonAdaption {
 
 	/**
@@ -22,7 +25,7 @@ public interface EpsilonAdaption {
 	 * 
 	 * @return Current epsilon_h
 	 */
-	public double getNeighborhoodEspilon();
+	public double getNeighborhoodEpsilon();
 
 	/**
 	 * At the end of the selection process, the epsilon_s value is adjusted

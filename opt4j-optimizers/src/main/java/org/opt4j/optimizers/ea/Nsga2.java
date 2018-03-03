@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.ea;
 
@@ -33,7 +32,6 @@ import java.util.Map;
 import java.util.Random;
 
 import org.opt4j.core.Individual;
-import org.opt4j.core.Objectives;
 import org.opt4j.core.common.archive.FrontDensityIndicator;
 import org.opt4j.core.common.random.Rand;
 import org.opt4j.core.start.Constant;
@@ -93,7 +91,7 @@ public class Nsga2 implements Selector {
 		List<Individual> all = new ArrayList<Individual>(population);
 		List<Individual> parents = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = fronts(all);
+		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(all);
 		Map<Individual, Integer> rank = getRank(fronts);
 		Map<Individual, Double> distance = new HashMap<Individual, Double>();
 
@@ -138,7 +136,7 @@ public class Nsga2 implements Selector {
 	public Collection<Individual> getLames(int size, Collection<Individual> population) {
 		List<Individual> lames = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = fronts(population);
+		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(population);
 		Collections.reverse(fronts);
 
 		for (List<Individual> front : fronts) {
@@ -174,72 +172,4 @@ public class Nsga2 implements Selector {
 		}
 		return ranks;
 	}
-
-	/**
-	 * Evaluate the fronts and set the correspondent rank values.
-	 * 
-	 * @param individuals
-	 *            the individuals
-	 * @return the fronts
-	 */
-	public List<List<Individual>> fronts(Collection<Individual> individuals) {
-
-		List<Individual> pop = new ArrayList<Individual>(individuals);
-		Map<Individual, Integer> id = new HashMap<Individual, Integer>();
-		for (int i = 0; i < pop.size(); i++) {
-			id.put(pop.get(i), i);
-		}
-
-		List<List<Individual>> fronts = new ArrayList<List<Individual>>();
-
-		Map<Individual, List<Individual>> S = new HashMap<Individual, List<Individual>>();
-		int[] n = new int[pop.size()];
-
-		for (Individual e : pop) {
-			S.put(e, new ArrayList<Individual>());
-			n[id.get(e)] = 0;
-		}
-
-		for (int i = 0; i < pop.size(); i++) {
-			for (int j = i + 1; j < pop.size(); j++) {
-				Individual p = pop.get(i);
-				Individual q = pop.get(j);
-
-				Objectives po = p.getObjectives();
-				Objectives qo = q.getObjectives();
-
-				if (po.dominates(qo)) {
-					S.get(p).add(q);
-					n[id.get(q)]++;
-				} else if (qo.dominates(po)) {
-					S.get(q).add(p);
-					n[id.get(p)]++;
-				}
-			}
-		}
-
-		List<Individual> f1 = new ArrayList<Individual>();
-		for (Individual i : pop) {
-			if (n[id.get(i)] == 0) {
-				f1.add(i);
-			}
-		}
-		fronts.add(f1);
-		List<Individual> fi = f1;
-		while (!fi.isEmpty()) {
-			List<Individual> h = new ArrayList<Individual>();
-			for (Individual p : fi) {
-				for (Individual q : S.get(p)) {
-					n[id.get(q)]--;
-					if (n[id.get(q)] == 0) {
-						h.add(q);
-					}
-				}
-			}
-			fronts.add(h);
-			fi = h;
-		}
-		return fronts;
-	}
-
 }

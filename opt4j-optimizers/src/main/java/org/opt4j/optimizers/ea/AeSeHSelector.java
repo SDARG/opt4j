@@ -2,7 +2,6 @@ package org.opt4j.optimizers.ea;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.opt4j.core.Individual;
@@ -28,21 +27,16 @@ import com.google.inject.Singleton;
 @Singleton
 public class AeSeHSelector implements Selector {
 
-	protected final NonDominatedSorting nonDominatedSorting;
-	protected final Random random;
 	protected final ESamplingSurvivorGeneration survivorGeneration;
 
 	@Inject
-	public AeSeHSelector(NonDominatedSorting nonDominatedSorting, Random random,
-			ESamplingSurvivorGeneration survivorGeneration) {
-		this.nonDominatedSorting = nonDominatedSorting;
-		this.random = random;
+	public AeSeHSelector(ESamplingSurvivorGeneration survivorGeneration) {
 		this.survivorGeneration = survivorGeneration;
 	}
 
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
-		if (mu != population.size()){
+		if (mu != population.size()) {
 			throw new IllegalArgumentException("The population should consist only of the parents by now.");
 		}
 		return population;
@@ -61,5 +55,4 @@ public class AeSeHSelector implements Selector {
 	public void init(int maxsize) {
 		// do nothing
 	}
-
 }
