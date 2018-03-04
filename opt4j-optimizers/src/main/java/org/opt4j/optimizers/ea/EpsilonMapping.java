@@ -7,6 +7,8 @@ import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 
+import com.google.inject.ImplementedBy;
+
 /**
  * Interface for the classes applying the epsilon mapping used by the
  * {@link AeSeHSelector}.
@@ -14,6 +16,7 @@ import org.opt4j.core.Objectives;
  * @author Fedor Smirnov
  *
  */
+@ImplementedBy(AdditiveEpsilonMapping.class)
 public interface EpsilonMapping {
 
 	/**

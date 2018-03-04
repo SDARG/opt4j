@@ -11,6 +11,7 @@ import java.util.Set;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
+import org.opt4j.core.start.Constant;
 import org.opt4j.operators.crossover.Pair;
 
 import com.google.inject.Inject;
@@ -39,7 +40,7 @@ public class AeSeHCoupler implements Coupler {
 
 	@Inject
 	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption, Random random,
-			int plannedNeighborhoodNumber) {
+			@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class) int plannedNeighborhoodNumber) {
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
 		this.random = random;

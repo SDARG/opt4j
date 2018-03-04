@@ -19,13 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.ea;
 
 import org.opt4j.core.config.annotations.Ignore;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
+import org.opt4j.core.config.annotations.Required;
 import org.opt4j.core.optimizer.MaxIterations;
 import org.opt4j.core.optimizer.OptimizerModule;
 import org.opt4j.core.start.Constant;
@@ -41,40 +41,76 @@ import org.opt4j.core.start.Constant;
 @Info("Multi-Objective Evolutionary Algorithm that performs a Crossover and Mutate for variation and uses a Selector for the environmental selection.")
 public class EvolutionaryAlgorithmModule extends OptimizerModule {
 
-	public enum MoeaType{
+	public enum MoeaType {
 		NSGA2, AeSeH
 	}
-	
+
 	@Info("The number of generations.")
 	@Order(0)
 	@MaxIterations
 	protected int generations = 1000;
 
 	@Constant(value = "alpha", namespace = EvolutionaryAlgorithm.class)
-	@Info("The size of the population.")
+	@Info("Alph - The size of the population.")
 	@Order(1)
-	protected int alpha = 100;
+	protected int populationSize = 100;
 
-	@Constant(value = "mu", namespace = EvolutionaryAlgorithm.class)
-	@Info("The number of parents per generation.")
+	@Info("Mu - The number of parents per generation.")
+	@Required(property = "moeaType", elements = { "NSGA2" })
 	@Order(2)
-	protected int mu = 25;
+	protected int parentsPerGeneration = 25;
 
-	@Constant(value = "lambda", namespace = EvolutionaryAlgorithm.class)
-	@Info("The number of offspring per generation.")
+	@Info("Lambda The number of offspring per generation.")
+	@Required(property = "moeaType", elements = { "NSGA2" })
 	@Order(3)
-	protected int lambda = 25;
+	protected int offspringsPerGeneration = 25;
 
 	@Info("Performs a crossover operation with this given rate.")
 	@Order(4)
 	@Constant(value = "rate", namespace = ConstantCrossoverRate.class)
 	protected double crossoverRate = 0.95;
 
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonSample", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonSample = 0.0;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonSampleDelta", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonSampleDelta = 0.005;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonSampleDeltaMax", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonSampleDeltaMax = 0.005;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonSampleDeltaMin", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonSampleDeltaMin = 0.0001;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonNeighborhood", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonNeighborhood = 0.0;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonNeighborhoodDelta", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonNeighborhoodDelta = 0.005;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonNeighborhoodDeltaMax = 0.005;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = DefaultEpsilonAdaptation.class)
+	protected double epsilonNeighborhoodDeltaMin = 0.0001;
+
+	@Required(property = "moeaType", elements = { "AeSeH" })
+	@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class)
+	protected int neighborhoodNumber = 5;
+
 	@Ignore
 	protected CrossoverRateType crossoverRateType = CrossoverRateType.CONSTANT;
-	
+
 	protected MoeaType moeaType = MoeaType.NSGA2;
-	
+
 	/**
 	 * The {@link CrossoverRateType} allows to choose between different types of
 	 * crossover rates.
@@ -88,7 +124,15 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 		 */
 		CONSTANT;
 	}
-	
+
+	public int getNeighborhoodNumber() {
+		return neighborhoodNumber;
+	}
+
+	public void setNeighborhoodNumber(int neighborhoodNumber) {
+		this.neighborhoodNumber = neighborhoodNumber;
+	}
+
 	public MoeaType getMoeaType() {
 		return moeaType;
 	}
@@ -97,14 +141,78 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 		this.moeaType = moeaType;
 	}
 
+	public double getEpsilonSample() {
+		return epsilonSample;
+	}
+
+	public void setEpsilonSample(double epsilonSample) {
+		this.epsilonSample = epsilonSample;
+	}
+
+	public double getEpsilonSampleDelta() {
+		return epsilonSampleDelta;
+	}
+
+	public void setEpsilonSampleDelta(double epsilonSampleDelta) {
+		this.epsilonSampleDelta = epsilonSampleDelta;
+	}
+
+	public double getEpsilonSampleDeltaMax() {
+		return epsilonSampleDeltaMax;
+	}
+
+	public void setEpsilonSampleDeltaMax(double epsilonSampleDeltaMax) {
+		this.epsilonSampleDeltaMax = epsilonSampleDeltaMax;
+	}
+
+	public double getEpsilonSampleDeltaMin() {
+		return epsilonSampleDeltaMin;
+	}
+
+	public void setEpsilonSampleDeltaMin(double epsilonSampleDeltaMin) {
+		this.epsilonSampleDeltaMin = epsilonSampleDeltaMin;
+	}
+
+	public double getEpsilonNeighborhood() {
+		return epsilonNeighborhood;
+	}
+
+	public void setEpsilonNeighborhood(double epsilonNeighborhood) {
+		this.epsilonNeighborhood = epsilonNeighborhood;
+	}
+
+	public double getEpsilonNeighborhoodDelta() {
+		return epsilonNeighborhoodDelta;
+	}
+
+	public void setEpsilonNeighborhoodDelta(double epsilonNeighborhoodDelta) {
+		this.epsilonNeighborhoodDelta = epsilonNeighborhoodDelta;
+	}
+
+	public double getEpsilonNeighborhoodDeltaMax() {
+		return epsilonNeighborhoodDeltaMax;
+	}
+
+	public void setEpsilonNeighborhoodDeltaMax(double epsilonNeighborhoodDeltaMax) {
+		this.epsilonNeighborhoodDeltaMax = epsilonNeighborhoodDeltaMax;
+	}
+
+	public double getEpsilonNeighborhoodDeltaMin() {
+		return epsilonNeighborhoodDeltaMin;
+	}
+
+	public void setEpsilonNeighborhoodDeltaMin(double epsilonNeighborhoodDeltaMin) {
+		this.epsilonNeighborhoodDeltaMin = epsilonNeighborhoodDeltaMin;
+	}
+
 	/**
 	 * Returns the population size {@code alpha}.
 	 * 
 	 * @see #setAlpha
 	 * @return the population size
 	 */
-	public int getAlpha() {
-		return alpha;
+	public int getPopulationSize() {
+		return populationSize;
 	}
 
 	/**
@@ -114,8 +222,8 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 * @param alpha
 	 *            the population size to set
 	 */
-	public void setAlpha(int alpha) {
-		this.alpha = alpha;
+	public void setPopulationSize(int alpha) {
+		this.populationSize = alpha;
 	}
 
 	/**
@@ -145,8 +253,8 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 * @see #setLambda
 	 * @return the number of children
 	 */
-	public int getLambda() {
-		return lambda;
+	public int getOffspringsPerGeneration() {
+		return offspringsPerGeneration;
 	}
 
 	/**
@@ -156,8 +264,8 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 * @param lambda
 	 *            the number of children
 	 */
-	public void setLambda(int lambda) {
-		this.lambda = lambda;
+	public void setOffspringsPerGeneration(int lambda) {
+		this.offspringsPerGeneration = lambda;
 	}
 
 	/**
@@ -166,8 +274,8 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 * @see #setMu
 	 * @return the number of parents
 	 */
-	public int getMu() {
-		return mu;
+	public int getParentsPerGeneration() {
+		return parentsPerGeneration;
 	}
 
 	/**
@@ -177,8 +285,8 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 * @param mu
 	 *            the number of parents
 	 */
-	public void setMu(int mu) {
-		this.mu = mu;
+	public void setParentsPerGeneration(int mu) {
+		this.parentsPerGeneration = mu;
 	}
 
 	/**
@@ -230,12 +338,18 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 */
 	@Override
 	public void config() {
-
 		bindIterativeOptimizer(EvolutionaryAlgorithm.class);
 		bind(CrossoverRate.class).to(ConstantCrossoverRate.class).in(SINGLETON);
-		if(moeaType.equals(MoeaType.AeSeH)){
+		if (moeaType.equals(MoeaType.AeSeH)) {
+			bindConstant("lambda", EvolutionaryAlgorithm.class).to(populationSize);
+			bindConstant("mu", EvolutionaryAlgorithm.class).to(populationSize);
+			parentsPerGeneration = populationSize;
+			offspringsPerGeneration = populationSize;
 			bind(Selector.class).to(AeSeHSelector.class);
 			bind(Coupler.class).to(AeSeHCoupler.class);
+		}else{
+			bindConstant("lambda", EvolutionaryAlgorithm.class).to(offspringsPerGeneration);
+			bindConstant("mu", EvolutionaryAlgorithm.class).to(parentsPerGeneration);
 		}
 	}
 }

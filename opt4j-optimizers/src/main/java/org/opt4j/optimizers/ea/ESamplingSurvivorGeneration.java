@@ -5,6 +5,8 @@ import java.util.Set;
 
 import org.opt4j.core.Individual;
 
+import com.google.inject.ImplementedBy;
+
 /**
  * 
  * Interface for the classes which generate the survivor pool during the
@@ -13,6 +15,7 @@ import org.opt4j.core.Individual;
  * @author Fedor Smirnov
  *
  */
+@ImplementedBy(DefaultSurvivorGeneration.class)
 public interface ESamplingSurvivorGeneration {
 
 	/**
