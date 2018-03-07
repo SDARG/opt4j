@@ -36,9 +36,8 @@ public class AeSeHSelector implements Selector {
 
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
-		if (mu != population.size()) {
-			throw new IllegalArgumentException("The population should consist only of the parents by now.");
-		}
+		// do nothing: In the AeSeH algorithm, all survivors are considered as possible
+		// parents
 		return population;
 	}
 

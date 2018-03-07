@@ -75,17 +75,6 @@ public class AeSeHCouplerTest {
 		verify(mockAdaption).adaptNeighborhoodEpsilon(false);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetCouplesWrongCoupleNumber() {
-		AeSeHCoupler coupler = new AeSeHCoupler(new AdditiveEpsilonMapping(), mockAdaption, new Random(), 2);
-		Individual first = mock(Individual.class);
-		Individual second = mock(Individual.class);
-		List<Individual> indiSet = new ArrayList<Individual>();
-		indiSet.add(first);
-		indiSet.add(second);
-		coupler.getCouples(3, indiSet);
-	}
-
 	@Test
 	public void testGetCouple() {
 		AeSeHCoupler coupler = new AeSeHCoupler(new AdditiveEpsilonMapping(), mockAdaption, new Random(), 2);

@@ -25,7 +25,6 @@ package org.opt4j.optimizers.ea;
 import org.opt4j.core.config.annotations.Ignore;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
-import org.opt4j.core.config.annotations.Required;
 import org.opt4j.core.optimizer.MaxIterations;
 import org.opt4j.core.optimizer.OptimizerModule;
 import org.opt4j.core.start.Constant;
@@ -41,10 +40,6 @@ import org.opt4j.core.start.Constant;
 @Info("Multi-Objective Evolutionary Algorithm that performs a Crossover and Mutate for variation and uses a Selector for the environmental selection.")
 public class EvolutionaryAlgorithmModule extends OptimizerModule {
 
-	public enum MoeaType {
-		NSGA2, AeSeH
-	}
-
 	@Info("The number of generations.")
 	@Order(0)
 	@MaxIterations
@@ -56,12 +51,10 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	protected int populationSize = 100;
 
 	@Info("Mu - The number of parents per generation.")
-	@Required(property = "moeaType", elements = { "NSGA2" })
 	@Order(2)
 	protected int parentsPerGeneration = 25;
 
-	@Info("Lambda The number of offspring per generation.")
-	@Required(property = "moeaType", elements = { "NSGA2" })
+	@Info("Lambda The number of offsprings per generation.")
 	@Order(3)
 	protected int offspringsPerGeneration = 25;
 
@@ -70,46 +63,8 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	@Constant(value = "rate", namespace = ConstantCrossoverRate.class)
 	protected double crossoverRate = 0.95;
 
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonSample", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonSample = 0.0;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonSampleDelta", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonSampleDelta = 0.005;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonSampleDeltaMax", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonSampleDeltaMax = 0.005;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonSampleDeltaMin", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonSampleDeltaMin = 0.0001;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonNeighborhood", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonNeighborhood = 0.0;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonNeighborhoodDelta", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonNeighborhoodDelta = 0.005;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonNeighborhoodDeltaMax = 0.005;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = DefaultEpsilonAdaptation.class)
-	protected double epsilonNeighborhoodDeltaMin = 0.0001;
-
-	@Required(property = "moeaType", elements = { "AeSeH" })
-	@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class)
-	protected int neighborhoodNumber = 5;
-
 	@Ignore
 	protected CrossoverRateType crossoverRateType = CrossoverRateType.CONSTANT;
-
-	protected MoeaType moeaType = MoeaType.NSGA2;
 
 	/**
 	 * The {@link CrossoverRateType} allows to choose between different types of
@@ -125,90 +80,9 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 		CONSTANT;
 	}
 
-	public int getNeighborhoodNumber() {
-		return neighborhoodNumber;
-	}
-
-	public void setNeighborhoodNumber(int neighborhoodNumber) {
-		this.neighborhoodNumber = neighborhoodNumber;
-	}
-
-	public MoeaType getMoeaType() {
-		return moeaType;
-	}
-
-	public void setMoeaType(MoeaType moeaType) {
-		this.moeaType = moeaType;
-	}
-
-	public double getEpsilonSample() {
-		return epsilonSample;
-	}
-
-	public void setEpsilonSample(double epsilonSample) {
-		this.epsilonSample = epsilonSample;
-	}
-
-	public double getEpsilonSampleDelta() {
-		return epsilonSampleDelta;
-	}
-
-	public void setEpsilonSampleDelta(double epsilonSampleDelta) {
-		this.epsilonSampleDelta = epsilonSampleDelta;
-	}
-
-	public double getEpsilonSampleDeltaMax() {
-		return epsilonSampleDeltaMax;
-	}
-
-	public void setEpsilonSampleDeltaMax(double epsilonSampleDeltaMax) {
-		this.epsilonSampleDeltaMax = epsilonSampleDeltaMax;
-	}
-
-	public double getEpsilonSampleDeltaMin() {
-		return epsilonSampleDeltaMin;
-	}
-
-	public void setEpsilonSampleDeltaMin(double epsilonSampleDeltaMin) {
-		this.epsilonSampleDeltaMin = epsilonSampleDeltaMin;
-	}
-
-	public double getEpsilonNeighborhood() {
-		return epsilonNeighborhood;
-	}
-
-	public void setEpsilonNeighborhood(double epsilonNeighborhood) {
-		this.epsilonNeighborhood = epsilonNeighborhood;
-	}
-
-	public double getEpsilonNeighborhoodDelta() {
-		return epsilonNeighborhoodDelta;
-	}
-
-	public void setEpsilonNeighborhoodDelta(double epsilonNeighborhoodDelta) {
-		this.epsilonNeighborhoodDelta = epsilonNeighborhoodDelta;
-	}
-
-	public double getEpsilonNeighborhoodDeltaMax() {
-		return epsilonNeighborhoodDeltaMax;
-	}
-
-	public void setEpsilonNeighborhoodDeltaMax(double epsilonNeighborhoodDeltaMax) {
-		this.epsilonNeighborhoodDeltaMax = epsilonNeighborhoodDeltaMax;
-	}
-
-	public double getEpsilonNeighborhoodDeltaMin() {
-		return epsilonNeighborhoodDeltaMin;
-	}
-
-	public void setEpsilonNeighborhoodDeltaMin(double epsilonNeighborhoodDeltaMin) {
-		this.epsilonNeighborhoodDeltaMin = epsilonNeighborhoodDeltaMin;
-	}
-
 	/**
 	 * Returns the population size {@code alpha}.
 	 * 
-	 * @see #setAlpha
 	 * @return the population size
 	 */
 	public int getPopulationSize() {
@@ -218,7 +92,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the population size {@code alpha}.
 	 * 
-	 * @see #getAlpha
 	 * @param alpha
 	 *            the population size to set
 	 */
@@ -229,7 +102,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the number of generations.
 	 * 
-	 * @see #setGenerations
 	 * @return the number of generations
 	 */
 	public int getGenerations() {
@@ -250,7 +122,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the number of children {@code lambda}.
 	 * 
-	 * @see #setLambda
 	 * @return the number of children
 	 */
 	public int getOffspringsPerGeneration() {
@@ -260,7 +131,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the number of children {@code lambda}.
 	 * 
-	 * @see #getLambda
 	 * @param lambda
 	 *            the number of children
 	 */
@@ -271,7 +141,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the number of parents {@code mu}.
 	 * 
-	 * @see #setMu
 	 * @return the number of parents
 	 */
 	public int getParentsPerGeneration() {
@@ -281,7 +150,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the number of parents {@code mu}.
 	 * 
-	 * @see #getMu
 	 * @param mu
 	 *            the number of parents
 	 */
@@ -292,7 +160,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the type of crossover rate that is used.
 	 * 
-	 * @see #setCrossoverRateType
 	 * @return the crossoverRateType
 	 */
 	public CrossoverRateType getCrossoverRateType() {
@@ -302,7 +169,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the type of crossover rate to use.
 	 * 
-	 * @see #getCrossoverRateType
 	 * @param crossoverRateType
 	 *            the crossoverRateType to set
 	 */
@@ -313,7 +179,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the used crossover rate.
 	 * 
-	 * @see #setCrossoverRate
 	 * @return the crossoverRate
 	 */
 	public double getCrossoverRate() {
@@ -323,7 +188,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the crossover rate.
 	 * 
-	 * @see #getCrossoverRate
 	 * @param crossoverRate
 	 *            the crossoverRate to set
 	 */
@@ -340,16 +204,5 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	public void config() {
 		bindIterativeOptimizer(EvolutionaryAlgorithm.class);
 		bind(CrossoverRate.class).to(ConstantCrossoverRate.class).in(SINGLETON);
-		if (moeaType.equals(MoeaType.AeSeH)) {
-			bindConstant("lambda", EvolutionaryAlgorithm.class).to(populationSize);
-			bindConstant("mu", EvolutionaryAlgorithm.class).to(populationSize);
-			parentsPerGeneration = populationSize;
-			offspringsPerGeneration = populationSize;
-			bind(Selector.class).to(AeSeHSelector.class);
-			bind(Coupler.class).to(AeSeHCoupler.class);
-		}else{
-			bindConstant("lambda", EvolutionaryAlgorithm.class).to(offspringsPerGeneration);
-			bindConstant("mu", EvolutionaryAlgorithm.class).to(parentsPerGeneration);
-		}
 	}
 }

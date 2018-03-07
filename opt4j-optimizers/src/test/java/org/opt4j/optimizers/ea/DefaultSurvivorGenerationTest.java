@@ -4,16 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.opt4j.core.Individual;
-import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -53,28 +49,6 @@ public class DefaultSurvivorGenerationTest {
 		return result;
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void testApplyEpsilonSampling(){
-		EpsilonMapping mockMapping = mock(AdditiveEpsilonMapping.class);
-		EpsilonAdaption mockAdaption = mock(DefaultEpsilonAdaptation.class);
-		Map<Objective, Double> amplitudeMap = new HashMap<Objective, Double>();
-		when(mockMapping.findObjectiveAmplitudes(any(HashSet.class))).thenReturn(amplitudeMap);
-		when(mockAdaption.getSamplingEpsilon()).thenReturn(0.0);
-		when(mockMapping.mapObjectives(dominant, 0.0, amplitudeMap)).thenReturn(dominant);
-		when(mockMapping.mapObjectives(dominated, 0.0, amplitudeMap)).thenReturn(dominated);
-		Set<Individual> extremes = new HashSet<Individual>();
-		extremes.add(extremeIndividual);
-		DefaultSurvivorGeneration survivorGeneration = new DefaultSurvivorGeneration(new Random(), mockMapping, mockAdaption);
-		Set<Individual> survivors = survivorGeneration.applyEpsilonSampling(extremes, getFirstFront(), 4);
-		assertTrue(survivors.containsAll(extremes));
-		assertTrue(survivors.contains(first));
-		assertTrue(survivors.contains(second));
-		verify(mockAdaption).adaptSamplingEpsilon(false);
-		survivorGeneration.applyEpsilonSampling(extremes, getFirstFront(), 2);
-		verify(mockAdaption).adaptSamplingEpsilon(true);
-	}
-
 	public static List<List<Individual>> getFronts() {
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);
