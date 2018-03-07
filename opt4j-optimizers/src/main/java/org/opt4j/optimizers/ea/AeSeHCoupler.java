@@ -49,9 +49,6 @@ public class AeSeHCoupler implements Coupler {
 
 	@Override
 	public Collection<Pair<Individual>> getCouples(int size, List<Individual> parents) {
-		if (size != parents.size() / 2) {
-			throw new IllegalArgumentException("The offspring number should be equal to the population size");
-		}
 		Collection<Pair<Individual>> result = new HashSet<Pair<Individual>>();
 		List<Set<Individual>> neighborhoods = createNeighborhoods(parents);
 		RoundRobinScheduler scheduler = new RoundRobinScheduler(neighborhoods);

@@ -50,10 +50,12 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	@Order(1)
 	protected int populationSize = 100;
 
+	@Constant(value = "mu", namespace = EvolutionaryAlgorithm.class)
 	@Info("Mu - The number of parents per generation.")
 	@Order(2)
 	protected int parentsPerGeneration = 25;
 
+	@Constant(value = "lambda", namespace = EvolutionaryAlgorithm.class)
 	@Info("Lambda The number of offsprings per generation.")
 	@Order(3)
 	protected int offspringsPerGeneration = 25;
