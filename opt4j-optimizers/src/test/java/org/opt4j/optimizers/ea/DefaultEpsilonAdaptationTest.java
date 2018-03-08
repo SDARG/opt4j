@@ -19,14 +19,14 @@ public class DefaultEpsilonAdaptationTest {
 		adaptation.adaptNeighborhoodEpsilon(true);
 		assertEquals(0.5, adaptation.getNeighborhoodEpsilon(), 0.0);
 		adaptation.adaptNeighborhoodEpsilon(true);
-		assertEquals(1.5, adaptation.epsilon_neighborhood_delta, 0.0);
+		assertEquals(1.5, adaptation.epsilonNeighborhoodDelta, 0.0);
 		assertEquals(1.5, adaptation.getNeighborhoodEpsilon(), 0.0);
 		adaptation.adaptNeighborhoodEpsilon(false);
 		assertEquals(0.0, adaptation.getNeighborhoodEpsilon(), 0.0);
-		assertEquals(0.75, adaptation.epsilon_neighborhood_delta, 0.0);
+		assertEquals(0.75, adaptation.epsilonNeighborhoodDelta, 0.0);
 		adaptation.adaptNeighborhoodEpsilon(false);
 		assertEquals(0.0, adaptation.getNeighborhoodEpsilon(), 0.0);
-		assertEquals(0.4, adaptation.epsilon_neighborhood_delta, 0.0);
+		assertEquals(0.4, adaptation.epsilonNeighborhoodDelta, 0.0);
 	}
 
 	@Test
@@ -37,14 +37,14 @@ public class DefaultEpsilonAdaptationTest {
 		adaptation.adaptSamplingEpsilon(true);
 		assertEquals(0.5, adaptation.getSamplingEpsilon(), 0.0);
 		adaptation.adaptSamplingEpsilon(true);
-		assertEquals(1.5, adaptation.epsilon_sample_delta, 0.0);
+		assertEquals(1.5, adaptation.epsilonSampleDelta, 0.0);
 		assertEquals(1.5, adaptation.getSamplingEpsilon(), 0.0);
 		adaptation.adaptSamplingEpsilon(false);
 		assertEquals(0.0, adaptation.getSamplingEpsilon(), 0.0);
-		assertEquals(0.75, adaptation.epsilon_sample_delta, 0.0);
+		assertEquals(0.75, adaptation.epsilonSampleDelta, 0.0);
 		adaptation.adaptSamplingEpsilon(false);
 		assertEquals(0.0, adaptation.getSamplingEpsilon(), 0.0);
-		assertEquals(0.4, adaptation.epsilon_sample_delta, 0.0);
+		assertEquals(0.4, adaptation.epsilonSampleDelta, 0.0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class DefaultSurvivorGenerationTest {
+public class DefaultSurvivorGenerationTest1 {
 
 	protected static Individual extremeIndividual = mock(Individual.class);
 
@@ -72,7 +72,7 @@ public class DefaultSurvivorGenerationTest {
 		fronts.add(thirdFront);
 		return fronts;
 	}
-
+	
 	@Test
 	public void testAddDominatedSurvivors() {
 		Random mockRandom = mock(Random.class);

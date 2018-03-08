@@ -44,7 +44,7 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 
 		if (paretoSolutions.size() > survivorNumber) {
 			// more non-dominated solutions than survivors => apply ε-sampling
-			survivors = applyEpsilonSampling(extremeIndividuals, paretoSolutions, survivorNumber);
+			survivors = addNonDominatedSurvivors(extremeIndividuals, paretoSolutions, survivorNumber);
 		} else {
 			survivors = addDominatedSurvivors(survivorNumber, fronts);
 		}
@@ -59,36 +59,16 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	 * @param firstFront
 	 * @param survivorNumber
 	 */
-	protected Set<Individual> applyEpsilonSampling(Collection<Individual> extremeIndividuals,
+	protected Set<Individual> addNonDominatedSurvivors(Collection<Individual> extremeIndividuals,
 			Collection<Individual> firstFront, int survivorNumber) {
 		Set<Individual> survivors = new HashSet<Individual>();
 		List<Individual> nonDominatedIndividuals = new ArrayList<Individual>(firstFront);
 		// the extreme values always survive
 		survivors.addAll(extremeIndividuals);
 		nonDominatedIndividuals.removeAll(extremeIndividuals);
-		Map<Objective, Double> objectiveAmplitudes = epsilonMapping
-				.findObjectiveAmplitudes(new HashSet<Individual>(nonDominatedIndividuals));
 		Set<Individual> epsilonDominantIndividuals = new HashSet<Individual>();
 		Set<Individual> epsilonDominatedIndividuals = new HashSet<Individual>();
-		// apply epsilon sampling until the individual list is empty
-		while (!nonDominatedIndividuals.isEmpty()) {
-			// pick a random individual
-			Individual epsilonDominant = nonDominatedIndividuals.get(random.nextInt(nonDominatedIndividuals.size()));
-			Set<Individual> epsilonDominated = new HashSet<Individual>();
-			nonDominatedIndividuals.remove(epsilonDominant);
-			Objectives epsilonEnhancedObjectives = epsilonMapping.mapObjectives(epsilonDominant.getObjectives(),
-					epsilonAdaption.getSamplingEpsilon(), objectiveAmplitudes);
-			// gather all individuals epsilon dominated by the picked individual
-			for (int i = 0; i < nonDominatedIndividuals.size(); i++) {
-				Individual comparisonIndividual = nonDominatedIndividuals.get(i);
-				if (epsilonEnhancedObjectives.dominates(comparisonIndividual.getObjectives())) {
-					epsilonDominated.add(comparisonIndividual);
-				}
-			}
-			nonDominatedIndividuals.removeAll(epsilonDominated);
-			epsilonDominantIndividuals.add(epsilonDominant);
-			epsilonDominatedIndividuals.addAll(epsilonDominated);
-		}
+		applyEpsilonSampling(nonDominatedIndividuals, epsilonDominantIndividuals, epsilonDominatedIndividuals, epsilonAdaption.getSamplingEpsilon());
 		boolean tooManyEpsilonDominantIndividuals = (extremeIndividuals.size()
 				+ epsilonDominantIndividuals.size()) > survivorNumber;
 		// adapt the sampling epsilon
@@ -117,9 +97,42 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	}
 
 	/**
-	 * In the case where the first non-dominated front does not suffice to
-	 * create enough survivors, dominated solutions are added to the survivor
-	 * pool.
+	 * Apply epsilon sampling by dividing the given individuals into the two sets of epsilon-dominant and epsilon-dominated individuals.
+	 * 
+	 * @param firstFront : The input individuals who constitute the first non-dominated front of the current population. 
+	 * @param epsilonDominantIndividuals : The set that will be filled with the epsilon-dominant individuals.
+	 * @param epsilonDominatedIndividuals : The set that will be filled with epsilon-dominated individuals
+	 * @param samplingEpsilon : The value used for the epsilon sampling.
+	 */
+	protected void applyEpsilonSampling(List<Individual> firstFront, Set<Individual> epsilonDominantIndividuals,
+			Set<Individual> epsilonDominatedIndividuals, double samplingEpsilon) {
+		// apply epsilon sampling until the individual list is empty
+		List<Individual> nonDominatedIndividuals = new ArrayList<Individual>(firstFront);
+		Map<Objective, Double> objectiveAmplitudes = epsilonMapping
+				.findObjectiveAmplitudes(new HashSet<Individual>(nonDominatedIndividuals));
+		while (!nonDominatedIndividuals.isEmpty()) {
+			// pick a random individual
+			Individual epsilonDominant = nonDominatedIndividuals.get(random.nextInt(nonDominatedIndividuals.size()));
+			Set<Individual> epsilonDominated = new HashSet<Individual>();
+			nonDominatedIndividuals.remove(epsilonDominant);
+			Objectives epsilonEnhancedObjectives = epsilonMapping.mapObjectives(epsilonDominant.getObjectives(),
+					samplingEpsilon, objectiveAmplitudes);
+			// gather all individuals epsilon dominated by the picked individual
+			for (int i = 0; i < nonDominatedIndividuals.size(); i++) {
+				Individual comparisonIndividual = nonDominatedIndividuals.get(i);
+				if (epsilonEnhancedObjectives.dominates(comparisonIndividual.getObjectives())) {
+					epsilonDominated.add(comparisonIndividual);
+				}
+			}
+			nonDominatedIndividuals.removeAll(epsilonDominated);
+			epsilonDominantIndividuals.add(epsilonDominant);
+			epsilonDominatedIndividuals.addAll(epsilonDominated);
+		}
+	}
+
+	/**
+	 * In the case where the first non-dominated front does not suffice to create
+	 * enough survivors, dominated solutions are added to the survivor pool.
 	 * 
 	 * @param survivorNumber
 	 * @param fronts

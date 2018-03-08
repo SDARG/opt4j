@@ -7,7 +7,16 @@ import org.opt4j.core.optimizer.OptimizerModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * Module to bind the AeSeH evolutionary algorithm as optimizer.
+ * Module to bind the AeSeH evolutionary algorithm as optimizer. This algorithm
+ * was first introduced in the paper:
+ * 
+ * Aguirre, Hernán, Akira Oyama, and Kiyoshi Tanaka. "Adaptive ε-sampling and
+ * ε-hood for evolutionary many-objective optimization." International
+ * Conference on Evolutionary Multi-Criterion Optimization. Springer, Berlin,
+ * Heidelberg, 2013.
+ * 
+ * Please consider citing the paper if you use this class for a scientific
+ * publication.
  * 
  * @author Fedor Smirnov
  *
