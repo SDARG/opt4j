@@ -1,0 +1,126 @@
+body {
+	position: absolute;
+	background: #FFFFFF;
+	color: #111111;
+	margin: 10px;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 10pt;
+	width: 800px;
+	counter-reset: h2counter;
+}
+
+ul.iconlist {
+	list-style: none;
+}
+
+li.xml {
+	list-style: none;
+	background-image: url(img/page_white.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.linux {
+	list-style: none;
+	background-image: url(img/application_osx_terminal.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.bat {
+	list-style: none;
+	background-image: url(img/application_xp_terminal.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.python {
+	list-style: none;
+	background-image: url(img/page_white_gear.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+li.folder {
+	list-style: none;
+	background-image: url(img/folder.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 0px 0 0px 20px;
+	margin: 0 0;
+}
+
+h1 {
+	font-size: 32pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+	counter-reset: h2counter;
+}
+
+h2 {
+	font-size: 16pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+h2:before {
+	content: counter(h2counter) ".\0000a0\0000a0";
+	counter-increment: h2counter;
+}
+
+h2.nocount:before {
+	content: none;
+	counter-increment: none;
+}
+
+h3 {
+	font-size: 12pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+h4 {
+	font-size: 10pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+a {
+	color: #16C;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a.jdoc {
+	color: #0000FF;
+	text-decoration: underline;
+}
+
+p {
+	padding-left: 8px;
+}
+
+p.tip {
+	padding-left: 40px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	position:relative;
+	background: url(img/tip.png) left no-repeat;
+	margin-left: 8px;
+	font-style: italic;
+}

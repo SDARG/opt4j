@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a name="line.1">package org.opt4j.tutorial.helloworld;</a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span><a name="line.3">import org.opt4j.core.Objective.Sign;</a>
+<span class="sourceLineNo">004</span><a name="line.4">import org.opt4j.core.Objectives;</a>
+<span class="sourceLineNo">005</span><a name="line.5">import org.opt4j.core.problem.Evaluator;</a>
+<span class="sourceLineNo">006</span><a name="line.6"></a>
+<span class="sourceLineNo">007</span><a name="line.7">public class HelloWorldEvaluator implements Evaluator&lt;String&gt; {</a>
+<span class="sourceLineNo">008</span><a name="line.8">        @Override</a>
+<span class="sourceLineNo">009</span><a name="line.9">        public Objectives evaluate(String phenotype) {</a>
+<span class="sourceLineNo">010</span><a name="line.10">                int value = 0;</a>
+<span class="sourceLineNo">011</span><a name="line.11">                for (int i = 0; i &lt; phenotype.length(); i++) {</a>
+<span class="sourceLineNo">012</span><a name="line.12">                        value += (phenotype.charAt(i) == "HELLO WORLD".charAt(i)) ? 1 : 0;</a>
+<span class="sourceLineNo">013</span><a name="line.13">                }</a>
+<span class="sourceLineNo">014</span><a name="line.14"></a>
+<span class="sourceLineNo">015</span><a name="line.15">                Objectives objectives = new Objectives();</a>
+<span class="sourceLineNo">016</span><a name="line.16">                objectives.add("objective", Sign.MAX, value);</a>
+<span class="sourceLineNo">017</span><a name="line.17">                return objectives;</a>
+<span class="sourceLineNo">018</span><a name="line.18">        }</a>
+<span class="sourceLineNo">019</span><a name="line.19">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

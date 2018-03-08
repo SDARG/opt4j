@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a name="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a name="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a name="line.3"> *</a>
+<span class="sourceLineNo">004</span><a name="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a name="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a name="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a name="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a name="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a name="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a name="line.10"> *</a>
+<span class="sourceLineNo">011</span><a name="line.11"> * The above copyright notice and this permission notice shall be included in all</a>
+<span class="sourceLineNo">012</span><a name="line.12"> * copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a name="line.13"> *</a>
+<span class="sourceLineNo">014</span><a name="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a name="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a name="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a name="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a name="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a name="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a name="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a name="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a name="line.22"> </a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24">package org.opt4j.operators.mutate;</a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26">import org.opt4j.core.common.random.Rand;</a>
+<span class="sourceLineNo">027</span><a name="line.27">import org.opt4j.core.genotype.DoubleGenotype;</a>
+<span class="sourceLineNo">028</span><a name="line.28">import org.opt4j.operators.normalize.NormalizeDouble;</a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30">/**</a>
+<span class="sourceLineNo">031</span><a name="line.31"> * The {@link MutateDoubleElementwise}.</a>
+<span class="sourceLineNo">032</span><a name="line.32"> * </a>
+<span class="sourceLineNo">033</span><a name="line.33"> * @author lukasiewycz</a>
+<span class="sourceLineNo">034</span><a name="line.34"> * </a>
+<span class="sourceLineNo">035</span><a name="line.35"> */</a>
+<span class="sourceLineNo">036</span><a name="line.36">public abstract class MutateDoubleElementwise extends MutateDouble {</a>
+<span class="sourceLineNo">037</span><a name="line.37"></a>
+<span class="sourceLineNo">038</span><a name="line.38">        /**</a>
+<span class="sourceLineNo">039</span><a name="line.39">         * Constructs a {@link MutateDoubleElementwise}.</a>
+<span class="sourceLineNo">040</span><a name="line.40">         * </a>
+<span class="sourceLineNo">041</span><a name="line.41">         * @param random</a>
+<span class="sourceLineNo">042</span><a name="line.42">         *            the random number generator</a>
+<span class="sourceLineNo">043</span><a name="line.43">         * @param normalize</a>
+<span class="sourceLineNo">044</span><a name="line.44">         *            the normalizer</a>
+<span class="sourceLineNo">045</span><a name="line.45">         */</a>
+<span class="sourceLineNo">046</span><a name="line.46">        public MutateDoubleElementwise(Rand random, NormalizeDouble normalize) {</a>
+<span class="sourceLineNo">047</span><a name="line.47">                super(random, normalize);</a>
+<span class="sourceLineNo">048</span><a name="line.48">        }</a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50">        /*</a>
+<span class="sourceLineNo">051</span><a name="line.51">         * (non-Javadoc)</a>
+<span class="sourceLineNo">052</span><a name="line.52">         * </a>
+<span class="sourceLineNo">053</span><a name="line.53">         * @see</a>
+<span class="sourceLineNo">054</span><a name="line.54">         * org.opt4j.operator.mutate.MutateDouble#mutateList(org.opt4j.genotype.</a>
+<span class="sourceLineNo">055</span><a name="line.55">         * DoubleGenotype, double)</a>
+<span class="sourceLineNo">056</span><a name="line.56">         */</a>
+<span class="sourceLineNo">057</span><a name="line.57">        @Override</a>
+<span class="sourceLineNo">058</span><a name="line.58">        protected void mutateList(DoubleGenotype vector, double p) {</a>
+<span class="sourceLineNo">059</span><a name="line.59">                for (int i = 0; i &lt; vector.size(); i++) {</a>
+<span class="sourceLineNo">060</span><a name="line.60">                        double x = vector.get(i);</a>
+<span class="sourceLineNo">061</span><a name="line.61">                        double y = mutateElement(x, vector.getLowerBound(i), vector.getUpperBound(i), p);</a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63">                        if (x != y) {</a>
+<span class="sourceLineNo">064</span><a name="line.64">                                vector.set(i, y);</a>
+<span class="sourceLineNo">065</span><a name="line.65">                        }</a>
+<span class="sourceLineNo">066</span><a name="line.66">                }</a>
+<span class="sourceLineNo">067</span><a name="line.67">        }</a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69">        /**</a>
+<span class="sourceLineNo">070</span><a name="line.70">         * Mutate one element of the list.</a>
+<span class="sourceLineNo">071</span><a name="line.71">         * </a>
+<span class="sourceLineNo">072</span><a name="line.72">         * @param element</a>
+<span class="sourceLineNo">073</span><a name="line.73">         *            the element</a>
+<span class="sourceLineNo">074</span><a name="line.74">         * @param lb</a>
+<span class="sourceLineNo">075</span><a name="line.75">         *            the lower bound</a>
+<span class="sourceLineNo">076</span><a name="line.76">         * @param ub</a>
+<span class="sourceLineNo">077</span><a name="line.77">         *            the upper bound</a>
+<span class="sourceLineNo">078</span><a name="line.78">         * @param p</a>
+<span class="sourceLineNo">079</span><a name="line.79">         *            the mutation rate</a>
+<span class="sourceLineNo">080</span><a name="line.80">         * @return the mutated element</a>
+<span class="sourceLineNo">081</span><a name="line.81">         */</a>
+<span class="sourceLineNo">082</span><a name="line.82">        protected abstract double mutateElement(double element, double lb, double ub, double p);</a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

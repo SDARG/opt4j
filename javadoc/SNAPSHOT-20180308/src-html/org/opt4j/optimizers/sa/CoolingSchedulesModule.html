@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a name="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a name="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a name="line.3"> *</a>
+<span class="sourceLineNo">004</span><a name="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a name="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a name="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a name="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a name="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a name="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a name="line.10"> *</a>
+<span class="sourceLineNo">011</span><a name="line.11"> * The above copyright notice and this permission notice shall be included in all</a>
+<span class="sourceLineNo">012</span><a name="line.12"> * copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a name="line.13"> *</a>
+<span class="sourceLineNo">014</span><a name="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a name="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a name="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a name="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a name="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a name="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a name="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a name="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a name="line.22"> </a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24">package org.opt4j.optimizers.sa;</a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26">import org.opt4j.core.config.annotations.Info;</a>
+<span class="sourceLineNo">027</span><a name="line.27">import org.opt4j.core.config.annotations.Order;</a>
+<span class="sourceLineNo">028</span><a name="line.28">import org.opt4j.core.config.annotations.Parent;</a>
+<span class="sourceLineNo">029</span><a name="line.29">import org.opt4j.core.config.annotations.Required;</a>
+<span class="sourceLineNo">030</span><a name="line.30">import org.opt4j.core.start.Constant;</a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32">/**</a>
+<span class="sourceLineNo">033</span><a name="line.33"> * This module provides several common {@link CoolingSchedule}s for the</a>
+<span class="sourceLineNo">034</span><a name="line.34"> * {@link SimulatedAnnealing}.</a>
+<span class="sourceLineNo">035</span><a name="line.35"> * </a>
+<span class="sourceLineNo">036</span><a name="line.36"> * @author lukasiewycz</a>
+<span class="sourceLineNo">037</span><a name="line.37"> * </a>
+<span class="sourceLineNo">038</span><a name="line.38"> */</a>
+<span class="sourceLineNo">039</span><a name="line.39">@Info("Common Cooling Schedules")</a>
+<span class="sourceLineNo">040</span><a name="line.40">@Parent(SimulatedAnnealingModule.class)</a>
+<span class="sourceLineNo">041</span><a name="line.41">public class CoolingSchedulesModule extends CoolingScheduleModule {</a>
+<span class="sourceLineNo">042</span><a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43">        @Constant(value = "t0", namespace = CoolingSchedule.class)</a>
+<span class="sourceLineNo">044</span><a name="line.44">        protected double initialTemperature = 10.0;</a>
+<span class="sourceLineNo">045</span><a name="line.45"></a>
+<span class="sourceLineNo">046</span><a name="line.46">        @Constant(value = "tn", namespace = CoolingSchedule.class)</a>
+<span class="sourceLineNo">047</span><a name="line.47">        protected double finalTemperature = 1.0;</a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49">        @Required(property = "type", elements = { "EXPONENTIAL" })</a>
+<span class="sourceLineNo">050</span><a name="line.50">        @Constant(value = "alpha", namespace = CoolingScheduleExponential.class)</a>
+<span class="sourceLineNo">051</span><a name="line.51">        protected double alpha = 0.995;</a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53">        @Order(0)</a>
+<span class="sourceLineNo">054</span><a name="line.54">        protected Type type = Type.LINEAR;</a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56">        /**</a>
+<span class="sourceLineNo">057</span><a name="line.57">         * Constructs a {@link CoolingSchedulesModule}.</a>
+<span class="sourceLineNo">058</span><a name="line.58">         * </a>
+<span class="sourceLineNo">059</span><a name="line.59">         */</a>
+<span class="sourceLineNo">060</span><a name="line.60">        public CoolingSchedulesModule() {</a>
+<span class="sourceLineNo">061</span><a name="line.61">                super();</a>
+<span class="sourceLineNo">062</span><a name="line.62">        }</a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span><a name="line.64">        /**</a>
+<span class="sourceLineNo">065</span><a name="line.65">         * Type of {@link CoolingSchedule} to use.</a>
+<span class="sourceLineNo">066</span><a name="line.66">         * </a>
+<span class="sourceLineNo">067</span><a name="line.67">         * @author lukasiewycz</a>
+<span class="sourceLineNo">068</span><a name="line.68">         * </a>
+<span class="sourceLineNo">069</span><a name="line.69">         */</a>
+<span class="sourceLineNo">070</span><a name="line.70">        public enum Type {</a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span><a name="line.72">                /**</a>
+<span class="sourceLineNo">073</span><a name="line.73">                 * Use the {@link CoolingScheduleLinear}.</a>
+<span class="sourceLineNo">074</span><a name="line.74">                 */</a>
+<span class="sourceLineNo">075</span><a name="line.75">                LINEAR,</a>
+<span class="sourceLineNo">076</span><a name="line.76">                /**</a>
+<span class="sourceLineNo">077</span><a name="line.77">                 * Use the {@link CoolingScheduleHyperbolic}.</a>
+<span class="sourceLineNo">078</span><a name="line.78">                 */</a>
+<span class="sourceLineNo">079</span><a name="line.79">                HYPERBOLIC,</a>
+<span class="sourceLineNo">080</span><a name="line.80">                /**</a>
+<span class="sourceLineNo">081</span><a name="line.81">                 * Use the {@link CoolingScheduleExponential}.</a>
+<span class="sourceLineNo">082</span><a name="line.82">                 */</a>
+<span class="sourceLineNo">083</span><a name="line.83">                EXPONENTIAL;</a>
+<span class="sourceLineNo">084</span><a name="line.84">        }</a>
+<span class="sourceLineNo">085</span><a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86">        /**</a>
+<span class="sourceLineNo">087</span><a name="line.87">         * Returns the final temperature.</a>
+<span class="sourceLineNo">088</span><a name="line.88">         * </a>
+<span class="sourceLineNo">089</span><a name="line.89">         * @see #setFinalTemperature</a>
+<span class="sourceLineNo">090</span><a name="line.90">         * @return the final temperature</a>
+<span class="sourceLineNo">091</span><a name="line.91">         */</a>
+<span class="sourceLineNo">092</span><a name="line.92">        @Info("The temperature at the end of the optimization")</a>
+<span class="sourceLineNo">093</span><a name="line.93">        public double getFinalTemperature() {</a>
+<span class="sourceLineNo">094</span><a name="line.94">                return finalTemperature;</a>
+<span class="sourceLineNo">095</span><a name="line.95">        }</a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span><a name="line.97">        /**</a>
+<span class="sourceLineNo">098</span><a name="line.98">         * Sets the final temperature.</a>
+<span class="sourceLineNo">099</span><a name="line.99">         * </a>
+<span class="sourceLineNo">100</span><a name="line.100">         * @see #getFinalTemperature</a>
+<span class="sourceLineNo">101</span><a name="line.101">         * @param finalTemperature</a>
+<span class="sourceLineNo">102</span><a name="line.102">         *            the final temperature</a>
+<span class="sourceLineNo">103</span><a name="line.103">         */</a>
+<span class="sourceLineNo">104</span><a name="line.104">        public void setFinalTemperature(double finalTemperature) {</a>
+<span class="sourceLineNo">105</span><a name="line.105">                this.finalTemperature = finalTemperature;</a>
+<span class="sourceLineNo">106</span><a name="line.106">        }</a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span><a name="line.108">        /**</a>
+<span class="sourceLineNo">109</span><a name="line.109">         * Returns the initial temperature.</a>
+<span class="sourceLineNo">110</span><a name="line.110">         * </a>
+<span class="sourceLineNo">111</span><a name="line.111">         * @see #setInitialTemperature</a>
+<span class="sourceLineNo">112</span><a name="line.112">         * @return the initial temperature</a>
+<span class="sourceLineNo">113</span><a name="line.113">         */</a>
+<span class="sourceLineNo">114</span><a name="line.114">        @Info("The temperature at the beginning of the optimization")</a>
+<span class="sourceLineNo">115</span><a name="line.115">        public double getInitialTemperature() {</a>
+<span class="sourceLineNo">116</span><a name="line.116">                return initialTemperature;</a>
+<span class="sourceLineNo">117</span><a name="line.117">        }</a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119">        /**</a>
+<span class="sourceLineNo">120</span><a name="line.120">         * Sets the initial temperature.</a>
+<span class="sourceLineNo">121</span><a name="line.121">         * </a>
+<span class="sourceLineNo">122</span><a name="line.122">         * @see #getInitialTemperature</a>
+<span class="sourceLineNo">123</span><a name="line.123">         * @param initialTemperature</a>
+<span class="sourceLineNo">124</span><a name="line.124">         *            the initial temperature</a>
+<span class="sourceLineNo">125</span><a name="line.125">         */</a>
+<span class="sourceLineNo">126</span><a name="line.126">        public void setInitialTemperature(double initialTemperature) {</a>
+<span class="sourceLineNo">127</span><a name="line.127">                this.initialTemperature = initialTemperature;</a>
+<span class="sourceLineNo">128</span><a name="line.128">        }</a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span><a name="line.130">        /**</a>
+<span class="sourceLineNo">131</span><a name="line.131">         * Returns the type of cooling schedule.</a>
+<span class="sourceLineNo">132</span><a name="line.132">         * </a>
+<span class="sourceLineNo">133</span><a name="line.133">         * @see #setType</a>
+<span class="sourceLineNo">134</span><a name="line.134">         * @return the type of cooling schedule</a>
+<span class="sourceLineNo">135</span><a name="line.135">         */</a>
+<span class="sourceLineNo">136</span><a name="line.136">        @Info("The type of the cooling schedule")</a>
+<span class="sourceLineNo">137</span><a name="line.137">        public Type getType() {</a>
+<span class="sourceLineNo">138</span><a name="line.138">                return type;</a>
+<span class="sourceLineNo">139</span><a name="line.139">        }</a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span><a name="line.141">        /**</a>
+<span class="sourceLineNo">142</span><a name="line.142">         * Sets the type of cooling schedule.</a>
+<span class="sourceLineNo">143</span><a name="line.143">         * </a>
+<span class="sourceLineNo">144</span><a name="line.144">         * @see #getType</a>
+<span class="sourceLineNo">145</span><a name="line.145">         * @param type</a>
+<span class="sourceLineNo">146</span><a name="line.146">         *            the type of cooling schedule</a>
+<span class="sourceLineNo">147</span><a name="line.147">         */</a>
+<span class="sourceLineNo">148</span><a name="line.148">        public void setType(Type type) {</a>
+<span class="sourceLineNo">149</span><a name="line.149">                this.type = type;</a>
+<span class="sourceLineNo">150</span><a name="line.150">        }</a>
+<span class="sourceLineNo">151</span><a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152">        /**</a>
+<span class="sourceLineNo">153</span><a name="line.153">         * Returns the alpha value.</a>
+<span class="sourceLineNo">154</span><a name="line.154">         * </a>
+<span class="sourceLineNo">155</span><a name="line.155">         * @see #setAlpha</a>
+<span class="sourceLineNo">156</span><a name="line.156">         * @return the alpha value</a>
+<span class="sourceLineNo">157</span><a name="line.157">         */</a>
+<span class="sourceLineNo">158</span><a name="line.158">        public double getAlpha() {</a>
+<span class="sourceLineNo">159</span><a name="line.159">                return alpha;</a>
+<span class="sourceLineNo">160</span><a name="line.160">        }</a>
+<span class="sourceLineNo">161</span><a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162">        /**</a>
+<span class="sourceLineNo">163</span><a name="line.163">         * Sets the alpha value.</a>
+<span class="sourceLineNo">164</span><a name="line.164">         * </a>
+<span class="sourceLineNo">165</span><a name="line.165">         * @see #getAlpha</a>
+<span class="sourceLineNo">166</span><a name="line.166">         * @param alpha</a>
+<span class="sourceLineNo">167</span><a name="line.167">         *            the alpha value</a>
+<span class="sourceLineNo">168</span><a name="line.168">         */</a>
+<span class="sourceLineNo">169</span><a name="line.169">        public void setAlpha(double alpha) {</a>
+<span class="sourceLineNo">170</span><a name="line.170">                this.alpha = alpha;</a>
+<span class="sourceLineNo">171</span><a name="line.171">        }</a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173">        /*</a>
+<span class="sourceLineNo">174</span><a name="line.174">         * (non-Javadoc)</a>
+<span class="sourceLineNo">175</span><a name="line.175">         * </a>
+<span class="sourceLineNo">176</span><a name="line.176">         * @see org.opt4j.start.Opt4JModule#config()</a>
+<span class="sourceLineNo">177</span><a name="line.177">         */</a>
+<span class="sourceLineNo">178</span><a name="line.178">        @Override</a>
+<span class="sourceLineNo">179</span><a name="line.179">        public void config() {</a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span><a name="line.181">                switch (type) {</a>
+<span class="sourceLineNo">182</span><a name="line.182">                case LINEAR:</a>
+<span class="sourceLineNo">183</span><a name="line.183">                        bindCoolingSchedule(CoolingScheduleLinear.class);</a>
+<span class="sourceLineNo">184</span><a name="line.184">                        break;</a>
+<span class="sourceLineNo">185</span><a name="line.185">                case HYPERBOLIC:</a>
+<span class="sourceLineNo">186</span><a name="line.186">                        bindCoolingSchedule(CoolingScheduleHyperbolic.class);</a>
+<span class="sourceLineNo">187</span><a name="line.187">                        break;</a>
+<span class="sourceLineNo">188</span><a name="line.188">                default: // EXPONENTIAL</a>
+<span class="sourceLineNo">189</span><a name="line.189">                        bindCoolingSchedule(CoolingScheduleExponential.class);</a>
+<span class="sourceLineNo">190</span><a name="line.190">                        break;</a>
+<span class="sourceLineNo">191</span><a name="line.191">                }</a>
+<span class="sourceLineNo">192</span><a name="line.192">        }</a>
+<span class="sourceLineNo">193</span><a name="line.193"></a>
+<span class="sourceLineNo">194</span><a name="line.194">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

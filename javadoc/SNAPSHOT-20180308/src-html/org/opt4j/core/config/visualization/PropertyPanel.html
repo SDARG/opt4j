@@ -1,0 +1,424 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a name="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a name="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a name="line.3"> *</a>
+<span class="sourceLineNo">004</span><a name="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</a>
+<span class="sourceLineNo">005</span><a name="line.5"> * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the</a>
+<span class="sourceLineNo">006</span><a name="line.6"> * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to</a>
+<span class="sourceLineNo">007</span><a name="line.7"> * permit persons to whom the Software is furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">008</span><a name="line.8"> *</a>
+<span class="sourceLineNo">009</span><a name="line.9"> * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the</a>
+<span class="sourceLineNo">010</span><a name="line.10"> * Software.</a>
+<span class="sourceLineNo">011</span><a name="line.11"> *</a>
+<span class="sourceLineNo">012</span><a name="line.12"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</a>
+<span class="sourceLineNo">013</span><a name="line.13"> * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</a>
+<span class="sourceLineNo">014</span><a name="line.14"> * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR</a>
+<span class="sourceLineNo">015</span><a name="line.15"> * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</a>
+<span class="sourceLineNo">016</span><a name="line.16"> *******************************************************************************/</a>
+<span class="sourceLineNo">017</span><a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18">package org.opt4j.core.config.visualization;</a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20">import java.awt.BorderLayout;</a>
+<span class="sourceLineNo">021</span><a name="line.21">import java.awt.Component;</a>
+<span class="sourceLineNo">022</span><a name="line.22">import java.awt.Cursor;</a>
+<span class="sourceLineNo">023</span><a name="line.23">import java.awt.FlowLayout;</a>
+<span class="sourceLineNo">024</span><a name="line.24">import java.awt.event.ActionEvent;</a>
+<span class="sourceLineNo">025</span><a name="line.25">import java.awt.event.ActionListener;</a>
+<span class="sourceLineNo">026</span><a name="line.26">import java.awt.event.FocusAdapter;</a>
+<span class="sourceLineNo">027</span><a name="line.27">import java.awt.event.FocusEvent;</a>
+<span class="sourceLineNo">028</span><a name="line.28">import java.awt.event.KeyAdapter;</a>
+<span class="sourceLineNo">029</span><a name="line.29">import java.awt.event.KeyEvent;</a>
+<span class="sourceLineNo">030</span><a name="line.30">import java.lang.reflect.InvocationTargetException;</a>
+<span class="sourceLineNo">031</span><a name="line.31">import java.util.HashMap;</a>
+<span class="sourceLineNo">032</span><a name="line.32">import java.util.Map;</a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span><a name="line.34">import javax.swing.BorderFactory;</a>
+<span class="sourceLineNo">035</span><a name="line.35">import javax.swing.JButton;</a>
+<span class="sourceLineNo">036</span><a name="line.36">import javax.swing.JCheckBox;</a>
+<span class="sourceLineNo">037</span><a name="line.37">import javax.swing.JComboBox;</a>
+<span class="sourceLineNo">038</span><a name="line.38">import javax.swing.JFileChooser;</a>
+<span class="sourceLineNo">039</span><a name="line.39">import javax.swing.JLabel;</a>
+<span class="sourceLineNo">040</span><a name="line.40">import javax.swing.JPanel;</a>
+<span class="sourceLineNo">041</span><a name="line.41">import javax.swing.JTextField;</a>
+<span class="sourceLineNo">042</span><a name="line.42">import javax.swing.SwingConstants;</a>
+<span class="sourceLineNo">043</span><a name="line.43">import javax.swing.filechooser.FileFilter;</a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span><a name="line.45">import org.opt4j.core.config.Icons;</a>
+<span class="sourceLineNo">046</span><a name="line.46">import org.opt4j.core.config.Property;</a>
+<span class="sourceLineNo">047</span><a name="line.47">import org.opt4j.core.config.PropertyModule;</a>
+<span class="sourceLineNo">048</span><a name="line.48">import org.opt4j.core.config.Requirement;</a>
+<span class="sourceLineNo">049</span><a name="line.49">import org.opt4j.core.config.annotations.File;</a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51">/**</a>
+<span class="sourceLineNo">052</span><a name="line.52"> * The {@link PropertyPanel} is a panel for the configuration of one module. Properties and values are arranged in a</a>
+<span class="sourceLineNo">053</span><a name="line.53"> * table.</a>
+<span class="sourceLineNo">054</span><a name="line.54"> * </a>
+<span class="sourceLineNo">055</span><a name="line.55"> * @author lukasiewycz</a>
+<span class="sourceLineNo">056</span><a name="line.56"> * </a>
+<span class="sourceLineNo">057</span><a name="line.57"> */</a>
+<span class="sourceLineNo">058</span><a name="line.58">@SuppressWarnings("serial")</a>
+<span class="sourceLineNo">059</span><a name="line.59">public class PropertyPanel extends JPanel {</a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span><a name="line.61">        protected final PropertyModule module;</a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63">        protected final FileChooser fileChooser;</a>
+<span class="sourceLineNo">064</span><a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65">        protected final Format format;</a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67">        protected final JPanel panel;</a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69">        protected final Map&lt;Property, Component&gt; components = new HashMap&lt;Property, Component&gt;();</a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71">        /**</a>
+<span class="sourceLineNo">072</span><a name="line.72">         * Constructs a {@link PropertyPanel} for one {@link PropertyModule} instance.</a>
+<span class="sourceLineNo">073</span><a name="line.73">         * </a>
+<span class="sourceLineNo">074</span><a name="line.74">         * @param module</a>
+<span class="sourceLineNo">075</span><a name="line.75">         *            the instance of the {@link PropertyModule}</a>
+<span class="sourceLineNo">076</span><a name="line.76">         * @param fileChooser</a>
+<span class="sourceLineNo">077</span><a name="line.77">         *            the FileChooser</a>
+<span class="sourceLineNo">078</span><a name="line.78">         * @param format</a>
+<span class="sourceLineNo">079</span><a name="line.79">         *            the format</a>
+<span class="sourceLineNo">080</span><a name="line.80">         */</a>
+<span class="sourceLineNo">081</span><a name="line.81">        public PropertyPanel(PropertyModule module, FileChooser fileChooser, Format format) {</a>
+<span class="sourceLineNo">082</span><a name="line.82">                this.module = module;</a>
+<span class="sourceLineNo">083</span><a name="line.83">                this.fileChooser = fileChooser;</a>
+<span class="sourceLineNo">084</span><a name="line.84">                this.format = format;</a>
+<span class="sourceLineNo">085</span><a name="line.85"></a>
+<span class="sourceLineNo">086</span><a name="line.86">                fillComponentsMap();</a>
+<span class="sourceLineNo">087</span><a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88">                panel = new JPanel(new DialogLayout(20, 2));</a>
+<span class="sourceLineNo">089</span><a name="line.89">                panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</a>
+<span class="sourceLineNo">090</span><a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91">                updatePropertyPanel();</a>
+<span class="sourceLineNo">092</span><a name="line.92">                update();</a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94">                setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">095</span><a name="line.95">                add(BorderLayout.NORTH, panel);</a>
+<span class="sourceLineNo">096</span><a name="line.96">        }</a>
+<span class="sourceLineNo">097</span><a name="line.97"></a>
+<span class="sourceLineNo">098</span><a name="line.98">        protected Component createComponent(final Property property) {</a>
+<span class="sourceLineNo">099</span><a name="line.99">                Component component = null;</a>
+<span class="sourceLineNo">100</span><a name="line.100">                Object value = property.getValue();</a>
+<span class="sourceLineNo">101</span><a name="line.101">                Class&lt;?&gt; type = property.getType();</a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103">                if (type.isEnum()) {</a>
+<span class="sourceLineNo">104</span><a name="line.104">                        Object[] obj = new Object[type.getEnumConstants().length];</a>
+<span class="sourceLineNo">105</span><a name="line.105">                        for (int k = 0; k &lt; obj.length; k++) {</a>
+<span class="sourceLineNo">106</span><a name="line.106">                                obj[k] = type.getEnumConstants()[k];</a>
+<span class="sourceLineNo">107</span><a name="line.107">                        }</a>
+<span class="sourceLineNo">108</span><a name="line.108">                        final JComboBox&lt;Object&gt; box = new JComboBox&lt;Object&gt;(obj);</a>
+<span class="sourceLineNo">109</span><a name="line.109">                        box.setSelectedItem(value);</a>
+<span class="sourceLineNo">110</span><a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111">                        box.addActionListener(new ActionListener() {</a>
+<span class="sourceLineNo">112</span><a name="line.112">                                @Override</a>
+<span class="sourceLineNo">113</span><a name="line.113">                                public void actionPerformed(ActionEvent e) {</a>
+<span class="sourceLineNo">114</span><a name="line.114">                                        Object selected = box.getSelectedItem();</a>
+<span class="sourceLineNo">115</span><a name="line.115">                                        try {</a>
+<span class="sourceLineNo">116</span><a name="line.116">                                                property.setValue(selected);</a>
+<span class="sourceLineNo">117</span><a name="line.117">                                                update();</a>
+<span class="sourceLineNo">118</span><a name="line.118">                                        } catch (InvocationTargetException ex) {</a>
+<span class="sourceLineNo">119</span><a name="line.119">                                                System.err.println(ex.getMessage());</a>
+<span class="sourceLineNo">120</span><a name="line.120">                                        }</a>
+<span class="sourceLineNo">121</span><a name="line.121">                                }</a>
+<span class="sourceLineNo">122</span><a name="line.122">                        });</a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124">                        component = box;</a>
+<span class="sourceLineNo">125</span><a name="line.125">                } else if (type.equals(Boolean.TYPE)) {</a>
+<span class="sourceLineNo">126</span><a name="line.126">                        final JCheckBox checkbox = new JCheckBox();</a>
+<span class="sourceLineNo">127</span><a name="line.127"></a>
+<span class="sourceLineNo">128</span><a name="line.128">                        boolean b = (Boolean) property.getValue();</a>
+<span class="sourceLineNo">129</span><a name="line.129">                        checkbox.setSelected(b);</a>
+<span class="sourceLineNo">130</span><a name="line.130">                        checkbox.addActionListener(new ActionListener() {</a>
+<span class="sourceLineNo">131</span><a name="line.131">                                @Override</a>
+<span class="sourceLineNo">132</span><a name="line.132">                                public void actionPerformed(ActionEvent e) {</a>
+<span class="sourceLineNo">133</span><a name="line.133">                                        boolean b = checkbox.isSelected();</a>
+<span class="sourceLineNo">134</span><a name="line.134">                                        try {</a>
+<span class="sourceLineNo">135</span><a name="line.135">                                                property.setValue(b);</a>
+<span class="sourceLineNo">136</span><a name="line.136">                                                update();</a>
+<span class="sourceLineNo">137</span><a name="line.137">                                        } catch (InvocationTargetException ex) {</a>
+<span class="sourceLineNo">138</span><a name="line.138">                                                System.err.println(ex.getMessage());</a>
+<span class="sourceLineNo">139</span><a name="line.139">                                        }</a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span><a name="line.141">                                }</a>
+<span class="sourceLineNo">142</span><a name="line.142">                        });</a>
+<span class="sourceLineNo">143</span><a name="line.143"></a>
+<span class="sourceLineNo">144</span><a name="line.144">                        component = checkbox;</a>
+<span class="sourceLineNo">145</span><a name="line.145">                } else {</a>
+<span class="sourceLineNo">146</span><a name="line.146">                        final JTextField field = new JTextField();</a>
+<span class="sourceLineNo">147</span><a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148">                        if (property.isNumber()) {</a>
+<span class="sourceLineNo">149</span><a name="line.149">                                field.setHorizontalAlignment(SwingConstants.RIGHT);</a>
+<span class="sourceLineNo">150</span><a name="line.150">                        }</a>
+<span class="sourceLineNo">151</span><a name="line.151">                        if (value == null) {</a>
+<span class="sourceLineNo">152</span><a name="line.152">                                field.setText("");</a>
+<span class="sourceLineNo">153</span><a name="line.153">                        } else {</a>
+<span class="sourceLineNo">154</span><a name="line.154">                                field.setText(value.toString());</a>
+<span class="sourceLineNo">155</span><a name="line.155">                        }</a>
+<span class="sourceLineNo">156</span><a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157">                        field.addFocusListener(new FocusAdapter() {</a>
+<span class="sourceLineNo">158</span><a name="line.158">                                @Override</a>
+<span class="sourceLineNo">159</span><a name="line.159">                                public void focusLost(FocusEvent e) {</a>
+<span class="sourceLineNo">160</span><a name="line.160">                                        String value = format(property, field.getText());</a>
+<span class="sourceLineNo">161</span><a name="line.161">                                        try {</a>
+<span class="sourceLineNo">162</span><a name="line.162">                                                property.setValue(value);</a>
+<span class="sourceLineNo">163</span><a name="line.163">                                        } catch (InvocationTargetException ex) {</a>
+<span class="sourceLineNo">164</span><a name="line.164">                                                System.err.println(ex.getMessage());</a>
+<span class="sourceLineNo">165</span><a name="line.165">                                        } finally {</a>
+<span class="sourceLineNo">166</span><a name="line.166">                                                field.setText(property.getValue().toString());</a>
+<span class="sourceLineNo">167</span><a name="line.167">                                                update();</a>
+<span class="sourceLineNo">168</span><a name="line.168">                                        }</a>
+<span class="sourceLineNo">169</span><a name="line.169">                                }</a>
+<span class="sourceLineNo">170</span><a name="line.170">                        });</a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172">                        field.addKeyListener(new KeyAdapter() {</a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174">                                @Override</a>
+<span class="sourceLineNo">175</span><a name="line.175">                                public void keyReleased(KeyEvent e) {</a>
+<span class="sourceLineNo">176</span><a name="line.176">                                        String value = format(property, field.getText());</a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span><a name="line.178">                                        try {</a>
+<span class="sourceLineNo">179</span><a name="line.179">                                                property.setValue(value);</a>
+<span class="sourceLineNo">180</span><a name="line.180">                                        } catch (InvocationTargetException ex) {</a>
+<span class="sourceLineNo">181</span><a name="line.181">                                                System.err.println(ex.getMessage());</a>
+<span class="sourceLineNo">182</span><a name="line.182">                                                field.setText(property.getValue().toString());</a>
+<span class="sourceLineNo">183</span><a name="line.183">                                        }</a>
+<span class="sourceLineNo">184</span><a name="line.184">                                }</a>
+<span class="sourceLineNo">185</span><a name="line.185">                        });</a>
+<span class="sourceLineNo">186</span><a name="line.186"></a>
+<span class="sourceLineNo">187</span><a name="line.187">                        component = field;</a>
+<span class="sourceLineNo">188</span><a name="line.188">                }</a>
+<span class="sourceLineNo">189</span><a name="line.189">                return component;</a>
+<span class="sourceLineNo">190</span><a name="line.190">        }</a>
+<span class="sourceLineNo">191</span><a name="line.191"></a>
+<span class="sourceLineNo">192</span><a name="line.192">        protected String format(Property property, String value) {</a>
+<span class="sourceLineNo">193</span><a name="line.193">                if (property.isNumber()) {</a>
+<span class="sourceLineNo">194</span><a name="line.194">                        value = value.trim();</a>
+<span class="sourceLineNo">195</span><a name="line.195">                        if (value.equals("")) {</a>
+<span class="sourceLineNo">196</span><a name="line.196">                                value = "0";</a>
+<span class="sourceLineNo">197</span><a name="line.197">                        } else if (value.equals("-")) {</a>
+<span class="sourceLineNo">198</span><a name="line.198">                                value = "0";</a>
+<span class="sourceLineNo">199</span><a name="line.199">                        } else {</a>
+<span class="sourceLineNo">200</span><a name="line.200">                                if (value.startsWith(".")) {</a>
+<span class="sourceLineNo">201</span><a name="line.201">                                        value = "0" + value;</a>
+<span class="sourceLineNo">202</span><a name="line.202">                                }</a>
+<span class="sourceLineNo">203</span><a name="line.203">                                if (value.endsWith(".")) {</a>
+<span class="sourceLineNo">204</span><a name="line.204">                                        value = value + "0";</a>
+<span class="sourceLineNo">205</span><a name="line.205">                                }</a>
+<span class="sourceLineNo">206</span><a name="line.206">                        }</a>
+<span class="sourceLineNo">207</span><a name="line.207">                        return value;</a>
+<span class="sourceLineNo">208</span><a name="line.208">                }</a>
+<span class="sourceLineNo">209</span><a name="line.209">                return value;</a>
+<span class="sourceLineNo">210</span><a name="line.210">        }</a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span><a name="line.212">        protected void fillComponentsMap() {</a>
+<span class="sourceLineNo">213</span><a name="line.213">                for (final Property property : module.getProperties()) {</a>
+<span class="sourceLineNo">214</span><a name="line.214">                        Component component = createComponent(property);</a>
+<span class="sourceLineNo">215</span><a name="line.215">                        components.put(property, component);</a>
+<span class="sourceLineNo">216</span><a name="line.216">                }</a>
+<span class="sourceLineNo">217</span><a name="line.217">        }</a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span><a name="line.219">        protected void updatePropertyPanel() {</a>
+<span class="sourceLineNo">220</span><a name="line.220">                panel.removeAll();</a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span><a name="line.222">                for (final Property property : module.getProperties()) {</a>
+<span class="sourceLineNo">223</span><a name="line.223">                        if (property.isActive()) {</a>
+<span class="sourceLineNo">224</span><a name="line.224">                                String name = property.getName();</a>
+<span class="sourceLineNo">225</span><a name="line.225"></a>
+<span class="sourceLineNo">226</span><a name="line.226">                                int i = getIndent(property);</a>
+<span class="sourceLineNo">227</span><a name="line.227">                                String s = "";</a>
+<span class="sourceLineNo">228</span><a name="line.228">                                for (int j = 0; j &lt; i; j++) {</a>
+<span class="sourceLineNo">229</span><a name="line.229">                                        s += "     ";</a>
+<span class="sourceLineNo">230</span><a name="line.230">                                }</a>
+<span class="sourceLineNo">231</span><a name="line.231">                                if (i &gt; 0) {</a>
+<span class="sourceLineNo">232</span><a name="line.232">                                        s = s.substring(2) + "\u21aa ";</a>
+<span class="sourceLineNo">233</span><a name="line.233">                                }</a>
+<span class="sourceLineNo">234</span><a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235">                                JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));</a>
+<span class="sourceLineNo">236</span><a name="line.236">                                JLabel label = new JLabel(s + name);</a>
+<span class="sourceLineNo">237</span><a name="line.237">                                label.setFocusable(false);</a>
+<span class="sourceLineNo">238</span><a name="line.238">                                String tooltip = format.getTooltip(property);</a>
+<span class="sourceLineNo">239</span><a name="line.239">                                if (tooltip != null) {</a>
+<span class="sourceLineNo">240</span><a name="line.240">                                        label.setToolTipText(tooltip);</a>
+<span class="sourceLineNo">241</span><a name="line.241">                                }</a>
+<span class="sourceLineNo">242</span><a name="line.242">                                labelPanel.add(label);</a>
+<span class="sourceLineNo">243</span><a name="line.243"></a>
+<span class="sourceLineNo">244</span><a name="line.244">                                File file = property.getAnnotation(File.class);</a>
+<span class="sourceLineNo">245</span><a name="line.245">                                if (file != null) {</a>
+<span class="sourceLineNo">246</span><a name="line.246">                                        JButton browse = new JButton(Icons.getIcon(Icons.FOLDER));</a>
+<span class="sourceLineNo">247</span><a name="line.247">                                        browse.setFocusable(false);</a>
+<span class="sourceLineNo">248</span><a name="line.248">                                        browse.setBorderPainted(false);</a>
+<span class="sourceLineNo">249</span><a name="line.249">                                        browse.setContentAreaFilled(false);</a>
+<span class="sourceLineNo">250</span><a name="line.250">                                        browse.setBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0));</a>
+<span class="sourceLineNo">251</span><a name="line.251"></a>
+<span class="sourceLineNo">252</span><a name="line.252">                                        browse.addActionListener(new ActionListener() {</a>
+<span class="sourceLineNo">253</span><a name="line.253">                                                @Override</a>
+<span class="sourceLineNo">254</span><a name="line.254">                                                public void actionPerformed(ActionEvent e) {</a>
+<span class="sourceLineNo">255</span><a name="line.255">                                                        selectFile(property);</a>
+<span class="sourceLineNo">256</span><a name="line.256">                                                }</a>
+<span class="sourceLineNo">257</span><a name="line.257">                                        });</a>
+<span class="sourceLineNo">258</span><a name="line.258">                                        browse.setCursor(new Cursor(Cursor.HAND_CURSOR));</a>
+<span class="sourceLineNo">259</span><a name="line.259">                                        browse.setToolTipText("Browse ...");</a>
+<span class="sourceLineNo">260</span><a name="line.260">                                        labelPanel.add(browse);</a>
+<span class="sourceLineNo">261</span><a name="line.261">                                }</a>
+<span class="sourceLineNo">262</span><a name="line.262">                                panel.add(labelPanel);</a>
+<span class="sourceLineNo">263</span><a name="line.263"></a>
+<span class="sourceLineNo">264</span><a name="line.264">                                Component component = components.get(property);</a>
+<span class="sourceLineNo">265</span><a name="line.265">                                panel.add(component);</a>
+<span class="sourceLineNo">266</span><a name="line.266">                        }</a>
+<span class="sourceLineNo">267</span><a name="line.267">                }</a>
+<span class="sourceLineNo">268</span><a name="line.268">        }</a>
+<span class="sourceLineNo">269</span><a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270">        protected void update() {</a>
+<span class="sourceLineNo">271</span><a name="line.271">                updatePropertyPanel();</a>
+<span class="sourceLineNo">272</span><a name="line.272">                revalidate();</a>
+<span class="sourceLineNo">273</span><a name="line.273">                repaint();</a>
+<span class="sourceLineNo">274</span><a name="line.274">        }</a>
+<span class="sourceLineNo">275</span><a name="line.275"></a>
+<span class="sourceLineNo">276</span><a name="line.276">        /**</a>
+<span class="sourceLineNo">277</span><a name="line.277">         * Returns the instance of the {@link PropertyModule}.</a>
+<span class="sourceLineNo">278</span><a name="line.278">         * </a>
+<span class="sourceLineNo">279</span><a name="line.279">         * @return the instance of the property module</a>
+<span class="sourceLineNo">280</span><a name="line.280">         */</a>
+<span class="sourceLineNo">281</span><a name="line.281">        public PropertyModule getModule() {</a>
+<span class="sourceLineNo">282</span><a name="line.282">                return module;</a>
+<span class="sourceLineNo">283</span><a name="line.283">        }</a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span><a name="line.285">        protected int getIndent(Property property) {</a>
+<span class="sourceLineNo">286</span><a name="line.286">                int i = 0;</a>
+<span class="sourceLineNo">287</span><a name="line.287">                for (Requirement requirement : property.getRequirements()) {</a>
+<span class="sourceLineNo">288</span><a name="line.288">                        i = Math.max(i, getIndent(requirement.getProperty()));</a>
+<span class="sourceLineNo">289</span><a name="line.289">                }</a>
+<span class="sourceLineNo">290</span><a name="line.290">                if (!property.getRequirements().isEmpty()) {</a>
+<span class="sourceLineNo">291</span><a name="line.291">                        i++;</a>
+<span class="sourceLineNo">292</span><a name="line.292">                }</a>
+<span class="sourceLineNo">293</span><a name="line.293">                return i;</a>
+<span class="sourceLineNo">294</span><a name="line.294">        }</a>
+<span class="sourceLineNo">295</span><a name="line.295"></a>
+<span class="sourceLineNo">296</span><a name="line.296">        private void selectFile(Property property) {</a>
+<span class="sourceLineNo">297</span><a name="line.297">                final File file = property.getAnnotation(File.class);</a>
+<span class="sourceLineNo">298</span><a name="line.298">                final JFileChooser fileChooser = PropertyPanel.this.fileChooser.get();</a>
+<span class="sourceLineNo">299</span><a name="line.299"></a>
+<span class="sourceLineNo">300</span><a name="line.300">                java.io.File dir = null;</a>
+<span class="sourceLineNo">301</span><a name="line.301">                try {</a>
+<span class="sourceLineNo">302</span><a name="line.302">                        dir = new java.io.File(property.getValue().toString());</a>
+<span class="sourceLineNo">303</span><a name="line.303">                } catch (Exception ex) {</a>
+<span class="sourceLineNo">304</span><a name="line.304">                }</a>
+<span class="sourceLineNo">305</span><a name="line.305"></a>
+<span class="sourceLineNo">306</span><a name="line.306">                fileChooser.setCurrentDirectory(dir);</a>
+<span class="sourceLineNo">307</span><a name="line.307"></a>
+<span class="sourceLineNo">308</span><a name="line.308">                if (file != null &amp;&amp; !file.value().equals("")) {</a>
+<span class="sourceLineNo">309</span><a name="line.309">                        FileFilter filter = new FileFilter() {</a>
+<span class="sourceLineNo">310</span><a name="line.310"></a>
+<span class="sourceLineNo">311</span><a name="line.311">                                @Override</a>
+<span class="sourceLineNo">312</span><a name="line.312">                                public boolean accept(java.io.File pathname) {</a>
+<span class="sourceLineNo">313</span><a name="line.313">                                        if (pathname.isDirectory()) {</a>
+<span class="sourceLineNo">314</span><a name="line.314">                                                return true;</a>
+<span class="sourceLineNo">315</span><a name="line.315">                                        }</a>
+<span class="sourceLineNo">316</span><a name="line.316">                                        String f = pathname.getName().toLowerCase();</a>
+<span class="sourceLineNo">317</span><a name="line.317">                                        String ext = file.value().toLowerCase();</a>
+<span class="sourceLineNo">318</span><a name="line.318"></a>
+<span class="sourceLineNo">319</span><a name="line.319">                                        if (f.endsWith(ext)) {</a>
+<span class="sourceLineNo">320</span><a name="line.320">                                                return true;</a>
+<span class="sourceLineNo">321</span><a name="line.321">                                        }</a>
+<span class="sourceLineNo">322</span><a name="line.322">                                        return false;</a>
+<span class="sourceLineNo">323</span><a name="line.323">                                }</a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span><a name="line.325">                                @Override</a>
+<span class="sourceLineNo">326</span><a name="line.326">                                public String getDescription() {</a>
+<span class="sourceLineNo">327</span><a name="line.327">                                        String ext = file.value().toLowerCase();</a>
+<span class="sourceLineNo">328</span><a name="line.328">                                        return "(*" + ext + ")";</a>
+<span class="sourceLineNo">329</span><a name="line.329">                                }</a>
+<span class="sourceLineNo">330</span><a name="line.330">                        };</a>
+<span class="sourceLineNo">331</span><a name="line.331"></a>
+<span class="sourceLineNo">332</span><a name="line.332">                        fileChooser.setFileFilter(filter);</a>
+<span class="sourceLineNo">333</span><a name="line.333">                } else {</a>
+<span class="sourceLineNo">334</span><a name="line.334">                        fileChooser.setFileFilter(null);</a>
+<span class="sourceLineNo">335</span><a name="line.335">                }</a>
+<span class="sourceLineNo">336</span><a name="line.336"></a>
+<span class="sourceLineNo">337</span><a name="line.337">                fileChooser.setVisible(true);</a>
+<span class="sourceLineNo">338</span><a name="line.338"></a>
+<span class="sourceLineNo">339</span><a name="line.339">                int status = fileChooser.showOpenDialog(null);</a>
+<span class="sourceLineNo">340</span><a name="line.340">                if (status == JFileChooser.APPROVE_OPTION) {</a>
+<span class="sourceLineNo">341</span><a name="line.341">                        java.io.File f = fileChooser.getSelectedFile();</a>
+<span class="sourceLineNo">342</span><a name="line.342">                        try {</a>
+<span class="sourceLineNo">343</span><a name="line.343">                                property.setValue(f.getAbsolutePath());</a>
+<span class="sourceLineNo">344</span><a name="line.344">                                JTextField field = (JTextField) components.get(property);</a>
+<span class="sourceLineNo">345</span><a name="line.345">                                field.setText("" + property.getValue());</a>
+<span class="sourceLineNo">346</span><a name="line.346">                                update();</a>
+<span class="sourceLineNo">347</span><a name="line.347">                        } catch (InvocationTargetException ex) {</a>
+<span class="sourceLineNo">348</span><a name="line.348">                                System.err.println(ex.getMessage());</a>
+<span class="sourceLineNo">349</span><a name="line.349">                        }</a>
+<span class="sourceLineNo">350</span><a name="line.350">                }</a>
+<span class="sourceLineNo">351</span><a name="line.351">        }</a>
+<span class="sourceLineNo">352</span><a name="line.352">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

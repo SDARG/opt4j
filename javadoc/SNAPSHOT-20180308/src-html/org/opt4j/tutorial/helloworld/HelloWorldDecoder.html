@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a name="line.1">package org.opt4j.tutorial.helloworld;</a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span><a name="line.3">import org.opt4j.core.genotype.SelectGenotype;</a>
+<span class="sourceLineNo">004</span><a name="line.4">import org.opt4j.core.problem.Decoder;</a>
+<span class="sourceLineNo">005</span><a name="line.5"></a>
+<span class="sourceLineNo">006</span><a name="line.6">public class HelloWorldDecoder implements Decoder&lt;SelectGenotype&lt;Character&gt;, String&gt; {</a>
+<span class="sourceLineNo">007</span><a name="line.7"></a>
+<span class="sourceLineNo">008</span><a name="line.8">        public String decode(SelectGenotype&lt;Character&gt; genotype) {</a>
+<span class="sourceLineNo">009</span><a name="line.9">                String phenotype = "";</a>
+<span class="sourceLineNo">010</span><a name="line.10">                for (int i = 0; i &lt; genotype.size(); i++) {</a>
+<span class="sourceLineNo">011</span><a name="line.11">                        phenotype += genotype.getValue(i);</a>
+<span class="sourceLineNo">012</span><a name="line.12">                }</a>
+<span class="sourceLineNo">013</span><a name="line.13">                return phenotype;</a>
+<span class="sourceLineNo">014</span><a name="line.14">        }</a>
+<span class="sourceLineNo">015</span><a name="line.15"></a>
+<span class="sourceLineNo">016</span><a name="line.16">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,242 @@
+/* CSS Document */
+body {
+	position: absolute;
+	background: #FFFFFF;
+	color: #111111;
+	width: 800px;
+	padding: 0px;
+	margin: 0px;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 10pt;
+}
+
+img {
+	border: none;
+}
+
+/* Top of the Page */
+#top {
+	display: block;
+	float: left;
+	position: relative;
+	width: 100%;
+	height: 100px;
+	padding: 0px;
+	margin: 0px;
+	background: url(design/img/top_logo.png) top left no-repeat;
+}
+
+#top h1 {
+	display: none;
+}
+
+#top h2 {
+	margin: 0px;
+	position: absolute;
+	height: 20px;
+	bottom: 24px;
+	right: 8px;
+	font-size: 12pt;
+	font-variant: small-caps;
+	color: #F28226;
+}
+
+#top hr {
+	display: block;
+	width: 800px;
+	border: none;
+	height: 13px;
+	margin: 0px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	background: url(design/img/top_hr.png) left repeat-x;
+}
+
+/* Container for Content */
+#container {
+	display: block;
+	position: relative;
+	float: left;
+	width: 800px;
+	text-align: justify;
+}
+
+/* Left Submenu and Main Textfield */
+#navigation {
+	float: left;
+	display: block;
+	position: relative;
+	width: 142px;
+	padding: 0px;
+	margin-top: 16px;
+	margin-left: 8px;
+	margin-bottom: 20px;
+}
+
+#navigation h4 {
+	display: none;
+}
+
+#navigation img {
+	margin-top: 20px;
+}
+
+#navigation ul {
+	margin: 0;
+	padding: 0;
+}
+
+#navigation ul li {
+	list-style: none;
+	padding: 0px 0px 0px 0px;
+}
+
+#navigation a {
+	font-size: 12pt;
+	font-variant: small-caps;
+	text-decoration: none;
+	color: #111111;
+}
+
+#navigation #current {
+	color: #F28226;
+	font-weight: bold;
+}
+
+#navigation a:hover {
+	color: #F28226;
+}
+
+#social {
+	float: left;
+	display: block;
+	position: relative;
+	margin-top: 40px;
+}
+
+#content {
+	display: block;
+	position: relative;
+	float: left;
+	width: 642px;
+	margin-top: 16px;
+	margin-bottom: 20px;
+	text-align: justify;
+}
+
+#content p {
+	margin-left: 8px;
+	font-size: 10pt;
+}
+
+#content a {
+	font-size: 10pt;
+	color: #16C;
+	text-decoration: none;
+}
+
+#content a:hover {
+	text-decoration: underline;
+}
+
+#content em {
+	font-variant: small-caps;
+	text-decoration: none;
+	font-style: normal;
+	font-weight: normal;
+}
+
+#content strong {
+	text-decoration: none;
+	font-style: normal;
+	font-weight: bold;
+}
+
+#content h2 {
+	font-size: 12pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+#content h4 {
+	font-size: 10pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+#content h5 {
+	font-size: 8pt;
+	font-weight: 600;
+	font-variant: small-caps;
+	margin: 0px;
+}
+
+#footer {
+	float: left;
+	margin-top: 5px;
+	position: relative;
+	text-align: right;
+	width: 800px;
+	font-size: 10pt;
+}
+
+#footer hr {
+	position: absolute;
+	top: -5px;
+	right: 0px;
+	display: block;
+	width: 250px;
+	border: none;
+	height: 5px;
+	margin: 0px;
+	background-color: #595959;
+}
+
+#footer a {
+	position: relative;
+	right: 8px;
+	margin-left: 8px;
+	font-size: 12pt;
+	font-variant: small-caps;
+	text-decoration: none;
+	color: #111111;
+}
+
+#footer a:hover {
+	color: #F28226;
+}
+
+#footer #current {
+	color: #F28226;
+	font-weight: bold;
+}
+
+#bibtex {
+	margin-left: 15px;
+	font-size: 0.7em;
+	font-family: Verdana;
+	border-width: 1px;
+	border-style: solid;
+	border-color: gray;
+	padding: 0.5em;
+	color: #333333;
+}
+
+#links table,td {
+	border: 0px solid green;
+	width: 100%;
+	vertical-align: top;
+	align: left;
+}
+
+#links td {
+	width: 300px;
+}
+
+#links li {
+	position: relative;
+	left: 20px;
+}
