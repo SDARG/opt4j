@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.ea;
 
@@ -47,19 +46,19 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	protected int generations = 1000;
 
 	@Constant(value = "alpha", namespace = EvolutionaryAlgorithm.class)
-	@Info("The size of the population.")
+	@Info("Alph - The size of the population.")
 	@Order(1)
-	protected int alpha = 100;
+	protected int populationSize = 100;
 
 	@Constant(value = "mu", namespace = EvolutionaryAlgorithm.class)
-	@Info("The number of parents per generation.")
+	@Info("Mu - The number of parents per generation.")
 	@Order(2)
-	protected int mu = 25;
+	protected int parentsPerGeneration = 25;
 
 	@Constant(value = "lambda", namespace = EvolutionaryAlgorithm.class)
-	@Info("The number of offspring per generation.")
+	@Info("Lambda The number of offsprings per generation.")
 	@Order(3)
-	protected int lambda = 25;
+	protected int offspringsPerGeneration = 25;
 
 	@Info("Performs a crossover operation with this given rate.")
 	@Order(4)
@@ -86,28 +85,25 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the population size {@code alpha}.
 	 * 
-	 * @see #setAlpha
 	 * @return the population size
 	 */
-	public int getAlpha() {
-		return alpha;
+	public int getPopulationSize() {
+		return populationSize;
 	}
 
 	/**
 	 * Sets the population size {@code alpha}.
 	 * 
-	 * @see #getAlpha
 	 * @param alpha
 	 *            the population size to set
 	 */
-	public void setAlpha(int alpha) {
-		this.alpha = alpha;
+	public void setPopulationSize(int alpha) {
+		this.populationSize = alpha;
 	}
 
 	/**
 	 * Returns the number of generations.
 	 * 
-	 * @see #setGenerations
 	 * @return the number of generations
 	 */
 	public int getGenerations() {
@@ -128,49 +124,44 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the number of children {@code lambda}.
 	 * 
-	 * @see #setLambda
 	 * @return the number of children
 	 */
-	public int getLambda() {
-		return lambda;
+	public int getOffspringsPerGeneration() {
+		return offspringsPerGeneration;
 	}
 
 	/**
 	 * Sets the number of children {@code lambda}.
 	 * 
-	 * @see #getLambda
 	 * @param lambda
 	 *            the number of children
 	 */
-	public void setLambda(int lambda) {
-		this.lambda = lambda;
+	public void setOffspringsPerGeneration(int lambda) {
+		this.offspringsPerGeneration = lambda;
 	}
 
 	/**
 	 * Returns the number of parents {@code mu}.
 	 * 
-	 * @see #setMu
 	 * @return the number of parents
 	 */
-	public int getMu() {
-		return mu;
+	public int getParentsPerGeneration() {
+		return parentsPerGeneration;
 	}
 
 	/**
 	 * Sets the number of parents {@code mu}.
 	 * 
-	 * @see #getMu
 	 * @param mu
 	 *            the number of parents
 	 */
-	public void setMu(int mu) {
-		this.mu = mu;
+	public void setParentsPerGeneration(int mu) {
+		this.parentsPerGeneration = mu;
 	}
 
 	/**
 	 * Returns the type of crossover rate that is used.
 	 * 
-	 * @see #setCrossoverRateType
 	 * @return the crossoverRateType
 	 */
 	public CrossoverRateType getCrossoverRateType() {
@@ -180,7 +171,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the type of crossover rate to use.
 	 * 
-	 * @see #getCrossoverRateType
 	 * @param crossoverRateType
 	 *            the crossoverRateType to set
 	 */
@@ -191,7 +181,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Returns the used crossover rate.
 	 * 
-	 * @see #setCrossoverRate
 	 * @return the crossoverRate
 	 */
 	public double getCrossoverRate() {
@@ -201,7 +190,6 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	/**
 	 * Sets the crossover rate.
 	 * 
-	 * @see #getCrossoverRate
 	 * @param crossoverRate
 	 *            the crossoverRate to set
 	 */
@@ -216,9 +204,7 @@ public class EvolutionaryAlgorithmModule extends OptimizerModule {
 	 */
 	@Override
 	public void config() {
-
 		bindIterativeOptimizer(EvolutionaryAlgorithm.class);
-
 		bind(CrossoverRate.class).to(ConstantCrossoverRate.class).in(SINGLETON);
 	}
 }
