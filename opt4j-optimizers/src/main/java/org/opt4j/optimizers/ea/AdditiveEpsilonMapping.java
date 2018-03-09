@@ -22,8 +22,11 @@ public class AdditiveEpsilonMapping implements EpsilonMapping {
 	@Override
 	public Objectives mapObjectives(Objectives original, double epsilon, Map<Objective, Double> objectiveAmplitudes) {
 		Objectives result = new Objectives();
-		for (Objective obj : original.getKeys()) {
-			double value = original.get(obj).getDouble();
+		Iterator<Objective> iterator = original.getKeys().iterator();
+		double[] values = original.array();
+		for (int i = 0; i < original.size(); i++) {
+			Objective obj = iterator.next();
+			double value = values[i] * (obj.getSign().equals(Sign.MIN) ? 1 : -1);
 			double delta = epsilon * objectiveAmplitudes.get(obj) * (obj.getSign().equals(Sign.MAX) ? 1 : -1);
 			result.add(obj, value + delta);
 		}
