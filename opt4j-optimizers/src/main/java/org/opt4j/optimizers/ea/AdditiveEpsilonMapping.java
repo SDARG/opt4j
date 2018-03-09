@@ -1,6 +1,7 @@
 package org.opt4j.optimizers.ea;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -35,8 +36,12 @@ public class AdditiveEpsilonMapping implements EpsilonMapping {
 		Map<Objective, Double> minimumMap = new HashMap<Objective, Double>();
 		Map<Objective, Double> amplitudeMap = new HashMap<Objective, Double>();
 		for (Individual indi : individuals) {
-			for (Objective obj : indi.getObjectives().getKeys()) {
-				double value = indi.getObjectives().get(obj).getDouble();
+			Objectives objectives = indi.getObjectives();
+			Iterator<Objective> iterator = objectives.getKeys().iterator();
+			double[] values = objectives.array();
+			for (int i = 0; i < objectives.size(); i++) {
+				Objective obj = iterator.next();
+				double value = values[i];
 				if (!maximumMap.containsKey(obj) || maximumMap.get(obj) < value) {
 					maximumMap.put(obj, value);
 				}
