@@ -14,20 +14,6 @@ import java.util.Set;
 
 public class AeSeHSelectorTest {
 
-//	@Test(expected=IllegalArgumentException.class)
-//	public void testGetParentsWrongCall(){
-//		ESamplingSurvivorGeneration survivorGeneration = mock(DefaultSurvivorGeneration.class);
-//		AeSeHSelector selector = new AeSeHSelector(survivorGeneration);
-//		Individual first = mock(Individual.class);
-//		Individual second = mock(Individual.class);
-//		Individual third = mock(Individual.class);
-//		Population population = new Population();
-//		population.add(first);
-//		population.add(second);
-//		population.add(third);
-//		selector.getParents(2, population);
-//	}
-	
 	@Test
 	public void testGetParents(){
 		ESamplingSurvivorGeneration survivorGeneration = mock(DefaultSurvivorGeneration.class);

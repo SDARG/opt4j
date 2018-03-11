@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
+
 import org.opt4j.core.Objectives;
 
 import static org.mockito.Mockito.*;
@@ -24,6 +25,7 @@ public class NonDominatedSortingTest {
 	protected static Individual third = mock(Individual.class);
 	protected static Individual fourth = mock(Individual.class);
 	protected static Individual fifth = mock(Individual.class);
+	protected static Individual infeasible = mock(Individual.class);
 
 	protected static Set<Individual> getIndividualSet() {
 		Set<Individual> result = new HashSet<Individual>();
@@ -34,17 +36,24 @@ public class NonDominatedSortingTest {
 		when(fourth.getObjectives()).thenReturn(getObjectives(3, 2));
 		when(fifth.getObjectives()).thenReturn(getObjectives(1, 1));
 		
+		Objectives insfeasibleObjectives = new Objectives();
+		insfeasibleObjectives.add(firstObj, Objective.INFEASIBLE);
+		insfeasibleObjectives.add(secondObj, Objective.INFEASIBLE);
+		when(infeasible.getObjectives()).thenReturn(insfeasibleObjectives);
+		
 		when(first.toString()).thenReturn("first");
 		when(second.toString()).thenReturn("second");
 		when(third.toString()).thenReturn("third");
 		when(fourth.toString()).thenReturn("fourth");
 		when(fifth.toString()).thenReturn("fifth");
+		when(infeasible.toString()).thenReturn("infeasible");
 
 		result.add(first);
 		result.add(second);
 		result.add(third);
 		result.add(fourth);
 		result.add(fifth);
+		result.add(infeasible);
 
 		return result;
 	}
@@ -59,7 +68,7 @@ public class NonDominatedSortingTest {
 	@Test
 	public void testGetExtremeIndividuals() {
 		Set<Individual> extremes = NonDominatedSorting
-				.getExtremeIndividuals(NonDominatedSorting.generateFronts(getIndividualSet()).get(0));
+				.getExtremeIndividuals(getIndividualSet());
 		assertEquals(2, extremes.size());
 		assertTrue(extremes.contains(first));
 		assertTrue(extremes.contains(third));
@@ -68,7 +77,7 @@ public class NonDominatedSortingTest {
 	@Test
 	public void testGenerateFronts() {
 		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(getIndividualSet());
-		assertEquals(3, fronts.size());
+		assertEquals(4, fronts.size());
 
 		assertEquals(3, fronts.get(0).size());
 		assertTrue(fronts.get(0).contains(first));

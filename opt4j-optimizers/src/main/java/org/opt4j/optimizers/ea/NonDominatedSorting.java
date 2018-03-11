@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
-import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
 
 /**
@@ -159,18 +158,19 @@ public class NonDominatedSorting {
 	 */
 	public static Set<Individual> getExtremeIndividuals(Collection<Individual> firstFront) {
 		Map<Objective, Individual> bestIndis = new HashMap<Objective, Individual>();
-		for (Individual indi : firstFront) {
-			for (Objective o : indi.getObjectives().getKeys()) {
-				double value = indi.getObjectives().get(o).getDouble();
-				Sign sign = o.getSign();
-				if (!bestIndis.containsKey(o)) {
-					bestIndis.put(o, indi);
-				} else {
-					double storedValue = bestIndis.get(o).getObjectives().get(o).getDouble();
-					if ((storedValue < value && sign.equals(Sign.MAX))
-							|| storedValue > value && sign.equals(Sign.MIN)) {
-						bestIndis.put(o, indi);
-					}
+		Map<Objective, Double> extremeValues = new HashMap<Objective, Double>();
+		Individual firstIndi = firstFront.iterator().next();
+		List<Objective> objList = new ArrayList<Objective>(firstIndi.getObjectives().getKeys());
+		// iterate the individuals
+		for (Individual indi : firstFront){
+			// iterate the objectives and their values
+			double[] values = indi.getObjectives().array();
+			for (int i = 0; i < objList.size(); i++){
+				Objective obj = objList.get(i);
+				double value = values[i];
+				if(!bestIndis.containsKey(obj) || extremeValues.get(obj) > value){
+					bestIndis.put(obj, indi);
+					extremeValues.put(obj, value);
 				}
 			}
 		}

@@ -31,6 +31,10 @@ public class AdditiveEpsilonMappingTest {
 		Objectives thirdObj = new Objectives();
 		thirdObj.add(first, 2);
 		thirdObj.add(second, 2);
+		
+		Objectives infeasibleObj = new Objectives();
+		infeasibleObj.add(first, Objective.INFEASIBLE);
+		infeasibleObj.add(second, Objective.INFEASIBLE);
 
 		Individual first = mock(Individual.class);
 		when(first.getObjectives()).thenReturn(firstObj);
@@ -38,11 +42,14 @@ public class AdditiveEpsilonMappingTest {
 		when(second.getObjectives()).thenReturn(secondObj);
 		Individual third = mock(Individual.class);
 		when(third.getObjectives()).thenReturn(thirdObj);
+		Individual infeasible = mock(Individual.class);
+		when(infeasible.getObjectives()).thenReturn(infeasibleObj);
 
 		Set<Individual> indis = new HashSet<Individual>();
 		indis.add(first);
 		indis.add(second);
 		indis.add(third);
+		indis.add(infeasible);
 		return indis;
 	}
 

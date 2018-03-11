@@ -44,6 +44,8 @@ public class AdditiveEpsilonMapping implements EpsilonMapping {
 			double[] values = objectives.array();
 			for (int i = 0; i < objectives.size(); i++) {
 				Objective obj = iterator.next();
+				if (objectives.get(obj).getValue() == Objective.INFEASIBLE)
+					continue;
 				double value = values[i];
 				if (!maximumMap.containsKey(obj) || maximumMap.get(obj) < value) {
 					maximumMap.put(obj, value);
