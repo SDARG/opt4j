@@ -31,7 +31,7 @@ public class AeSeHModule extends OptimizerModule {
 	protected int generations = 1000;
 
 	@Constant(value = "alpha", namespace = EvolutionaryAlgorithm.class)
-	@Info("Alph - The size of the population.")
+	@Info("Alpha - The size of the population.")
 	@Order(1)
 	protected int populationSize = 100;
 
