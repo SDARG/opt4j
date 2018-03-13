@@ -1,27 +1,24 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
+
+import static java.time.format.TextStyle.FULL;
+import static java.util.Locale.ENGLISH;
 
 import java.lang.reflect.Field;
 
@@ -31,6 +28,7 @@ import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.Property;
 import org.opt4j.core.config.PropertyModule;
 import org.opt4j.core.config.annotations.Category;
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Icon;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Name;
@@ -105,6 +103,11 @@ public class Format {
 		if (info != null) {
 			text += xmlBreak + info;
 		}
+
+		Citation citation = c.getAnnotation(Citation.class);
+		if (citation != null)
+			text += xmlBreak + xmlBreak + "<span style='color: gray;'>[" + formatIEEE(citation) + "]</span>";
+
 		text += "</html>";
 
 		return text;
@@ -236,6 +239,10 @@ public class Format {
 					if (i != null) {
 						text += i.value();
 					}
+
+					Citation c = field.getAnnotation(Citation.class);
+					if (c != null)
+						text += "&nbsp;&nbsp;<span style='color: gray;'>[" + formatIEEE(c) + "]</span>";
 					text += xmlBreak;
 				}
 			}
@@ -255,5 +262,32 @@ public class Format {
 	 */
 	public String formatTooltip(String text) {
 		return "<html>" + text.replaceAll("\n", xmlBreak) + "</html>";
+	}
+
+	public static String formatIEEE(Citation citation) {
+		StringBuilder builder = new StringBuilder(citation.authors());
+		builder.append(": <em>").append(citation.title()).append(".</em> ");
+		if (!citation.journal().isEmpty()) {
+			builder.append("In: <em>").append(citation.journal()).append(".</em> ");
+		}
+		if (citation.volume() >= 0) {
+			builder.append("vol. ").append(citation.volume()).append(", ");
+		}
+		if (citation.number() >= 0) {
+			builder.append("no. ").append(citation.number()).append(", ");
+		}
+		if (citation.pageFirst() >= 0) {
+			if (citation.pageLast() > 0 && citation.pageFirst() != citation.pageLast()) {
+				builder.append("pp. ").append(citation.pageFirst()).append("&ndash;").append(citation.pageLast())
+						.append(", ");
+			} else {
+				builder.append("p. ").append(citation.pageFirst()).append(", ");
+			}
+		}
+		if (!citation.noMonth()) {
+			builder.append(citation.month().getDisplayName(FULL, ENGLISH)).append(" ");
+		}
+		builder.append(citation.year()).append(".");
+		return builder.toString();
 	}
 }

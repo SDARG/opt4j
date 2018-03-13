@@ -1,29 +1,27 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
-
 
 package org.opt4j.core.common.archive;
 
+import static java.time.Month.APRIL;
+import static java.time.Month.AUGUST;
+
 import org.opt4j.core.config.Icons;
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Icon;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Required;
@@ -32,8 +30,7 @@ import org.opt4j.core.start.Constant;
 import org.opt4j.core.start.Opt4JModule;
 
 /**
- * The {@link ArchiveModule} determines an implementation for the
- * {@link Archive} interface.
+ * The {@link ArchiveModule} determines an implementation for the {@link Archive} interface.
  * 
  * @see UnboundedArchive
  * @see PopulationArchive
@@ -56,6 +53,7 @@ public class ArchiveModule extends Opt4JModule {
 	protected int capacity = 100;
 
 	@Info("Divisions for the adaptive grid archive. A convergence is guaranteed if 'capacity>1+div^m+(div-1)^m+2*m' with m being the number of objectives holds")
+	@Citation(title = "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors", authors = "J. Knowles, D. Corne", journal = "Transactions of Evolutionary Computation", volume = 7, number = 2, month = APRIL, year = 2003)
 	@Required(property = "type", elements = { "ADAPTIVE_GRID" })
 	@Constant(value = "div", namespace = AdaptiveGridArchive.class)
 	protected int divisions = 7;
@@ -84,6 +82,7 @@ public class ArchiveModule extends Opt4JModule {
 		 * @see AdaptiveGridArchive
 		 */
 		@Info("Adaptive grid archive")
+		@Citation(title = "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors", authors = "J. Knowles, D. Corne", journal = "Transactions of Evolutionary Computation", volume = 7, number = 2, month = APRIL, year = 2003)
 		ADAPTIVE_GRID,
 
 		/**
@@ -92,6 +91,7 @@ public class ArchiveModule extends Opt4JModule {
 		 * @see CrowdingArchive
 		 */
 		@Info("Bounded archive based on the crowding distance (NSGA2)")
+		@Citation(title = "A fast and elitist multiobjective genetic algorithm : NSGA-II", authors = "K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan", journal = "IEEETransactions on Evolutionary Computation", pageFirst = 182, pageLast = 197, month = AUGUST, year = 2002)
 		CROWDING;
 	}
 
