@@ -17,8 +17,8 @@
 
 package org.opt4j.core.common.archive;
 
-import static java.time.Month.APRIL;
-import static java.time.Month.AUGUST;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.APRIL;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.AUGUST;
 
 import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.annotations.Citation;

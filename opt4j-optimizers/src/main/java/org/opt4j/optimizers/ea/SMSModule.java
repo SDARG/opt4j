@@ -17,7 +17,7 @@
 
 package org.opt4j.optimizers.ea;
 
-import java.time.Month;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
 
 import org.opt4j.core.common.archive.FrontDensityIndicator;
 import org.opt4j.core.config.annotations.Citation;
@@ -34,7 +34,7 @@ import org.opt4j.core.start.Constant;
  * 
  */
 @Info("SMS-EMOA: Multiobjective selection based on dominated hypervolume")
-@Citation(authors = "M. Emmerich, N. Beume, and B. Naujoks", title = "An EMO Algorithm Using the Hypervolume Measure as Selection Criterion", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 62, pageLast = 76, year = 2005, month = Month.JANUARY, noMonth = true)
+@Citation(authors = "M. Emmerich, N. Beume, and B. Naujoks", title = "An EMO Algorithm Using the Hypervolume Measure as Selection Criterion", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 62, pageLast = 76, year = 2005, month = UNKNOWN)
 public class SMSModule extends SelectorModule {
 
 	@Info("The offset value")

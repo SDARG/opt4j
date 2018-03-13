@@ -19,6 +19,7 @@ package org.opt4j.core.config.visualization;
 
 import static java.time.format.TextStyle.FULL;
 import static java.util.Locale.ENGLISH;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
 
 import java.lang.reflect.Field;
 
@@ -284,8 +285,8 @@ public class Format {
 				builder.append("p. ").append(citation.pageFirst()).append(", ");
 			}
 		}
-		if (!citation.noMonth()) {
-			builder.append(citation.month().getDisplayName(FULL, ENGLISH)).append(" ");
+		if (citation.month() != UNKNOWN) {
+			builder.append(citation.month().toMonth().getDisplayName(FULL, ENGLISH)).append(" ");
 		}
 		builder.append(citation.year()).append(".");
 		return builder.toString();

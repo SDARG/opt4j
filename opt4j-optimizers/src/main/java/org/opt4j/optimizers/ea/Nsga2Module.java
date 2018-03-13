@@ -17,7 +17,7 @@
 
 package org.opt4j.optimizers.ea;
 
-import java.time.Month;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
 
 import org.opt4j.core.common.archive.Crowding;
 import org.opt4j.core.common.archive.FrontDensityIndicator;
@@ -34,7 +34,7 @@ import org.opt4j.core.start.Constant;
  * 
  */
 @Info("A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization")
-@Citation(title = "A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization: NSGA-II", authors = "K. Deb, Samir Agrawal, Amrit Pratap, and T. Meyarivan", journal = "Parallel MockProblem Solving from Nature", year = 2000, month = Month.JANUARY, noMonth = true)
+@Citation(title = "A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization: NSGA-II", authors = "K. Deb, Samir Agrawal, Amrit Pratap, and T. Meyarivan", journal = "Parallel MockProblem Solving from Nature", year = 2000, month = UNKNOWN)
 public class Nsga2Module extends SelectorModule {
 
 	@Info("The tournament value")

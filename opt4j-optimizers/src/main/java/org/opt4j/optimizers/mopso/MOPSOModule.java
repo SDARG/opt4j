@@ -17,7 +17,7 @@
 
 package org.opt4j.optimizers.mopso;
 
-import java.time.Month;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
 
 import org.opt4j.core.IndividualFactory;
 import org.opt4j.core.config.annotations.Citation;
@@ -34,7 +34,7 @@ import org.opt4j.core.start.Constant;
  * @author lukasiewycz
  */
 @Info("Multi-objective particle swarm optimizer. Mostly based on the OMOPSO. Works only with real-valued problems.")
-@Citation(title = "Improving PSO-based Multi-Objective Optimization using Crowding, Mutation and ∈-Dominance", authors = "M. Reyes Sierra and C. A. Coello Coello", journal = "Proceedings of Evolutionary Multi-Criterion Optimization", month = Month.JANUARY, noMonth = true, year = 2005)
+@Citation(title = "Improving PSO-based Multi-Objective Optimization using Crowding, Mutation and ∈-Dominance", authors = "M. Reyes Sierra and C. A. Coello Coello", journal = "Proceedings of Evolutionary Multi-Criterion Optimization", month = UNKNOWN, year = 2005)
 public class MOPSOModule extends OptimizerModule {
 
 	@Info("The number of particles.")

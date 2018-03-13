@@ -17,7 +17,7 @@
 
 package org.opt4j.optimizers.ea;
 
-import java.time.Month;
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
 
 import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Info;
@@ -30,7 +30,7 @@ import org.opt4j.core.start.Constant;
  * 
  */
 @Info("The Strength Pareto Evolutionary Algorithm (SPEA II).")
-@Citation(title = "SPEA2: Improving the Strength Pareto Evolutionary Algorithm For Multiobjective Optimization", authors = "Eckart Zitzler, Marco Laumanns, and Lothar Thiele", journal = "Evolutionary Methods for Design, Optimisation, and Control", pageFirst = 19, pageLast = 26, year = 2002, month = Month.JANUARY, noMonth = true)
+@Citation(title = "SPEA2: Improving the Strength Pareto Evolutionary Algorithm For Multiobjective Optimization", authors = "Eckart Zitzler, Marco Laumanns, and Lothar Thiele", journal = "Evolutionary Methods for Design, Optimisation, and Control", pageFirst = 19, pageLast = 26, year = 2002, month = UNKNOWN)
 public class Spea2Module extends SelectorModule {
 
 	@Info("The tournament value (number of opponents for the mating selection).")
