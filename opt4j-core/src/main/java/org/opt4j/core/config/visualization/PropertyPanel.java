@@ -20,14 +20,22 @@ package org.opt4j.core.config.visualization;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +46,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
@@ -46,6 +55,7 @@ import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.Property;
 import org.opt4j.core.config.PropertyModule;
 import org.opt4j.core.config.Requirement;
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.File;
 
 /**
@@ -265,6 +275,73 @@ public class PropertyPanel extends JPanel {
 				panel.add(component);
 			}
 		}
+
+		if (module.getModule().getClass().isAnnotationPresent(Citation.class)) {
+			Citation citation = module.getModule().getClass().getAnnotation(Citation.class);
+			addReferenceRow(citation);
+		}
+	}
+
+	/**
+	 * Adds a row showing the {@link Citation}. On the left hand side, "reference" is printed while on the right hand
+	 * side, the {@link Citation} is added in a static {@link TextArea}.
+	 * 
+	 * @param citation
+	 *            the {@link Citation}
+	 * @return
+	 */
+	protected void addReferenceRow(Citation citation) {
+		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		JLabel label = new JLabel("reference");
+		label.setFocusable(false);
+		labelPanel.add(label);
+
+		panel.add(labelPanel);
+
+		final JTextArea field = new JTextArea();
+		field.setLineWrap(true);
+		field.setWrapStyleWord(true);
+		field.setFont(label.getFont());
+		field.setBackground(label.getBackground());
+		field.setEditable(false);
+		field.setPreferredSize(
+				new Dimension((int) (panel.getPreferredSize().width * 0.70), field.getMaximumSize().height));
+		field.setText(Format.formatJava(citation));
+
+		if (!citation.doi().isEmpty()) {
+			final String doi = citation.doi();
+			field.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			field.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						Desktop.getDesktop().browse(new URI("https://doi.org/" + doi));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} catch (URISyntaxException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+		}
+		panel.add(field);
 	}
 
 	protected void update() {

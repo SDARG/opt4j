@@ -289,6 +289,40 @@ public class Format {
 			builder.append(citation.month().toMonth().getDisplayName(FULL, ENGLISH)).append(" ");
 		}
 		builder.append(citation.year()).append(".");
+
+		if (!citation.doi().isEmpty()) {
+			builder.append(" <a href=\"https://doi.org/").append(citation.doi()).append("\">").append(citation.doi())
+					.append("</a>");
+		}
+		return builder.toString();
+	}
+
+	public static String formatJava(Citation citation) {
+		StringBuilder builder = new StringBuilder();
+		if (!citation.authors().isEmpty())
+			builder.append(citation.authors()).append(": ");
+		builder.append("\"").append(citation.title()).append("\". ");
+		if (!citation.journal().isEmpty())
+			builder.append("In: ").append(citation.journal()).append(". ");
+		if (citation.volume() >= 0)
+			builder.append("vol. ").append(citation.volume()).append(", ");
+		if (citation.number() >= 0)
+			builder.append("no. ").append(citation.number()).append(", ");
+		if (citation.pageFirst() >= 0) {
+			if (citation.pageLast() > 0 && citation.pageFirst() != citation.pageLast()) {
+				builder.append("pp. ").append(citation.pageFirst()).append("–").append(citation.pageLast())
+						.append(", ");
+			} else {
+				builder.append("p. ").append(citation.pageFirst()).append(", ");
+			}
+		}
+		if (citation.month() != UNKNOWN) {
+			builder.append(citation.month().toMonth().getDisplayName(FULL, ENGLISH)).append(" ");
+		}
+		builder.append(citation.year()).append(".");
+		if (!citation.doi().isEmpty()) {
+			builder.append(" https://doi.org/").append(citation.doi());
+		}
 		return builder.toString();
 	}
 }

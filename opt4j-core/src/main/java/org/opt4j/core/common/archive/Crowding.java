@@ -38,6 +38,7 @@ import org.opt4j.core.Individual;
  * @author lukasiewycz
  * 
  */
+
 public class Crowding implements FrontDensityIndicator {
 
 	/**

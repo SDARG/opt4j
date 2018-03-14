@@ -1,25 +1,19 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
@@ -32,10 +26,8 @@ import java.awt.LayoutManager;
 /**
  * The {@link DialogLayout} is used for label-field pair layout.
  * 
- * @see <a
- *      href="http://www.javafaq.nu/java-allbooks-8.html">http://www.javafaq.nu/java-allbooks-8.html</a>
- * @see <a
- *      href="http://www.javafaq.nu/java-bookpage-15-5.html">http://www.javafaq.nu/java-bookpage-15-5.html</a>
+ * @see <a href="http://www.javafaq.nu/java-allbooks-8.html">http://www.javafaq.nu/java-allbooks-8.html</a>
+ * @see <a href="http://www.javafaq.nu/java-bookpage-15-5.html">http://www.javafaq.nu/java-bookpage-15-5.html</a>
  * 
  * @author lukasiewycz
  * 
@@ -71,8 +63,7 @@ class DialogLayout implements LayoutManager {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see java.awt.LayoutManager#addLayoutComponent(java.lang.String,
-	 * java.awt.Component)
+	 * @see java.awt.LayoutManager#addLayoutComponent(java.lang.String, java.awt.Component)
 	 */
 	@Override
 	public void addLayoutComponent(String name, Component comp) {
@@ -141,11 +132,13 @@ class DialogLayout implements LayoutManager {
 		int w = parent.getWidth() - insets.left - insets.right - divider;
 		int x = insets.left;
 		int y = insets.top;
-
+		System.out.println("divider: " + divider + " parent.width: " + parent.getWidth());
 		for (int k = 1; k < parent.getComponentCount(); k += 2) {
 			Component comp1 = parent.getComponent(k - 1);
 			Component comp2 = parent.getComponent(k);
 			Dimension d = comp2.getPreferredSize();
+			System.out.println("[" + x + "," + y + "," + (divider - hGap) + "," + d.height + "][" + (x + divider) + ","
+					+ y + "," + w + "," + d.height + "]");
 			comp1.setBounds(x, y, divider - hGap, d.height);
 			comp2.setBounds(x + divider, y, w, d.height);
 			y += d.height + vGap;
@@ -163,7 +156,7 @@ class DialogLayout implements LayoutManager {
 	protected int getDivider(Container parent) {
 
 		Insets insets = parent.getInsets();
-		int half = (parent.getWidth() - insets.left - insets.right) / 2;
+		int half = (parent.getWidth() - insets.left - insets.right) / 4;
 
 		int divider = 0;
 
@@ -171,10 +164,11 @@ class DialogLayout implements LayoutManager {
 			Component comp = parent.getComponent(k);
 			Dimension d = comp.getPreferredSize();
 			divider = Math.max(divider, d.width);
+			System.out.println(d.width + "--> max: " + divider);
 		}
 
 		divider += hGap;
-
+		System.out.println("getDivider=" + Math.max(divider, half));
 		return Math.max(divider, half);
 
 	}

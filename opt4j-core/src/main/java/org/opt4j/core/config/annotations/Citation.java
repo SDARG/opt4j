@@ -16,6 +16,21 @@ import org.opt4j.core.start.Opt4JModule;
 /**
  * The {@link Citation} can be used in {@link Opt4JModule}s to add citations to scientific works.
  * 
+ * Example:
+ * 
+ * <pre>
+ * &#64;Citation(title     = "Opt4J: A Modular Framework for Meta-heuristic Optimization",
+ *               authors   = "Martin Lukasiewycz, Michael Glass, Felix Reimann, and Jürgen Teich",
+ *               journal   = "Proceedings of the 13th Annual Conference on Genetic and Evolutionary Computation",
+ *               pageFirst = 1723
+ *               pageLast  = 1730
+ *               volume    = 13
+ *               number    = 1
+ *               month     = PublicationMonth.JULY,
+ *               year      = 2011,
+ *               doi       = "10.1145/2001576.2001808")
+ * </pre>
+ * 
  * @author Felix Reimann
  *
  */
@@ -65,17 +80,26 @@ public @interface Citation {
 	 */
 	String title();
 
-	String authors()
+	/**
+	 * The authors of the work.
+	 * 
+	 * @return the authors
+	 */
+	String authors() default "";
 
-	default "";
+	/**
+	 * The volume of the journal.
+	 * 
+	 * @return the volume
+	 */
+	int volume() default -1;
 
-	int volume()
-
-	default -1;
-
-	int number()
-
-	default -1;
+	/**
+	 * The number of the journal issue.
+	 * 
+	 * @return the number
+	 */
+	int number() default -1;
 
 	/**
 	 * The month, in which the paper has been published.
@@ -84,15 +108,38 @@ public @interface Citation {
 	 */
 	PublicationMonth month();
 
+	/**
+	 * The year, in which the paper has been published.
+	 * 
+	 * @return the year
+	 */
 	int year();
 
-	String journal()
+	/**
+	 * The journal, in which the paper has been published.
+	 * 
+	 * @return the title of the journal
+	 */
+	String journal() default "";
 
-	default "";
+	/**
+	 * The number of the page, where the paper starts.
+	 * 
+	 * @return the first page
+	 */
+	int pageFirst() default -1;
 
-	int pageFirst()
-
-	default -1;
-
+	/**
+	 * The number of the page, where the paper ends.
+	 * 
+	 * @return the last page
+	 */
 	int pageLast() default -1;
+
+	/**
+	 * The Digital Object Identifier of the work.
+	 * 
+	 * @return the doi
+	 */
+	String doi() default "";
 }

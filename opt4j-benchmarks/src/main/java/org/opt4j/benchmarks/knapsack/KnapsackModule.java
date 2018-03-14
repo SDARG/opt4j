@@ -1,27 +1,25 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.benchmarks.knapsack;
 
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.NOVEMBER;
+
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.File;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Required;
@@ -29,19 +27,18 @@ import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * The multiobjective 0/1 ILP knapsack problem as proposed in "E. Zitzler and L.
- * Thiele: Multiobjective evolutionary algorithms: A comparative case study and
- * the strength Pareto approach. IEEE Transactions on Evolutionary Computation,
- * vol. 3, no. 4, pp. 257-271, Nov. 1999.". Either one of the nine benchmark
- * problems from Zitzler and Thiele 1999 can be selected or the number of
- * knapsacks and items can be set manually.
+ * The multiobjective 0/1 ILP knapsack problem as proposed in "E. Zitzler and L. Thiele: Multiobjective evolutionary
+ * algorithms: A comparative case study and the strength Pareto approach. IEEE Transactions on Evolutionary Computation,
+ * vol. 3, no. 4, pp. 257-271, Nov. 1999.". Either one of the nine benchmark problems from Zitzler and Thiele 1999 can
+ * be selected or the number of knapsacks and items can be set manually.
  * 
- * @see <a
- *      href="http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
+ * @see <a href=
+ *      "http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
  * 
  * @author reimann, lukasiewycz
  * 
  */
+@Citation(authors = "E. Zitzler and L. Thiele", title = "Multiobjective evolutionary algorithms: A comparative case study and the strength Pareto approach", journal = "IEEE Transactions on Evolutionary Computation", volume = 3, number = 4, pageFirst = 257, pageLast = 271, month = NOVEMBER, year = 1999)
 public class KnapsackModule extends ProblemModule {
 
 	protected int knapsacks = 5;
@@ -140,7 +137,8 @@ public class KnapsackModule extends ProblemModule {
 					KnapsackProfitEvaluator.class);
 			break;
 		case SAT:
-			bindProblem(KnapsackSATCreatorDecoder.class, KnapsackSATCreatorDecoder.class, KnapsackProfitEvaluator.class);
+			bindProblem(KnapsackSATCreatorDecoder.class, KnapsackSATCreatorDecoder.class,
+					KnapsackProfitEvaluator.class);
 			break;
 		}
 		addEvaluator(KnapsackOverloadEvaluator.class);
