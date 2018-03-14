@@ -34,7 +34,7 @@ import org.opt4j.core.start.Constant;
  * 
  */
 @Info("A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization")
-@Citation(title = "A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization: NSGA-II", authors = "K. Deb, Samir Agrawal, Amrit Pratap, and T. Meyarivan", journal = "Parallel MockProblem Solving from Nature", year = 2000, month = UNKNOWN)
+@Citation(title = "A Fast Elitist Non-Dominated Sorting Genetic Algorithm for Multi-Objective Optimization: NSGA-II", authors = "K. Deb, Samir Agrawal, Amrit Pratap, and T. Meyarivan", journal = "Parallel MockProblem Solving from Nature", pageFirst = 849, pageLast = 858, year = 2000, doi = "10.1007/3-540-45356-3_83", month = UNKNOWN)
 public class Nsga2Module extends SelectorModule {
 
 	@Info("The tournament value")

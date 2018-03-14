@@ -34,7 +34,7 @@ import org.opt4j.core.start.Constant;
  * @author lukasiewycz
  */
 @Info("Multi-objective particle swarm optimizer. Mostly based on the OMOPSO. Works only with real-valued problems.")
-@Citation(title = "Improving PSO-based Multi-Objective Optimization using Crowding, Mutation and ∈-Dominance", authors = "M. Reyes Sierra and C. A. Coello Coello", journal = "Proceedings of Evolutionary Multi-Criterion Optimization", month = UNKNOWN, year = 2005)
+@Citation(title = "Improving PSO-based Multi-Objective Optimization using Crowding, Mutation and ∈-Dominance", authors = "M. Reyes Sierra and C. A. Coello Coello", journal = "Proceedings of Evolutionary Multi-Criterion Optimization", pageFirst = 505, pageLast = 519, month = UNKNOWN, year = 2005, doi = "10.1007/978-3-540-31880-4_35")
 public class MOPSOModule extends OptimizerModule {
 
 	@Info("The number of particles.")

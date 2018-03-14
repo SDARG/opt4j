@@ -1,27 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.benchmarks.dtlz;
+
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.MAY;
 
 import org.opt4j.benchmarks.BinaryCreator;
 import org.opt4j.benchmarks.BinaryToDoubleDecoder;
@@ -30,6 +26,7 @@ import org.opt4j.benchmarks.DoubleCopyDecoder;
 import org.opt4j.benchmarks.DoubleCreator;
 import org.opt4j.benchmarks.M;
 import org.opt4j.benchmarks.N;
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
 import org.opt4j.core.config.annotations.Required;
@@ -40,14 +37,14 @@ import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * Module for the DTLZ benchmarks as proposed in "Scalable multi-objective
- * optimization test problems, Kalyanmoy Deb,Lothar Thiele, Marco Laumanns,
- * Eckart Zitzler, Proc. Congress Evolutionary Computation Volume 1 (May 2002)".
+ * Module for the DTLZ benchmarks as proposed in "Scalable multi-objective optimization test problems, Kalyanmoy Deb,
+ * Lothar Thiele, Marco Laumanns, Eckart Zitzler, Proc. Congress Evolutionary Computation Volume 1 (May 2002)".
  * 
  * @author lukasiewycz
  * 
  */
 @Info("DTLZ Problem Suite.  (n = m + k - 1)")
+@Citation(title = "", authors = "Kalyanmoy Deb, Lothar Thiele, Marco Laumanns, and Eckart Zitzler", journal = "Proceedings of the 2002 Congress on Evolutionary Computation", volume = 1, month = MAY, year = 2002, doi = "10.1109/CEC.2002.1007032")
 public class DTLZModule extends ProblemModule {
 
 	@Order(0)

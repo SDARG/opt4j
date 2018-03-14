@@ -289,6 +289,11 @@ public class Format {
 			builder.append(citation.month().toMonth().getDisplayName(FULL, ENGLISH)).append(" ");
 		}
 		builder.append(citation.year()).append(".");
+
+		if (!citation.doi().isEmpty()) {
+			builder.append(" <a href=\"https://doi.org/").append(citation.doi()).append("\">").append(citation.doi())
+					.append("</a>");
+		}
 		return builder.toString();
 	}
 }
