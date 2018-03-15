@@ -27,10 +27,8 @@ import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * The multiobjective 0/1 ILP knapsack problem as proposed in "E. Zitzler and L. Thiele: Multiobjective evolutionary
- * algorithms: A comparative case study and the strength Pareto approach. IEEE Transactions on Evolutionary Computation,
- * vol. 3, no. 4, pp. 257-271, Nov. 1999.". Either one of the nine benchmark problems from Zitzler and Thiele 1999 can
- * be selected or the number of knapsacks and items can be set manually.
+ * The multiobjective 0/1 ILP knapsack problem as proposed in Zitzler and Thiele 1999. Either one of the nine benchmark
+ * problems from Zitzler and Thiele 1999 can be selected or the number of knapsacks and items can be set manually.
  * 
  * @see <a href=
  *      "http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
@@ -38,7 +36,7 @@ import org.opt4j.core.start.Constant;
  * @author reimann, lukasiewycz
  * 
  */
-@Citation(authors = "E. Zitzler and L. Thiele", title = "Multiobjective evolutionary algorithms: A comparative case study and the strength Pareto approach", journal = "IEEE Transactions on Evolutionary Computation", volume = 3, number = 4, pageFirst = 257, pageLast = 271, month = NOVEMBER, year = 1999)
+@Citation(authors = "Eckart Zitzler and Lothar Thiele", title = "Multiobjective evolutionary algorithms: A comparative case study and the strength Pareto approach", journal = "IEEE Transactions on Evolutionary Computation", volume = 3, number = 4, pageFirst = 257, pageLast = 271, month = NOVEMBER, year = 1999)
 public class KnapsackModule extends ProblemModule {
 
 	protected int knapsacks = 5;

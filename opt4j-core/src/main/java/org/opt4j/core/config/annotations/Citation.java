@@ -14,21 +14,22 @@ import java.time.Month;
 import org.opt4j.core.start.Opt4JModule;
 
 /**
- * The {@link Citation} can be used in {@link Opt4JModule}s to add citations to scientific works.
+ * The {@link Citation} can be used in {@link Opt4JModule}s to add citations to
+ * scientific works.
  * 
  * Example:
  * 
  * <pre>
  * &#64;Citation(title     = "Opt4J: A Modular Framework for Meta-heuristic Optimization",
- *               authors   = "Martin Lukasiewycz, Michael Glass, Felix Reimann, and Jürgen Teich",
- *               journal   = "Proceedings of the 13th Annual Conference on Genetic and Evolutionary Computation",
- *               pageFirst = 1723
- *               pageLast  = 1730
- *               volume    = 13
- *               number    = 1
- *               month     = PublicationMonth.JULY,
- *               year      = 2011,
- *               doi       = "10.1145/2001576.2001808")
+ *           authors   = "Martin Lukasiewycz, Michael Gla&szlig;, Felix Reimann, and J&uuml;rgen Teich",
+ *           journal   = "Proceedings of the 13th Annual Conference on Genetic and Evolutionary Computation",
+ *           pageFirst = 1723
+ *           pageLast  = 1730
+ *           volume    = 13
+ *           number    = 1
+ *           month     = PublicationMonth.JULY,
+ *           year      = 2011,
+ *           doi       = "10.1145/2001576.2001808")
  * </pre>
  * 
  * @author Felix Reimann

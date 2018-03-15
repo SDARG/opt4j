@@ -25,8 +25,8 @@ import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.start.Constant;
 
 /**
- * Module for the S-Metric Selection ({@link Selector}) based on the {@link Hypervolume} contribution, see "M. Emmerich,
- * N. Beume, and B. Naujoks. An EMO Algorithm Using the Hypervolume Measure as Selection Criterion. EMO 2005.".
+ * Module for the S-Metric Selection ({@link Selector}) based on the {@link Hypervolume} contribution, see Emmerich et
+ * al. 2005.
  * 
  * @see Hypervolume
  * @author lukasiewycz
@@ -34,7 +34,7 @@ import org.opt4j.core.start.Constant;
  * 
  */
 @Info("SMS-EMOA: Multiobjective selection based on dominated hypervolume")
-@Citation(authors = "M. Emmerich, N. Beume, and B. Naujoks", title = "An EMO Algorithm Using the Hypervolume Measure as Selection Criterion", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 62, pageLast = 76, year = 2005, month = UNKNOWN)
+@Citation(authors = "Michael Emmerich, Nicola Beume, and Boris Naujoks", title = "An EMO Algorithm Using the Hypervolume Measure as Selection Criterion", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 62, pageLast = 76, year = 2005, month = UNKNOWN)
 public class SMSModule extends SelectorModule {
 
 	@Info("The offset value")

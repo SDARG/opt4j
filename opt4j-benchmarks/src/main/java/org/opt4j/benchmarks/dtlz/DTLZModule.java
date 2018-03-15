@@ -37,8 +37,7 @@ import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * Module for the DTLZ benchmarks as proposed in "Scalable multi-objective optimization test problems, Kalyanmoy Deb,
- * Lothar Thiele, Marco Laumanns, Eckart Zitzler, Proc. Congress Evolutionary Computation Volume 1 (May 2002)".
+ * Module for the DTLZ benchmarks as proposed in Deb et al. 2002.
  * 
  * @author lukasiewycz
  * 

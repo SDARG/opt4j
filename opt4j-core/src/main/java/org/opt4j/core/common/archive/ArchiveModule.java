@@ -53,7 +53,7 @@ public class ArchiveModule extends Opt4JModule {
 	protected int capacity = 100;
 
 	@Info("Divisions for the adaptive grid archive. A convergence is guaranteed if 'capacity>1+div^m+(div-1)^m+2*m' with m being the number of objectives holds")
-	@Citation(title = "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors", authors = "J. Knowles, D. Corne", journal = "Transactions of Evolutionary Computation", volume = 7, number = 2, month = APRIL, year = 2003)
+	@Citation(title = "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors", authors = "Joshua Knowles and David Corne", journal = "Transactions of Evolutionary Computation", volume = 7, number = 2, month = APRIL, year = 2003)
 	@Required(property = "type", elements = { "ADAPTIVE_GRID" })
 	@Constant(value = "div", namespace = AdaptiveGridArchive.class)
 	protected int divisions = 7;
@@ -82,7 +82,7 @@ public class ArchiveModule extends Opt4JModule {
 		 * @see AdaptiveGridArchive
 		 */
 		@Info("Adaptive grid archive")
-		@Citation(title = "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors", authors = "J. Knowles, D. Corne", journal = "Transactions of Evolutionary Computation", volume = 7, number = 2, month = APRIL, year = 2003)
+		@Citation(title = "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors", authors = "Joshua Knowles and David Corne", journal = "Transactions of Evolutionary Computation", volume = 7, number = 2, month = APRIL, year = 2003)
 		ADAPTIVE_GRID,
 
 		/**
@@ -91,7 +91,7 @@ public class ArchiveModule extends Opt4JModule {
 		 * @see CrowdingArchive
 		 */
 		@Info("Bounded archive based on the crowding distance (NSGA2)")
-		@Citation(title = "A fast and elitist multiobjective genetic algorithm : NSGA-II", authors = "K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan", journal = "IEEETransactions on Evolutionary Computation", pageFirst = 182, pageLast = 197, month = AUGUST, year = 2002)
+		@Citation(title = "A fast and elitist multiobjective genetic algorithm : NSGA-II", authors = "Kalyanmoy Deb, Amrit Pratap, Samir Agarwal, and Tanaka Meyarivan", journal = "IEEETransactions on Evolutionary Computation", pageFirst = 182, pageLast = 197, month = AUGUST, year = 2002)
 		CROWDING;
 	}
 
