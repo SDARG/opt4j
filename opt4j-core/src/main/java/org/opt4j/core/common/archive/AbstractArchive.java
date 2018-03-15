@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.core.common.archive;
 
 import java.util.ArrayList;
@@ -78,20 +77,22 @@ public abstract class AbstractArchive extends Archive {
 		}
 
 		/*
-		 * Remove those individuals from the archive which are dominated by the
-		 * candidates. Remove those individuals from the candidates which are
-		 * dominated by the archive.
+		 * Remove those individuals from the candidates which are weakly
+		 * dominated by the archive. Remove those individuals from the archive
+		 * which are dominated by the candidates. In case of equal objectives,
+		 * this gives priority to the individuals in the archive and avoids
+		 * unnecessary archive updates.
 		 */
 		Iterator<Individual> i1, i2;
 		for (i1 = candidates.iterator(); i1.hasNext();) {
 			o1 = i1.next().getObjectives();
 			for (i2 = this.iterator(); i2.hasNext();) {
 				o2 = i2.next().getObjectives();
-				if (o1.weaklyDominates(o2)) {
-					i2.remove();
-				} else if (o2.dominates(o1)) {
+				if (o2.weaklyDominates(o1)) {
 					i1.remove();
 					break;
+				} else if (o1.dominates(o2)) {
+					i2.remove();
 				}
 			}
 		}
