@@ -1,5 +1,6 @@
 plugins {
 	id 'com.github.kt3k.coveralls' version '2.6.3'
+ 
 }
 apply plugin: 'base'
 apply plugin: 'application'
@@ -21,7 +22,6 @@ allprojects {
     group = 'org.opt4j'
    
     repositories {
-	jcenter() 
     	mavenCentral()
     }
     
