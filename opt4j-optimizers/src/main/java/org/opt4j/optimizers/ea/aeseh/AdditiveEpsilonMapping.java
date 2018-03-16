@@ -12,7 +12,7 @@ import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
 
 /**
- * Implements the evenly spaced adaptive epsilon function.
+ * Implements the evenly spaced adaptive ε function.
  * 
  * @author Fedor Smirnov
  *

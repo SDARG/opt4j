@@ -53,7 +53,7 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	}
 
 	/**
-	 * Create the survivor pool by adding the epsilon-sampled individuals to the
+	 * Creates the survivor pool by adding the ε-sampled individuals to the
 	 * extreme individuals.
 	 * 
 	 * @param extremeIndividuals
@@ -99,8 +99,8 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	}
 
 	/**
-	 * Apply epsilon sampling by dividing the given individuals into the two sets of
-	 * epsilon-dominant and epsilon-dominated individuals.
+	 * Applies ε-sampling by dividing the given individuals into the two sets of
+	 * ε-dominant and ε-dominated individuals.
 	 * 
 	 * @param firstFront
 	 *            the input individuals which constitute the first non-dominated front

@@ -19,14 +19,15 @@ import com.google.inject.ImplementedBy;
 public interface ESamplingSurvivorGeneration {
 
 	/**
-	 * Generate the survivors out of the input collection.
+	 * generates the survivors out of the input collection
 	 * 
 	 * @param population
 	 *            the current population (union of the parent- and the
 	 *            offspring-sets from the current iteration)
 	 * @param survivorNumber
 	 *            the number of survivors to create
-	 * @return the survivors (used as the parent generation for the next iteration)
+	 * @return the survivors (used as the pool for the parent candidates for the
+	 *         next generation)
 	 */
 	public Set<Individual> getSurvivors(Collection<Individual> population, int survivorNumber);
 

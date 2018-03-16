@@ -29,11 +29,11 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	}
 
 	/**
-	 * Sort the given individuals into non-dominated fronts
+	 * sort the given individuals into non-dominated fronts
 	 * 
 	 * @param individuals
 	 * @return an ordered list of the non-dominated front. The first entry is made
-	 *         up by the first front, that is by the Pareto-optimal solutions
+	 *         up by the first front, that is by the Pareto-optimal solutions.
 	 */
 	public void generateFronts(Collection<Individual> individuals) {
 		// assign an id to each individual that corresponds to its index in an
@@ -83,17 +83,17 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	 * individuals that are then not dominated form the next non-dominated front.
 	 * 
 	 * @param currentFront
-	 *            : The list of individuals forming the current non-dominated front
+	 *            the list of individuals forming the current non-dominated front
 	 * @param dominatedIndividualsMap
-	 *            : map mapping an individual on the collection of individuals that
+	 *            map mapping an individual on the collection of individuals that
 	 *            it dominates
 	 * @param dominatingIndividualNumber
-	 *            : an array where the number of dominating individuals is stored
+	 *            an array where the number of dominating individuals is stored
 	 *            for each individual
 	 * @param individual2IndexMap
-	 *            : a map storing the indices of the individuals used to access the
+	 *            a map storing the indices of the individuals used to access the
 	 *            dominatingIndividualNumber
-	 * @return The list of individuals forming the next non-dominated front.
+	 * @return the list of individuals forming the next non-dominated front
 	 */
 	protected List<Individual> getNextFront(List<Individual> currentFront,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
@@ -116,19 +116,19 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	 * dominates.
 	 * 
 	 * @param individualList
-	 *            : A list of the individuals
+	 *            a list of the individuals
 	 * @param dominatedIndividualsMap
-	 *            : A map that is filled during the execution of the method. Each
+	 *            A map that is filled during the execution of the method. Each
 	 *            individual is mapped onto the set of individuals that are
 	 *            dominated by this individual.
 	 * @param dominatingIndividualNumber
-	 *            : An integer array (initialized with zeros) that is filled during
+	 *            An integer array (initialized with zeros) that is filled during
 	 *            the execution of this method. Each individual is associated with
 	 *            an entry of this array. The integer therein is the number of
 	 *            individuals this individual is dominated by.
 	 * @param individual2IndexMap
-	 *            : A map mapping each individual onto its index in the
-	 *            dominatingIndividualNumber - array.
+	 *            a map mapping each individual onto its index in the
+	 *            dominatingIndividualNumber - array
 	 */
 	protected void determineDomination(List<Individual> individualList,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
@@ -152,10 +152,10 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	}
 
 	/**
-	 * Return the individuals with the best values for the individual objectives
+	 * returns the individuals with the best values for the individual objectives
 	 * 
 	 * @param firstFront
-	 * @return the set of the extreme individuals.
+	 * @return the set of the extreme individuals
 	 */
 	public Set<Individual> getExtremeIndividuals() {
 		Map<Objective, Individual> bestIndis = new HashMap<Objective, Individual>();

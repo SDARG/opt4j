@@ -18,8 +18,8 @@ import org.opt4j.optimizers.ea.Coupler;
 import com.google.inject.Inject;
 
 /**
- * This class implements a parent selection process based on
- * epsilon-neighborhood. This technique was first proposed in the paper:
+ * Implements a parent selection process based on epsilon-neighborhood. This
+ * technique was first proposed in the paper:
  * 
  * Aguirre, Hernán, Akira Oyama, and Kiyoshi Tanaka. "Adaptive ε-sampling and
  * ε-hood for evolutionary many-objective optimization." International
@@ -60,8 +60,8 @@ public class AeSeHCoupler implements Coupler {
 	}
 
 	/**
-	 * Pick a couple of parents from the given neighborhood. Here, we just pick
-	 * two random individuals.
+	 * Picks a couple of parents from the given neighborhood. Here, we just pick two
+	 * random individuals.
 	 * 
 	 * @param neighborhood
 	 * @return the pair that was picked as parents for a crossover
@@ -78,11 +78,10 @@ public class AeSeHCoupler implements Coupler {
 	}
 
 	/**
-	 * Apply the epsilon neighborhood creation.
+	 * Applies the epsilon neighborhood creation.
 	 * 
 	 * @param survivors
-	 * @return a list of individual sets. Each set is considered as a
-	 *         neighborhood
+	 * @return a list of individual sets. Each set is considered as a neighborhood.
 	 */
 	protected List<Set<Individual>> createNeighborhoods(List<Individual> survivors) {
 		List<Set<Individual>> neighborhoods = new ArrayList<Set<Individual>>();
