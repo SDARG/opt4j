@@ -24,9 +24,7 @@ import org.opt4j.optimizers.ea.Selector;
  * publication.
  * 
  * @author Fedor Smirnov
- *
  */
-
 @Info("Multi-objective evolutionary algorithm where the survival selection and the creation of neighborhoods is based on epsilon-dominance. The selection of parents is done within the created neighborhoods.")
 public class AeSeHModule extends OptimizerModule {
 
@@ -36,17 +34,17 @@ public class AeSeHModule extends OptimizerModule {
 	protected int generations = 1000;
 
 	@Constant(value = "alpha", namespace = EvolutionaryAlgorithm.class)
-	@Info("Alpha - The size of the population.")
+	@Info("The size of the population α.")
 	@Order(1)
 	protected int populationSize = 100;
 
 	@Constant(value = "mu", namespace = EvolutionaryAlgorithm.class)
-	@Info("Mu - The number of parents per generation.")
+	@Info("The number of parents per generation μ.")
 	@Order(2)
 	protected int parentsPerGeneration = 25;
 
 	@Constant(value = "lambda", namespace = EvolutionaryAlgorithm.class)
-	@Info("Lambda The number of offsprings per generation.")
+	@Info("The number of offsprings per generation λ.")
 	@Order(3)
 	protected int offspringsPerGeneration = 25;
 

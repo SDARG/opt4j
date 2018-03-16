@@ -13,17 +13,19 @@ import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 
 /**
- * Class used for the non-dominated sorting. During non-dominated sorting, the
- * evaluated individuals are sorted into fronts based on the number of
- * individuals they are dominated by. The first front consists of points that
- * are not dominated at all and so on.
+ * The NonDominatedFronts sorts each evaluated individual into fronts based on
+ * the number of other individuals it is dominated by. The first front consists
+ * of points that are not dominated at all and so on.
  * 
  * @author Fedor Smirnov
  *
  */
-public class NonDominatedSorting {
+public class NonDominatedFronts extends ArrayList<List<Individual>> {
 
-	private NonDominatedSorting() {
+	private static final long serialVersionUID = -7008617060878292974L;
+
+	public NonDominatedFronts(Collection<Individual> individuals) {
+		generateFronts(individuals);
 	}
 
 	/**
@@ -33,7 +35,7 @@ public class NonDominatedSorting {
 	 * @return an ordered list of the non-dominated front. The first entry is made
 	 *         up by the first front, that is by the Pareto-optimal solutions
 	 */
-	public static List<List<Individual>> generateFronts(Collection<Individual> individuals) {
+	public void generateFronts(Collection<Individual> individuals) {
 		// assign an id to each individual that corresponds to its index in an
 		// array
 		List<Individual> individualList = new ArrayList<Individual>(individuals);
@@ -41,7 +43,6 @@ public class NonDominatedSorting {
 		for (int i = 0; i < individualList.size(); i++) {
 			indexMap.put(individualList.get(i), i);
 		}
-		List<List<Individual>> fronts = new ArrayList<List<Individual>>();
 		// Initialize a map where an individual is assigned to the individuals
 		// that it dominates
 		Map<Individual, List<Individual>> dominatedIndividualsMap = new HashMap<Individual, List<Individual>>();
@@ -61,19 +62,19 @@ public class NonDominatedSorting {
 				f1.add(i);
 			}
 		}
-		fronts.add(f1);
+		add(f1);
 		List<Individual> currentFront = f1;
 		// Create the subsequent fronts. Front f_i is made up by individuals
 		// that
 		// are not dominated if all individuals from fronts f_j with j < i are
 		// removed.
 		while (!currentFront.isEmpty()) {
-			List<Individual> nextFront = getNextFront(currentFront, dominatedIndividualsMap, dominatingIndividualNumber, indexMap);
+			List<Individual> nextFront = getNextFront(currentFront, dominatedIndividualsMap, dominatingIndividualNumber,
+					indexMap);
 			if (!nextFront.isEmpty())
-				fronts.add(nextFront);
+				add(nextFront);
 			currentFront = nextFront;
 		}
-		return fronts;
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class NonDominatedSorting {
 	 *            dominatingIndividualNumber
 	 * @return The list of individuals forming the next non-dominated front.
 	 */
-	protected static List<Individual> getNextFront(List<Individual> currentFront,
+	protected List<Individual> getNextFront(List<Individual> currentFront,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
 			Map<Individual, Integer> individual2IndexMap) {
 		List<Individual> nextFront = new ArrayList<Individual>();
@@ -129,7 +130,7 @@ public class NonDominatedSorting {
 	 *            : A map mapping each individual onto its index in the
 	 *            dominatingIndividualNumber - array.
 	 */
-	protected static void determineDomination(List<Individual> individualList,
+	protected void determineDomination(List<Individual> individualList,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
 			Map<Individual, Integer> individual2IndexMap) {
 		// compare each individual with each other individual
@@ -156,19 +157,20 @@ public class NonDominatedSorting {
 	 * @param firstFront
 	 * @return the set of the extreme individuals.
 	 */
-	public static Set<Individual> getExtremeIndividuals(Collection<Individual> firstFront) {
+	public Set<Individual> getExtremeIndividuals() {
 		Map<Objective, Individual> bestIndis = new HashMap<Objective, Individual>();
 		Map<Objective, Double> extremeValues = new HashMap<Objective, Double>();
+		List<Individual> firstFront = get(0);
 		Individual firstIndi = firstFront.iterator().next();
 		List<Objective> objList = new ArrayList<Objective>(firstIndi.getObjectives().getKeys());
 		// iterate the individuals
-		for (Individual indi : firstFront){
+		for (Individual indi : firstFront) {
 			// iterate the objectives and their values
 			double[] values = indi.getObjectives().array();
-			for (int i = 0; i < objList.size(); i++){
+			for (int i = 0; i < objList.size(); i++) {
 				Objective obj = objList.get(i);
 				double value = values[i];
-				if(!bestIndis.containsKey(obj) || extremeValues.get(obj) > value){
+				if (!bestIndis.containsKey(obj) || extremeValues.get(obj) > value) {
 					bestIndis.put(obj, indi);
 					extremeValues.put(obj, value);
 				}

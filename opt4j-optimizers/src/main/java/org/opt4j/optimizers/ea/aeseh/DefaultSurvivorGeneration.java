@@ -11,7 +11,7 @@ import java.util.Set;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
-import org.opt4j.optimizers.ea.NonDominatedSorting;
+import org.opt4j.optimizers.ea.NonDominatedFronts;
 
 import com.google.inject.Inject;
 
@@ -39,9 +39,9 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	public Set<Individual> getSurvivors(Collection<Individual> population, int survivorNumber) {
 		Set<Individual> survivors;
 		// get the non-dominated front and the extreme solutions
-		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(population);
+		NonDominatedFronts fronts = new NonDominatedFronts(population);
 		Collection<Individual> paretoSolutions = fronts.get(0);
-		Set<Individual> extremeIndividuals = NonDominatedSorting.getExtremeIndividuals(paretoSolutions);
+		Set<Individual> extremeIndividuals = fronts.getExtremeIndividuals();
 
 		if (paretoSolutions.size() > survivorNumber) {
 			// more non-dominated solutions than survivors => apply ε-sampling
@@ -69,7 +69,8 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 		nonDominatedIndividuals.removeAll(extremeIndividuals);
 		Set<Individual> epsilonDominantIndividuals = new HashSet<Individual>();
 		Set<Individual> epsilonDominatedIndividuals = new HashSet<Individual>();
-		applyEpsilonSampling(nonDominatedIndividuals, epsilonDominantIndividuals, epsilonDominatedIndividuals, epsilonAdaption.getSamplingEpsilon());
+		applyEpsilonSampling(nonDominatedIndividuals, epsilonDominantIndividuals, epsilonDominatedIndividuals,
+				epsilonAdaption.getSamplingEpsilon());
 		boolean tooManyEpsilonDominantIndividuals = (extremeIndividuals.size()
 				+ epsilonDominantIndividuals.size()) > survivorNumber;
 		// adapt the sampling epsilon
@@ -98,12 +99,18 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	}
 
 	/**
-	 * Apply epsilon sampling by dividing the given individuals into the two sets of epsilon-dominant and epsilon-dominated individuals.
+	 * Apply epsilon sampling by dividing the given individuals into the two sets of
+	 * epsilon-dominant and epsilon-dominated individuals.
 	 * 
-	 * @param firstFront : The input individuals who constitute the first non-dominated front of the current population. 
-	 * @param epsilonDominantIndividuals : The set that will be filled with the epsilon-dominant individuals.
-	 * @param epsilonDominatedIndividuals : The set that will be filled with epsilon-dominated individuals
-	 * @param samplingEpsilon : The value used for the epsilon sampling.
+	 * @param firstFront
+	 *            the input individuals which constitute the first non-dominated front
+	 *            of the current population
+	 * @param epsilonDominantIndividuals
+	 *            the set that will be filled with the epsilon-dominant individuals
+	 * @param epsilonDominatedIndividuals
+	 *            the set that will be filled with epsilon-dominated individuals
+	 * @param samplingEpsilon
+	 *            the value used for the epsilon sampling
 	 */
 	protected void applyEpsilonSampling(List<Individual> firstFront, Set<Individual> epsilonDominantIndividuals,
 			Set<Individual> epsilonDominatedIndividuals, double samplingEpsilon) {

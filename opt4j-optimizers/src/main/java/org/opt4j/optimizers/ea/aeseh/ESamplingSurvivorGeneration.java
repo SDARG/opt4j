@@ -22,11 +22,11 @@ public interface ESamplingSurvivorGeneration {
 	 * Generate the survivors out of the input collection.
 	 * 
 	 * @param population
-	 *            : the current population (union of the parent- and the
+	 *            the current population (union of the parent- and the
 	 *            offspring-sets from the current iteration)
-	 * @param survivorNumber : The number of survivors to create
-	 * @return : the survivors (used as the parent generation for the next
-	 *         iteration)
+	 * @param survivorNumber
+	 *            the number of survivors to create
+	 * @return the survivors (used as the parent generation for the next iteration)
 	 */
 	public Set<Individual> getSurvivors(Collection<Individual> population, int survivorNumber);
 

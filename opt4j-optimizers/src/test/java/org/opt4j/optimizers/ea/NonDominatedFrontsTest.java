@@ -15,7 +15,7 @@ import org.opt4j.core.Objectives;
 
 import static org.mockito.Mockito.*;
 
-public class NonDominatedSortingTest {
+public class NonDominatedFrontsTest {
 
 	protected static final Objective firstObj = new Objective("first", Sign.MAX);
 	protected static final Objective secondObj = new Objective("second", Sign.MAX);
@@ -67,8 +67,8 @@ public class NonDominatedSortingTest {
 
 	@Test
 	public void testGetExtremeIndividuals() {
-		Set<Individual> extremes = NonDominatedSorting
-				.getExtremeIndividuals(getIndividualSet());
+		NonDominatedFronts fronts = new NonDominatedFronts(getIndividualSet());
+		Set<Individual> extremes = fronts.getExtremeIndividuals();
 		assertEquals(2, extremes.size());
 		assertTrue(extremes.contains(first));
 		assertTrue(extremes.contains(third));
@@ -76,7 +76,7 @@ public class NonDominatedSortingTest {
 
 	@Test
 	public void testGenerateFronts() {
-		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(getIndividualSet());
+		List<List<Individual>> fronts = new NonDominatedFronts(getIndividualSet());
 		assertEquals(4, fronts.size());
 
 		assertEquals(3, fronts.get(0).size());

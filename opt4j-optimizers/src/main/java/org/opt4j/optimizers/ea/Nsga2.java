@@ -91,7 +91,7 @@ public class Nsga2 implements Selector {
 		List<Individual> all = new ArrayList<Individual>(population);
 		List<Individual> parents = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(all);
+		List<List<Individual>> fronts = new NonDominatedFronts(all);
 		Map<Individual, Integer> rank = getRank(fronts);
 		Map<Individual, Double> distance = new HashMap<Individual, Double>();
 
@@ -136,7 +136,7 @@ public class Nsga2 implements Selector {
 	public Collection<Individual> getLames(int size, Collection<Individual> population) {
 		List<Individual> lames = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = NonDominatedSorting.generateFronts(population);
+		List<List<Individual>> fronts = new NonDominatedFronts(population);
 		Collections.reverse(fronts);
 
 		for (List<Individual> front : fronts) {

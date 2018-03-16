@@ -64,7 +64,7 @@ public class AeSeHCoupler implements Coupler {
 	 * two random individuals.
 	 * 
 	 * @param neighborhood
-	 * @return The pair that was picked as parents for a crossover.
+	 * @return the pair that was picked as parents for a crossover
 	 */
 	protected Pair<Individual> pickCouple(Set<Individual> neighborhood) {
 		if (neighborhood.size() == 1) {
