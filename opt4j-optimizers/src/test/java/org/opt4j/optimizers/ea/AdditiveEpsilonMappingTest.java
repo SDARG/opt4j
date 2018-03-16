@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
+import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
 import org.opt4j.core.Objectives;
 
 import static org.mockito.Mockito.*;

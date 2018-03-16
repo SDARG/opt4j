@@ -3,6 +3,7 @@ package org.opt4j.optimizers.ea;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.opt4j.optimizers.ea.aeseh.DefaultEpsilonAdaptation;
 
 public class DefaultEpsilonAdaptationTest {
 

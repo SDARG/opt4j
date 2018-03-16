@@ -8,6 +8,10 @@ import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.Objective.Sign;
 import org.opt4j.operators.crossover.Pair;
+import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
+import org.opt4j.optimizers.ea.aeseh.AeSeHCoupler;
+import org.opt4j.optimizers.ea.aeseh.DefaultEpsilonAdaptation;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaption;
 
 import static org.mockito.Mockito.*;
 

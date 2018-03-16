@@ -1,10 +1,11 @@
-package org.opt4j.optimizers.ea;
+package org.opt4j.optimizers.ea.aeseh;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.opt4j.core.Individual;
+import org.opt4j.optimizers.ea.Selector;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

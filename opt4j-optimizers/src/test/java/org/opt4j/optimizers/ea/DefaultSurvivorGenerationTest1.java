@@ -5,6 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objectives;
+import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
+import org.opt4j.optimizers.ea.aeseh.DefaultEpsilonAdaptation;
+import org.opt4j.optimizers.ea.aeseh.DefaultSurvivorGeneration;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaption;
 
 import static org.mockito.Mockito.*;
 

@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.optimizer.Population;
+import org.opt4j.optimizers.ea.aeseh.AeSeHSelector;
+import org.opt4j.optimizers.ea.aeseh.DefaultSurvivorGeneration;
+import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGeneration;
 
 import static org.mockito.Mockito.*;
 

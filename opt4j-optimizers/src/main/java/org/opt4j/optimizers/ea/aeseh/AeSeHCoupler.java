@@ -1,4 +1,4 @@
-package org.opt4j.optimizers.ea;
+package org.opt4j.optimizers.ea.aeseh;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +13,7 @@ import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.start.Constant;
 import org.opt4j.operators.crossover.Pair;
+import org.opt4j.optimizers.ea.Coupler;
 
 import com.google.inject.Inject;
 

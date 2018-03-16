@@ -1,4 +1,4 @@
-package org.opt4j.optimizers.ea;
+package org.opt4j.optimizers.ea.aeseh;
 
 import org.opt4j.core.start.Constant;
 

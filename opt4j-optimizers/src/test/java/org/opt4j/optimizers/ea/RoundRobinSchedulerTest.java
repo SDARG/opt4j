@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.opt4j.core.Individual;
+import org.opt4j.optimizers.ea.aeseh.RoundRobinScheduler;
 
 public class RoundRobinSchedulerTest {
 

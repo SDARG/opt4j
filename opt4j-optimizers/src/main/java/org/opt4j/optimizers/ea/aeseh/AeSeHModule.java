@@ -1,10 +1,15 @@
-package org.opt4j.optimizers.ea;
+package org.opt4j.optimizers.ea.aeseh;
 
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
 import org.opt4j.core.optimizer.MaxIterations;
 import org.opt4j.core.optimizer.OptimizerModule;
 import org.opt4j.core.start.Constant;
+import org.opt4j.optimizers.ea.ConstantCrossoverRate;
+import org.opt4j.optimizers.ea.Coupler;
+import org.opt4j.optimizers.ea.CrossoverRate;
+import org.opt4j.optimizers.ea.EvolutionaryAlgorithm;
+import org.opt4j.optimizers.ea.Selector;
 
 /**
  * Module to bind the AeSeH evolutionary algorithm as optimizer. This algorithm

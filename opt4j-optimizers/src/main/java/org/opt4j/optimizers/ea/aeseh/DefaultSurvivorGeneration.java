@@ -1,4 +1,4 @@
-package org.opt4j.optimizers.ea;
+package org.opt4j.optimizers.ea.aeseh;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +11,7 @@ import java.util.Set;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
+import org.opt4j.optimizers.ea.NonDominatedSorting;
 
 import com.google.inject.Inject;
 
