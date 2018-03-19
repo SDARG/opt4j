@@ -32,8 +32,6 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	 * sort the given individuals into non-dominated fronts
 	 * 
 	 * @param individuals
-	 * @return an ordered list of the non-dominated front. The first entry is made
-	 *         up by the first front, that is by the Pareto-optimal solutions.
 	 */
 	public void generateFronts(Collection<Individual> individuals) {
 		// assign an id to each individual that corresponds to its index in an
@@ -154,7 +152,6 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	/**
 	 * returns the individuals with the best values for the individual objectives
 	 * 
-	 * @param firstFront
 	 * @return the set of the extreme individuals
 	 */
 	public Set<Individual> getExtremeIndividuals() {

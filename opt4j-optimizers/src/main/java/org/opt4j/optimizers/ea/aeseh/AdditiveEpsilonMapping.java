@@ -27,8 +27,11 @@ public class AdditiveEpsilonMapping implements EpsilonMapping {
 		for (int i = 0; i < original.size(); i++) {
 			Objective obj = iterator.next();
 			double value = values[i] * (obj.getSign().equals(Sign.MIN) ? 1 : -1);
-			double delta = epsilon * objectiveAmplitudes.get(obj) * (obj.getSign().equals(Sign.MAX) ? 1 : -1);
-			result.add(obj, value + delta);
+			if (objectiveAmplitudes.containsKey(obj)) {
+				// the ε mapping is only applied if the objective is feasible for at least one individual
+				value += epsilon * objectiveAmplitudes.get(obj) * (obj.getSign().equals(Sign.MAX) ? 1 : -1);
+			}
+			result.add(obj, value);
 		}
 		return result;
 	}
