@@ -12,15 +12,6 @@ import com.google.inject.Singleton;
 
 /**
  * This class implements a selection process based on the epsilon-sampling
- * presented in the paper:
- * 
- * Aguirre, Hernán, Akira Oyama, and Kiyoshi Tanaka. "Adaptive ε-sampling and
- * ε-hood for evolutionary many-objective optimization." International
- * Conference on Evolutionary Multi-Criterion Optimization. Springer, Berlin,
- * Heidelberg, 2013.
- * 
- * Please consider citing the paper if you use this class for a scientific
- * publication.
  * 
  * @author Fedor Smirnov
  *

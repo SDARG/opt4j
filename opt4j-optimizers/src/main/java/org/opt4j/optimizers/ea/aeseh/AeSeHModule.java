@@ -1,5 +1,8 @@
 package org.opt4j.optimizers.ea.aeseh;
 
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
+
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
 import org.opt4j.core.optimizer.MaxIterations;
@@ -12,20 +15,12 @@ import org.opt4j.optimizers.ea.EvolutionaryAlgorithm;
 import org.opt4j.optimizers.ea.Selector;
 
 /**
- * Module to bind the AeSeH evolutionary algorithm as optimizer. This algorithm
- * was first introduced in the paper:
- * 
- * Aguirre, Hernán, Akira Oyama, and Kiyoshi Tanaka. "Adaptive ε-sampling and
- * ε-hood for evolutionary many-objective optimization." International
- * Conference on Evolutionary Multi-Criterion Optimization. Springer, Berlin,
- * Heidelberg, 2013.
- * 
- * Please consider citing the paper if you use this class for a scientific
- * publication.
+ * Module to bind the AeSeH evolutionary algorithm as optimizer. 
  * 
  * @author Fedor Smirnov
  */
 @Info("Multi-objective evolutionary algorithm where the survival selection and the creation of neighborhoods is based on epsilon-dominance. The selection of parents is done within the created neighborhoods.")
+@Citation(authors = "Hernán Aguirre, Akira Oyama, and Kiyoshi Tanaka", title = "Adaptive ε-sampling and ε-hood for evolutionary many-objective optimization.", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 322, pageLast = 336, year = 2013, month = UNKNOWN)
 public class AeSeHModule extends OptimizerModule {
 
 	@Info("The number of generations.")

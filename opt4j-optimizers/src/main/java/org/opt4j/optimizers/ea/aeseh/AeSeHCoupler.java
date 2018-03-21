@@ -18,16 +18,7 @@ import org.opt4j.optimizers.ea.Coupler;
 import com.google.inject.Inject;
 
 /**
- * Implements a parent selection process based on epsilon-neighborhood. This
- * technique was first proposed in the paper:
- * 
- * Aguirre, Hernán, Akira Oyama, and Kiyoshi Tanaka. "Adaptive ε-sampling and
- * ε-hood for evolutionary many-objective optimization." International
- * Conference on Evolutionary Multi-Criterion Optimization. Springer, Berlin,
- * Heidelberg, 2013.
- * 
- * Please consider citing the paper if you use this class for a scientific
- * publication.
+ * Implements a parent selection process based on epsilon-neighborhood.
  * 
  * @author Fedor Smirnov
  *
