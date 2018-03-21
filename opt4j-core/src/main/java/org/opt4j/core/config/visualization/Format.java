@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core.config.visualization;
@@ -73,6 +78,37 @@ public class Format {
 	}
 
 	/**
+	 * Returns the name of a {@link PropertyModule}.
+	 * 
+	 * @param module
+	 *            the module
+	 * @return the name
+	 */
+	public String getName(PropertyModule module) {
+		Class<?> c = module.getModule().getClass();
+
+		return getName(c);
+	}
+
+	/**
+	 * Returns the formatted name of the property.
+	 * 
+	 * @param property
+	 *            the property
+	 * @return the formatted name
+	 */
+	public String getName(Property property) {
+		String name;
+		Name n = property.getAnnotation(Name.class);
+		if (n == null) {
+			name = property.getName();
+		} else {
+			name = n.value();
+		}
+		return name;
+	}
+
+	/**
 	 * Returns the info of a {@link Class}.
 	 * 
 	 * @param c
@@ -85,32 +121,6 @@ public class Format {
 		if (info != null && !"".equals(info.value())) {
 			text = info.value();
 		}
-		return text;
-	}
-
-	/**
-	 * Returns the tooltip of a {@link Class}.
-	 * 
-	 * @param c
-	 *            the class
-	 * @return the tooltip
-	 */
-	public String getTooltip(Class<?> c) {
-
-		String name = getName(c);
-		String info = getInfo(c);
-
-		String text = "<html><b>" + name + "</b>";
-		if (info != null) {
-			text += xmlBreak + info;
-		}
-
-		Citation citation = c.getAnnotation(Citation.class);
-		if (citation != null)
-			text += xmlBreak + xmlBreak + "<span style='color: gray;'>[" + formatIEEE(citation) + "]</span>";
-
-		text += "</html>";
-
 		return text;
 	}
 
@@ -129,32 +139,6 @@ public class Format {
 		}
 
 		return Icons.getIcon(icon.value());
-	}
-
-	/**
-	 * Returns the name of a {@link PropertyModule}.
-	 * 
-	 * @param module
-	 *            the module
-	 * @return the name
-	 */
-	public String getName(PropertyModule module) {
-		Class<?> c = module.getModule().getClass();
-
-		return getName(c);
-	}
-
-	/**
-	 * Returns the tooltip of a {@link PropertyModule}.
-	 * 
-	 * @param module
-	 *            the module
-	 * @return the tooltip
-	 */
-	public String getTooltip(PropertyModule module) {
-		Class<?> c = module.getModule().getClass();
-
-		return getTooltip(c);
 	}
 
 	/**
@@ -188,21 +172,43 @@ public class Format {
 	}
 
 	/**
-	 * Returns the formatted name of the property.
+	 * Returns the tooltip of a {@link Class}.
 	 * 
-	 * @param property
-	 *            the property
-	 * @return the formatted name
+	 * @param c
+	 *            the class
+	 * @return the tooltip
 	 */
-	public String getName(Property property) {
-		String name;
-		Name n = property.getAnnotation(Name.class);
-		if (n == null) {
-			name = property.getName();
-		} else {
-			name = n.value();
+	public String getTooltip(Class<?> c) {
+
+		String name = getName(c);
+		String info = getInfo(c);
+
+		String text = "<html><b>" + name + "</b>";
+		if (info != null) {
+			text += xmlBreak + info;
 		}
-		return name;
+
+		Citation citation = c.getAnnotation(Citation.class);
+		if (citation != null) {
+			text += xmlBreak + xmlBreak + "<span style='color: gray;'>[" + formatIeee(citation) + "]</span>";
+		}
+
+		text += "</html>";
+
+		return text;
+	}
+
+	/**
+	 * Returns the tooltip of a {@link PropertyModule}.
+	 * 
+	 * @param module
+	 *            the module
+	 * @return the tooltip
+	 */
+	public String getTooltip(PropertyModule module) {
+		Class<?> c = module.getModule().getClass();
+
+		return getTooltip(c);
 	}
 
 	/**
@@ -242,8 +248,9 @@ public class Format {
 					}
 
 					Citation c = field.getAnnotation(Citation.class);
-					if (c != null)
-						text += "&nbsp;&nbsp;<span style='color: gray;'>[" + formatIEEE(c) + "]</span>";
+					if (c != null) {
+						text += "&nbsp;&nbsp;<span style='color: gray;'>[" + formatIeee(c) + "]</span>";
+					}
 					text += xmlBreak;
 				}
 			}
@@ -265,7 +272,7 @@ public class Format {
 		return "<html>" + text.replaceAll("\n", xmlBreak) + "</html>";
 	}
 
-	public static String formatIEEE(Citation citation) {
+	public static String formatIeee(Citation citation) {
 		StringBuilder builder = new StringBuilder(citation.authors());
 		builder.append(": <em>").append(citation.title()).append(".</em> ");
 		if (!citation.journal().isEmpty()) {
@@ -299,15 +306,19 @@ public class Format {
 
 	public static String formatJava(Citation citation) {
 		StringBuilder builder = new StringBuilder();
-		if (!citation.authors().isEmpty())
+		if (!citation.authors().isEmpty()) {
 			builder.append(citation.authors()).append(": ");
+		}
 		builder.append("\"").append(citation.title()).append("\". ");
-		if (!citation.journal().isEmpty())
+		if (!citation.journal().isEmpty()) {
 			builder.append("In: ").append(citation.journal()).append(". ");
-		if (citation.volume() >= 0)
+		}
+		if (citation.volume() >= 0) {
 			builder.append("vol. ").append(citation.volume()).append(", ");
-		if (citation.number() >= 0)
+		}
+		if (citation.number() >= 0) {
 			builder.append("no. ").append(citation.number()).append(", ");
+		}
 		if (citation.pageFirst() >= 0) {
 			if (citation.pageLast() > 0 && citation.pageFirst() != citation.pageLast()) {
 				builder.append("pp. ").append(citation.pageFirst()).append("–").append(citation.pageLast())

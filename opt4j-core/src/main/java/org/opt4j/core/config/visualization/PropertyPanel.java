@@ -244,7 +244,7 @@ public class PropertyPanel extends JPanel {
 					s += "     ";
 				}
 				if (i > 0) {
-					s = s.substring(2) + "\u21aa ";
+					s = s.substring(2) + "↪ ";
 				}
 
 				JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));

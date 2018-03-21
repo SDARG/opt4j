@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-
 
 package org.opt4j.core.common.logger;
 
@@ -46,11 +45,15 @@ import com.google.inject.Inject;
  * to the specified file. It can be configured to write the data each
  * {@code iterationStep} iterations or each {@code evaluationStep} evaluations.
  * 
+ * <p>
  * The file format is TSV (tab separated values), according to the <a href=
  * "http://www.iana.org/assignments/media-types/text/tab-separated-values"
  * >Definition of tab-separated-values (tsv)</a> by IANA.
+ * </p>
  * 
+ * <p>
  * An infeasible Objective is printed as <it>INFEASIBLE</it>.
+ * </p>
  * 
  * @see Objective
  * @author reimann, lukasiewycz
@@ -86,7 +89,7 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	}
 
 	/**
-	 * Initialize the print write from a filename
+	 * Initializes the {@link PrintWriter} with a file to write to.
 	 * 
 	 * @param filename
 	 *            the filename
@@ -168,8 +171,10 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * The {@link String} separating two columns.
 	 * 
+	 * <p>
 	 * The tab character ("\t") is the default, which leads to a tab separated
 	 * values file format (TSV).
+	 * </p>
 	 * 
 	 * @return the delimiter
 	 */
@@ -180,13 +185,17 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * Creates a {@link String} representation of the given {@link Individual}.
 	 * 
+	 * <p>
 	 * Per default, the {@link Value}s of all {@link Objectives} of the
 	 * individual, separated by {@link #getColumnDelimiter()}, are returned. The
 	 * {@link String} representation of a {@link Value} must not contain the tab
 	 * character.
+	 * </p>
 	 * 
+	 * <p>
 	 * If one of the values of the {@link Objectives} is INFEASIBLE,
 	 * {@code null} is returned.
+	 * </p>
 	 * 
 	 * @see Objective
 	 * @param individual
@@ -220,9 +229,11 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * Statistics for the given {@code iteration} and {@code evaluation}.
 	 * 
+	 * <p>
 	 * Per default, the iteration, the number of evaluations and the
 	 * optimization run time in milliseconds, separated by
 	 * {@link #getColumnDelimiter()}, are returned.
+	 * </p>
 	 * 
 	 * @param iteration
 	 *            the current iteration
@@ -239,7 +250,9 @@ public class TsvLogger extends AbstractLogger implements Logger {
 	/**
 	 * The {@link String} starting a line comment.
 	 * 
+	 * <p>
 	 * Default is the empty String ("") according to the TSV specification.
+	 * </p>
 	 * 
 	 * @return the comment delimiter
 	 */
