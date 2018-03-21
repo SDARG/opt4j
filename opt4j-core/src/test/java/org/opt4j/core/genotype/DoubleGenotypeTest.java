@@ -1,6 +1,8 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +11,9 @@ import java.util.Random;
 import org.junit.Test;
 
 public class DoubleGenotypeTest {
-	
-	@Test(expected=IndexOutOfBoundsException.class)
-	public void testWrongSettingBoundList(){
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testWrongSettingBoundList() {
 		Random rand = new Random();
 		List<Double> lowerBounds = new ArrayList<Double>();
 		lowerBounds.add(-1.0);
@@ -27,8 +29,8 @@ public class DoubleGenotypeTest {
 		listGeno.init(rand, 4);
 	}
 
-	@Test(expected=IndexOutOfBoundsException.class)
-	public void testWrongBoundSettingArray(){
+	@Test(expected = IllegalArgumentException.class)
+	public void testWrongBoundSettingArray() {
 		Random rand = new Random();
 		double[] lowerBounds = { -1.0, -0.5, 0.0 };
 		double[] upperBounds = { -0.5, 0.0, 0.5 };
@@ -37,7 +39,7 @@ public class DoubleGenotypeTest {
 		assertTrue(listGeno.isEmpty());
 		listGeno.init(rand, 4);
 	}
-	
+
 	@Test
 	public void testArrayBound() {
 		Random rand = new Random();

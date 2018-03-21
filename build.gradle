@@ -225,7 +225,7 @@ task alldocs(type: Javadoc) {
 	}
 	
 	options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PUBLIC
-	options.links 'http://docs.oracle.com/javase/6/docs/api/','http://google-guice.googlecode.com/svn/tags/3.0/javadoc/'
+	options.links 'http://docs.oracle.com/javase/6/docs/api/','http://google.github.io/guice/api-docs/4.1/javadoc/'
 	options.linkSource = true
 
 	subprojects.each {subproject ->

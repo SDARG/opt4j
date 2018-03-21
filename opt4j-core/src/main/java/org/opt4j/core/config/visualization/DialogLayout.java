@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
@@ -32,10 +31,10 @@ import java.awt.LayoutManager;
 /**
  * The {@link DialogLayout} is used for label-field pair layout.
  * 
- * @see <a
- *      href="http://www.javafaq.nu/java-allbooks-8.html">http://www.javafaq.nu/java-allbooks-8.html</a>
- * @see <a
- *      href="http://www.javafaq.nu/java-bookpage-15-5.html">http://www.javafaq.nu/java-bookpage-15-5.html</a>
+ * @see <a href=
+ *      "http://www.javafaq.nu/java-allbooks-8.html">http://www.javafaq.nu/java-allbooks-8.html</a>
+ * @see <a href=
+ *      "http://www.javafaq.nu/java-bookpage-15-5.html">http://www.javafaq.nu/java-bookpage-15-5.html</a>
  * 
  * @author lukasiewycz
  * 
@@ -141,7 +140,6 @@ class DialogLayout implements LayoutManager {
 		int w = parent.getWidth() - insets.left - insets.right - divider;
 		int x = insets.left;
 		int y = insets.top;
-
 		for (int k = 1; k < parent.getComponentCount(); k += 2) {
 			Component comp1 = parent.getComponent(k - 1);
 			Component comp2 = parent.getComponent(k);
@@ -163,7 +161,7 @@ class DialogLayout implements LayoutManager {
 	protected int getDivider(Container parent) {
 
 		Insets insets = parent.getInsets();
-		int half = (parent.getWidth() - insets.left - insets.right) / 2;
+		int half = (parent.getWidth() - insets.left - insets.right) / 4;
 
 		int divider = 0;
 
@@ -174,7 +172,6 @@ class DialogLayout implements LayoutManager {
 		}
 
 		divider += hGap;
-
 		return Math.max(divider, half);
 
 	}

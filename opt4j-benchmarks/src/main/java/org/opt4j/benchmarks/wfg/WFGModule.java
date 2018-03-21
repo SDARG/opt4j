@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.benchmarks.wfg;
 
@@ -31,6 +30,8 @@ import org.opt4j.benchmarks.DoubleCreator;
 import org.opt4j.benchmarks.K;
 import org.opt4j.benchmarks.M;
 import org.opt4j.benchmarks.N;
+import org.opt4j.core.config.annotations.Citation;
+import org.opt4j.core.config.annotations.Citation.PublicationMonth;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
 import org.opt4j.core.config.annotations.Required;
@@ -40,14 +41,13 @@ import org.opt4j.core.problem.Evaluator;
 import org.opt4j.core.problem.ProblemModule;
 
 /**
- * Module for the WFG (Walking Fish Group) benchmarks, see "A Scalable
- * Multi-objective Test Problem Toolkit, Simon Huband, Luigi Barone, R. Lyndon
- * While, and Philip Hingston (EMO 2005)".
+ * Module for the WFG (Walking Fish Group) benchmarks, see Huband et al. 2005.
  * 
  * @author lukasiewycz
  * 
  */
 @Info("WFG Problem Suite. The number of search variables is n=k+l.")
+@Citation(title = "A Scalable Multi-objective Test Problem Toolkit", authors = "Simon Huband, Luigi Barone, Lyndon While, and Philip Hingston", journal = "Evolutionary Multi-Criterion Optimization", pageFirst = 280, pageLast = 295, year = 2005, month = PublicationMonth.UNKNOWN, doi = "10.1007/978-3-540-31880-4_20")
 public class WFGModule extends ProblemModule {
 
 	@Order(0)
