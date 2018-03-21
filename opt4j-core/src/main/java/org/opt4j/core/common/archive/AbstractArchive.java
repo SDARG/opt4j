@@ -28,10 +28,12 @@ import org.opt4j.core.Objectives;
 import org.opt4j.core.optimizer.Archive;
 
 /**
- * This {@link AbstractArchive} provides some common methods for {@link Archive} s. If one or more new
- * {@link Individual}s are added to this {@link Archive}, it is ensured that all {@link Individual}s in this
- * {@link Archive} are not Pareto-dominated. Actual implementations of this class may still refuse or drop some
- * {@link Individual}s. An {@link Archive} can be a {@link BoundedArchive} if it has a bounded size or an
+ * This {@link AbstractArchive} provides some common methods for {@link Archive}
+ * s. If one or more new {@link Individual}s are added to this {@link Archive},
+ * it is ensured that all {@link Individual}s in this {@link Archive} are not
+ * Pareto-dominated. Actual implementations of this class may still refuse or
+ * drop some {@link Individual}s. An {@link Archive} can be a
+ * {@link BoundedArchive} if it has a bounded size or an
  * {@link UnboundedArchive}, otherwise.
  * 
  * @author helwig, glass, lukasiewycz
@@ -61,7 +63,8 @@ public abstract class AbstractArchive extends Archive {
 	/**
 	 * Remove candidates, which are weakly dominated by another candidate.
 	 * 
-	 * Thus, the list of candidates which need to be tested against the whole archive is reduced.
+	 * Thus, the list of candidates which need to be tested against the whole
+	 * archive is reduced.
 	 * 
 	 * @param candidates
 	 *            the list of candidates to sanitize
@@ -84,8 +87,11 @@ public abstract class AbstractArchive extends Archive {
 	}
 
 	/**
-	 * Remove those individuals from the archive which are dominated by the candidates as well as remove those
-	 * individuals from the candidates which are dominated by the archive.
+	 * Remove those individuals from the candidates which are weakly dominated
+	 * by the archive. Remove those individuals from the archive which are
+	 * dominated by the candidates. In case of equal objectives, this gives
+	 * priority to the individuals in the archive and avoids unnecessary archive
+	 * updates.
 	 * 
 	 * @param candidates
 	 *            the list of candidates to sanitize
@@ -96,20 +102,21 @@ public abstract class AbstractArchive extends Archive {
 			Objectives o1 = i1.next().getObjectives();
 			for (i2 = this.iterator(); i2.hasNext();) {
 				Objectives o2 = i2.next().getObjectives();
-				if (o1.weaklyDominates(o2)) {
-					i2.remove();
-				} else if (o2.dominates(o1)) {
+				if (o2.weaklyDominates(o1)) {
 					i1.remove();
 					break;
+				} else if (o1.dominates(o2)) {
+					i2.remove();
 				}
 			}
 		}
 	}
 
 	/**
-	 * Adds new {@code candidates} which are already checked to be not Pareto-dominated by any other individual in this
-	 * {@link Archive}. All {@link Individual}s in the {@link Archive} which were dominated by the candidates have
-	 * already been removed.
+	 * Adds new {@code candidates} which are already checked to be not
+	 * Pareto-dominated by any other individual in this {@link Archive}. All
+	 * {@link Individual}s in the {@link Archive} which were dominated by the
+	 * candidates have already been removed.
 	 * 
 	 * @param candidates
 	 *            the non-dominated individuals which can be added
