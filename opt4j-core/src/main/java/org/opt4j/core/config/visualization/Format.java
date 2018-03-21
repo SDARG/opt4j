@@ -310,7 +310,7 @@ public class Format {
 			builder.append("no. ").append(citation.number()).append(", ");
 		if (citation.pageFirst() >= 0) {
 			if (citation.pageLast() > 0 && citation.pageFirst() != citation.pageLast()) {
-				builder.append("pp. ").append(citation.pageFirst()).append("–").append(citation.pageLast())
+				builder.append("pp. ").append(citation.pageFirst()).append("â€“").append(citation.pageLast())
 						.append(", ");
 			} else {
 				builder.append("p. ").append(citation.pageFirst()).append(", ");
