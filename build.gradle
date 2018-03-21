@@ -49,6 +49,7 @@ subprojects {
     apply plugin: 'signing'
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
 
     sourceCompatibility = 1.6 
 	targetCompatibility = 1.6
@@ -133,6 +134,10 @@ subprojects {
 		    xml.enabled = true
 		    csv.enabled = false
 		}
+	}
+
+	checkstyle {
+		configFile = new File('../src/checkstyle/checkstyle.xml')
 	}
 }
 
