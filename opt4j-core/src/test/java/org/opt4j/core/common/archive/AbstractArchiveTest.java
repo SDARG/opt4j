@@ -196,7 +196,8 @@ public class AbstractArchiveTest {
 
 	/**
 	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with a candidate which has the same objectives as an
-	 * individual in the archive.
+	 * individual in the archive. To avoid unnecessary archive updates, the candidate is expected to be
+	 * discarded here.
 	 */
 	@Test
 	public void removeArchiveDominatedTest3() {
@@ -225,8 +226,8 @@ public class AbstractArchiveTest {
 		list.add(i0);
 		archive.removeArchiveDominated(list);
 
-		Assert.assertEquals(1, list.size());
-		Assert.assertTrue(list.contains(i0));
+		Assert.assertEquals(0, list.size());
+		Assert.assertFalse(list.contains(i0));
 		Assert.assertEquals(1, archive.size());
 		Assert.assertTrue(archive.contains(iArchived0));
 	}
