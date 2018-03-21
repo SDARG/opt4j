@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,21 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +51,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
@@ -52,6 +60,7 @@ import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.Property;
 import org.opt4j.core.config.PropertyModule;
 import org.opt4j.core.config.Requirement;
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.File;
 
 /**
@@ -95,11 +104,10 @@ public class PropertyPanel extends JPanel {
 		panel = new JPanel(new DialogLayout(20, 2));
 		panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		updatePropertyPanel();
-		update();
-
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, panel);
+
+		update();
 	}
 
 	protected Component createComponent(final Property property) {
@@ -112,7 +120,7 @@ public class PropertyPanel extends JPanel {
 			for (int k = 0; k < obj.length; k++) {
 				obj[k] = type.getEnumConstants()[k];
 			}
-			final JComboBox box = new JComboBox(obj);
+			final JComboBox<Object> box = new JComboBox<Object>(obj);
 			box.setSelectedItem(value);
 
 			box.addActionListener(new ActionListener() {
@@ -272,6 +280,78 @@ public class PropertyPanel extends JPanel {
 				panel.add(component);
 			}
 		}
+
+		if (module.getModule().getClass().isAnnotationPresent(Citation.class)) {
+			Citation citation = module.getModule().getClass().getAnnotation(Citation.class);
+			addReferenceRow(citation);
+		}
+	}
+
+	/**
+	 * Adds a row showing the {@link Citation}. On the left hand side,
+	 * "reference" is printed while on the right hand side, the {@link Citation}
+	 * is added in a static {@link TextArea}.
+	 * 
+	 * @param citation
+	 *            the citation to add
+	 */
+	protected void addReferenceRow(Citation citation) {
+		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		JLabel label = new JLabel("reference");
+		label.setFocusable(false);
+		labelPanel.add(label);
+
+		panel.add(labelPanel);
+
+		final JTextArea field = new JTextArea();
+		field.setLineWrap(true);
+		field.setWrapStyleWord(true);
+		field.setFont(label.getFont());
+		field.setBackground(label.getBackground());
+		field.setEditable(false);
+		field.setText(Format.formatJava(citation));
+		System.out.println("title:      " + citation.title());
+		System.out.println("formatJava: " + Format.formatJava(citation));
+
+		if (!citation.doi().isEmpty()) {
+			final String doi = citation.doi();
+			field.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			field.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						Desktop.getDesktop().browse(new URI("https://doi.org/" + doi));
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} catch (URISyntaxException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
+		}
+
+		JPanel rightPanel = new JPanel(new BorderLayout());
+		rightPanel.add(BorderLayout.NORTH, field);
+		rightPanel.setPreferredSize(
+				new Dimension((int) (panel.getPreferredSize().width * 0.70), panel.getPreferredSize().height));
+		panel.add(rightPanel);
 	}
 
 	protected void update() {

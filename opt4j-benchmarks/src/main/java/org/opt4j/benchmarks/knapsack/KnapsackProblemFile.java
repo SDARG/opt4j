@@ -1,25 +1,20 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.benchmarks.knapsack;
 
 import java.io.BufferedReader;
@@ -38,11 +33,11 @@ import com.google.inject.Inject;
 
 /**
  * 
- * The {@link KnapsackProblemFile} is a {@link KnapsackProblem} that is
- * initialized by a file. The format can be found on the referenced website.
+ * The {@link KnapsackProblemFile} is a {@link KnapsackProblem} that is initialized by a file. The format can be found
+ * on the referenced website.
  * 
- * @see <a
- *      href="http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
+ * @see <a href=
+ *      "http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
  * 
  * @author lukasiewycz
  * 
@@ -127,7 +122,7 @@ public class KnapsackProblemFile implements KnapsackProblem {
 	protected int getInt(String line) {
 		Matcher matcher = Pattern.compile(POSINT).matcher(line);
 		matcher.find();
-		return new Integer(matcher.group());
+		return Integer.parseInt(matcher.group());
 	}
 
 	/**
@@ -140,7 +135,7 @@ public class KnapsackProblemFile implements KnapsackProblem {
 	protected double getDouble(String line) {
 		Matcher matcher = Pattern.compile(POSDOUBLE).matcher(line);
 		matcher.find();
-		return new Double(matcher.group());
+		return Double.parseDouble(matcher.group());
 	}
 
 	/*

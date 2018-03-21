@@ -87,12 +87,11 @@ public abstract class AbstractArchive extends Archive {
 	}
 
 	/**
-	 * Remove those individuals from the candidates which are weakly dominated
-	 * by the archive. Remove those individuals from the archive which are
-	 * dominated by the candidates. In case of equal objectives, this gives
-	 * priority to the individuals in the archive and avoids unnecessary archive
-	 * updates.
-	 * 
+   * Remove those individuals from the candidates which are weakly
+   * dominated by the archive. Remove those individuals from the archive
+   * which are dominated by the candidates. In case of equal objectives,
+   * this gives priority to the individuals in the archive and avoids
+   * unnecessary archive updates.
 	 * @param candidates
 	 *            the list of candidates to sanitize
 	 */

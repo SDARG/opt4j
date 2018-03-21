@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.benchmarks.zdt;
 
@@ -30,6 +29,8 @@ import org.opt4j.benchmarks.Bits;
 import org.opt4j.benchmarks.DoubleCopyDecoder;
 import org.opt4j.benchmarks.DoubleCreator;
 import org.opt4j.benchmarks.N;
+import org.opt4j.core.config.annotations.Citation;
+import org.opt4j.core.config.annotations.Citation.PublicationMonth;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
 import org.opt4j.core.config.annotations.Required;
@@ -39,15 +40,13 @@ import org.opt4j.core.problem.Evaluator;
 import org.opt4j.core.problem.ProblemModule;
 
 /**
- * The {@link ZDTModule} configures the ZDT benchmarks, see "Comparison of
- * Multiobjective Evolutionary Algorithms: Empirical Results, Eckart Zitzler,
- * Kalyanmoy Deb, Lothar Thiele, Evolutionary Computation Volume 8 , Issue 2
- * (June 2000)".
+ * The {@link ZDTModule} configures the ZDT benchmarks, see Zitzler et al. 2000.
  * 
  * @author lukasiewycz
  * 
  */
 @Info("ZDT Problem Suite.")
+@Citation(title = "Comparison of Multiobjective Evolutionary Algorithms: Empirical Results", authors = "Eckart Zitzler, Kalyanmoy Deb, and Lothar Thiele", journal = "Evolutionary Computation Volume", volume = 8, number = 2, month = PublicationMonth.JUNE, year = 2000)
 public class ZDTModule extends ProblemModule {
 
 	@Order(0)
