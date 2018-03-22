@@ -12,13 +12,26 @@ import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
 
 /**
- * Implements the evenly spaced adaptive ε function.
+ * The {@link AdditiveEpsilonMapping} implements the evenly spaced adaptive ε function.
  * 
  * @author Fedor Smirnov
  *
  */
 public class AdditiveEpsilonMapping implements EpsilonMapping {
 
+	/**
+	 * Applies ε mapping by enhancing all of the given {@link Objective}s by the ε
+	 * fraction of the objective amplitude.
+	 * 
+	 * @param original
+	 *            the {@link Objectives} that are enhanced by this method
+	 * @param epsilon
+	 *            the fraction used for the enhancement
+	 * @param objectiveAmplitudes
+	 *            the map mapping its objective onto its amplitude
+	 * @return enhanced {@link Objectives} where each {@link Objective} is improved
+	 *         by the ε fraction of the objective's amplitude
+	 */
 	@Override
 	public Objectives mapObjectives(Objectives original, double epsilon, Map<Objective, Double> objectiveAmplitudes) {
 		Objectives result = new Objectives();
@@ -28,7 +41,8 @@ public class AdditiveEpsilonMapping implements EpsilonMapping {
 			Objective obj = iterator.next();
 			double value = values[i] * (obj.getSign().equals(Sign.MIN) ? 1 : -1);
 			if (objectiveAmplitudes.containsKey(obj)) {
-				// the ε mapping is only applied if the objective is feasible for at least one individual
+				// the ε mapping is only applied if the objective is feasible for at least one
+				// individual
 				value += epsilon * objectiveAmplitudes.get(obj) * (obj.getSign().equals(Sign.MAX) ? 1 : -1);
 			}
 			result.add(obj, value);

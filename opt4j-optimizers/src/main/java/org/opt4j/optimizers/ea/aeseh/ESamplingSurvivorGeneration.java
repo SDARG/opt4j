@@ -9,8 +9,8 @@ import com.google.inject.ImplementedBy;
 
 /**
  * 
- * Interface for the classes which generate the survivor pool during the
- * selection implemented by {@link AeSeHSelector}.
+ * The {@link ESamplingSurvivorGeneration} generates the survivor pool during
+ * the selection implemented by {@link AeSeHSelector}.
  * 
  * @author Fedor Smirnov
  *
@@ -19,7 +19,7 @@ import com.google.inject.ImplementedBy;
 public interface ESamplingSurvivorGeneration {
 
 	/**
-	 * generates the survivors out of the input collection
+	 * Generates the survivors out of the input collection of {@link Individual}s.
 	 * 
 	 * @param population
 	 *            the current population (union of the parent- and the

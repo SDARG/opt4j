@@ -18,7 +18,8 @@ import org.opt4j.optimizers.ea.Coupler;
 import com.google.inject.Inject;
 
 /**
- * Implements a parent selection process based on epsilon-neighborhood.
+ * The {@link AeSeHCoupler} implements a parent selection process based on by
+ * the ε-neighborhood.
  * 
  * @author Fedor Smirnov
  *
@@ -30,6 +31,22 @@ public class AeSeHCoupler implements Coupler {
 	protected final Random random;
 	protected final int plannedNeighborhoodNumber;
 
+	/**
+	 * Basic constructor.
+	 * 
+	 * @param epsilonMapping
+	 *            an {@link EpsilonMapping} that is used to enhance the
+	 *            {@link Objectives} during the creation of the neighborhoods
+	 * @param epsilonAdaption
+	 *            an {@link EpsilonAdaption} that adjusts the ε valued used for the
+	 *            creation of the neighborhoods
+	 * @param random
+	 *            a {@link Random}
+	 * @param plannedNeighborhoodNumber
+	 *            A value provided by the user. The ε used for the creation of the
+	 *            neighborhoods is adjusted in order to create a number of
+	 *            neighborhoods similar to this value.
+	 */
 	@Inject
 	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption, Random random,
 			@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class) int plannedNeighborhoodNumber) {
@@ -39,10 +56,24 @@ public class AeSeHCoupler implements Coupler {
 		this.plannedNeighborhoodNumber = plannedNeighborhoodNumber;
 	}
 
+	/**
+	 * Generates parent couples. Distributes the parent {@link Individual}s onto
+	 * neighborhoods. Both parents of a couple are picked from the same
+	 * neighborhood. Uses a {@link RoundRobinScheduler} to arbitrate the
+	 * neighborhoods from where the parent couples are picked.
+	 * 
+	 * @param size
+	 *            the number of couples that is generated
+	 * @param survivors
+	 *            the {@link Individual}s that can be used as parents
+	 * @return a collection of {@link Individual} pairs, that will be used to
+	 *         generate the next generation of individuals
+	 * 
+	 */
 	@Override
-	public Collection<Pair<Individual>> getCouples(int size, List<Individual> parents) {
+	public Collection<Pair<Individual>> getCouples(int size, List<Individual> survivors) {
 		Collection<Pair<Individual>> result = new HashSet<Pair<Individual>>();
-		List<Set<Individual>> neighborhoods = createNeighborhoods(parents);
+		List<Set<Individual>> neighborhoods = createNeighborhoods(survivors);
 		RoundRobinScheduler scheduler = new RoundRobinScheduler(neighborhoods);
 		for (int i = 0; i < size; i++) {
 			result.add(pickCouple(scheduler.next()));
@@ -55,6 +86,8 @@ public class AeSeHCoupler implements Coupler {
 	 * random individuals.
 	 * 
 	 * @param neighborhood
+	 *            the set of similar {@link Individual}s from where the parents are
+	 *            picked
 	 * @return the pair that was picked as parents for a crossover
 	 */
 	protected Pair<Individual> pickCouple(Set<Individual> neighborhood) {
@@ -72,6 +105,7 @@ public class AeSeHCoupler implements Coupler {
 	 * Applies the epsilon neighborhood creation.
 	 * 
 	 * @param survivors
+	 *            the {@link Individual} that can be used as parents
 	 * @return a list of individual sets. Each set is considered as a neighborhood.
 	 */
 	protected List<Set<Individual>> createNeighborhoods(List<Individual> survivors) {

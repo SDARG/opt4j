@@ -13,9 +13,9 @@ import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 
 /**
- * The NonDominatedFronts sorts each evaluated individual into fronts based on
- * the number of other individuals it is dominated by. The first front consists
- * of points that are not dominated at all and so on.
+ * The {@link NonDominatedFronts} sorts each evaluated {@link Individual} into
+ * fronts based on the number of other individuals it is dominated by. The first
+ * front consists of points that are not dominated at all and so on.
  * 
  * @author Fedor Smirnov
  *
@@ -24,45 +24,51 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 
 	private static final long serialVersionUID = -7008617060878292974L;
 
+	/**
+	 * Creates the {@link NonDominatedFronts} for the given collection of {@link Individual}s.
+	 * 
+	 * @param individuals the {@link Individual}s that are sorted into non dominated fronts
+	 */
 	public NonDominatedFronts(Collection<Individual> individuals) {
 		generateFronts(individuals);
 	}
 
 	/**
-	 * sort the given individuals into non-dominated fronts
+	 * Sorts the given {@link Individual}s into non-dominated fronts.
 	 * 
 	 * @param individuals
+	 *            the collection of {@link Individual}s that shall be sorted
 	 */
 	public void generateFronts(Collection<Individual> individuals) {
-		// assign an id to each individual that corresponds to its index in an
-		// array
-		List<Individual> individualList = new ArrayList<Individual>(individuals);
+		// Assigns an id to each individual that corresponds to its index in an
+		// array.
 		Map<Individual, Integer> indexMap = new HashMap<Individual, Integer>();
-		for (int i = 0; i < individualList.size(); i++) {
-			indexMap.put(individualList.get(i), i);
+		int index = 0;
+		for (Individual individual : individuals) {
+			indexMap.put(individual, index++);
 		}
-		// Initialize a map where an individual is assigned to the individuals
-		// that it dominates
+		// Initializes a map where an individual is assigned to the individuals
+		// that it dominates.
 		Map<Individual, List<Individual>> dominatedIndividualsMap = new HashMap<Individual, List<Individual>>();
-		// n is an array where for each individual, the number of individuals
-		// that dominate it is stored
-		int[] dominatingIndividualNumber = new int[individualList.size()];
-		for (Individual e : individualList) {
+		// Creates an array where for each individual, the number of individuals
+		// that dominate it is stored.
+		int[] dominatingIndividualNumber = new int[individuals.size()];
+		for (Individual e : individuals) {
 			dominatedIndividualsMap.put(e, new ArrayList<Individual>());
 			dominatingIndividualNumber[indexMap.get(e)] = 0;
 		}
-		determineDomination(individualList, dominatedIndividualsMap, dominatingIndividualNumber, indexMap);
+		determineDomination(individuals, dominatedIndividualsMap, dominatingIndividualNumber, indexMap);
 		// The first front consists of individuals that are dominated by zero
-		// other individuals
+		// other individuals.
 		List<Individual> f1 = new ArrayList<Individual>();
-		for (Individual i : individualList) {
+		for (Individual i : individuals) {
 			if (dominatingIndividualNumber[indexMap.get(i)] == 0) {
 				f1.add(i);
 			}
 		}
 		add(f1);
 		List<Individual> currentFront = f1;
-		// Create the subsequent fronts. Front f_i is made up by individuals
+		// Creates the subsequent fronts. Front f_i is made up by individuals
 		// that
 		// are not dominated if all individuals from fronts f_j with j < i are
 		// removed.
@@ -76,18 +82,18 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	}
 
 	/**
-	 * Find the next non-dominated front by processing the current non-dominated
-	 * front. The individuals found therein are removed from consideration. The
+	 * Finds the next non-dominated front by processing the current non-dominated
+	 * front. The {@link Individual}s found therein are removed from consideration. The
 	 * individuals that are then not dominated form the next non-dominated front.
 	 * 
 	 * @param currentFront
 	 *            the list of individuals forming the current non-dominated front
 	 * @param dominatedIndividualsMap
-	 *            map mapping an individual on the collection of individuals that
-	 *            it dominates
+	 *            map mapping an individual on the collection of individuals that it
+	 *            dominates
 	 * @param dominatingIndividualNumber
-	 *            an array where the number of dominating individuals is stored
-	 *            for each individual
+	 *            an array where the number of dominating individuals is stored for
+	 *            each individual
 	 * @param individual2IndexMap
 	 *            a map storing the indices of the individuals used to access the
 	 *            dominatingIndividualNumber
@@ -109,12 +115,12 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	}
 
 	/**
-	 * Compare all possible individual pairs. For each individual, store 1) the
+	 * Compares all possible {@link Individual} pairs. For each individual, stores 1) the
 	 * number of individuals it is dominated by and 2) the set of individuals it
 	 * dominates.
 	 * 
-	 * @param individualList
-	 *            a list of the individuals
+	 * @param individuals
+	 *            a collection of individuals
 	 * @param dominatedIndividualsMap
 	 *            A map that is filled during the execution of the method. Each
 	 *            individual is mapped onto the set of individuals that are
@@ -128,9 +134,10 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	 *            a map mapping each individual onto its index in the
 	 *            dominatingIndividualNumber - array
 	 */
-	protected void determineDomination(List<Individual> individualList,
+	protected void determineDomination(Collection<Individual> individuals,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
 			Map<Individual, Integer> individual2IndexMap) {
+		List<Individual> individualList = new ArrayList<Individual>(individuals);
 		// compare each individual with each other individual
 		for (int i = 0; i < individualList.size(); i++) {
 			for (int j = i + 1; j < individualList.size(); j++) {
@@ -144,13 +151,17 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 				} else if (qo.dominates(po)) {
 					dominatedIndividualsMap.get(q).add(p);
 					dominatingIndividualNumber[individual2IndexMap.get(p)]++;
+				} else {
+					// Neither of the two points dominates the other one, so that neither the array
+					// keeping track of the domination number nor the map containing the dominating
+					// individuals has to be adjusted. Nothing is done in this case.
 				}
 			}
 		}
 	}
 
 	/**
-	 * returns the individuals with the best values for the individual objectives
+	 * Returns the {@link Individual}s with the best values for the individual {@link Objective}.
 	 * 
 	 * @return the set of the extreme individuals
 	 */

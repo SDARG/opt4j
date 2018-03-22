@@ -16,8 +16,9 @@ import org.opt4j.optimizers.ea.NonDominatedFronts;
 import com.google.inject.Inject;
 
 /**
- * The basic survivor selection used by the Adaptive ε-sampling and ε-hood for
- * evolutionary many-objective optimization, without any extensions.
+ * The {@link DefaultSurvivorGeneration} implements the basic survivor selection
+ * used by the Adaptive ε-sampling and ε-hood for evolutionary many-objective
+ * optimization, without any extensions.
  * 
  * @author Fedor Smirnov
  *
@@ -28,6 +29,18 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	protected final EpsilonMapping epsilonMapping;
 	protected final EpsilonAdaption epsilonAdaption;
 
+	/**
+	 * Basic constructor.
+	 * 
+	 * @param epsilonMapping
+	 *            an {@link EpsilonMapping} that is used to enhance the
+	 *            {@link Objectives} during the choice of the survivors
+	 * @param epsilonAdaption
+	 *            an {@link EpsilonAdaption} that adjusts the ε valued used for the
+	 *            choice of the survivors
+	 * @param random
+	 *            the {@link Random} used for the sampling
+	 */
 	@Inject
 	public DefaultSurvivorGeneration(Random random, EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption) {
 		this.random = random;
@@ -53,12 +66,16 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	}
 
 	/**
-	 * Creates the survivor pool by adding the ε-sampled individuals to the
-	 * extreme individuals.
+	 * Creates the survivor pool by adding the ε-sampled individuals to the extreme
+	 * individuals.
 	 * 
 	 * @param extremeIndividuals
+	 *            the {@link Individual}s with (positively) extreme values for their
+	 *            {@link Objective}s
 	 * @param firstFront
+	 *            the {@link Individual} that are not dominated at all
 	 * @param survivorNumber
+	 *            the desired number of survivors
 	 */
 	protected Set<Individual> addNonDominatedSurvivors(Collection<Individual> extremeIndividuals,
 			Collection<Individual> firstFront, int survivorNumber) {
@@ -103,8 +120,8 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	 * ε-dominant and ε-dominated individuals.
 	 * 
 	 * @param firstFront
-	 *            the input individuals which constitute the first non-dominated front
-	 *            of the current population
+	 *            the input individuals which constitute the first non-dominated
+	 *            front of the current population
 	 * @param epsilonDominantIndividuals
 	 *            the set that will be filled with the epsilon-dominant individuals
 	 * @param epsilonDominatedIndividuals
@@ -143,7 +160,9 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	 * enough survivors, dominated solutions are added to the survivor pool.
 	 * 
 	 * @param survivorNumber
+	 *            the desired number of survivors
 	 * @param fronts
+	 *            the non-dominated fronts
 	 */
 	protected Set<Individual> addDominatedSurvivors(int survivorNumber, List<List<Individual>> fronts) {
 		Set<Individual> survivors = new HashSet<Individual>();

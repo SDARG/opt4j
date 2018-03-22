@@ -10,7 +10,7 @@ import org.opt4j.core.Objectives;
 import com.google.inject.ImplementedBy;
 
 /**
- * Interface for the classes applying the ε mapping used by the
+ * The {@link EpsilonMapping} implements the ε mapping used by the
  * {@link AeSeHSelector}.
  * 
  * @author Fedor Smirnov
@@ -20,8 +20,8 @@ import com.google.inject.ImplementedBy;
 public interface EpsilonMapping {
 
 	/**
-	 * maps the given objectives on the objectives used for the check of the
-	 * ε dominance.
+	 * Maps the given {@link Objectives} on the objectives used for the check of the ε
+	 * dominance.
 	 * 
 	 * @param original
 	 *            the actual objectives of the individual
@@ -29,18 +29,19 @@ public interface EpsilonMapping {
 	 *            the ε value
 	 * @param objectiveAmplitudes
 	 *            a map containing the amplitude values of the objectives
-	 * @return objectives enhanced by the epsilon value
+	 * @return {@link Objectives} enhanced by the ε value
 	 */
-	public Objectives mapObjectives(final Objectives original, double epsilon, Map<Objective, Double> objectiveAmplitudes);
+	public Objectives mapObjectives(final Objectives original, double epsilon,
+			Map<Objective, Double> objectiveAmplitudes);
 
 	/**
-	 * Creates a map mapping the objectives to their amplitudes (difference
-	 * between maximal and minimal value). These extreme values are used during
-	 * ε mapping to scale the delta according to the objective values of
-	 * the individual group under consideration.
+	 * Creates a map mapping the {@link Objective}s to their amplitudes (difference between
+	 * maximal and minimal value). These extreme values are used during ε mapping to
+	 * scale the delta according to the objective values of the {@link Individual} group
+	 * under consideration.
 	 * 
 	 * @param individuals
-	 * @return map mapping each objective onto its amplitude
+	 * @return map mapping each {@link Objective} onto its amplitude
 	 */
 	public Map<Objective, Double> findObjectiveAmplitudes(Set<Individual> individuals);
 

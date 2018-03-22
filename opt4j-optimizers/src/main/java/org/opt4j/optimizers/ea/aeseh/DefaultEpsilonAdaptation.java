@@ -4,6 +4,13 @@ import org.opt4j.core.start.Constant;
 
 import com.google.inject.Inject;
 
+/**
+ * The {@link DefaultEpsilonAdaptation} adapts the ε values exactly as described
+ * in the paper cited in the {@link AeSeHModule}.
+ * 
+ * @author Fedor Smirnov
+ *
+ */
 public class DefaultEpsilonAdaptation implements EpsilonAdaption {
 
 	protected double epsilonSample;
