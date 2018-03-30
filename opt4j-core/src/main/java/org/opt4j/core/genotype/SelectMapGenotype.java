@@ -19,15 +19,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.genotype;
 
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.opt4j.core.Genotype;
@@ -44,8 +46,8 @@ import org.opt4j.core.Genotype;
  * Example usage: <blockquote>
  * 
  * <pre>
- * SelectMapGenotype&lt;Ball, Color&gt; genotype = new SelectMapGenotype&lt;Ball, Color&gt;(Arrays.asList(ball1, ball2, ball3, ball4,
- * 		ball5), Arrays.asList(Color.BLUE, Color.GREEN, Color.RED));
+ * SelectMapGenotype&lt;Ball, Color&gt; genotype = new SelectMapGenotype&lt;Ball, Color&gt;(
+ * 		Arrays.asList(ball1, ball2, ball3, ball4, ball5), Arrays.asList(Color.BLUE, Color.GREEN, Color.RED));
  * genotype.init(new Random());
  * </pre>
  * 
@@ -74,6 +76,11 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 		public SelectBounds(List<O> list, Map<O, List<P>> map) {
 			this.list = list;
 			this.map = map;
+			for (Entry<O, List<P>> entry : map.entrySet()) {
+				if (entry.getValue().isEmpty()) {
+					throw new IllegalArgumentException("Empty value map provided for key " + entry.getKey());
+				}
+			}
 		}
 
 		@Override
@@ -97,11 +104,20 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	 */
 	public SelectMapGenotype(List<K> keys, Map<K, List<V>> values) {
 		super(new SelectBounds<K, V>(keys, values));
+		if (!keys.containsAll(values.keySet()) || !values.keySet().containsAll(keys)) {
+			throw new IllegalArgumentException("The provided list does not match the provided map");
+		}
+		if (new HashSet<K>(keys).size() < keys.size()) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
+		}
 		this.keys = keys;
 		this.values = values;
 	}
 
 	private static <K, V> Map<K, List<V>> toMap(List<K> keys, List<V> values) {
+		if (new HashSet<K>(keys).size() < keys.size()) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
+		}
 		Map<K, List<V>> map = new HashMap<K, List<V>>();
 		for (K key : keys) {
 			map.put(key, values);
@@ -142,7 +158,7 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	 */
 	@Override
 	public void init(Random random, int n) {
-		throw new UnsupportedOperationException("Use method init(Random) instead");
+		throw new UnsupportedOperationException(MapGenotype.ERROR_MESSAGE_UNSUPPORTED_INIT);
 	}
 
 	/*
@@ -162,6 +178,9 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	 */
 	@Override
 	public int getIndexOf(K key) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
+		}
 		return keys.indexOf(key);
 	}
 
@@ -174,11 +193,7 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	public V getValue(K key) {
 		int i = getIndexOf(key);
 		int v = get(i);
-		assert v <= getUpperBound(i);
-		assert v >= getLowerBound(i);
 		List<V> valueList = values.get(key);
-
-		assert valueList.size() > v : "index " + v + " unavailable for list of key " + key + ": " + valueList;
 		return valueList.get(v);
 	}
 
@@ -190,14 +205,16 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	 */
 	@Override
 	public void setValue(K key, V value) {
-		int i = keys.indexOf(key);
+		int i = getIndexOf(key);
 		while (size() <= i) {
 			add(bounds.getLowerBound(i));
 		}
-
 		List<V> valueList = values.get(key);
+		if (!valueList.contains(value)) {
+			throw new IllegalArgumentException(
+					"The list provided for key " + key + " does not contain the value " + value);
+		}
 		int v = valueList.indexOf(value);
-
 		set(i, v);
 	}
 
