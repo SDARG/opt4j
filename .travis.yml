@@ -8,8 +8,8 @@ before_install:
   - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
 
 after_success:
-- gradle jacocoRootReport
-- java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoRootReport.xml
+- gradle jacocoRootReport 
+- java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
 
 before_deploy:
         - "./gradlew assemble website"
