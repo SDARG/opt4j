@@ -1,25 +1,19 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.diversity;
 
@@ -30,8 +24,7 @@ import org.opt4j.core.genotype.BooleanGenotype;
 import org.opt4j.core.genotype.DoubleGenotype;
 
 /**
- * The {@link BasicDiversityModule} is the basic {@link PropertyModule} for the
- * {@link Diversity} operator.
+ * The {@link BasicDiversityModule} is the basic {@link PropertyModule} for the {@link Diversity} operator.
  * 
  * @author glass
  * 
@@ -41,10 +34,10 @@ public class BasicDiversityModule extends DiversityModule {
 
 	@Ignore
 	@Info("The type of the diversity operator for the Boolean genotype.")
-	BooleanType booleanType = BooleanType.FRACTION;
+	protected BooleanType booleanType = BooleanType.FRACTION;
 
 	@Info("The type of the diversity operator for the Double genotype.")
-	DoubleType doubleType = DoubleType.ABSOLUTE;
+	protected DoubleType doubleType = DoubleType.ABSOLUTE;
 
 	/**
 	 * Type of {@link Diversity} operator for the {@link BooleanGenotype}.
@@ -75,16 +68,7 @@ public class BasicDiversityModule extends DiversityModule {
 	}
 
 	/**
-	 * Constructs a {@link BasicDiversityModule}.
-	 * 
-	 */
-	public BasicDiversityModule() {
-		super();
-	}
-
-	/**
-	 * Returns the Type of {@link Diversity} operator for
-	 * {@link BooleanGenotype}.
+	 * Returns the Type of {@link Diversity} operator for {@link BooleanGenotype}.
 	 * 
 	 * @return the type of diversity operator for boolean genotypes
 	 */
@@ -103,8 +87,7 @@ public class BasicDiversityModule extends DiversityModule {
 	}
 
 	/**
-	 * Returns the Type of {@link Diversity} operator for {@link DoubleGenotype}
-	 * .
+	 * Returns the Type of {@link Diversity} operator for {@link DoubleGenotype} .
 	 * 
 	 * @return the type of diversity operator for double genotypes
 	 */
@@ -113,8 +96,7 @@ public class BasicDiversityModule extends DiversityModule {
 	}
 
 	/**
-	 * Sets the the Type of {@link Diversity} operator for
-	 * {@link DoubleGenotype}.
+	 * Sets the the Type of {@link Diversity} operator for {@link DoubleGenotype}.
 	 * 
 	 * @param doubleType
 	 *            the doubleType to set
@@ -131,17 +113,17 @@ public class BasicDiversityModule extends DiversityModule {
 	@Override
 	public void config() {
 		switch (booleanType) {
-		case FRACTION:
+		default:
 			bind(DiversityBoolean.class).to(DiversityBooleanFraction.class).in(SINGLETON);
 			break;
 		}
 
 		switch (doubleType) {
-		case ABSOLUTE:
-			bind(DiversityDouble.class).to(DiversityDoubleAbsolute.class).in(SINGLETON);
-			break;
 		case EUCLIDEAN:
 			bind(DiversityDouble.class).to(DiversityDoubleEuclidean.class).in(SINGLETON);
+			break;
+		default:
+			bind(DiversityDouble.class).to(DiversityDoubleAbsolute.class).in(SINGLETON);
 			break;
 		}
 	}

@@ -23,10 +23,31 @@ public class AbstractArchiveTest {
 		@Override
 		protected boolean updateWithNondominated(Collection<Individual> candidates) {
 			this.candidates = candidates;
+			addAll(candidates);
 			return true;
 		}
 
 	};
+
+	@Test
+	public void update() {
+		Injector injector = Guice.createInjector(new MockProblemModule());
+		IndividualFactory factory = injector.getInstance(IndividualFactory.class);
+
+		Objective o0 = new Objective("o0");
+		Objective o1 = new Objective("o1");
+
+		TestArchive archive = new TestArchive();
+
+		Individual i0 = factory.create();
+		Objectives objectives0 = new Objectives();
+		objectives0.add(o0, 1);
+		objectives0.add(o1, 0);
+		i0.setObjectives(objectives0);
+
+		Assert.assertTrue(archive.update(i0));
+		Assert.assertTrue(archive.contains(i0));
+	}
 
 	/**
 	 * Tests {@link AbstractArchive#removeDominatedCandidates(List)} with two nondominated individuals.
@@ -196,8 +217,7 @@ public class AbstractArchiveTest {
 
 	/**
 	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with a candidate which has the same objectives as an
-	 * individual in the archive. To avoid unnecessary archive updates, the candidate is expected to be
-	 * discarded here.
+	 * individual in the archive. To avoid unnecessary archive updates, the candidate is expected to be discarded here.
 	 */
 	@Test
 	public void removeArchiveDominatedTest3() {
