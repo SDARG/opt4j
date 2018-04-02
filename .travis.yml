@@ -1,8 +1,15 @@
 language: java
 install: true
 dist: trusty
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+
 after_success:
-    - "./gradlew coveralls"
+- "./gradlew jacocoRootReport coveralls" 
+- java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
 
 before_deploy:
         - "./gradlew assemble website"
@@ -17,8 +24,9 @@ deploy:
       file:
         - build/distributions/opt4j-*.tar
         - build/distributions/opt4j-*.zip
-      keep-history: true
-    - provider: pages
-      github-token: $GITHUB_TOKEN
-      keep-history: true
-      local-dir: ./build/website
+        keep-history: true
+       - provider: pages
+          skip-cleanup: true
+          github-token: $GITHUB_TOKEN   # Set in travis-ci.org dashboard, marked secure
+          keep-history: true
+          local-dir: ./build/website
