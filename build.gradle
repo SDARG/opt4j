@@ -8,7 +8,22 @@ apply plugin: 'jacoco'
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
-version = 'SNAPSHOT-' + new Date().format("yyyyMMdd")
+/*
+ * Gets the version name from the latest Git tag
+ */
+def getVersionName = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags'
+        standardOutput = stdout
+	ignoreExitValue true
+    }
+    version=stdout.toString().trim()
+    if (version.indexOf('-') >= 0 || version.isEmpty())
+    	version += '-SNAPSHOT'
+    return version
+}
+version=getVersionName()
 
 def stagingURL = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 def snapshotURL = 'https://oss.sonatype.org/content/repositories/snapshots/'
