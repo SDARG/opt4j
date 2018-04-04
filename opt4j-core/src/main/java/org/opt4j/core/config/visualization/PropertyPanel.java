@@ -1,23 +1,18 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core.config.visualization;
@@ -64,8 +59,8 @@ import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.File;
 
 /**
- * The {@link PropertyPanel} is a panel for the configuration of one module.
- * Properties and values are arranged in a table.
+ * The {@link PropertyPanel} is a panel for the configuration of one module. Properties and values are arranged in a
+ * table.
  * 
  * @author lukasiewycz
  * 
@@ -84,8 +79,7 @@ public class PropertyPanel extends JPanel {
 	protected final Map<Property, Component> components = new HashMap<Property, Component>();
 
 	/**
-	 * Constructs a {@link PropertyPanel} for one {@link PropertyModule}
-	 * instance.
+	 * Constructs a {@link PropertyPanel} for one {@link PropertyModule} instance.
 	 * 
 	 * @param module
 	 *            the instance of the {@link PropertyModule}
@@ -288,9 +282,8 @@ public class PropertyPanel extends JPanel {
 	}
 
 	/**
-	 * Adds a row showing the {@link Citation}. On the left hand side,
-	 * "reference" is printed while on the right hand side, the {@link Citation}
-	 * is added in a static {@link TextArea}.
+	 * Adds a row showing the {@link Citation}. On the left hand side, "reference" is printed while on the right hand
+	 * side, the {@link Citation} is added in a static {@link TextArea}.
 	 * 
 	 * @param citation
 	 *            the citation to add
@@ -310,8 +303,6 @@ public class PropertyPanel extends JPanel {
 		field.setBackground(label.getBackground());
 		field.setEditable(false);
 		field.setText(Format.formatJava(citation));
-		System.out.println("title:      " + citation.title());
-		System.out.println("formatJava: " + Format.formatJava(citation));
 
 		if (!citation.doi().isEmpty()) {
 			final String doi = citation.doi();
@@ -421,6 +412,15 @@ public class PropertyPanel extends JPanel {
 			fileChooser.setFileFilter(null);
 		}
 
+		if (file.folder()) {
+			if (file.file()) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			} else {
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			}
+		} else {
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		}
 		fileChooser.setVisible(true);
 
 		int status = fileChooser.showOpenDialog(null);

@@ -1,23 +1,20 @@
 #!/usr/bin/python
-'''
-@author: Martin Lukasiewycz
-
-opt4j batch program
-
-features:
- - execute xml configurations in a batch 
-   * automatically replaces __RUN__ by the current run counter (use for the seed)
- - evaluate the statistics
-   * use edominance and hypervolume indicators
-   * determine the optimal results of each method
-   
-folder organization:
- - basefolder
-   * configs - the xml configurations
-   * runs - the results of the optimization runs (tsv)
-   * results - the results of the evaluation
-
-'''
+# @author: Martin Lukasiewycz
+# 
+# opt4j batch program
+# 
+# features:
+#  - execute xml configurations in a batch 
+#    * automatically replaces __RUN__ by the current run counter (use for the seed)
+#  - evaluate the statistics
+#    * use edominance and hypervolume indicators
+#    * determine the optimal results of each method
+#    
+# folder organization:
+#  - basefolder
+#    * configs - the xml configurations
+#    * runs - the results of the optimization runs (tsv)
+#    * results - the results of the evaluation
 from multiprocessing import Pool
 from bisect import insort
 from math import sqrt, floor
@@ -36,7 +33,7 @@ FOLDER_CONFIGS = "configs"
 FOLDER_RUNS = "runs"
 FOLDER_RESULTS = "results"
 
-''' available: avg, dev, min, max, median, lq, uq '''
+# available: avg, dev, min, max, median, lq, uq
 STATS = ["avg", "dev"]
 COVSTATS = ["avg", "dev", "min", "max", "median", "lq", "uq"] 
 
@@ -48,11 +45,11 @@ MIN = True
 MAX = False
 DEADLINE = None
 
-''' objectives are determined in the function readRun '''
+# objectives are determined in the function readRun
 objectives = None
 gNadir = None
 
-''' assumes that files are named 'method.RUN.tsv' '''
+# assumes that files are named 'method.RUN.tsv'
 def getGroup(file):
     str = os.path.split(file)[1]
     return str[0:str.index('.')]
@@ -243,13 +240,13 @@ def writeRun(run, filename):
         for sample in run.samples[iteration]:
             out.write('\t'.join(str(v) for v in [iteration, evaluations, runtime] + [value for value in sample.values]) + "\n")
 
-''' determines if p1 strong dominates p2 '''
+# determines if p1 strong dominates p2
 def hv_dominates(p1, p2, nObjectives):
     p1 = p1[0:nObjectives]
     p2 = p2[0:nObjectives]
     return all(x1 >= x2 for x1, x2 in zip(p1, p2)) and not p1 == p2
 
-''' determines all points that are not dominated up to a given objective '''
+# determines all points that are not dominated up to a given objective
 def hv_filterNondominatedSet(front, nObjectives):
     nondominated = []
     for p1 in front:
@@ -257,16 +254,16 @@ def hv_filterNondominatedSet(front, nObjectives):
             nondominated = [p2 for p2 in nondominated if not hv_dominates(p1, p2, nObjectives)] + [p1]
     return nondominated
 
-''' calculate next value regarding dimension 'objective' '''
+# calculate next value regarding dimension 'objective'
 def hv_surfaceUnchangedTo(front, objective):
     assert len(front) > 0
     return min([p[objective] for p in front])
 
-''' returns a subset of the front that satisfies a threshold '''
+# returns a subset of the front that satisfies a threshold
 def hv_reduceNondominatedSet(front, objective, threshold):
     return [p for p in front if p[objective] > threshold]
 
-''' calculate the hypervolume '''
+# calculate the hypervolume
 def hv_calculateHypervolume(front, nObjectives):
     volume = 0
     distance = 0
@@ -290,7 +287,6 @@ def hypervolume(samples, nadir, add=0.0):
 def edominance(samples, reference):
     A = [s.minvalues for s in samples]
     B = [r.minvalues for r in reference]
-    ''''v = max(min(max(x/y for x,y in zip(a,b)) for a in A) for b in B)'''
     v = max(min(max(x - y for x, y in zip(a, b)) for a in A) for b in B)
     return v
 
@@ -325,7 +321,6 @@ def isnumber(s):
         return False
 
 def average(sources, dest):
-
     out = open(dest, 'w')
     input = [open(source, 'r') for source in sources]
     
@@ -451,9 +446,6 @@ def doResults(basefolder):
         tasks = [(doReadFile, (file, resultsfoldertmp)) for file in groupfiles]
         result = parallel(tasks, 1)
         
-        
-        '''result = [doReadFile(file,resultsfoldertmp) for file in groupfiles]; sequential '''
-        
         references[group] = []
         for (zen, nad, nondom) in result:
             if len(nondom) > 0:
@@ -465,7 +457,7 @@ def doResults(basefolder):
     nadir = getMax(nadir)
     zenit = getMin(zenit)
     
-    ''' adjust nadir in case an objective is equal for nadir and zenit '''
+    # adjust nadir in case an objective is equal for nadir and zenit
     nadmin = [x if x < y else x + 1 for x, y in zip(nadir.minvalues, zenit.minvalues)]
     nadir = Sample(Sample.invValues(nadmin));
     
@@ -492,8 +484,7 @@ def doResults(basefolder):
     tasks = [(doResultsIndicators, (file, runsfolder, zenit, nadir, hypervolumeopt, normReference, resultsfoldertmp)) for file in files]
     parallel(tasks, PROCESSES)
 
-    ''' determine stats ''' 
-        
+    # determine stats        
     resultfiles = os.listdir(resultsfoldertmp)
     resultgroups = set([getGroup(file) for file in resultfiles])
 
@@ -505,8 +496,7 @@ def doResults(basefolder):
         statfile = resultsfolder + "/" + group + ".stats"
         average(gresultfiles, statfile)
         
-    ''' determine coverage '''
-    
+    # determine coverage
     with open(resultsfolder + "/coverage", 'w') as covfile:        
         covfile.write('\t'.join(["method1", "method2"] + [stat for stat in COVSTATS]) + '\n')
         
@@ -521,8 +511,7 @@ def doResults(basefolder):
                 values.append(c)
             stats = statistics(values)
             covfile.write('\t'.join([group1, group2] + [str(stats[stat]) for stat in COVSTATS]) + '\n')
-    
-    '''rmdir(resultsfoldertmp)'''
+
     print('results successful')
 
 
@@ -606,8 +595,6 @@ def resetObjectives():
     objectives = None
     
 if __name__ == '__main__':
-    '''print(os.getcwd())'''
-    
     help='''usage: %prog [options] <directories>", version="%prog 1.0 
      
     Each directory in <directories> contains a folder configs that has to contain 
@@ -620,7 +607,6 @@ if __name__ == '__main__':
     
     Finally, the statistics (incl. hypervolume and e-dominance) will be calculated
     based on the runs and written in the results folder.'''
-
     
     parser = OptionParser(usage=help)
     parser.add_option("-c", "--clear", action="store_true", default=False, help="clear all previous runs and results")
@@ -658,4 +644,3 @@ if __name__ == '__main__':
                 if options.results: doResults(basefolder) 
             except DirectoryException as e:
                 print('Skip directory ' + str(basefolder) + ': ' + str(e))
-    

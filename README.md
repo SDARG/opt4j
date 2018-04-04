@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e6f0cbe65dc4a57a1c1769248956018)](https://app.codacy.com/app/FedorSmirnov89/opt4j?utm_source=github.com&utm_medium=referral&utm_content=felixreimann/opt4j&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/felixreimann/opt4j.svg?branch=master)](https://travis-ci.org/felixreimann/opt4j)
 [![Coverage Status](https://coveralls.io/repos/github/felixreimann/opt4j/badge.svg?branch=master)](https://coveralls.io/github/felixreimann/opt4j?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.opt4j/opt4j-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.opt4j/opt4j-core)
