@@ -34,11 +34,13 @@ import org.opt4j.core.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link Hypervolume}, see "Zitzler, E., and Thiele, L. (1998): Multiobjective Optimization Using Evolutionary
- * Algorithms - A Comparative Case Study. Parallel Problem Solving from Nature (PPSN-V), 292-301." is a
- * {@link FrontDensityIndicator} based on determination of the hypervolume contribution. The calculation is based on a
- * normalization between 0 and 1 in each dimension and a transformation to a maximization problem. Additionally an
- * offset value (default 1) is added to each dimension.
+ * The {@link Hypervolume}, see "Zitzler, E., and Thiele, L. (1998):
+ * Multiobjective Optimization Using Evolutionary Algorithms - A Comparative
+ * Case Study. Parallel Problem Solving from Nature (PPSN-V), 292-301." is a
+ * {@link FrontDensityIndicator} based on determination of the hypervolume
+ * contribution. The calculation is based on a normalization between 0 and 1 in
+ * each dimension and a transformation to a maximization problem. Additionally
+ * an offset value (default 1) is added to each dimension.
  * 
  * 
  * @see SMSModule
@@ -56,7 +58,8 @@ public class Hypervolume implements FrontDensityIndicator {
 	 * Constructs a {@link Hypervolume}.
 	 * 
 	 * @param offset
-	 *            the offset that is added to each dimension before the hypervolume is calculated
+	 *            the offset that is added to each dimension before the
+	 *            hypervolume is calculated
 	 */
 	@Inject
 	public Hypervolume(@Constant(value = "offset", namespace = Hypervolume.class) double offset) {
@@ -66,7 +69,9 @@ public class Hypervolume implements FrontDensityIndicator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.optimizer.ea.FrontDensityIndicator#getDensityValues(java.util .Collection)
+	 * @see
+	 * org.opt4j.optimizer.ea.FrontDensityIndicator#getDensityValues(java.util
+	 * .Collection)
 	 */
 	@Override
 	public Map<Individual, Double> getDensityValues(Collection<Individual> individuals) {
@@ -74,10 +79,11 @@ public class Hypervolume implements FrontDensityIndicator {
 	}
 
 	/**
-	 * Calculates the density values for a front of non-dominated individuals based on the contribution of the
-	 * {@link Hypervolume}.
+	 * Calculates the density values for a front of non-dominated individuals
+	 * based on the contribution of the {@link Hypervolume}.
 	 * 
-	 * A special approach for two dimension exists as well as a general approach for n dimensions.
+	 * A special approach for two dimension exists as well as a general approach
+	 * for n dimensions.
 	 * 
 	 * @param individuals
 	 *            the individuals
@@ -170,7 +176,8 @@ public class Hypervolume implements FrontDensityIndicator {
 	}
 
 	/**
-	 * Transforms the non-dominated {@link Individual}s to a front where each objective is to be minimized.
+	 * Transforms the non-dominated {@link Individual}s to a front where each
+	 * objective is to be minimized.
 	 * 
 	 * @param individuals
 	 *            the individuals
@@ -225,8 +232,8 @@ public class Hypervolume implements FrontDensityIndicator {
 	}
 
 	/**
-	 * Inverts (from a minimization to a maximization problem) a front of solutions and adds an offset value to each
-	 * dimension.
+	 * Inverts (from a minimization to a maximization problem) a front of
+	 * solutions and adds an offset value to each dimension.
 	 * 
 	 * @param front
 	 *            the front of non-dominated solutions
@@ -253,8 +260,9 @@ public class Hypervolume implements FrontDensityIndicator {
 	}
 
 	/**
-	 * Implements the {@link Hypervolume} calculations as proposed by Zitzler, E., and Thiele, L. (1998). All points
-	 * have positive values in all dimensions and the hypervolume is calculated from 0.
+	 * Implements the {@link Hypervolume} calculations as proposed by Zitzler,
+	 * E., and Thiele, L. (1998). All points have positive values in all
+	 * dimensions and the hypervolume is calculated from 0.
 	 * 
 	 * @param front
 	 *            the front of non-dominated solutions
@@ -278,7 +286,7 @@ public class Hypervolume implements FrontDensityIndicator {
 			double tempDistance = surfaceUnchangedTo(front, nObjectives - 1);
 			volume += tempVolume * (tempDistance - distance);
 			distance = tempDistance;
-			front = reduceNondominatedSet(front, nObjectives - 1, distance);
+			reduceNondominatedSet(front, nObjectives - 1, distance);
 		}
 
 		return volume;
@@ -331,15 +339,17 @@ public class Hypervolume implements FrontDensityIndicator {
 		return value;
 	}
 
-	protected List<double[]> reduceNondominatedSet(List<double[]> front, int objective, double threshold) {
-		List<double[]> result = new ArrayList<double[]>();
+	protected void reduceNondominatedSet(List<double[]> front, int objective, double threshold) {
+		List<double[]> lames = new ArrayList<double[]>();
 
 		for (double[] p : front) {
-			if (p[objective] > threshold) {
-				result.add(p);
+			if (p[objective] <= threshold) {
+				lames.add(p);
 			}
 		}
-		return result;
+
+		front.removeAll(lames);
+		return;
 	}
 
 }
