@@ -42,13 +42,6 @@ public class VarOrder extends Order {
 	protected final Map<Object, Boolean> phase = new HashMap<Object, Boolean>();
 
 	/**
-	 * Constructs a {@link VarOrder}.
-	 */
-	public VarOrder() {
-		super();
-	}
-
-	/**
 	 * Sets the activity of the specified variable.
 	 * 
 	 * @see #getActivity

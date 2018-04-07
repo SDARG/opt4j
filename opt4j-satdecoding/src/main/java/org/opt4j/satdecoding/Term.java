@@ -46,7 +46,7 @@ public class Term {
 		this.coeff = coeff;
 		this.lit = lit;
 		if (lit == null) {
-			throw new NullPointerException();
+			throw new IllegalArgumentException("Literal must not be null.");
 		}
 	}
 

@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.satdecoding;
 
 import java.util.ArrayList;
@@ -50,6 +49,8 @@ public class Constraint extends ArrayList<Term> {
 
 	protected Operator operator = Operator.GE;
 	protected int rhs = 1;
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The {@link Operator}s correspond to the Boolean operators &lt;=,=,&gt;=.
@@ -183,7 +184,7 @@ public class Constraint extends ArrayList<Term> {
 
 					@Override
 					public void remove() {
-						throw new RuntimeException("Operation not supported");
+						throw new UnsupportedOperationException("Do not remove constraint coefficients.");
 					}
 				};
 			}
@@ -428,7 +429,5 @@ public class Constraint extends ArrayList<Term> {
 		Constraint other = (Constraint) obj;
 		return (super.equals(other) && operator == other.operator && rhs == other.rhs);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 }
