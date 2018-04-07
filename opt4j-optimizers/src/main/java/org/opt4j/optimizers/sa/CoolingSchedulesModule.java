@@ -54,14 +54,6 @@ public class CoolingSchedulesModule extends CoolingScheduleModule {
 	protected Type type = Type.LINEAR;
 
 	/**
-	 * Constructs a {@link CoolingSchedulesModule}.
-	 * 
-	 */
-	public CoolingSchedulesModule() {
-		super();
-	}
-
-	/**
 	 * Type of {@link CoolingSchedule} to use.
 	 * 
 	 * @author lukasiewycz

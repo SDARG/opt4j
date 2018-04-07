@@ -62,14 +62,6 @@ public class BasicMatingModule extends MatingModule {
 	}
 
 	/**
-	 * Constructs a {@link BasicMatingModule}.
-	 * 
-	 */
-	public BasicMatingModule() {
-		super();
-	}
-
-	/**
 	 * Returns the type of {@link Coupler} operator to use.
 	 * 
 	 * @see #setType

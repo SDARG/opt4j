@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.ea;
 
@@ -104,7 +103,7 @@ public class Nsga2 implements Selector {
 
 			for (int t = 0; t < tournament; t++) {
 				Individual opponent = all.get(random.nextInt(size));
-				if (rank.get(opponent) < rank.get(winner) || opponent == winner) {
+				if (rank.get(opponent) < rank.get(winner) || opponent.equals(winner)) {
 					winner = opponent;
 				} else if (rank.get(opponent) == rank.get(winner)) {
 					// The winner is determined considering the crowding
@@ -184,43 +183,27 @@ public class Nsga2 implements Selector {
 	 */
 	public List<List<Individual>> fronts(Collection<Individual> individuals) {
 
-		List<Individual> pop = new ArrayList<Individual>(individuals);
-		Map<Individual, Integer> id = new HashMap<Individual, Integer>();
-		for (int i = 0; i < pop.size(); i++) {
-			id.put(pop.get(i), i);
+		List<Individual> population = new ArrayList<Individual>(individuals);
+		Map<Individual, Integer> individualID = new HashMap<Individual, Integer>();
+		for (int i = 0; i < population.size(); i++) {
+			individualID.put(population.get(i), i);
 		}
 
 		List<List<Individual>> fronts = new ArrayList<List<Individual>>();
 
-		Map<Individual, List<Individual>> S = new HashMap<Individual, List<Individual>>();
-		int[] n = new int[pop.size()];
+		Map<Individual, List<Individual>> dominatedIndividuals = new HashMap<Individual, List<Individual>>();
+		int[] numberOfDominations = new int[population.size()];
 
-		for (Individual e : pop) {
-			S.put(e, new ArrayList<Individual>());
-			n[id.get(e)] = 0;
+		for (Individual e : population) {
+			dominatedIndividuals.put(e, new ArrayList<Individual>());
+			numberOfDominations[individualID.get(e)] = 0;
 		}
 
-		for (int i = 0; i < pop.size(); i++) {
-			for (int j = i + 1; j < pop.size(); j++) {
-				Individual p = pop.get(i);
-				Individual q = pop.get(j);
-
-				Objectives po = p.getObjectives();
-				Objectives qo = q.getObjectives();
-
-				if (po.dominates(qo)) {
-					S.get(p).add(q);
-					n[id.get(q)]++;
-				} else if (qo.dominates(po)) {
-					S.get(q).add(p);
-					n[id.get(p)]++;
-				}
-			}
-		}
+		frontsResolveDomination(population, numberOfDominations, individualID, dominatedIndividuals);
 
 		List<Individual> f1 = new ArrayList<Individual>();
-		for (Individual i : pop) {
-			if (n[id.get(i)] == 0) {
+		for (Individual i : population) {
+			if (numberOfDominations[individualID.get(i)] == 0) {
 				f1.add(i);
 			}
 		}
@@ -229,9 +212,9 @@ public class Nsga2 implements Selector {
 		while (!fi.isEmpty()) {
 			List<Individual> h = new ArrayList<Individual>();
 			for (Individual p : fi) {
-				for (Individual q : S.get(p)) {
-					n[id.get(q)]--;
-					if (n[id.get(q)] == 0) {
+				for (Individual q : dominatedIndividuals.get(p)) {
+					numberOfDominations[individualID.get(q)]--;
+					if (numberOfDominations[individualID.get(q)] == 0) {
 						h.add(q);
 					}
 				}
@@ -240,6 +223,40 @@ public class Nsga2 implements Selector {
 			fi = h;
 		}
 		return fronts;
+	}
+
+	/**
+	 * Helper function for fronts() that determines the number of dominations
+	 * and the dominated individuals for each individual
+	 * 
+	 * @param population
+	 *            the individuals to consider
+	 * @param numberOfDominations
+	 *            the number of dominations
+	 * @param individualID
+	 *            helper ID for the individuals
+	 * @param dominatedIndividuals
+	 *            the individuals dominated by each individual
+	 */
+	protected void frontsResolveDomination(List<Individual> population, int[] numberOfDominations,
+			Map<Individual, Integer> individualID, Map<Individual, List<Individual>> dominatedIndividuals) {
+		for (int i = 0; i < population.size(); i++) {
+			for (int j = i + 1; j < population.size(); j++) {
+				Individual p = population.get(i);
+				Individual q = population.get(j);
+
+				Objectives po = p.getObjectives();
+				Objectives qo = q.getObjectives();
+
+				if (po.dominates(qo)) {
+					dominatedIndividuals.get(p).add(q);
+					numberOfDominations[individualID.get(q)]++;
+				} else if (qo.dominates(po)) {
+					dominatedIndividuals.get(q).add(p);
+					numberOfDominations[individualID.get(p)]++;
+				}
+			}
+		}
 	}
 
 }
