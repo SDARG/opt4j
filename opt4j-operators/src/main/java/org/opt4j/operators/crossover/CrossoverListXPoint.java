@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.crossover;
 
@@ -82,7 +81,7 @@ public abstract class CrossoverListXPoint<G extends ListGenotype<?>> implements 
 		int size = p1.size();
 
 		if (x <= 0 || x > size - 1) {
-			throw new RuntimeException(this.getClass() + " : x is " + x + " for binary vector size " + size);
+			throw new IllegalArgumentException(this.getClass() + " : x is " + x + " for binary vector size " + size);
 		}
 
 		SortedSet<Integer> points = new TreeSet<Integer>();
