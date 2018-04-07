@@ -252,7 +252,7 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 	 */
 	@Override
 	public synchronized void init(Viewport viewport) {
-
+		// nothing to be done
 	}
 
 	/*
