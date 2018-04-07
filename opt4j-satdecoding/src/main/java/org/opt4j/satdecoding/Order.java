@@ -41,13 +41,6 @@ public abstract class Order {
 	protected double varDecay = 1;
 
 	/**
-	 * Constructs an {@link Order}.
-	 */
-	public Order() {
-		super();
-	}
-
-	/**
 	 * Returns the scaling factor for the offset value.
 	 * 
 	 * @see #setVarDecay
