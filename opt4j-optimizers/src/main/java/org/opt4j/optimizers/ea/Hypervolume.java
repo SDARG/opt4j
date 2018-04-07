@@ -349,7 +349,6 @@ public class Hypervolume implements FrontDensityIndicator {
 		}
 
 		front.removeAll(lames);
-		return;
 	}
 
 }
