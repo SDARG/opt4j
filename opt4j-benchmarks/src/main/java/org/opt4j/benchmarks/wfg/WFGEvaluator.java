@@ -109,7 +109,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 			S.add(m * 2.0);
 		}
 
-		return caculateF(x, h, S);
+		return calculateF(x, h, S);
 	}
 
 	protected static List<Double> normalizeZ(final List<Double> z, final List<Double> z_max) {
@@ -146,7 +146,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 		return result;
 	}
 
-	protected static List<Double> caculateF(final List<Double> x, final List<Double> h, final List<Double> S) {
+	protected static List<Double> calculateF(final List<Double> x, final List<Double> h, final List<Double> S) {
 		assert (x.size() == h.size());
 		assert (h.size() == S.size());
 

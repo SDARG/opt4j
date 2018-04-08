@@ -58,7 +58,7 @@ public class WFG4 extends WFGEvaluator {
 		List<Double> t = new ArrayList<Double>();
 
 		for (int i = 0; i < n; i++) {
-			t.add(WFGTransFunctions.s_multi(y.get(i), 30, 10, 0.35));
+			t.add(WFGTransFunctions.sMulti(y.get(i), 30, 10, 0.35));
 		}
 
 		return t;

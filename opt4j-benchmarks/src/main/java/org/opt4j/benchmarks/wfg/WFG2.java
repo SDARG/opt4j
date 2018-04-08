@@ -70,7 +70,7 @@ public class WFG2 extends WFGEvaluator {
 			final int head = k + 2 * (i - k) - 2;
 			final int tail = k + 2 * (i - k);
 
-			t.add(WFGTransFunctions.r_nonsep(y.subList(head, tail), 2));
+			t.add(WFGTransFunctions.rNonsep(y.subList(head, tail), 2));
 		}
 
 		return t;
@@ -98,13 +98,13 @@ public class WFG2 extends WFGEvaluator {
 			final List<Double> y_sub = y.subList(head, tail);
 			final List<Double> w_sub = w.subList(head, tail);
 
-			t.add(WFGTransFunctions.r_sum(y_sub, w_sub));
+			t.add(WFGTransFunctions.rSum(y_sub, w_sub));
 		}
 
 		final List<Double> y_sub = y.subList(k, n);
 		final List<Double> w_sub = w.subList(k, n);
 
-		t.add(WFGTransFunctions.r_sum(y_sub, w_sub));
+		t.add(WFGTransFunctions.rSum(y_sub, w_sub));
 
 		return t;
 	}

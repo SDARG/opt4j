@@ -80,7 +80,7 @@ public class WFGI1 extends WFGEvaluator {
 			S.add(1.0);
 		}
 
-		return caculateF(x, h, S);
+		return calculateF(x, h, S);
 	}
 
 	/*

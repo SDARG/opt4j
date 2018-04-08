@@ -59,7 +59,7 @@ class WFGTransFunctions {
 
 	}
 
-	public static double b_poly(final double y, final double alpha) {
+	public static double bPoly(final double y, final double alpha) {
 		assert (y >= 0.0);
 		assert (y <= 1.0);
 		assert (alpha > 0.0);
@@ -75,7 +75,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double b_flat(final double y, final double A, final double B, final double C) {
+	public static double bFlat(final double y, final double A, final double B, final double C) {
 		assert (y >= 0.0);
 		assert (y <= 1.0);
 		assert (A >= 0.0);
@@ -103,7 +103,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double b_param(final double y, final double u, final double A, final double B, final double C) {
+	public static double bParam(final double y, final double u, final double A, final double B, final double C) {
 		assert (y >= 0.0);
 		assert (y <= 1.0);
 		assert (u >= 0.0);
@@ -125,7 +125,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double s_linear(final double y, final double A) {
+	public static double sLinear(final double y, final double A) {
 		assert (y >= 0.0);
 		assert (y <= 1.0);
 		assert (A > 0.0);
@@ -141,7 +141,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double s_decept(final double y, final double A, final double B, final double C) {
+	public static double sDecept(final double y, final double A, final double B, final double C) {
 		assert (y >= 0.0);
 		assert (y <= 1.0);
 		assert (A > 0.0);
@@ -166,7 +166,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double s_multi(final double y, final double A, final double B, final double C) {
+	public static double sMulti(final double y, final double A, final double B, final double C) {
 		assert (y >= 0.0);
 		assert (y <= 1.0);
 		assert (A >= 1);
@@ -188,7 +188,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double r_sum(final List<Double> y, final List<Double> w) {
+	public static double rSum(final List<Double> y, final List<Double> w) {
 		assert (!y.isEmpty());
 		assert (w.size() == y.size());
 
@@ -212,7 +212,7 @@ class WFGTransFunctions {
 		return result;
 	}
 
-	public static double r_nonsep(final List<Double> y, final int A) {
+	public static double rNonsep(final List<Double> y, final int A) {
 		final int y_len = y.size();
 
 		assert (y_len != 0);
