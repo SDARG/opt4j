@@ -70,7 +70,7 @@ public class Configurator {
 		String filename = null;
 		Class<? extends Task> taskClass = null;
 		if (args.length < 1) {
-			throw new RuntimeException("Specify the task class");
+			throw new ClassNotFoundException("Specify the task class");
 		}
 
 		String taskname = args[0];

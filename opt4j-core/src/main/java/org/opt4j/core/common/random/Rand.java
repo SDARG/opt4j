@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.common.random;
 
 import java.util.Random;
@@ -35,6 +35,8 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(RandomDefault.class)
 public abstract class Rand extends Random {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a Rand.
@@ -52,7 +54,5 @@ public abstract class Rand extends Random {
 	public Rand(long seed) {
 		super(seed);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 }

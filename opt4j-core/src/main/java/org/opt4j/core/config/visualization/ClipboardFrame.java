@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.config.visualization;
 
 import java.awt.BorderLayout;
@@ -72,8 +72,14 @@ class ClipboardFrame extends JFrame implements ClipboardOwner {
 						StringSelection stringSelection = new StringSelection(content);
 						Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 						clipboard.setContents(stringSelection, ClipboardFrame.this);
+						break;
+					default:
+						break;
 					}
 					ClipboardFrame.this.dispose();
+					break;
+				default:
+					break;
 				}
 			}
 		};

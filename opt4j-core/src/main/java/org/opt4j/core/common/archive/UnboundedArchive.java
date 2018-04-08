@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.core.common.archive;
 
 import java.util.Collection;
@@ -38,19 +37,11 @@ import com.google.inject.Singleton;
 @Singleton
 public class UnboundedArchive extends AbstractArchive {
 
-	/**
-	 * Constructs a new archive of unbounded size.
-	 */
-	public UnboundedArchive() {
-		super();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opt4j.common.archive.AbstractArchive#addNondominated(java.util.Collection
-	 * )
+	 * @see org.opt4j.common.archive.AbstractArchive#addNondominated(java.util.
+	 * Collection )
 	 */
 	@Override
 	protected boolean updateWithNondominated(Collection<Individual> candidates) {

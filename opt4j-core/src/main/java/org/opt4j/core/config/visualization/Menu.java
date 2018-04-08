@@ -48,13 +48,13 @@ import com.google.inject.Provider;
 @SuppressWarnings("serial")
 public class Menu extends JMenuBar implements FileOperationsListener, Startupable {
 
-	final JMenuItem load = new JMenuItem("Load ...", Icons.getIcon(Icons.FOLDER));
+	protected final JMenuItem load = new JMenuItem("Load ...", Icons.getIcon(Icons.FOLDER));
 
-	final JMenuItem save = new JMenuItem("Save", Icons.getIcon(Icons.DISK));
+	protected final JMenuItem save = new JMenuItem("Save", Icons.getIcon(Icons.DISK));
 
-	final JMenuItem saveAs = new JMenuItem("Save As ...", Icons.getIcon(Icons.DISK));
+	protected final JMenuItem saveAs = new JMenuItem("Save As ...", Icons.getIcon(Icons.DISK));
 
-	final JMenuItem about = new JMenuItem("About");
+	protected final JMenuItem about = new JMenuItem("About");
 
 	protected final FileOperations fileOperations;
 

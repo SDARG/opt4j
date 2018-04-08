@@ -54,9 +54,7 @@ public class SelectGenotypeTest {
 				return false;
 			if (Double.doubleToLongBits(field1) != Double.doubleToLongBits(other.field1))
 				return false;
-			if (field2 != other.field2)
-				return false;
-			return true;
+			return field2 == other.field2;
 		}
 
 		private SelectGenotypeTest getOuterType() {
@@ -92,6 +90,7 @@ public class SelectGenotypeTest {
 		mockObjects.add(obj3);
 		SelectGenotype<MockObject> selectGenotype = new SelectGenotype<SelectGenotypeTest.MockObject>(inputArray);
 		testGenotype(selectGenotype, mockObjects);
+		assertFalse(selectGenotype.isEmpty());
 	}
 
 	@Test
@@ -110,6 +109,7 @@ public class SelectGenotypeTest {
 		mockObjects.add(obj3);
 		SelectGenotype<MockObject> selectGenotype = new SelectGenotype<SelectGenotypeTest.MockObject>(inputList);
 		testGenotype(selectGenotype, mockObjects);
+		assertFalse(selectGenotype.isEmpty());
 	}
 
 }

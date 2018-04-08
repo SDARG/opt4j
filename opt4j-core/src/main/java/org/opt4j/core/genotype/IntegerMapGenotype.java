@@ -60,6 +60,8 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 
 	protected final List<K> list;
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructs a {@link IntegerMapGenotype}.
 	 * 
@@ -208,8 +210,6 @@ public class IntegerMapGenotype<K> extends IntegerGenotype implements MapGenotyp
 		}
 		return list.indexOf(key);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	/*
 	 * (non-Javadoc)

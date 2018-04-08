@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.start;
 
 import java.awt.Color;
@@ -82,8 +82,8 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		}
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-				boolean hasFocus, int row, int column) {
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
 			if (value instanceof Progress) {
 				Progress progress = (Progress) value;
 				Double v = progress.get();
@@ -103,9 +103,8 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * javax.swing.JTable#prepareRenderer(javax.swing.table.TableCellRenderer
-		 * , int, int)
+		 * @see javax.swing.JTable#prepareRenderer(javax.swing.table.
+		 * TableCellRenderer , int, int)
 		 */
 		@Override
 		public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -299,7 +298,7 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 		 * @param event
 		 *            the triggered event
 		 */
-		void display(MouseEvent event) {
+		protected void display(MouseEvent event) {
 
 			if (event.isPopupTrigger()) {
 				try {
@@ -418,6 +417,9 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 					pause.setEnabled(false);
 					stop.setEnabled(false);
 					break;
+				default:
+					throw new IllegalArgumentException(
+							"Control state " + control.getState() + " not supported by " + this);
 				}
 			} else {
 				terminate.setEnabled(false);

@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
@@ -82,9 +81,50 @@ import com.google.inject.Module;
 @SuppressWarnings("serial")
 public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 
+	protected final TabbedPane tabs = new TabbedPane();
+
+	protected final Format format;
+
+	protected final SelectedModules selectedModules;
+
+	protected final FileChooser fileChooser;
+
+	protected final Map<PropertyModule, PropertyPanel> map = new HashMap<PropertyModule, PropertyPanel>();
+
+	protected final DropTarget dropTarget;
+
+	/**
+	 * The drop listener for the drag-and-drop functionality.
+	 */
+	protected final DropTargetListener dropListener = new DropTargetAdapter() {
+		@Override
+		public void drop(DropTargetDropEvent dtde) {
+			Transferable transferable = dtde.getTransferable();
+			DataFlavor flaver = ModuleTransferable.localModuleFlavor;
+			try {
+
+				if (transferable.isDataFlavorSupported(flaver)) {
+					Object o = transferable.getTransferData(flaver);
+					PropertyModule module = (PropertyModule) o;
+					selectedModules.add(module);
+
+					dtde.acceptDrop(DnDConstants.ACTION_MOVE);
+					dtde.getDropTargetContext().dropComplete(true);
+				} else {
+					dtde.rejectDrop();
+				}
+
+			} catch (UnsupportedFlavorException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	};
+
 	protected static class MyScrollPane extends JScrollPane {
 
-		PropertyPanel panel;
+		protected PropertyPanel panel;
 
 		public MyScrollPane(PropertyPanel panel) {
 			super(panel);
@@ -158,9 +198,10 @@ public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 
 		protected void setLabelName(String name) {
 			if (name.length() > 22) {
-				name = name.substring(0, 18) + "...";
+				label.setName(name.substring(0, 18) + "...");
+			} else {
+				label.setName(name);
 			}
-			label.setName(name);
 			removeAll();
 
 			label = new JLabel(label.getName(), label.getIcon(), SwingConstants.LEFT);
@@ -269,47 +310,6 @@ public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 			}
 		};
 	}
-
-	protected final TabbedPane tabs = new TabbedPane();
-
-	protected final Format format;
-
-	protected final SelectedModules selectedModules;
-
-	protected final FileChooser fileChooser;
-
-	protected final Map<PropertyModule, PropertyPanel> map = new HashMap<PropertyModule, PropertyPanel>();
-
-	protected final DropTarget dropTarget;
-
-	/**
-	 * The drop listener for the drag-and-drop functionality.
-	 */
-	protected final DropTargetListener dropListener = new DropTargetAdapter() {
-		@Override
-		public void drop(DropTargetDropEvent dtde) {
-			Transferable transferable = dtde.getTransferable();
-			DataFlavor flaver = ModuleTransferable.localModuleFlavor;
-			try {
-
-				if (transferable.isDataFlavorSupported(flaver)) {
-					Object o = transferable.getTransferData(flaver);
-					PropertyModule module = (PropertyModule) o;
-					selectedModules.add(module);
-
-					dtde.acceptDrop(DnDConstants.ACTION_MOVE);
-					dtde.getDropTargetContext().dropComplete(true);
-				} else {
-					dtde.rejectDrop();
-				}
-
-			} catch (UnsupportedFlavorException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	};
 
 	/**
 	 * Constructs a {@link DefaultSelectedPanel}.

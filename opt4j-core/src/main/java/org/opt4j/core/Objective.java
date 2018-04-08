@@ -172,9 +172,7 @@ public class Objective implements Comparable<Objective> {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (sign != other.sign)
-			return false;
-		return true;
+		return sign == other.sign;
 	}
 
 }

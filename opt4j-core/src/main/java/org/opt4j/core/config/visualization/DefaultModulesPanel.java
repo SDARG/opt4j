@@ -257,7 +257,10 @@ public class DefaultModulesPanel extends ModulesPanel {
 	 */
 	protected static class MyTree extends JTree implements DragGestureListener {
 
-		DragSource dragSource = null;
+		protected DragSource dragSource = null;
+		
+		protected DragSourceListener dragSourceListener = new DragSourceAdapter() {
+		};
 
 		public MyTree(TreeNode root) {
 			super(root);
@@ -265,9 +268,6 @@ public class DefaultModulesPanel extends ModulesPanel {
 			dragSource = new DragSource();
 			dragSource.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_MOVE, this);
 		}
-
-		protected DragSourceListener dragSourceListener = new DragSourceAdapter() {
-		};
 
 		@Override
 		public void dragGestureRecognized(DragGestureEvent dge) {
@@ -370,7 +370,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 
 		for (Class<? extends Module> module : allModules) {
 			Class<?> category = getCategory(module, false);
-			assert (module != category) : module;
+			assert (!module.equals(category)) : module;
 			map.put(module, category);
 		}
 
@@ -421,7 +421,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 				}
 			} else {
 				DefaultMutableTreeNode n = atn.get(category);
-				assert (n != null && n != node) : clazz + " " + category;
+				assert (n != null && !n.equals(node)) : clazz + " " + category;
 				n.add(node);
 			}
 

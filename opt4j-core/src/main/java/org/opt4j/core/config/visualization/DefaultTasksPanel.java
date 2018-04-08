@@ -105,6 +105,8 @@ public class DefaultTasksPanel extends TasksPanel implements TaskListener {
 	 * The {@link Model}.
 	 */
 	protected class Model extends AbstractTableModel {
+		
+		protected String[] columnNames = { "Task", "State" };
 
 		@Override
 		public int getColumnCount() {
@@ -129,8 +131,6 @@ public class DefaultTasksPanel extends TasksPanel implements TaskListener {
 			}
 			return null;
 		}
-
-		protected String[] columnNames = { "Task", "State" };
 
 		@Override
 		public String getColumnName(int i) {

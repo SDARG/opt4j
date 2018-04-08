@@ -199,23 +199,24 @@ public class PropertyPanel extends JPanel {
 	}
 
 	protected String format(Property property, String value) {
+		String result = value;
 		if (property.isNumber()) {
-			value = value.trim();
-			if (value.equals("")) {
-				value = "0";
-			} else if (value.equals("-")) {
-				value = "0";
+			result = result.trim();
+			if ("".equals(result)) {
+				result = "0";
+			} else if ("-".equals(result)) {
+				result = "0";
 			} else {
-				if (value.startsWith(".")) {
-					value = "0" + value;
+				if (result.startsWith(".")) {
+					result = "0" + result;
 				}
-				if (value.endsWith(".")) {
-					value = value + "0";
+				if (result.endsWith(".")) {
+					result = result + "0";
 				}
 			}
-			return value;
+			return result;
 		}
-		return value;
+		return result;
 	}
 
 	protected void fillComponentsMap() {
@@ -311,18 +312,22 @@ public class PropertyPanel extends JPanel {
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
+					// nothing to be done
 				}
 
 				@Override
 				public void mousePressed(MouseEvent e) {
+					// nothing to be done
 				}
 
 				@Override
 				public void mouseExited(MouseEvent e) {
+					// nothing to be done
 				}
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
+					// nothing to be done
 				}
 
 				@Override

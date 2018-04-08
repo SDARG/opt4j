@@ -52,12 +52,6 @@ import org.opt4j.core.Genotype;
 @SuppressWarnings("serial")
 public class BooleanGenotype extends ArrayList<Boolean> implements ListGenotype<Boolean> {
 
-	/**
-	 * Constructs a {@link BooleanGenotype}.
-	 */
-	public BooleanGenotype() {
-		super();
-	}
 
 	/*
 	 * (non-Javadoc)
