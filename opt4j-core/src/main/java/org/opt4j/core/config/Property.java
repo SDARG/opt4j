@@ -234,7 +234,7 @@ public class Property {
 	/**
 	 * Sets the value of the property. The property has first to be converted to the corresponding type.
 	 * 
-	 * @param valueToSet
+	 * @param value
 	 *            the value to set
 	 * @throws InvocationTargetException
 	 *             thrown if the value cannot be assigned

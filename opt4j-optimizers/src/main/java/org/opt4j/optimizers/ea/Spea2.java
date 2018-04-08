@@ -423,7 +423,7 @@ public class Spea2 implements Selector {
 	protected double getMinDistance(Spea2IndividualSet w0) {
 		double min = Double.MAX_VALUE;
 		for (Spea2IndividualSet w1 : individualSets) {
-			if (w0 == w1) {
+			if (w0 != w1) {
 				min = Math.min(min, distance(w0, w1));
 			}
 		}
