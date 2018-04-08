@@ -83,7 +83,7 @@ public class CouplerUnique implements Coupler {
 				int y = (x + random.nextInt(n - 1) + 1) % n;
 				first = p.get(x);
 				second = p.get(y);
-				assert (!first.equals(second)) : x + "==" + y;
+				assert (first != second) : x + "==" + y;
 			}
 			Pair<Individual> pair = new Pair<Individual>(first, second);
 			couples.add(pair);

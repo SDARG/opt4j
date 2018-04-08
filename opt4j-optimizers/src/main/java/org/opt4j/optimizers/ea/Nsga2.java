@@ -103,7 +103,7 @@ public class Nsga2 implements Selector {
 
 			for (int t = 0; t < tournament; t++) {
 				Individual opponent = all.get(random.nextInt(size));
-				if (rank.get(opponent) < rank.get(winner) || opponent.equals(winner)) {
+				if (rank.get(opponent) < rank.get(winner) || opponent == winner) {
 					winner = opponent;
 				} else if (rank.get(opponent) == rank.get(winner)) {
 					// The winner is determined considering the crowding

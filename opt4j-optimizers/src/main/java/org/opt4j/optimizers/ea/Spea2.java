@@ -211,7 +211,7 @@ public class Spea2 implements Selector {
 				double oFitness = wWinner.getFitness();
 				double wFitness = wOpponent.getFitness();
 
-				if (oFitness > wFitness || (winner.equals(opponent))) {
+				if (oFitness > wFitness || (winner == opponent)) {
 					winner = opponent;
 				} else if (oFitness == wFitness) {
 
@@ -396,7 +396,7 @@ public class Spea2 implements Selector {
 		for (Spea2IndividualSet w0 : candidates) {
 			List<Spea2IndividualSet> list = new ArrayList<Spea2IndividualSet>();
 			for (Spea2IndividualSet w1 : candidates) {
-				if (!w0.equals(w1)) {
+				if (w0 != w1) {
 					w1.setNextDistance(distance(w0, w1));
 					list.add(w1);
 				}
@@ -423,7 +423,7 @@ public class Spea2 implements Selector {
 	protected double getMinDistance(Spea2IndividualSet w0) {
 		double min = Double.MAX_VALUE;
 		for (Spea2IndividualSet w1 : individualSets) {
-			if (w0.equals(w1)) {
+			if (w0 == w1) {
 				min = Math.min(min, distance(w0, w1));
 			}
 		}
@@ -552,7 +552,7 @@ public class Spea2 implements Selector {
 		for (Spea2IndividualSet individual : individualSets) {
 			int s = 0;
 			for (Spea2IndividualSet other : individualSets) {
-				if (!individual.equals(other) && individual.dominates(other)) {
+				if (individual != other && individual.dominates(other)) {
 					s += other.size();
 				}
 			}
@@ -562,7 +562,7 @@ public class Spea2 implements Selector {
 		for (Spea2IndividualSet individual : individualSets) {
 			int f = 0;
 			for (Spea2IndividualSet other : individualSets) {
-				if (!individual.equals(other) && other.dominates(individual)) {
+				if (individual != other && other.dominates(individual)) {
 					f += other.getStrength() * other.size();
 				}
 			}

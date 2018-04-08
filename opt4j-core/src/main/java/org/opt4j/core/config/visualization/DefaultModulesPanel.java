@@ -421,7 +421,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 				}
 			} else {
 				DefaultMutableTreeNode n = atn.get(category);
-				assert (n != null && !n.equals(node)) : clazz + " " + category;
+				assert (n != null && n != node) : clazz + " " + category;
 				n.add(node);
 			}
 
