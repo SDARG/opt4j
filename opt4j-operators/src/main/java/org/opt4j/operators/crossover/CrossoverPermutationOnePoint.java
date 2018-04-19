@@ -113,8 +113,8 @@ public class CrossoverPermutationOnePoint implements CrossoverPermutation {
 	}
 
 	/**
-	 * Helper function for crossover() to crossover and rotate up to the
-	 * cutpoint.
+	 * Helper function for crossover() to crossover and rotate up to the coined cut
+	 * point.
 	 * 
 	 * @param p1
 	 *            parent one
@@ -150,7 +150,7 @@ public class CrossoverPermutationOnePoint implements CrossoverPermutation {
 	}
 
 	/**
-	 * Helper function for crossover() to fill and rotate.
+	 * Helper function for crossover() to fill and rotate after the cut point.
 	 * 
 	 * @param p1
 	 *            parent one

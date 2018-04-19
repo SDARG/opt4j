@@ -184,9 +184,9 @@ public class Nsga2 implements Selector {
 	public List<List<Individual>> fronts(Collection<Individual> individuals) {
 
 		List<Individual> population = new ArrayList<Individual>(individuals);
-		Map<Individual, Integer> individualID = new HashMap<Individual, Integer>();
+		Map<Individual, Integer> individualIDs = new HashMap<Individual, Integer>();
 		for (int i = 0; i < population.size(); i++) {
-			individualID.put(population.get(i), i);
+			individualIDs.put(population.get(i), i);
 		}
 
 		List<List<Individual>> fronts = new ArrayList<List<Individual>>();
@@ -196,14 +196,14 @@ public class Nsga2 implements Selector {
 
 		for (Individual e : population) {
 			dominatedIndividuals.put(e, new ArrayList<Individual>());
-			numberOfDominations[individualID.get(e)] = 0;
+			numberOfDominations[individualIDs.get(e)] = 0;
 		}
 
-		frontsResolveDomination(population, numberOfDominations, individualID, dominatedIndividuals);
+		frontsResolveDomination(population, numberOfDominations, individualIDs, dominatedIndividuals);
 
 		List<Individual> f1 = new ArrayList<Individual>();
 		for (Individual i : population) {
-			if (numberOfDominations[individualID.get(i)] == 0) {
+			if (numberOfDominations[individualIDs.get(i)] == 0) {
 				f1.add(i);
 			}
 		}
@@ -213,8 +213,8 @@ public class Nsga2 implements Selector {
 			List<Individual> h = new ArrayList<Individual>();
 			for (Individual p : fi) {
 				for (Individual q : dominatedIndividuals.get(p)) {
-					numberOfDominations[individualID.get(q)]--;
-					if (numberOfDominations[individualID.get(q)] == 0) {
+					numberOfDominations[individualIDs.get(q)]--;
+					if (numberOfDominations[individualIDs.get(q)] == 0) {
 						h.add(q);
 					}
 				}
