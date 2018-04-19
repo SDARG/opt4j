@@ -15,7 +15,7 @@ import com.google.inject.ImplementedBy;
  * @author Fedor Smirnov
  *
  */
-@ImplementedBy(DefaultSurvivorGeneration.class)
+@ImplementedBy(ESamplingSurvivorGenerationBasic.class)
 public interface ESamplingSurvivorGeneration {
 
 	/**

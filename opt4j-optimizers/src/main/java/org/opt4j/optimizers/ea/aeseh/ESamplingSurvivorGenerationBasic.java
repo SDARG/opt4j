@@ -16,18 +16,18 @@ import org.opt4j.optimizers.ea.NonDominatedFronts;
 import com.google.inject.Inject;
 
 /**
- * The {@link DefaultSurvivorGeneration} implements the basic survivor selection
+ * The {@link ESamplingSurvivorGenerationBasic} implements the basic survivor selection
  * used by the Adaptive ε-sampling and ε-hood for evolutionary many-objective
  * optimization, without any extensions.
  * 
  * @author Fedor Smirnov
  *
  */
-public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
+public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGeneration {
 
 	protected final Random random;
 	protected final EpsilonMapping epsilonMapping;
-	protected final EpsilonAdaption epsilonAdaption;
+	protected final EpsilonAdaptation epsilonAdaption;
 
 	/**
 	 * Basic constructor.
@@ -36,13 +36,13 @@ public class DefaultSurvivorGeneration implements ESamplingSurvivorGeneration {
 	 *            an {@link EpsilonMapping} that is used to enhance the
 	 *            {@link Objectives} during the choice of the survivors
 	 * @param epsilonAdaption
-	 *            an {@link EpsilonAdaption} that adjusts the ε valued used for the
+	 *            an {@link EpsilonAdaptation} that adjusts the ε valued used for the
 	 *            choice of the survivors
 	 * @param random
 	 *            the {@link Random} used for the sampling
 	 */
 	@Inject
-	public DefaultSurvivorGeneration(Random random, EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption) {
+	public ESamplingSurvivorGenerationBasic(Random random, EpsilonMapping epsilonMapping, EpsilonAdaptation epsilonAdaption) {
 		this.random = random;
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;

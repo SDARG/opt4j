@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
-import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
+import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
 import org.opt4j.core.Objectives;
 
 import static org.mockito.Mockito.*;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AdditiveEpsilonMappingTest {
+public class EpsilonMappingAdditiveTest {
 
 	protected static final Objective first = new Objective("first", Sign.MAX);
 	protected static final Objective second = new Objective("second", Sign.MIN);
@@ -57,7 +57,7 @@ public class AdditiveEpsilonMappingTest {
 	@Test
 	public void testMapObjectives() {
 		Set<Individual> indis = getIndividualSet();
-		AdditiveEpsilonMapping epsilonMapping = new AdditiveEpsilonMapping();
+		EpsilonMappingAdditive epsilonMapping = new EpsilonMappingAdditive();
 		Map<Objective, Double> amplitudeMap = epsilonMapping.findObjectiveAmplitudes(indis);
 
 		Objectives objectives = new Objectives();
@@ -73,7 +73,7 @@ public class AdditiveEpsilonMappingTest {
 	@Test
 	public void testFindAmplitudes() {
 		Set<Individual> indis = getIndividualSet();
-		AdditiveEpsilonMapping epsilonMapping = new AdditiveEpsilonMapping();
+		EpsilonMappingAdditive epsilonMapping = new EpsilonMappingAdditive();
 		Map<Objective, Double> amplitudeMap = epsilonMapping.findObjectiveAmplitudes(indis);
 		assertTrue(amplitudeMap.containsKey(first));
 		assertTrue(amplitudeMap.containsKey(second));

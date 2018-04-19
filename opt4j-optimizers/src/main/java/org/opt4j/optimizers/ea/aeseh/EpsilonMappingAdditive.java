@@ -12,12 +12,12 @@ import org.opt4j.core.Objective.Sign;
 import org.opt4j.core.Objectives;
 
 /**
- * The {@link AdditiveEpsilonMapping} implements the evenly spaced adaptive ε function.
+ * The {@link EpsilonMappingAdditive} implements the evenly spaced adaptive ε function.
  * 
  * @author Fedor Smirnov
  *
  */
-public class AdditiveEpsilonMapping implements EpsilonMapping {
+public class EpsilonMappingAdditive implements EpsilonMapping {
 
 	/**
 	 * Applies ε mapping by enhancing all of the given {@link Objective}s by the ε

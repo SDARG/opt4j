@@ -16,7 +16,7 @@ import com.google.inject.ImplementedBy;
  * @author Fedor Smirnov
  *
  */
-@ImplementedBy(AdditiveEpsilonMapping.class)
+@ImplementedBy(EpsilonMappingAdditive.class)
 public interface EpsilonMapping {
 
 	/**

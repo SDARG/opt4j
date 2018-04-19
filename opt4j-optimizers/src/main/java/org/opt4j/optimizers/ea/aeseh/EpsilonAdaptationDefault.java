@@ -5,13 +5,13 @@ import org.opt4j.core.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link DefaultEpsilonAdaptation} adapts the ε values exactly as described
+ * The {@link EpsilonAdaptationDefault} adapts the ε values exactly as described
  * in the paper cited in the {@link AeSeHModule}.
  * 
  * @author Fedor Smirnov
  *
  */
-public class DefaultEpsilonAdaptation implements EpsilonAdaption {
+public class EpsilonAdaptationDefault implements EpsilonAdaptation {
 
 	protected double epsilonSample;
 	protected double epsilonSampleDelta;
@@ -24,15 +24,15 @@ public class DefaultEpsilonAdaptation implements EpsilonAdaption {
 	protected final double epsilonNeighborhoodDeltaMin;
 
 	@Inject
-	public DefaultEpsilonAdaptation(
-			@Constant(value = "epsilonSample", namespace = DefaultEpsilonAdaptation.class) double epsilonSample,
-			@Constant(value = "epsilonSampleDelta", namespace = DefaultEpsilonAdaptation.class) double epsilonSampleDelta,
-			@Constant(value = "epsilonSampleDeltaMax", namespace = DefaultEpsilonAdaptation.class) double epsilonSampleDeltaMax,
-			@Constant(value = "epsilonSampleDeltaMin", namespace = DefaultEpsilonAdaptation.class) double epsilonSampleDeltaMin,
-			@Constant(value = "epsilonNeighborhood", namespace = DefaultEpsilonAdaptation.class) double epsilonNeighborhood,
-			@Constant(value = "epsilonNeighborhoodDelta", namespace = DefaultEpsilonAdaptation.class) double epsilonNeighborhoodDelta,
-			@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = DefaultEpsilonAdaptation.class) double epsilonNeighborhoodDeltaMax,
-			@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = DefaultEpsilonAdaptation.class) double epsilonNeighborhoodDeltaMin) {
+	public EpsilonAdaptationDefault(
+			@Constant(value = "epsilonSample", namespace = EpsilonAdaptationDefault.class) double epsilonSample,
+			@Constant(value = "epsilonSampleDelta", namespace = EpsilonAdaptationDefault.class) double epsilonSampleDelta,
+			@Constant(value = "epsilonSampleDeltaMax", namespace = EpsilonAdaptationDefault.class) double epsilonSampleDeltaMax,
+			@Constant(value = "epsilonSampleDeltaMin", namespace = EpsilonAdaptationDefault.class) double epsilonSampleDeltaMin,
+			@Constant(value = "epsilonNeighborhood", namespace = EpsilonAdaptationDefault.class) double epsilonNeighborhood,
+			@Constant(value = "epsilonNeighborhoodDelta", namespace = EpsilonAdaptationDefault.class) double epsilonNeighborhoodDelta,
+			@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = EpsilonAdaptationDefault.class) double epsilonNeighborhoodDeltaMax,
+			@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = EpsilonAdaptationDefault.class) double epsilonNeighborhoodDeltaMin) {
 		if (epsilonSampleDelta < epsilonSampleDeltaMin || epsilonSampleDelta > epsilonSampleDeltaMax) {
 			throw new IllegalArgumentException(
 					"The start value for the epsilon_sample must lie within the provided bounds");

@@ -6,18 +6,18 @@ import java.util.Set;
 import org.opt4j.core.Individual;
 
 /**
- * The {@link RoundRobinScheduler} schedules the neighborhoods in a simple
+ * The {@link NeighborhoodSchedulerRoundRobin} schedules the neighborhoods in a simple
  * round-robin fashion.
  * 
  * @author Fedor Smirnov
  *
  */
-public class RoundRobinScheduler implements NeighborhoodScheduler {
+public class NeighborhoodSchedulerRoundRobin implements NeighborhoodScheduler {
 
 	protected final List<Set<Individual>> neighborhoods;
 	protected int nextIdx;
 
-	public RoundRobinScheduler(List<Set<Individual>> neighborhoods) {
+	public NeighborhoodSchedulerRoundRobin(List<Set<Individual>> neighborhoods) {
 		this.neighborhoods = neighborhoods;
 		this.nextIdx = 0;
 	}

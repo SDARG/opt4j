@@ -26,7 +26,7 @@ import com.google.inject.Inject;
  */
 public class AeSeHCoupler implements Coupler {
 
-	protected final EpsilonAdaption epsilonAdaption;
+	protected final EpsilonAdaptation epsilonAdaption;
 	protected final EpsilonMapping epsilonMapping;
 	protected final Random random;
 	protected final int plannedNeighborhoodNumber;
@@ -38,7 +38,7 @@ public class AeSeHCoupler implements Coupler {
 	 *            an {@link EpsilonMapping} that is used to enhance the
 	 *            {@link Objectives} during the creation of the neighborhoods
 	 * @param epsilonAdaption
-	 *            an {@link EpsilonAdaption} that adjusts the ε valued used for the
+	 *            an {@link EpsilonAdaptation} that adjusts the ε valued used for the
 	 *            creation of the neighborhoods
 	 * @param random
 	 *            a {@link Random}
@@ -48,7 +48,7 @@ public class AeSeHCoupler implements Coupler {
 	 *            neighborhoods similar to this value.
 	 */
 	@Inject
-	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaption epsilonAdaption, Random random,
+	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaptation epsilonAdaption, Random random,
 			@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class) int plannedNeighborhoodNumber) {
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
@@ -59,7 +59,7 @@ public class AeSeHCoupler implements Coupler {
 	/**
 	 * Generates parent couples. Distributes the parent {@link Individual}s onto
 	 * neighborhoods. Both parents of a couple are picked from the same
-	 * neighborhood. Uses a {@link RoundRobinScheduler} to arbitrate the
+	 * neighborhood. Uses a {@link NeighborhoodSchedulerRoundRobin} to arbitrate the
 	 * neighborhoods from where the parent couples are picked.
 	 * 
 	 * @param size
@@ -74,7 +74,7 @@ public class AeSeHCoupler implements Coupler {
 	public Collection<Pair<Individual>> getCouples(int size, List<Individual> survivors) {
 		Collection<Pair<Individual>> result = new HashSet<Pair<Individual>>();
 		List<Set<Individual>> neighborhoods = createNeighborhoods(survivors);
-		RoundRobinScheduler scheduler = new RoundRobinScheduler(neighborhoods);
+		NeighborhoodSchedulerRoundRobin scheduler = new NeighborhoodSchedulerRoundRobin(neighborhoods);
 		for (int i = 0; i < size; i++) {
 			result.add(pickCouple(scheduler.next()));
 		}

@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objectives;
-import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
-import org.opt4j.optimizers.ea.aeseh.DefaultEpsilonAdaptation;
-import org.opt4j.optimizers.ea.aeseh.DefaultSurvivorGeneration;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaption;
+import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDefault;
+import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGenerationBasic;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation;
 
 import static org.mockito.Mockito.*;
 
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class DefaultSurvivorGenerationTest1 {
+public class ESamplingSurvivorGenerationBasicTest1 {
 
 	protected static Individual extremeIndividual = mock(Individual.class);
 
@@ -81,9 +81,9 @@ public class DefaultSurvivorGenerationTest1 {
 	public void testAddDominatedSurvivors() {
 		Random mockRandom = mock(Random.class);
 		when(mockRandom.nextInt(2)).thenReturn(0);
-		EpsilonAdaption mockAdaption = mock(DefaultEpsilonAdaptation.class);
-		DefaultSurvivorGeneration survivorGeneration = new DefaultSurvivorGeneration(mockRandom,
-				new AdditiveEpsilonMapping(), mockAdaption);
+		EpsilonAdaptation mockAdaption = mock(EpsilonAdaptationDefault.class);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(mockRandom,
+				new EpsilonMappingAdditive(), mockAdaption);
 		List<List<Individual>> fronts = getFronts();
 		Set<Individual> survivors = survivorGeneration.addDominatedSurvivors(5, fronts);
 		assertEquals(5, survivors.size());

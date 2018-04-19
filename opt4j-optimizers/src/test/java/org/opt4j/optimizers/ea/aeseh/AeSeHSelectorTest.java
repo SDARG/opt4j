@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.optimizer.Population;
 import org.opt4j.optimizers.ea.aeseh.AeSeHSelector;
-import org.opt4j.optimizers.ea.aeseh.DefaultSurvivorGeneration;
+import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGenerationBasic;
 import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGeneration;
 
 import static org.mockito.Mockito.*;
@@ -19,7 +19,7 @@ public class AeSeHSelectorTest {
 
 	@Test
 	public void testGetParents(){
-		ESamplingSurvivorGeneration survivorGeneration = mock(DefaultSurvivorGeneration.class);
+		ESamplingSurvivorGeneration survivorGeneration = mock(ESamplingSurvivorGenerationBasic.class);
 		AeSeHSelector selector = new AeSeHSelector(survivorGeneration);
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);
@@ -34,7 +34,7 @@ public class AeSeHSelectorTest {
 	
 	@Test
 	public void testGetLames() {
-		ESamplingSurvivorGeneration survivorGeneration = mock(DefaultSurvivorGeneration.class);
+		ESamplingSurvivorGeneration survivorGeneration = mock(ESamplingSurvivorGenerationBasic.class);
 		AeSeHSelector selector = new AeSeHSelector(survivorGeneration);
 		
 		Individual first = mock(Individual.class);

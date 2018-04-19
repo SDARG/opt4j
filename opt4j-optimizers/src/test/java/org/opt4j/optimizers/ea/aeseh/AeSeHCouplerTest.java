@@ -8,10 +8,10 @@ import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
 import org.opt4j.core.Objective.Sign;
 import org.opt4j.operators.crossover.Pair;
-import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
+import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
 import org.opt4j.optimizers.ea.aeseh.AeSeHCoupler;
-import org.opt4j.optimizers.ea.aeseh.DefaultEpsilonAdaptation;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaption;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDefault;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation;
 
 import static org.mockito.Mockito.*;
 
@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class AeSeHCouplerTest {
 
-	protected static EpsilonAdaption mockAdaption = mock(DefaultEpsilonAdaptation.class);
+	protected static EpsilonAdaptation mockAdaption = mock(EpsilonAdaptationDefault.class);
 
 	protected static Objective firstObj = new Objective("first", Sign.MAX);
 	protected static Objective secondObj = new Objective("second", Sign.MAX);
@@ -58,14 +58,14 @@ public class AeSeHCouplerTest {
 
 	@Test
 	public void testGetCouples() {
-		AeSeHCoupler coupler = new AeSeHCoupler(new AdditiveEpsilonMapping(), mockAdaption, new Random(), 2);
+		AeSeHCoupler coupler = new AeSeHCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 2);
 		Collection<Pair<Individual>> couples = coupler.getCouples(2, getSurvivors());
 		assertEquals(2, couples.size());
 	}
 
 	@Test
 	public void testCreateNeighborhoods() {
-		AeSeHCoupler coupler = new AeSeHCoupler(new AdditiveEpsilonMapping(), mockAdaption, new Random(), 2);
+		AeSeHCoupler coupler = new AeSeHCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 2);
 		Map<Objective, Double> amplitudeMap = new HashMap<Objective, Double>();
 		amplitudeMap.put(firstObj, 0.001);
 		amplitudeMap.put(secondObj, 0.001);
@@ -74,14 +74,14 @@ public class AeSeHCouplerTest {
 		List<Set<Individual>> neighborhoods = coupler.createNeighborhoods(survivors);
 		assertEquals(3, neighborhoods.size());
 		verify(mockAdaption).adaptNeighborhoodEpsilon(true);
-		coupler = new AeSeHCoupler(new AdditiveEpsilonMapping(), mockAdaption, new Random(), 5);
+		coupler = new AeSeHCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 5);
 		neighborhoods = coupler.createNeighborhoods(survivors);
 		verify(mockAdaption).adaptNeighborhoodEpsilon(false);
 	}
 
 	@Test
 	public void testGetCouple() {
-		AeSeHCoupler coupler = new AeSeHCoupler(new AdditiveEpsilonMapping(), mockAdaption, new Random(), 2);
+		AeSeHCoupler coupler = new AeSeHCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 2);
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);
 		Set<Individual> indiSet = new HashSet<Individual>();

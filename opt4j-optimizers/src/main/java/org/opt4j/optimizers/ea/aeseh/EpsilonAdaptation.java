@@ -3,14 +3,14 @@ package org.opt4j.optimizers.ea.aeseh;
 import com.google.inject.ImplementedBy;
 
 /**
- * The {@link EpsilonAdaption} manages the adaptation of the ε-value used for
+ * The {@link EpsilonAdaptation} manages the adaptation of the ε-value used for
  * survivor selection by {@link AeSeHSelector}.
  * 
  * @author Fedor Smirnov
  *
  */
-@ImplementedBy(DefaultEpsilonAdaptation.class)
-public interface EpsilonAdaption {
+@ImplementedBy(EpsilonAdaptationDefault.class)
+public interface EpsilonAdaptation {
 
 	/**
 	 * Returns the current value of the sampling epsilon.

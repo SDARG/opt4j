@@ -7,9 +7,9 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
-import org.opt4j.optimizers.ea.aeseh.AdditiveEpsilonMapping;
-import org.opt4j.optimizers.ea.aeseh.DefaultSurvivorGeneration;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaption;
+import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
+import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGenerationBasic;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation;
 import org.opt4j.optimizers.ea.aeseh.EpsilonMapping;
 import org.opt4j.core.Objectives;
 
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class DefaultSurvivorGenerationTest2 {
+public class ESamplingSurvivorGenerationBasicTest2 {
 
 	protected Objective firstObj = new Objective("first", Sign.MAX);
 	protected Objective secondObj = new Objective("second", Sign.MAX);
@@ -37,7 +37,7 @@ public class DefaultSurvivorGenerationTest2 {
 
 	protected EpsilonMapping mapping;
 
-	protected EpsilonAdaption adaptation;
+	protected EpsilonAdaptation adaptation;
 
 	protected Individual getIndividual(double firstValue, double secondValue) {
 		Individual result = mock(Individual.class);
@@ -63,9 +63,9 @@ public class DefaultSurvivorGenerationTest2 {
 		rand = mock(Random.class);
 		when(rand.nextInt(anyInt())).thenReturn(0);
 
-		adaptation = mock(EpsilonAdaption.class);
+		adaptation = mock(EpsilonAdaptation.class);
 		when(adaptation.getSamplingEpsilon()).thenReturn(0.2);
-		mapping = new AdditiveEpsilonMapping();
+		mapping = new EpsilonMappingAdditive();
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class DefaultSurvivorGenerationTest2 {
 		Set<Individual> population = new HashSet<Individual>(nonDominated);
 		population.addAll(extremes);
 		population.add(dominated);
-		DefaultSurvivorGeneration survivorGeneration = new DefaultSurvivorGeneration(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
 		Set<Individual> survivors = survivorGeneration.getSurvivors(population, 3);
 		assertEquals(3, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
@@ -105,7 +105,7 @@ public class DefaultSurvivorGenerationTest2 {
 		Set<Individual> firstFront = new HashSet<Individual>(nonDominated);
 		firstFront.addAll(extremes);
 		firstFront.add(addition);
-		DefaultSurvivorGeneration survivorGeneration = new DefaultSurvivorGeneration(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
 		Set<Individual> survivors = survivorGeneration.addNonDominatedSurvivors(extremes, firstFront, 7);
 		assertEquals(7, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
@@ -122,7 +122,7 @@ public class DefaultSurvivorGenerationTest2 {
 		extremes.add(secondExtreme);
 		Set<Individual> firstFront = new HashSet<Individual>(nonDominated);
 		firstFront.addAll(extremes);
-		DefaultSurvivorGeneration survivorGeneration = new DefaultSurvivorGeneration(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
 		Set<Individual> survivors = survivorGeneration.addNonDominatedSurvivors(extremes, firstFront, 3);
 		assertEquals(3, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
@@ -132,7 +132,7 @@ public class DefaultSurvivorGenerationTest2 {
 
 	@Test
 	public void testApplyEpsilonSampling() {
-		DefaultSurvivorGeneration survivorGeneration = new DefaultSurvivorGeneration(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
 		Set<Individual> dominant = new HashSet<Individual>();
 		Set<Individual> dominated = new HashSet<Individual>();
 		survivorGeneration.applyEpsilonSampling(nonDominated, dominant, dominated, 0.05);

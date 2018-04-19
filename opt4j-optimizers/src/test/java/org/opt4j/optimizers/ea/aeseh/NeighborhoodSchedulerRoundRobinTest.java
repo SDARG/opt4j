@@ -9,9 +9,9 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.opt4j.core.Individual;
-import org.opt4j.optimizers.ea.aeseh.RoundRobinScheduler;
+import org.opt4j.optimizers.ea.aeseh.NeighborhoodSchedulerRoundRobin;
 
-public class RoundRobinSchedulerTest {
+public class NeighborhoodSchedulerRoundRobinTest {
 
 	@SuppressWarnings("serial")
 	class MockNeighborhood extends HashSet<Individual>{
@@ -34,7 +34,7 @@ public class RoundRobinSchedulerTest {
 		neighborhoods.add(first);
 		neighborhoods.add(second);
 		neighborhoods.add(third);
-		RoundRobinScheduler scheduler = new RoundRobinScheduler(neighborhoods);
+		NeighborhoodSchedulerRoundRobin scheduler = new NeighborhoodSchedulerRoundRobin(neighborhoods);
 		assertEquals(scheduler.next().toString(), "first");
 		assertEquals(scheduler.next().toString(), "second");
 		assertEquals(scheduler.next().toString(), "third");

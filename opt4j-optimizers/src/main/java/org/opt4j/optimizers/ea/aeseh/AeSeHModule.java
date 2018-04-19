@@ -49,35 +49,35 @@ public class AeSeHModule extends OptimizerModule {
 	protected double crossoverRate = 0.95;
 
 	@Info("The start value used for the epsilon value which is applied during the survivor selection.")
-	@Constant(value = "epsilonSample", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonSample", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonSample = 0.0;
 
 	@Info("The start value used for the adaption of the epsilon value which is applied during the survivor selection.")
-	@Constant(value = "epsilonSampleDelta", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonSampleDelta", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonSampleDelta = 0.005;
 
 	@Info("The maximal value used for the epsilon value which is applied during the survivor selection.")
-	@Constant(value = "epsilonSampleDeltaMax", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonSampleDeltaMax", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonSampleDeltaMax = 0.005;
 
 	@Info("The minimal value used for the epsilon value which is applied during the survivor selection.")
-	@Constant(value = "epsilonSampleDeltaMin", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonSampleDeltaMin", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonSampleDeltaMin = 0.0001;
 
 	@Info("The start value used for the epsilon value which is applied during the neighborhood creation.")
-	@Constant(value = "epsilonNeighborhood", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonNeighborhood", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonNeighborhood = 0.0;
 
 	@Info("The start value used for the adaptation of the epsilon value which is applied during the neighborhood creation.")
-	@Constant(value = "epsilonNeighborhoodDelta", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonNeighborhoodDelta", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonNeighborhoodDelta = 0.005;
 
 	@Info("The maximal value used for the epsilon value which is applied during the neighborhood creation.")
-	@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonNeighborhoodDeltaMax = 0.005;
 
 	@Info("The minimal value used for the epsilon value which is applied during the neighborhood creation.")
-	@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = DefaultEpsilonAdaptation.class)
+	@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = EpsilonAdaptationDefault.class)
 	protected double epsilonNeighborhoodDeltaMin = 0.0001;
 
 	@Info("The reference value for the number of neighborhoods. The epsilon_h value is adapted to create a similar number of neighborhoods.")
