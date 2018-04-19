@@ -25,9 +25,11 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	private static final long serialVersionUID = -7008617060878292974L;
 
 	/**
-	 * Creates the {@link NonDominatedFronts} for the given collection of {@link Individual}s.
+	 * Creates the {@link NonDominatedFronts} for the given collection of
+	 * {@link Individual}s.
 	 * 
-	 * @param individuals the {@link Individual}s that are sorted into non dominated fronts
+	 * @param individuals
+	 *            the {@link Individual}s that are sorted into non dominated fronts
 	 */
 	public NonDominatedFronts(Collection<Individual> individuals) {
 		generateFronts(individuals);
@@ -83,8 +85,9 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 
 	/**
 	 * Finds the next non-dominated front by processing the current non-dominated
-	 * front. The {@link Individual}s found therein are removed from consideration. The
-	 * individuals that are then not dominated form the next non-dominated front.
+	 * front. The {@link Individual}s found therein are removed from consideration.
+	 * The individuals that are then not dominated form the next non-dominated
+	 * front.
 	 * 
 	 * @param currentFront
 	 *            the list of individuals forming the current non-dominated front
@@ -115,9 +118,9 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 	}
 
 	/**
-	 * Compares all possible {@link Individual} pairs. For each individual, stores 1) the
-	 * number of individuals it is dominated by and 2) the set of individuals it
-	 * dominates.
+	 * Compares all possible {@link Individual} pairs. For each individual, stores
+	 * 1) the number of individuals it is dominated by and 2) the set of individuals
+	 * it dominates.
 	 * 
 	 * @param individuals
 	 *            a collection of individuals
@@ -151,17 +154,17 @@ public class NonDominatedFronts extends ArrayList<List<Individual>> {
 				} else if (qo.dominates(po)) {
 					dominatedIndividualsMap.get(q).add(p);
 					dominatingIndividualNumber[individual2IndexMap.get(p)]++;
-				} else {
-					// Neither of the two points dominates the other one, so that neither the array
-					// keeping track of the domination number nor the map containing the dominating
-					// individuals has to be adjusted. Nothing is done in this case.
 				}
+				// Neither of the two points dominates the other one, so that neither the array
+				// keeping track of the domination number nor the map containing the dominating
+				// individuals has to be adjusted. Nothing is done in this case.
 			}
 		}
 	}
 
 	/**
-	 * Returns the {@link Individual}s with the best values for the individual {@link Objective}.
+	 * Returns the {@link Individual}s with the best values for the individual
+	 * {@link Objective}.
 	 * 
 	 * @return the set of the extreme individuals
 	 */

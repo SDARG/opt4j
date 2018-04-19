@@ -26,5 +26,9 @@
  *         neighborhoods close to a number provided by the user. The adaptation
  *         of the ε-values is hereby managed by the
  *         {@link org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation}.
+ * 
+ *         In the Opt4J GUI, the AeSeH is configured using the
+ *         {@link org.opt4j.optimizers.ea.aeseh.AeSeHModule} and the
+ *         {@link org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule}.
  */
 package org.opt4j.optimizers.ea.aeseh;

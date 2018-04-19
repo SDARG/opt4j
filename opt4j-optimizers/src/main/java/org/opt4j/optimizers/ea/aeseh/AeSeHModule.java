@@ -4,14 +4,9 @@ import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOW
 
 import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Info;
-import org.opt4j.core.config.annotations.Order;
-import org.opt4j.core.optimizer.MaxIterations;
 import org.opt4j.core.optimizer.OptimizerModule;
 import org.opt4j.core.start.Constant;
-import org.opt4j.optimizers.ea.ConstantCrossoverRate;
 import org.opt4j.optimizers.ea.Coupler;
-import org.opt4j.optimizers.ea.CrossoverRate;
-import org.opt4j.optimizers.ea.EvolutionaryAlgorithm;
 import org.opt4j.optimizers.ea.Selector;
 
 /**
@@ -22,31 +17,6 @@ import org.opt4j.optimizers.ea.Selector;
 @Info("Multi-objective evolutionary algorithm where the survival selection and the creation of neighborhoods is based on epsilon-dominance. The selection of parents is done within the created neighborhoods.")
 @Citation(authors = "Hernán Aguirre, Akira Oyama, and Kiyoshi Tanaka", title = "Adaptive ε-sampling and ε-hood for evolutionary many-objective optimization.", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 322, pageLast = 336, year = 2013, month = UNKNOWN)
 public class AeSeHModule extends OptimizerModule {
-
-	@Info("The number of generations.")
-	@Order(0)
-	@MaxIterations
-	protected int generations = 1000;
-
-	@Constant(value = "alpha", namespace = EvolutionaryAlgorithm.class)
-	@Info("The size of the population α.")
-	@Order(1)
-	protected int populationSize = 100;
-
-	@Constant(value = "mu", namespace = EvolutionaryAlgorithm.class)
-	@Info("The number of parents per generation μ.")
-	@Order(2)
-	protected int parentsPerGeneration = 25;
-
-	@Constant(value = "lambda", namespace = EvolutionaryAlgorithm.class)
-	@Info("The number of offsprings per generation λ.")
-	@Order(3)
-	protected int offspringsPerGeneration = 25;
-
-	@Info("Performs a crossover operation with this given rate.")
-	@Order(4)
-	@Constant(value = "rate", namespace = ConstantCrossoverRate.class)
-	protected double crossoverRate = 0.95;
 
 	@Info("The start value used for the epsilon value which is applied during the survivor selection.")
 	@Constant(value = "epsilonSample", namespace = EpsilonAdaptationDefault.class)
@@ -156,105 +126,8 @@ public class AeSeHModule extends OptimizerModule {
 		this.epsilonNeighborhoodDeltaMin = epsilonNeighborhoodDeltaMin;
 	}
 
-	/**
-	 * Returns the population size {@code alpha}.
-	 * 
-	 * @return the population size
-	 */
-	public int getPopulationSize() {
-		return populationSize;
-	}
-
-	/**
-	 * Sets the population size {@code alpha}.
-	 * 
-	 * @param alpha
-	 *            the population size to set
-	 */
-	public void setPopulationSize(int alpha) {
-		this.populationSize = alpha;
-	}
-
-	/**
-	 * Returns the number of generations.
-	 * 
-	 * @return the number of generations
-	 */
-	public int getGenerations() {
-		return generations;
-	}
-
-	/**
-	 * Sets the number of generations.
-	 * 
-	 * @param generations
-	 *            the number of generations
-	 */
-	public void setGenerations(int generations) {
-		this.generations = generations;
-	}
-
-	/**
-	 * Returns the number of children {@code lambda}.
-	 * 
-	 * @return the number of children
-	 */
-	public int getOffspringsPerGeneration() {
-		return offspringsPerGeneration;
-	}
-
-	/**
-	 * Sets the number of children {@code lambda}.
-	 * 
-	 * @param lambda
-	 *            the number of children
-	 */
-	public void setOffspringsPerGeneration(int lambda) {
-		this.offspringsPerGeneration = lambda;
-	}
-
-	/**
-	 * Returns the number of parents {@code mu}.
-	 * 
-	 * @return the number of parents
-	 */
-	public int getParentsPerGeneration() {
-		return parentsPerGeneration;
-	}
-
-	/**
-	 * Sets the number of parents {@code mu}.
-	 * 
-	 * @param mu
-	 *            the number of parents
-	 */
-	public void setParentsPerGeneration(int mu) {
-		this.parentsPerGeneration = mu;
-	}
-
-	/**
-	 * Returns the used crossover rate.
-	 * 
-	 * @return the crossoverRate
-	 */
-	public double getCrossoverRate() {
-		return crossoverRate;
-	}
-
-	/**
-	 * Sets the crossover rate.
-	 * 
-	 * @param crossoverRate
-	 *            the crossoverRate to set
-	 */
-	public void setCrossoverRate(double crossoverRate) {
-		this.crossoverRate = crossoverRate;
-	}
-
 	@Override
 	protected void config() {
-		bindIterativeOptimizer(EvolutionaryAlgorithm.class);
-		bind(CrossoverRate.class).to(ConstantCrossoverRate.class).in(SINGLETON);
 		bind(Selector.class).to(AeSeHSelector.class);
 		bind(Coupler.class).to(AeSeHCoupler.class);
 	}
