@@ -58,9 +58,7 @@ public class IntegerMapGenotypeTest {
 				return false;
 			if (Double.doubleToLongBits(field1) != Double.doubleToLongBits(other.field1))
 				return false;
-			if (field2 != other.field2)
-				return false;
-			return true;
+			return field2 == other.field2;
 		}
 
 		private IntegerMapGenotypeTest getOuterType() {

@@ -316,6 +316,7 @@ public class PropertyTest {
 
 		@Override
 		public void configure(Binder binder) {
+			// nothing to be done
 		}
 	}
 

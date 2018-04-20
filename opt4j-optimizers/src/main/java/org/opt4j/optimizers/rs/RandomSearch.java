@@ -65,6 +65,7 @@ public class RandomSearch implements IterativeOptimizer {
 
 	@Override
 	public void initialize() {
+		// nothing to be done
 	}
 
 	@Override

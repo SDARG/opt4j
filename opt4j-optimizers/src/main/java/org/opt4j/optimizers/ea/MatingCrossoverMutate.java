@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.optimizers.ea;
 
 import java.util.ArrayList;
@@ -165,7 +165,8 @@ public class MatingCrossoverMutate implements Mating {
 	protected Pair<Individual> mate(Individual parent1, Individual parent2, boolean doCrossover) {
 		Genotype p1 = parent1.getGenotype();
 		Genotype p2 = parent2.getGenotype();
-		Genotype o1, o2;
+		Genotype o1;
+		Genotype o2;
 
 		if (doCrossover) {
 			Pair<Genotype> offspring = crossover.crossover(p1, p2);

@@ -68,9 +68,9 @@ public class WFGI3 extends WFGEvaluator {
 			final List<Double> y_sub = y.subList(0, i);
 			final List<Double> w_sub = w.subList(0, i);
 
-			final double u = WFGTransFunctions.r_sum(y_sub, w_sub);
+			final double u = WFGTransFunctions.rSum(y_sub, w_sub);
 
-			t.add(WFGTransFunctions.b_param(y.get(i), u, 0.98 / 49.98, 0.02, 50));
+			t.add(WFGTransFunctions.bParam(y.get(i), u, 0.98 / 49.98, 0.02, 50));
 		}
 
 		return t;

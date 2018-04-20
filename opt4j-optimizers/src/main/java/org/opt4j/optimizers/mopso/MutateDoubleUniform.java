@@ -68,11 +68,12 @@ public class MutateDoubleUniform extends MutateDoubleElementwise {
 	 */
 	@Override
 	protected double mutateElement(double x, double lb, double ub, double p) {
+		double element = x;
 		if (random.nextDouble() < p) {
 			double v = (random.nextDouble() - 0.5) * perturbation;
-			x += v;
+			element += v;
 		}
-		return x;
+		return element;
 	}
 
 }

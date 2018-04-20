@@ -95,7 +95,7 @@ public class VariableOrder extends VarOrderHeap {
 	 */
 	@Override
 	public void init() {
-
+		// nothing to be done
 	}
 
 	/*

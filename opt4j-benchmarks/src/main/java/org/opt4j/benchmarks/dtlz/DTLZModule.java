@@ -304,7 +304,7 @@ public class DTLZModule extends ProblemModule {
 			creator = BinaryCreator.class;
 			decoder = BinaryToDoubleDecoder.class;
 			break;
-		case DOUBLE:
+		default: // DOUBLE
 			creator = DoubleCreator.class;
 			decoder = DoubleCopyDecoder.class;
 			break;
@@ -334,6 +334,7 @@ public class DTLZModule extends ProblemModule {
 			break;
 		default:
 			evaluator = DTLZ1.class;
+			break;
 		}
 
 		bindConstant(N.class).to(n);

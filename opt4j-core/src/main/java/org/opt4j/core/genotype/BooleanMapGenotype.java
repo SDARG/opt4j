@@ -63,6 +63,8 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 
 	protected final List<K> list;
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructs a {@link BooleanMapGenotype}.
 	 * 
@@ -181,13 +183,11 @@ public class BooleanMapGenotype<K> extends BooleanGenotype implements MapGenotyp
 	 */
 	@Override
 	public int getIndexOf(K key) {
-		if (!containsKey(key)){
+		if (!containsKey(key)) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_INVALID_KEY);
 		}
 		return list.indexOf(key);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	/*
 	 * (non-Javadoc)

@@ -84,7 +84,7 @@ public class Opt4J extends Configurator {
 
 	static class SplashDecorator {
 
-		DelayTask delay = new DelayTask(1);
+		protected DelayTask delay = new DelayTask(1);
 
 		protected SplashScreen splash;
 

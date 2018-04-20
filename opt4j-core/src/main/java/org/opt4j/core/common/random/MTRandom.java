@@ -32,8 +32,8 @@ package org.opt4j.core.common.random;
  *         <p>
  *         A Java implementation of the MT19937 (Mersenne Twister) pseudo random
  *         number generator algorithm based upon the original C code by Makoto
- *         Matsumoto and Takuji Nishimura (see <a
- *         href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">
+ *         Matsumoto and Takuji Nishimura (see
+ *         <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">
  *         http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</a> for more
  *         information.
  *         <p>
@@ -50,21 +50,21 @@ package org.opt4j.core.common.random;
  *         and should <b>not</b> be used for cryptographic systems or in any
  *         other situation where true random numbers are required.
  *         <p>
- *         <!-- Creative Commons License --> <a
- *         href="http://creativecommons.org/licenses/LGPL/2.1/"><img
- *         alt="CC-GNU LGPL" border="0"
- *         src="http://creativecommons.org/images/public/cc-LGPL-a.png" /></a><br />
- *         This software is licensed under the <a
- *         href="http://creativecommons.org/licenses/LGPL/2.1/">CC-GNU LGPL</a>.
- *         <!-- /Creative Commons License -->
+ *         <!-- Creative Commons License -->
+ *         <a href="http://creativecommons.org/licenses/LGPL/2.1/"><img alt=
+ *         "CC-GNU LGPL" border="0" src=
+ *         "http://creativecommons.org/images/public/cc-LGPL-a.png" /></a><br />
+ *         This software is licensed under the
+ *         <a href="http://creativecommons.org/licenses/LGPL/2.1/">CC-GNU
+ *         LGPL</a>. <!-- /Creative Commons License -->
  * 
- *         <!-- <rdf:RDF xmlns="http://web.resource.org/cc/"
- *         xmlns:dc="http://purl.org/dc/elements/1.1/"
- *         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ *         <!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc=
+ *         "http://purl.org/dc/elements/1.1/" xmlns:rdf=
+ *         "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
  * 
- *         <Work rdf:about=""> <license
- *         rdf:resource="http://creativecommons.org/licenses/LGPL/2.1/" />
- *         <dc:type rdf:resource="http://purl.org/dc/dcmitype/Software" />
+ *         <Work rdf:about="">
+ *         <license rdf:resource="http://creativecommons.org/licenses/LGPL/2.1/"
+ *         /> <dc:type rdf:resource="http://purl.org/dc/dcmitype/Software" />
  *         </Work>
  * 
  *         <License rdf:about="http://creativecommons.org/licenses/LGPL/2.1/">
@@ -233,7 +233,10 @@ class MTRandom extends Rand {
 			throw new IllegalArgumentException("Seed buffer may not be empty");
 		}
 		// ---- Begin Mersenne Twister Algorithm ----
-		int i = 1, j = 0, k = (N > length ? N : length);
+		int i = 1;
+		int j = 0;
+		int k = (N > length ? N : length);
+
 		setSeed(MAGIC_SEED);
 		for (; k > 0; k--) {
 			mt[i] = (mt[i] ^ ((mt[i - 1] ^ (mt[i - 1] >>> 30)) * MAGIC_FACTOR2)) + buf[j] + j;
@@ -290,7 +293,9 @@ class MTRandom extends Rand {
 	@Override
 	protected synchronized int next(int bits) {
 		// ---- Begin Mersenne Twister Algorithm ----
-		int y, kk;
+		int y;
+		int kk;
+
 		if (mti >= N) { // generate N words at one time
 
 			// In the original C implementation, mti is checked here
@@ -361,7 +366,10 @@ class MTRandom extends Rand {
 	 *             if the given byte array is null.
 	 */
 	public static int[] pack(byte[] buf) {
-		int k, blen = buf.length, ilen = ((buf.length + 3) >>> 2);
+		int k;
+		int blen = buf.length;
+		int ilen = ((buf.length + 3) >>> 2);
+		
 		int[] ibuf = new int[ilen];
 		for (int n = 0; n < ilen; n++) {
 			int m = (n + 1) << 2;

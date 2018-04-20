@@ -50,9 +50,7 @@ public class DoubleMapGenotypeTest {
 			MockObject other = (MockObject) obj;
 			if (!getOuterType().equals(other.getOuterType()))
 				return false;
-			if (field != other.field)
-				return false;
-			return true;
+			return field == other.field;
 		}
 		
 		@Override

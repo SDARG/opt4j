@@ -154,7 +154,7 @@ public class MOPSO implements IterativeOptimizer {
 	 */
 	@Override
 	public void initialize() {
-
+		// nothing to be done
 	}
 
 	/*

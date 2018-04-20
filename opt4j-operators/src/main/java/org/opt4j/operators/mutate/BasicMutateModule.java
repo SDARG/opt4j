@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.mutate;
 
@@ -121,13 +120,6 @@ public class BasicMutateModule extends MutateModule {
 		 */
 		@Info("Reverts a part for the genotype")
 		REVERT;
-	}
-
-	/**
-	 * Constructs a {@link BasicMutateModule}.
-	 */
-	public BasicMutateModule() {
-		super();
 	}
 
 	/**
@@ -258,6 +250,10 @@ public class BasicMutateModule extends MutateModule {
 			break;
 		case CONSTANT:
 			bind(MutationRate.class).to(ConstantMutationRate.class).in(SINGLETON);
+			break;
+		default:
+			bind(MutationRate.class).to(AdaptiveMutationRate.class).in(SINGLETON);
+			break;
 		}
 
 		Class<? extends MutatePermutation> permutation = MutatePermutationMixed.class;
@@ -275,6 +271,8 @@ public class BasicMutateModule extends MutateModule {
 		case REVERT:
 			permutation = MutatePermutationRevert.class;
 			break;
+		default:
+			break;
 		}
 		bind(MutatePermutation.class).to(permutation).in(SINGLETON);
 
@@ -283,6 +281,9 @@ public class BasicMutateModule extends MutateModule {
 			bind(MutateDouble.class).to(MutateDoubleGauss.class).in(SINGLETON);
 			break;
 		case POLYNOMIAL:
+			bind(MutateDouble.class).to(MutateDoublePolynomial.class).in(SINGLETON);
+			break;
+		default:
 			bind(MutateDouble.class).to(MutateDoublePolynomial.class).in(SINGLETON);
 			break;
 		}
