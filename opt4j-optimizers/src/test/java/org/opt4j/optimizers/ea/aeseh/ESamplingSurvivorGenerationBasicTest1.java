@@ -23,7 +23,7 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 
 	protected static Objectives dominant = mock(Objectives.class);
 	protected static Objectives dominated = mock(Objectives.class);
-	
+
 	protected static Individual first = mock(Individual.class);
 	protected static Individual second = mock(Individual.class);
 	protected static Individual third = mock(Individual.class);
@@ -38,7 +38,7 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		when(dominant.dominates(dominant)).thenReturn(false);
 		when(dominated.dominates(dominated)).thenReturn(false);
 		when(dominated.dominates(dominated)).thenReturn(false);
-		
+
 		when(first.getObjectives()).thenReturn(dominant);
 		when(second.getObjectives()).thenReturn(dominant);
 		when(third.getObjectives()).thenReturn(dominated);
@@ -52,7 +52,7 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		result.add(fifth);
 		return result;
 	}
-	
+
 	public static List<List<Individual>> getFronts() {
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);
@@ -76,14 +76,14 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		fronts.add(thirdFront);
 		return fronts;
 	}
-	
+
 	@Test
 	public void testAddDominatedSurvivors() {
 		Random mockRandom = mock(Random.class);
 		when(mockRandom.nextInt(2)).thenReturn(0);
 		EpsilonAdaptation mockAdaption = mock(EpsilonAdaptationDefault.class);
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(mockRandom,
-				new EpsilonMappingAdditive(), mockAdaption);
+				new EpsilonMappingAdditive(), mockAdaption, 0.0, .0, .0, .0);
 		List<List<Individual>> fronts = getFronts();
 		Set<Individual> survivors = survivorGeneration.addDominatedSurvivors(5, fronts);
 		assertEquals(5, survivors.size());

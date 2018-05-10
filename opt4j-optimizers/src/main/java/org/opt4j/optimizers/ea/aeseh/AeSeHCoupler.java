@@ -30,6 +30,7 @@ public class AeSeHCoupler implements Coupler {
 	protected final EpsilonMapping epsilonMapping;
 	protected final Random random;
 	protected final int plannedNeighborhoodNumber;
+	protected final AdaptiveEpsilon adaptiveEpsilonNeighborhood;
 
 	/**
 	 * Basic constructor.
@@ -38,29 +39,35 @@ public class AeSeHCoupler implements Coupler {
 	 *            an {@link EpsilonMapping} that is used to enhance the
 	 *            {@link Objectives} during the creation of the neighborhoods
 	 * @param epsilonAdaption
-	 *            an {@link EpsilonAdaptation} that adjusts the ε valued used for the
-	 *            creation of the neighborhoods
+	 *            an {@link EpsilonAdaptation} that adjusts the ε valued used
+	 *            for the creation of the neighborhoods
 	 * @param random
 	 *            a {@link Random}
 	 * @param plannedNeighborhoodNumber
-	 *            A value provided by the user. The ε used for the creation of the
-	 *            neighborhoods is adjusted in order to create a number of
+	 *            A value provided by the user. The ε used for the creation of
+	 *            the neighborhoods is adjusted in order to create a number of
 	 *            neighborhoods similar to this value.
 	 */
 	@Inject
 	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaptation epsilonAdaption, Random random,
-			@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class) int plannedNeighborhoodNumber) {
+			@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class) int plannedNeighborhoodNumber,
+			@Constant(value = "epsilonNeighborhood", namespace = AeSeHCoupler.class) double epsilonNeighborhood,
+			@Constant(value = "epsilonNeighborhoodDelta", namespace = AeSeHCoupler.class) double epsilonNeighborhoodDelta,
+			@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = AeSeHCoupler.class) double epsilonNeighborhoodDeltaMax,
+			@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = AeSeHCoupler.class) double epsilonNeighborhoodDeltaMin) {
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
 		this.random = random;
 		this.plannedNeighborhoodNumber = plannedNeighborhoodNumber;
+		this.adaptiveEpsilonNeighborhood = new AdaptiveEpsilon(epsilonNeighborhood, epsilonNeighborhoodDelta,
+				epsilonNeighborhoodDeltaMax, epsilonNeighborhoodDeltaMin);
 	}
 
 	/**
 	 * Generates parent couples. Distributes the parent {@link Individual}s onto
 	 * neighborhoods. Both parents of a couple are picked from the same
-	 * neighborhood. Uses a {@link NeighborhoodSchedulerRoundRobin} to arbitrate the
-	 * neighborhoods from where the parent couples are picked.
+	 * neighborhood. Uses a {@link NeighborhoodSchedulerRoundRobin} to arbitrate
+	 * the neighborhoods from where the parent couples are picked.
 	 * 
 	 * @param size
 	 *            the number of couples that is generated
@@ -82,12 +89,12 @@ public class AeSeHCoupler implements Coupler {
 	}
 
 	/**
-	 * Picks a couple of parents from the given neighborhood. Here, we just pick two
-	 * random individuals.
+	 * Picks a couple of parents from the given neighborhood. Here, we just pick
+	 * two random individuals.
 	 * 
 	 * @param neighborhood
-	 *            the set of similar {@link Individual}s from where the parents are
-	 *            picked
+	 *            the set of similar {@link Individual}s from where the parents
+	 *            are picked
 	 * @return the pair that was picked as parents for a crossover
 	 */
 	protected Pair<Individual> pickCouple(Set<Individual> neighborhood) {
@@ -106,19 +113,21 @@ public class AeSeHCoupler implements Coupler {
 	 * 
 	 * @param survivors
 	 *            the {@link Individual} that can be used as parents
-	 * @return a list of individual sets. Each set is considered as a neighborhood.
+	 * @return a list of individual sets. Each set is considered as a
+	 *         neighborhood.
 	 */
-	protected List<Set<Individual>> createNeighborhoods(List<Individual> survivors) {
+	protected List<Set<Individual>> createNeighborhoods(List<Individual> survivorPool) {
 		List<Set<Individual>> neighborhoods = new ArrayList<Set<Individual>>();
 		Map<Objective, Double> objectiveAmplitudes = epsilonMapping
-				.findObjectiveAmplitudes(new HashSet<Individual>(survivors));
+				.findObjectiveAmplitudes(new HashSet<Individual>(survivorPool));
+		List<Individual> survivors = new ArrayList<Individual>(survivorPool);
 		while (!survivors.isEmpty()) {
 			// pick a random individual
 			int idx = random.nextInt(survivors.size());
 			Individual reference = survivors.remove(idx);
 			Set<Individual> neighborhood = new HashSet<Individual>();
 			Objectives epsilonEnhancedObjectives = epsilonMapping.mapObjectives(reference.getObjectives(),
-					epsilonAdaption.getNeighborhoodEpsilon(), objectiveAmplitudes);
+					adaptiveEpsilonNeighborhood.getEpsilon(), objectiveAmplitudes);
 			// put the individuals epsilon-dominated by the reference into its
 			// neighborhood
 			for (Individual candidate : survivors) {
@@ -130,7 +139,8 @@ public class AeSeHCoupler implements Coupler {
 			neighborhoods.add(neighborhood);
 		}
 		// adapt the epsilon
-		epsilonAdaption.adaptNeighborhoodEpsilon(neighborhoods.size() > plannedNeighborhoodNumber);
+		boolean epsilonTooBig = neighborhoods.size() < plannedNeighborhoodNumber;
+		epsilonAdaption.adaptEpsilon(adaptiveEpsilonNeighborhood, epsilonTooBig);
 		return neighborhoods;
 	}
 }

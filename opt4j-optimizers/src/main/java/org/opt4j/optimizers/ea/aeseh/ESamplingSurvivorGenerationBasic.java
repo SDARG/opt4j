@@ -11,14 +11,15 @@ import java.util.Set;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
+import org.opt4j.core.start.Constant;
 import org.opt4j.optimizers.ea.NonDominatedFronts;
 
 import com.google.inject.Inject;
 
 /**
- * The {@link ESamplingSurvivorGenerationBasic} implements the basic survivor selection
- * used by the Adaptive ε-sampling and ε-hood for evolutionary many-objective
- * optimization, without any extensions.
+ * The {@link ESamplingSurvivorGenerationBasic} implements the basic survivor
+ * selection used by the Adaptive ε-sampling and ε-hood for evolutionary
+ * many-objective optimization, without any extensions.
  * 
  * @author Fedor Smirnov
  *
@@ -28,6 +29,7 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	protected final Random random;
 	protected final EpsilonMapping epsilonMapping;
 	protected final EpsilonAdaptation epsilonAdaption;
+	protected final AdaptiveEpsilon adaptiveEpsilonSampling;
 
 	/**
 	 * Basic constructor.
@@ -36,16 +38,23 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	 *            an {@link EpsilonMapping} that is used to enhance the
 	 *            {@link Objectives} during the choice of the survivors
 	 * @param epsilonAdaption
-	 *            an {@link EpsilonAdaptation} that adjusts the ε valued used for the
-	 *            choice of the survivors
+	 *            an {@link EpsilonAdaptation} that adjusts the ε valued used
+	 *            for the choice of the survivors
 	 * @param random
 	 *            the {@link Random} used for the sampling
 	 */
 	@Inject
-	public ESamplingSurvivorGenerationBasic(Random random, EpsilonMapping epsilonMapping, EpsilonAdaptation epsilonAdaption) {
+	public ESamplingSurvivorGenerationBasic(Random random, EpsilonMapping epsilonMapping,
+			EpsilonAdaptation epsilonAdaption,
+			@Constant(value = "epsilonSample", namespace = ESamplingSurvivorGeneration.class) double epsilonSample,
+			@Constant(value = "epsilonSampleDelta", namespace = ESamplingSurvivorGeneration.class) double epsilonSampleDelta,
+			@Constant(value = "epsilonSampleDeltaMax", namespace = ESamplingSurvivorGeneration.class) double epsilonSampleDeltaMax,
+			@Constant(value = "epsilonSampleDeltaMin", namespace = ESamplingSurvivorGeneration.class) double epsilonSampleDeltaMin) {
 		this.random = random;
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
+		this.adaptiveEpsilonSampling = new AdaptiveEpsilon(epsilonSample, epsilonSampleDelta, epsilonSampleDeltaMax,
+				epsilonSampleDeltaMin);
 	}
 
 	@Override
@@ -66,12 +75,12 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	}
 
 	/**
-	 * Creates the survivor pool by adding the ε-sampled individuals to the extreme
-	 * individuals.
+	 * Creates the survivor pool by adding the ε-sampled individuals to the
+	 * extreme individuals.
 	 * 
 	 * @param extremeIndividuals
-	 *            the {@link Individual}s with (positively) extreme values for their
-	 *            {@link Objective}s
+	 *            the {@link Individual}s with (positively) extreme values for
+	 *            their {@link Objective}s
 	 * @param firstFront
 	 *            the {@link Individual} that are not dominated at all
 	 * @param survivorNumber
@@ -87,11 +96,12 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 		Set<Individual> epsilonDominantIndividuals = new HashSet<Individual>();
 		Set<Individual> epsilonDominatedIndividuals = new HashSet<Individual>();
 		applyEpsilonSampling(nonDominatedIndividuals, epsilonDominantIndividuals, epsilonDominatedIndividuals,
-				epsilonAdaption.getSamplingEpsilon());
+				adaptiveEpsilonSampling.getEpsilon());
 		boolean tooManyEpsilonDominantIndividuals = (extremeIndividuals.size()
 				+ epsilonDominantIndividuals.size()) > survivorNumber;
 		// adapt the sampling epsilon
-		epsilonAdaption.adaptSamplingEpsilon(tooManyEpsilonDominantIndividuals);
+		boolean epsilonTooBig = !tooManyEpsilonDominantIndividuals;
+		epsilonAdaption.adaptEpsilon(adaptiveEpsilonSampling, epsilonTooBig);
 		if (tooManyEpsilonDominantIndividuals) {
 			// add a random subset of the epsilon dominant individuals
 			List<Individual> survivalCandidates = new ArrayList<Individual>(epsilonDominantIndividuals);
@@ -123,7 +133,8 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	 *            the input individuals which constitute the first non-dominated
 	 *            front of the current population
 	 * @param epsilonDominantIndividuals
-	 *            the set that will be filled with the epsilon-dominant individuals
+	 *            the set that will be filled with the epsilon-dominant
+	 *            individuals
 	 * @param epsilonDominatedIndividuals
 	 *            the set that will be filled with epsilon-dominated individuals
 	 * @param samplingEpsilon
@@ -156,8 +167,9 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	}
 
 	/**
-	 * In the case where the first non-dominated front does not suffice to create
-	 * enough survivors, dominated solutions are added to the survivor pool.
+	 * In the case where the first non-dominated front does not suffice to
+	 * create enough survivors, dominated solutions are added to the survivor
+	 * pool.
 	 * 
 	 * @param survivorNumber
 	 *            the desired number of survivors
