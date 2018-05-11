@@ -4,7 +4,6 @@ import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.annotations.Category;
 import org.opt4j.core.config.annotations.Icon;
 import org.opt4j.core.config.annotations.Parent;
-import org.opt4j.core.optimizer.OptimizerModule;
 import org.opt4j.core.start.Opt4JModule;
 
 /**
@@ -15,7 +14,7 @@ import org.opt4j.core.start.Opt4JModule;
  */
 @Icon(Icons.SELECTOR)
 @Category
-@Parent(OptimizerModule.class)
+@Parent(EvolutionaryAlgorithmModule.class)
 public abstract class CouplerModule extends Opt4JModule {
 
 	/**
