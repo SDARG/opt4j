@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.mutate;
 
@@ -65,10 +64,11 @@ public class MutateDoubleGauss extends MutateDoubleElementwise {
 	 */
 	@Override
 	protected double mutateElement(double element, double lb, double ub, double p) {
+		double result = element;
 		if (random.nextDouble() < p) {
-			element += sigma * random.nextGaussian();
+			result += sigma * random.nextGaussian();
 		}
-		return element;
+		return result;
 	}
 
 }

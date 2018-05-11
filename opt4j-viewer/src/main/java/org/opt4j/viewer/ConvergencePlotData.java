@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.viewer;
 
 import java.awt.geom.Point2D;
@@ -79,7 +79,7 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 		protected final List<Point2D.Double> meanValues = new CopyOnWriteArrayList<Point2D.Double>();
 		protected final int MAXVALUES = 2000;
 
-		final Set<Double> currentIteration = new HashSet<Double>();
+		protected final Set<Double> currentIteration = new HashSet<Double>();
 
 		PlotDataObjective(Objective objective) {
 			this.objective = objective;
@@ -98,7 +98,7 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 			}
 		}
 
-		protected synchronized void simplify(List<java.awt.geom.Point2D.Double> values) {
+		protected synchronized void simplify(List<Point2D.Double> values) {
 			if (values.size() > MAXVALUES) {
 				List<Point2D.Double> copy = new ArrayList<Point2D.Double>(values);
 
@@ -167,17 +167,15 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 			}
 		}
 
-		private void addValue(double min, List<java.awt.geom.Point2D.Double> points, int iteration) {
-			if (!Double.isInfinite(min)) {
-				if (points.isEmpty() || points.get(points.size() - 1).getY() != min) {
-					if (!points.isEmpty()) {
-						Point2D.Double steppoint = new Point2D.Double(iteration, points.get(points.size() - 1).getY());
-						points.add(steppoint);
-					}
-
-					Point2D.Double point = new Point2D.Double(iteration, min);
-					points.add(point);
+		private void addValue(double min, List<Point2D.Double> points, int iteration) {
+			if (!Double.isInfinite(min) && (points.isEmpty() || points.get(points.size() - 1).getY() != min)) {
+				if (!points.isEmpty()) {
+					Point2D.Double steppoint = new Point2D.Double(iteration, points.get(points.size() - 1).getY());
+					points.add(steppoint);
 				}
+
+				Point2D.Double point = new Point2D.Double(iteration, min);
+				points.add(point);
 			}
 		}
 	}

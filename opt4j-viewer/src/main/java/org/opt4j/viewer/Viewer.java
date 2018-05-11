@@ -168,6 +168,7 @@ public class Viewer implements OptimizerStateListener {
 					break;
 				default:
 					control.doStop();
+					break;
 				}
 				frame.dispose();
 			}

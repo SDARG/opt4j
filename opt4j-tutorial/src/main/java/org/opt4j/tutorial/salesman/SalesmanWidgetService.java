@@ -29,6 +29,8 @@ import com.google.inject.Inject;
 // of a single route in the viewer.
 public class SalesmanWidgetService implements IndividualMouseListener {
 
+	protected final Viewport viewport;
+	
 	// Panel that paints a single SalesmanRoute (which is the phenotype of an
 	// Individual)
 	public static class MyPanel extends JPanel {
@@ -74,7 +76,7 @@ public class SalesmanWidgetService implements IndividualMouseListener {
 	@WidgetParameters(title = "Route", resizable = false, maximizable = false)
 	protected static class SalesmanWidget implements Widget {
 
-		final Individual individual;
+		protected final Individual individual;
 
 		public SalesmanWidget(Individual individual) {
 			super();
@@ -89,11 +91,10 @@ public class SalesmanWidgetService implements IndividualMouseListener {
 
 		@Override
 		public void init(Viewport viewport) {
+			// nothing to be done
 		}
 
 	}
-
-	protected final Viewport viewport;
 
 	// The route is shown by a double click of a individual in the archive
 	// monitor panel. Thus we need the ArchiveMonitorPanel and the main

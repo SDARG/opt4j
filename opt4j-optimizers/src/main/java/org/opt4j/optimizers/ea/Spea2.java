@@ -43,8 +43,8 @@ import com.google.inject.Inject;
 
 /**
  * <p>
- * The {@link Spea2}-Selector is a Java implementation of the <a
- * href="http://e-collection.ethbib.ethz.ch/ecol-pool/incoll/incoll_324.pdf"
+ * The {@link Spea2}-Selector is a Java implementation of the
+ * <a href="http://e-collection.ethbib.ethz.ch/ecol-pool/incoll/incoll_324.pdf"
  * >SPEA2-MOEA</a>, see "SPEA2: Improving the Strength Pareto Evolutionary
  * Algorithm For Multiobjective Optimization, Eckart Zitzler, Marco Laumanns,
  * and Lothar Thiele, In Evolutionary Methods for Design, Optimisation, and
@@ -79,7 +79,8 @@ public class Spea2 implements Selector {
 	 * @author lukasiewycz
 	 * 
 	 */
-	private static class Spea2IndividualSet extends LinkedHashSet<Individual> implements Comparable<Spea2IndividualSet> {
+	private static class Spea2IndividualSet extends LinkedHashSet<Individual>
+			implements Comparable<Spea2IndividualSet> {
 		private static final long serialVersionUID = 1L;
 		protected final int id;
 		protected int fitness;
@@ -338,32 +339,7 @@ public class Spea2 implements Selector {
 
 		List<Spea2IndividualSet> lames = new ArrayList<Spea2IndividualSet>();
 
-		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = new LinkedHashMap<Spea2IndividualSet, List<Spea2IndividualSet>>();
-
-		for (Spea2IndividualSet w0 : candidates) {
-			List<Spea2IndividualSet> list = new ArrayList<Spea2IndividualSet>();
-			for (Spea2IndividualSet w1 : candidates) {
-				if (w0 != w1) {
-					w1.setNextDistance(distance(w0, w1));
-					list.add(w1);
-				}
-			}
-			Collections.sort(list, new Comparator<Spea2IndividualSet>() {
-				@Override
-				public int compare(Spea2IndividualSet o1, Spea2IndividualSet o2) {
-					double v = o1.getNextDistance() - o2.getNextDistance();
-					if (v < 0) {
-						return -1;
-					} else if (v > 0) {
-						return 1;
-					} else {
-						return 0;
-					}
-				}
-
-			});
-			orderedLists.put(w0, list);
-		}
+		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = getNearestPreOrder(candidates);
 
 		while (lames.size() < n) {
 			List<Spea2IndividualSet> lcandidates = new ArrayList<Spea2IndividualSet>(orderedLists.keySet());
@@ -404,6 +380,44 @@ public class Spea2 implements Selector {
 		assert (lames.size() == n);
 
 		return lames;
+	}
+
+	/**
+	 * Helper function to preorder the candidates for getNearest() operation
+	 * 
+	 * @param candidates
+	 *            the candidate IndividualSets
+	 * @return the preordered IndividualSets
+	 */
+	protected Map<Spea2IndividualSet, List<Spea2IndividualSet>> getNearestPreOrder(
+			Collection<Spea2IndividualSet> candidates) {
+		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = new LinkedHashMap<Spea2IndividualSet, List<Spea2IndividualSet>>();
+
+		for (Spea2IndividualSet w0 : candidates) {
+			List<Spea2IndividualSet> list = new ArrayList<Spea2IndividualSet>();
+			for (Spea2IndividualSet w1 : candidates) {
+				if (w0 != w1) {
+					w1.setNextDistance(distance(w0, w1));
+					list.add(w1);
+				}
+			}
+			Collections.sort(list, new Comparator<Spea2IndividualSet>() {
+				@Override
+				public int compare(Spea2IndividualSet o1, Spea2IndividualSet o2) {
+					double v = o1.getNextDistance() - o2.getNextDistance();
+					if (v < 0) {
+						return -1;
+					} else if (v > 0) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
+
+			});
+			orderedLists.put(w0, list);
+		}
+		return orderedLists;
 	}
 
 	protected double getMinDistance(Spea2IndividualSet w0) {

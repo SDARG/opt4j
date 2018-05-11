@@ -57,14 +57,6 @@ public class Viewport {
 	protected final Map<Widget, JInternalFrame> widgets = new HashMap<Widget, JInternalFrame>();
 
 	/**
-	 * Constructs a {@link Viewport} for {@link Widget}s.
-	 * 
-	 */
-	public Viewport() {
-
-	}
-
-	/**
 	 * Initialization. This method has to be called once after construction.
 	 */
 	public void init() {

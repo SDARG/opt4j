@@ -111,8 +111,8 @@ public class AeSeHCoupler implements Coupler {
 	/**
 	 * Applies the epsilon neighborhood creation.
 	 * 
-	 * @param survivors
-	 *            the {@link Individual} that can be used as parents
+	 * @param survivorPool
+	 *            a list of {@link Individual}s that can be used as parents
 	 * @return a list of individual sets. Each set is considered as a
 	 *         neighborhood.
 	 */

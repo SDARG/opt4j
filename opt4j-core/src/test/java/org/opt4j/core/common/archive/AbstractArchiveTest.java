@@ -18,7 +18,7 @@ import com.google.inject.Injector;
 public class AbstractArchiveTest {
 
 	class TestArchive extends AbstractArchive {
-		Collection<Individual> candidates = null;
+		protected Collection<Individual> candidates = null;
 
 		@Override
 		protected boolean updateWithNondominated(Collection<Individual> candidates) {

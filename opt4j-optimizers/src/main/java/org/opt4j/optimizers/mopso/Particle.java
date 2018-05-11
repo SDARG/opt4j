@@ -19,15 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.mopso;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objectives;
-
-import com.google.inject.Inject;
 
 /**
  * The {@link Particle} extends the {@link Individual} by an id, a velocity
@@ -46,14 +43,6 @@ public class Particle extends Individual {
 	protected Genotype best = null;
 
 	protected Objectives objectivesBest = null;
-
-	/**
-	 * Constructs a {@link Particle}.
-	 */
-	@Inject
-	public Particle() {
-		super();
-	}
 
 	/**
 	 * Returns the velocity.

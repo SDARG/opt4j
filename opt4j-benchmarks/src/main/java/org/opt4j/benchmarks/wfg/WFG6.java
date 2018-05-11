@@ -68,12 +68,12 @@ public class WFG6 extends WFGEvaluator {
 
 			final List<Double> y_sub = y.subList(head, tail);
 
-			t.add(WFGTransFunctions.r_nonsep(y_sub, k / (M - 1)));
+			t.add(WFGTransFunctions.rNonsep(y_sub, k / (M - 1)));
 		}
 
 		final List<Double> y_sub = y.subList(k, n);
 
-		t.add(WFGTransFunctions.r_nonsep(y_sub, n - k));
+		t.add(WFGTransFunctions.rNonsep(y_sub, n - k));
 
 		return t;
 	}

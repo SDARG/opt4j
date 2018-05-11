@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.viewer;
 
 import java.awt.BorderLayout;
@@ -259,18 +258,22 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 
 			@Override
 			public void columnAdded(TableColumnModelEvent arg0) {
+				// nothing to be done
 			}
 
 			@Override
 			public void columnMarginChanged(ChangeEvent arg0) {
+				// nothing to be done
 			}
 
 			@Override
 			public void columnMoved(TableColumnModelEvent arg0) {
+				// nothing to be done
 			}
 
 			@Override
 			public void columnRemoved(TableColumnModelEvent arg0) {
+				// nothing to be done
 			}
 
 			@Override
@@ -342,7 +345,7 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	 */
 	@Override
 	public synchronized void init(Viewport viewport) {
-
+		// nothing to be done
 	}
 
 	protected boolean updateOrder() {

@@ -66,7 +66,7 @@ public class WFG1 extends WFGEvaluator {
 		}
 
 		for (int i = k; i < n; i++) {
-			t.add(WFGTransFunctions.s_linear(y.get(i), 0.35));
+			t.add(WFGTransFunctions.sLinear(y.get(i), 0.35));
 		}
 
 		return t;
@@ -85,7 +85,7 @@ public class WFG1 extends WFGEvaluator {
 		}
 
 		for (int i = k; i < n; i++) {
-			t.add(WFGTransFunctions.b_flat(y.get(i), 0.8, 0.75, 0.85));
+			t.add(WFGTransFunctions.bFlat(y.get(i), 0.8, 0.75, 0.85));
 		}
 
 		return t;
@@ -96,7 +96,7 @@ public class WFG1 extends WFGEvaluator {
 		List<Double> t = new ArrayList<Double>();
 
 		for (int i = 0; i < n; i++) {
-			t.add(WFGTransFunctions.b_poly(y.get(i), 0.02));
+			t.add(WFGTransFunctions.bPoly(y.get(i), 0.02));
 		}
 
 		return t;
@@ -125,13 +125,13 @@ public class WFG1 extends WFGEvaluator {
 			final List<Double> y_sub = y.subList(head, tail);
 			final List<Double> w_sub = w.subList(head, tail);
 
-			t.add(WFGTransFunctions.r_sum(y_sub, w_sub));
+			t.add(WFGTransFunctions.rSum(y_sub, w_sub));
 		}
 
 		final List<Double> y_sub = y.subList(k, n);
 		final List<Double> w_sub = w.subList(k, n);
 
-		t.add(WFGTransFunctions.r_sum(y_sub, w_sub));
+		t.add(WFGTransFunctions.rSum(y_sub, w_sub));
 
 		return t;
 	}

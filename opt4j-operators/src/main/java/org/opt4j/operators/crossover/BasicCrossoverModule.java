@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.crossover;
 
@@ -152,13 +151,6 @@ public class BasicCrossoverModule extends CrossoverModule {
 		 * Use the {@link CrossoverBooleanXPoint}.
 		 */
 		XPOINT;
-	}
-
-	/**
-	 * Constructs a {@link BasicCrossoverModule}.
-	 */
-	public BasicCrossoverModule() {
-		super();
 	}
 
 	/**

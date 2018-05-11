@@ -20,8 +20,8 @@ public class IndividiualSetTest {
 	}
 
 	private class AddIndividualSetListener implements IndividualSetListener {
-		IndividualSet collection;
-		Individual i;
+		protected IndividualSet collection;
+		protected Individual i;
 
 		@Override
 		public void individualRemoved(IndividualSet collection, Individual i) {
@@ -76,6 +76,7 @@ public class IndividiualSetTest {
 
 			@Override
 			public void individualAdded(IndividualSet collection, Individual individual) {
+				// nothing to be done
 			}
 		};
 		set.addListener(l);
@@ -102,10 +103,12 @@ public class IndividiualSetTest {
 		IndividualSetListener l = new IndividualSetListener() {
 			@Override
 			public void individualRemoved(IndividualSet collection, Individual individual) {
+				// nothing to be done
 			}
 
 			@Override
 			public void individualAdded(IndividualSet collection, Individual individual) {
+				// nothing to be done
 			}
 		};
 		set.addListener(l);
@@ -176,8 +179,8 @@ public class IndividiualSetTest {
 	}
 
 	private class RemoveIndividualSetListener implements IndividualSetListener {
-		IndividualSet collection;
-		Individual individual;
+		protected IndividualSet collection;
+		protected Individual individual;
 
 		@Override
 		public void individualRemoved(IndividualSet collection, Individual individual) {

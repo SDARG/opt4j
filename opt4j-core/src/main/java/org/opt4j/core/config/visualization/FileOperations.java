@@ -47,6 +47,16 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class FileOperations {
+	
+	protected File file = null;
+
+	protected final FileChooser fileChooser;
+
+	protected final ModuleRegister moduleRegister;
+
+	protected final SelectedModules selectedModules;
+
+	protected final Set<FileOperationsListener> listeners = new CopyOnWriteArraySet<FileOperationsListener>();
 
 	/**
 	 * The {@link FileOperationsListener}.
@@ -64,16 +74,6 @@ public class FileOperations {
 		 */
 		public void setCurrentFile(File file);
 	}
-
-	protected File file = null;
-
-	protected final FileChooser fileChooser;
-
-	protected final ModuleRegister moduleRegister;
-
-	protected final SelectedModules selectedModules;
-
-	protected final Set<FileOperationsListener> listeners = new CopyOnWriteArraySet<FileOperationsListener>();
 
 	/**
 	 * Constructs a {@link FileOperations}.

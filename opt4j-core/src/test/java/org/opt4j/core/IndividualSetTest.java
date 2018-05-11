@@ -35,7 +35,7 @@ public class IndividualSetTest {
 
 	protected final static int SIZE = 10000;
 
-	List<Individual> list = new ArrayList<Individual>();
+	protected List<Individual> list = new ArrayList<Individual>();
 
 	@Before
 	public void setUp() throws Exception {

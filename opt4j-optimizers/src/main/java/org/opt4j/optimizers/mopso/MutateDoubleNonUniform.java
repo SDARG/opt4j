@@ -70,11 +70,12 @@ public class MutateDoubleNonUniform extends MutateDoubleUniform {
 	 */
 	@Override
 	protected double mutateElement(double x, double lb, double ub, double p) {
+		double element = x;
 		if (random.nextDouble() < p) {
 			double tau = random.nextBoolean() ? 1 : -1;
-			x += tau * delta(perturbation);
+			element += tau * delta(perturbation);
 		}
-		return x;
+		return element;
 	}
 
 	/**

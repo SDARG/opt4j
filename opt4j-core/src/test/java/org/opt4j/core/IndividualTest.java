@@ -8,6 +8,9 @@ import org.opt4j.core.Individual.State;
 import org.opt4j.core.genotype.PermutationGenotype;
 
 public class IndividualTest {
+	
+	private boolean stateChanged = false;
+	
 	@Test
 	public void getPhenotypeTest() {
 		Individual individual = new Individual();
@@ -36,8 +39,6 @@ public class IndividualTest {
 		Assert.assertEquals(State.EVALUATED, individual.getState());
 		Assert.assertTrue(individual.isEvaluated());
 	}
-
-	private boolean stateChanged = false;
 
 	@Test
 	public void setStateTest() {

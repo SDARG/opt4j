@@ -211,7 +211,7 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	 */
 	@Override
 	public void init(Viewport viewport) {
-
+		// nothing to be done
 	}
 
 	/*

@@ -232,7 +232,7 @@ public class Property {
 	}
 
 	/**
-	 * Sets the value of the property. The property has first to be converted to a the corresponding type.
+	 * Sets the value of the property. The property has first to be converted to the corresponding type.
 	 * 
 	 * @param value
 	 *            the value to set
@@ -241,6 +241,7 @@ public class Property {
 	 */
 	public void setValue(String value) throws InvocationTargetException {
 		Class<?> type = this.type;
+		String valueToSet = value;
 
 		if (type.equals(Integer.TYPE)) {
 			type = Integer.class;
@@ -256,19 +257,19 @@ public class Property {
 			type = Byte.class;
 		} else if (type.equals(Short.TYPE)) {
 			type = Short.class;
-		} else if (type.equals(String.class) && value == null) {
-			value = "";
+		} else if (type.equals(String.class) && valueToSet == null) {
+			valueToSet = "";
 		}
 
 		Object object = null;
 		try {
 			if (Character.TYPE.equals(type) || Character.class.equals(type)) {
-				object = value.toCharArray()[0];
+				object = valueToSet.toCharArray()[0];
 			} else if (type.isEnum()) {
-				object = PropertyModule.toEnumElement(value, type.asSubclass(Enum.class));
+				object = PropertyModule.toEnumElement(valueToSet, type.asSubclass(Enum.class));
 			} else if (type.equals(Class.class)) {
-				if (value != null && !value.equals("")) {
-					Class<?> c = Class.forName(value);
+				if (valueToSet != null && !valueToSet.equals("")) {
+					Class<?> c = Class.forName(valueToSet);
 
 					Type gtype = getter.getGenericReturnType();
 					Type actual = getEnclosingType(gtype);
@@ -284,7 +285,7 @@ public class Property {
 				// and all objects that have a constructor that accepts one
 				// string
 				Constructor<?> constructor = type.getConstructor(String.class);
-				object = constructor.newInstance(value.trim());
+				object = constructor.newInstance(valueToSet.trim());
 			}
 		} catch (Exception e) {
 			Throwable t = e;
@@ -295,7 +296,7 @@ public class Property {
 
 			throw new InvocationTargetException(e,
 					"Failed assignment: module=" + module.getClass().getName() + " property=\"" + getName()
-							+ "\" value=\"" + value + "\" (" + t.getClass().getName()
+							+ "\" value=\"" + valueToSet + "\" (" + t.getClass().getName()
 							+ (message != null ? ": " + message : "") + ")");
 		}
 		setValueObject(object);

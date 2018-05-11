@@ -69,9 +69,9 @@ public class WFG7 extends WFGEvaluator {
 			final List<Double> y_sub = y.subList(i + 1, n);
 			final List<Double> w_sub = w.subList(i + 1, n);
 
-			final double u = WFGTransFunctions.r_sum(y_sub, w_sub);
+			final double u = WFGTransFunctions.rSum(y_sub, w_sub);
 
-			t.add(WFGTransFunctions.b_param(y.get(i), u, 0.98 / 49.98, 0.02, 50));
+			t.add(WFGTransFunctions.bParam(y.get(i), u, 0.98 / 49.98, 0.02, 50));
 		}
 
 		for (int i = k; i < n; i++) {

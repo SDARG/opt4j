@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.sa;
 
@@ -69,6 +68,10 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 
 	private final Iteration iteration;
 
+	private double fold;
+
+	private Individual old;
+
 	/**
 	 * Constructs a new {@link SimulatedAnnealing}.
 	 * 
@@ -90,9 +93,8 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 	 *            the cooling schedule
 	 */
 	@Inject
-	public SimulatedAnnealing(Population population, Archive archive,
-			IndividualFactory individualFactory, IndividualCompleter completer,
-			Rand random, Neighbor<Genotype> neighbor, Copy<Genotype> copy,
+	public SimulatedAnnealing(Population population, Archive archive, IndividualFactory individualFactory,
+			IndividualCompleter completer, Rand random, Neighbor<Genotype> neighbor, Copy<Genotype> copy,
 			CoolingSchedule coolingSchedule, Iteration iteration) {
 		this.random = random;
 		this.neighbor = neighbor;
@@ -112,11 +114,8 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 	 */
 	@Override
 	public void initialize() throws TerminationException {
-
+		// nothing to be done
 	}
-
-	private double fold;
-	private Individual old;
 
 	/*
 	 * (non-Javadoc)
@@ -128,7 +127,7 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 
 		if (population.isEmpty()) {
 			// the first iteration
-			
+
 			old = individualFactory.create();
 
 			population.add(old);
@@ -137,7 +136,7 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 			fold = f(old);
 		} else {
 			// all iterations > 1
-			
+
 			Genotype g = copy.copy(old.getGenotype());
 			neighbor.neighbor(g);
 
@@ -153,9 +152,7 @@ public class SimulatedAnnealing implements IterativeOptimizer {
 			if (fy <= fold) {
 				sw = true;
 			} else {
-				double a = (fold - fy)
-						/ coolingSchedule.getTemperature(iteration.value(),
-								iteration.max());
+				double a = (fold - fy) / coolingSchedule.getTemperature(iteration.value(), iteration.max());
 				double e = Math.exp(a);
 				if (random.nextDouble() < e) {
 					sw = true;

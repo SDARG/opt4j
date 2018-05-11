@@ -25,7 +25,8 @@ import org.opt4j.core.Genotype;
 
 /**
  * <p>
- * The {@link IntegerGenotype} is a {@link Genotype} that consists of {@link Integer} values.
+ * The {@link IntegerGenotype} is a {@link Genotype} that consists of
+ * {@link Integer} values.
  * </p>
  * <p>
  * Example problem: Select the outcome of throwing five dice<br/>
@@ -47,8 +48,11 @@ public class IntegerGenotype extends ArrayList<Integer> implements ListGenotype<
 
 	protected final Bounds<Integer> bounds;
 
+	private static final long serialVersionUID = 1L;
+
 	/**
-	 * Constructs a {@link IntegerGenotype} with a specified lower and upper bound for all values.
+	 * Constructs a {@link IntegerGenotype} with a specified lower and upper
+	 * bound for all values.
 	 * 
 	 * @param lowerBound
 	 *            the lower bound
@@ -136,6 +140,4 @@ public class IntegerGenotype extends ArrayList<Integer> implements ListGenotype<
 			}
 		}
 	}
-
-	private static final long serialVersionUID = 1L;
 }

@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.satdecoding;
 
@@ -124,7 +123,7 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 
 			} catch (Throwable e) {
 				System.err.println("Failed initialization of " + getClass().getName() + " with " + e);
-				throw new RuntimeException(e);
+				throw new IllegalArgumentException(e);
 			} finally {
 				isInit = true;
 			}

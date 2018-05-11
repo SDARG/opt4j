@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
@@ -70,7 +69,7 @@ public class Configurator {
 		String filename = null;
 		Class<? extends Task> taskClass = null;
 		if (args.length < 1) {
-			throw new RuntimeException("Specify the task class");
+			throw new IllegalArgumentException("Specify the task class");
 		}
 
 		String taskname = args[0];

@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.benchmarks.queens;
 
@@ -90,7 +89,20 @@ public class QueensSATDecoder extends AbstractSATDecoder<Genotype, QueensBoard> 
 	@Override
 	public Set<Constraint> createConstraints() {
 		Set<Constraint> constraints = new HashSet<Constraint>();
+
+		constraints.addAll(createConstraintsRowsColumns());
+		constraints.addAll(createConstraintsDiagonal());
+		return constraints;
+	}
+
+	/**
+	 * Helper function for createConstraints() that creates the constraints regarding rows and columns.
+	 * 
+	 * @return constraints regarding rows and columns
+	 */
+	protected Set<Constraint> createConstraintsRowsColumns() {
 		int size = problem.size();
+		Set<Constraint> constraints = new HashSet<Constraint>();
 
 		for (int i = 0; i < size; i++) {
 
@@ -111,6 +123,19 @@ public class QueensSATDecoder extends AbstractSATDecoder<Genotype, QueensBoard> 
 
 			constraints.add(constraint);
 		}
+
+		return constraints;
+
+	}
+
+	/**
+	 * Helper function for createConstraints() that creates the constraints regarding diagonals.
+	 * 
+	 * @return constraints regarding diagonals
+	 */
+	protected Set<Constraint> createConstraintsDiagonal() {
+		int size = problem.size();
+		Set<Constraint> constraints = new HashSet<Constraint>();
 
 		for (int k = -size + 1; k < size; k++) {
 			// diagonal 1
@@ -137,5 +162,6 @@ public class QueensSATDecoder extends AbstractSATDecoder<Genotype, QueensBoard> 
 		}
 
 		return constraints;
+
 	}
 }

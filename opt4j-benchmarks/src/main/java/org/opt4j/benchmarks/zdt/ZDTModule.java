@@ -194,6 +194,7 @@ public class ZDTModule extends ProblemModule {
 			break;
 		default:
 			n = 30;
+			break;
 		}
 
 	}
@@ -253,6 +254,15 @@ public class ZDTModule extends ProblemModule {
 			// only for ZDT1,ZDT2,ZDT3,ZDT4,ZDT6
 			creator = DoubleCreator.class;
 			decoder = DoubleCopyDecoder.class;
+			break;
+		default:
+			if (function == Function.ZDT5) {
+				creator = ZDT5BinaryCreator.class;
+				decoder = BinaryCopyDecoder.class;
+			} else {
+				creator = BinaryCreator.class;
+				decoder = BinaryToDoubleDecoder.class;
+			}
 			break;
 		}
 

@@ -64,13 +64,6 @@ public class QueensModule extends ProblemModule {
 	protected Dec decoder = Dec.SAT;
 
 	/**
-	 * Constructs a {@link QueensModule}.
-	 */
-	public QueensModule() {
-		super();
-	}
-
-	/**
 	 * The {@link Decoder} strategy for the queens problem.
 	 * 
 	 * @author lukasiewycz
@@ -105,7 +98,7 @@ public class QueensModule extends ProblemModule {
 		Class<? extends Decoder<?, ?>> decoderClass = null;
 
 		switch (decoder) {
-		case SAT:
+		default: // SAT
 			creatorClass = QueensSATDecoder.class;
 			decoderClass = QueensSATDecoder.class;
 			break;
