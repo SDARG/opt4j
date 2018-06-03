@@ -3,9 +3,9 @@ package org.opt4j.optimizers.ea.aeseh;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDefault;
+import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDelta;
 
-public class EpsilonAdaptationDefaultTest {
+public class EpsilonAdaptationDeltaTest {
 
 	protected double eps_start = 0.0;
 	protected double eps_delta_start = 0.5;
@@ -14,7 +14,7 @@ public class EpsilonAdaptationDefaultTest {
 
 	@Test
 	public void testEpsilonSample() {
-		EpsilonAdaptationDefault adaptation = new EpsilonAdaptationDefault();
+		EpsilonAdaptationDelta adaptation = new EpsilonAdaptationDelta();
 		AdaptiveEpsilon adaptiveEpsilon = new AdaptiveEpsilon(eps_start, eps_delta_start, eps_delta_max, eps_delta_min);
 		adaptation.adaptEpsilon(adaptiveEpsilon, false);
 		assertEquals(0.5, adaptiveEpsilon.getEpsilon(), 0.0);

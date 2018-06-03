@@ -18,13 +18,13 @@ import org.opt4j.optimizers.ea.Coupler;
 import com.google.inject.Inject;
 
 /**
- * The {@link AeSeHCoupler} implements a parent selection process based on by
+ * The {@link EpsilonNeighborhoodCoupler} implements a parent selection process based on by
  * the ε-neighborhood.
  * 
  * @author Fedor Smirnov
  *
  */
-public class AeSeHCoupler implements Coupler {
+public class EpsilonNeighborhoodCoupler implements Coupler {
 
 	protected final EpsilonAdaptation epsilonAdaption;
 	protected final EpsilonMapping epsilonMapping;
@@ -49,12 +49,12 @@ public class AeSeHCoupler implements Coupler {
 	 *            neighborhoods similar to this value.
 	 */
 	@Inject
-	public AeSeHCoupler(EpsilonMapping epsilonMapping, EpsilonAdaptation epsilonAdaption, Random random,
-			@Constant(value = "neighborhoodNumber", namespace = AeSeHCoupler.class) int plannedNeighborhoodNumber,
-			@Constant(value = "epsilonNeighborhood", namespace = AeSeHCoupler.class) double epsilonNeighborhood,
-			@Constant(value = "epsilonNeighborhoodDelta", namespace = AeSeHCoupler.class) double epsilonNeighborhoodDelta,
-			@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = AeSeHCoupler.class) double epsilonNeighborhoodDeltaMax,
-			@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = AeSeHCoupler.class) double epsilonNeighborhoodDeltaMin) {
+	public EpsilonNeighborhoodCoupler(EpsilonMapping epsilonMapping, EpsilonAdaptation epsilonAdaption, Random random,
+			@Constant(value = "neighborhoodNumber", namespace = EpsilonNeighborhoodCoupler.class) int plannedNeighborhoodNumber,
+			@Constant(value = "epsilonNeighborhood", namespace = EpsilonNeighborhoodCoupler.class) double epsilonNeighborhood,
+			@Constant(value = "epsilonNeighborhoodDelta", namespace = EpsilonNeighborhoodCoupler.class) double epsilonNeighborhoodDelta,
+			@Constant(value = "epsilonNeighborhoodDeltaMax", namespace = EpsilonNeighborhoodCoupler.class) double epsilonNeighborhoodDeltaMax,
+			@Constant(value = "epsilonNeighborhoodDeltaMin", namespace = EpsilonNeighborhoodCoupler.class) double epsilonNeighborhoodDeltaMin) {
 		this.epsilonMapping = epsilonMapping;
 		this.epsilonAdaption = epsilonAdaption;
 		this.random = random;

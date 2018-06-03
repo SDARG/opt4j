@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.optimizer.Population;
-import org.opt4j.optimizers.ea.aeseh.AeSeHSelector;
+import org.opt4j.optimizers.ea.aeseh.EpsilonSamplingSelector;
 import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGenerationBasic;
 import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGeneration;
 
@@ -15,12 +15,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AeSeHSelectorTest {
+public class EpsilonSamplingSelectorTest {
 
 	@Test
 	public void testGetParents(){
 		ESamplingSurvivorGeneration survivorGeneration = mock(ESamplingSurvivorGenerationBasic.class);
-		AeSeHSelector selector = new AeSeHSelector(survivorGeneration);
+		EpsilonSamplingSelector selector = new EpsilonSamplingSelector(survivorGeneration);
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);
 		Individual third = mock(Individual.class);
@@ -35,7 +35,7 @@ public class AeSeHSelectorTest {
 	@Test
 	public void testGetLames() {
 		ESamplingSurvivorGeneration survivorGeneration = mock(ESamplingSurvivorGenerationBasic.class);
-		AeSeHSelector selector = new AeSeHSelector(survivorGeneration);
+		EpsilonSamplingSelector selector = new EpsilonSamplingSelector(survivorGeneration);
 		
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);

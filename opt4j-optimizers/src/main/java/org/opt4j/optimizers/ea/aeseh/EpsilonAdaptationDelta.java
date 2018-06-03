@@ -1,13 +1,13 @@
 package org.opt4j.optimizers.ea.aeseh;
 
 /**
- * The {@link EpsilonAdaptationDefault} adapts the ε values exactly as described
+ * The {@link EpsilonAdaptationDelta} adapts the ε values exactly as described
  * in the paper cited in the {@link AeSeHModule}.
  * 
  * @author Fedor Smirnov
  *
  */
-public class EpsilonAdaptationDefault implements EpsilonAdaptation {
+public class EpsilonAdaptationDelta implements EpsilonAdaptation {
 
 	@Override
 	public void adaptEpsilon(AdaptiveEpsilon adaptiveEpsilon, boolean epsilonTooBig) {

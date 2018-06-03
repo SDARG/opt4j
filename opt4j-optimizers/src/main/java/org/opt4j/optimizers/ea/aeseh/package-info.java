@@ -6,14 +6,14 @@
  * based on ε-sampling.
  * </p>
  * <p>
- * The {@link org.opt4j.optimizers.ea.aeseh.AeSeHSelector} uses the
+ * The {@link org.opt4j.optimizers.ea.aeseh.EpsilonSamplingSelector} uses the
  * {@link org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGeneration} to pick the
  * individuals that form the pool of possible parents. Hereby, ε-dominant
  * {@link org.opt4j.core.Individual}s are preferred. The check for ε-dominance
  * is implemented by enhancing the {@link org.opt4j.core.Objectives} of the
  * considered individual using the
  * {@link org.opt4j.optimizers.ea.aeseh.EpsilonMapping}. For the parent
- * selection, the {@link org.opt4j.optimizers.ea.aeseh.AeSeHCoupler} divides the
+ * selection, the {@link org.opt4j.optimizers.ea.aeseh.EpsilonNeighborhoodCoupler} divides the
  * survivor pool based on ε-dominance among the survivors. A pair of parents is
  * then always picked from the same neighborhood, while the arbitration of the
  * neighborhoods to pick from is handled by the

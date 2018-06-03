@@ -2,6 +2,7 @@ package org.opt4j.optimizers.ea.aeseh;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +63,8 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 		Set<Individual> survivors;
 		// get the non-dominated front and the extreme solutions
 		NonDominatedFronts fronts = new NonDominatedFronts(population);
-		Collection<Individual> paretoSolutions = fronts.get(0);
-		Set<Individual> extremeIndividuals = fronts.getExtremeIndividuals();
+		Collection<Individual> paretoSolutions = fronts.getFrontAtIndex(0);
+		Set<Individual> extremeIndividuals = getExtremeIndividuals(paretoSolutions);
 
 		if (paretoSolutions.size() > survivorNumber) {
 			// more non-dominated solutions than survivors => apply ε-sampling
@@ -176,18 +177,18 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	 * @param fronts
 	 *            the non-dominated fronts
 	 */
-	protected Set<Individual> addDominatedSurvivors(int survivorNumber, List<List<Individual>> fronts) {
+	protected Set<Individual> addDominatedSurvivors(int survivorNumber, NonDominatedFronts fronts) {
 		Set<Individual> survivors = new HashSet<Individual>();
 		// non-dominated solutions do not suffice to generate the number of
 		// survivors => add dominated solutions
-		survivors.addAll(fronts.get(0));
+		survivors.addAll(fronts.getFrontAtIndex(0));
 		int frontIndex = 1;
 		// Fill the survivors by iteratively adding the dominated fronts.
-		while (survivorNumber > fronts.get(frontIndex).size() + survivors.size()) {
-			survivors.addAll(fronts.get(frontIndex));
+		while (survivorNumber > (fronts.getFrontAtIndex(frontIndex).size()) + survivors.size()) {
+			survivors.addAll(fronts.getFrontAtIndex(frontIndex));
 			frontIndex++;
 		}
-		List<Individual> currentFront = fronts.get(frontIndex);
+		List<Individual> currentFront = new ArrayList<Individual>(fronts.getFrontAtIndex(frontIndex));
 		while (survivorNumber > survivors.size()) {
 			// choose a random survivor from the current front
 			Individual survivor = currentFront.get(random.nextInt(currentFront.size()));
@@ -195,5 +196,36 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 			currentFront.remove(survivor);
 		}
 		return survivors;
+	}
+
+	/**
+	 * Returns the {@link Individual}s with the best values for the individual
+	 * {@link Objective}.
+	 * 
+	 * @param firstFront
+	 *            the list of {@link Individual}s constituting the first
+	 *            non-dominated front
+	 * 
+	 * @return the set of the extreme individuals
+	 */
+	protected Set<Individual> getExtremeIndividuals(Collection<Individual> firstFront) {
+		Map<Objective, Individual> bestIndis = new HashMap<Objective, Individual>();
+		Map<Objective, Double> extremeValues = new HashMap<Objective, Double>();
+		Individual firstIndi = firstFront.iterator().next();
+		List<Objective> objList = new ArrayList<Objective>(firstIndi.getObjectives().getKeys());
+		// iterate the individuals
+		for (Individual indi : firstFront) {
+			// iterate the objectives and their values
+			double[] values = indi.getObjectives().array();
+			for (int i = 0; i < objList.size(); i++) {
+				Objective obj = objList.get(i);
+				double value = values[i];
+				if (!bestIndis.containsKey(obj) || extremeValues.get(obj) > value) {
+					bestIndis.put(obj, indi);
+					extremeValues.put(obj, value);
+				}
+			}
+		}
+		return new HashSet<Individual>(bestIndis.values());
 	}
 }

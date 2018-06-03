@@ -1,5 +1,8 @@
 package org.opt4j.optimizers.ea.aeseh;
 
+import static org.opt4j.core.config.annotations.Citation.PublicationMonth.UNKNOWN;
+
+import org.opt4j.core.config.annotations.Citation;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Name;
 import org.opt4j.core.start.Constant;
@@ -7,14 +10,15 @@ import org.opt4j.optimizers.ea.Selector;
 import org.opt4j.optimizers.ea.SelectorModule;
 
 /**
- * Binds the {@link AeSeHSelector} as {@link Selector}
+ * Binds the {@link EpsilonSamplingSelector} as {@link Selector}
  * 
  * 
  * @author Fedor Smirnov
  *
  */
 @Name("Epsilon Sampling")
-public class AeSeHSelectorModule extends SelectorModule {
+@Citation(authors = "Hernán Aguirre, Akira Oyama, and Kiyoshi Tanaka", title = "Adaptive ε-sampling and ε-hood for evolutionary many-objective optimization.", journal = "Evolutionary Multi-Criterion Optimization (EMO)", pageFirst = 322, pageLast = 336, year = 2013, month = UNKNOWN)
+public class EpsilonSamplingSelectorModule extends SelectorModule {
 
 	@Info("The start value used for the epsilon value which is applied during the survivor selection.")
 	@Constant(value = "epsilonSample", namespace = ESamplingSurvivorGeneration.class)
@@ -31,7 +35,7 @@ public class AeSeHSelectorModule extends SelectorModule {
 
 	@Override
 	protected void config() {
-		bindSelector(AeSeHSelector.class);
+		bindSelector(EpsilonSamplingSelector.class);
 	}
 
 	public double getEpsilonSample() {

@@ -10,7 +10,7 @@ import com.google.inject.ImplementedBy;
 /**
  * 
  * The {@link ESamplingSurvivorGeneration} generates the survivor pool during
- * the selection implemented by {@link AeSeHSelector}.
+ * the selection implemented by {@link EpsilonSamplingSelector}.
  * 
  * @author Fedor Smirnov
  *

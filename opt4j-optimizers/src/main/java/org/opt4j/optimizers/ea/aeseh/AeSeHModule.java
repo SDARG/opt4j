@@ -11,7 +11,13 @@ import org.opt4j.optimizers.ea.EvolutionaryAlgorithmModule;
 import org.opt4j.optimizers.ea.Selector;
 
 /**
- * Module to bind the AeSeH evolutionary algorithm as optimizer.
+ * The {@link AeSeHModule} binds the {@link EpsilonSamplingSelector} as
+ * {@link Selector} and the {@link EpsilonNeighborhoodCoupler} as
+ * {@link Coupler} and configures them with the parameters used in the AeSeH
+ * paper (see the citation for details). Together with the
+ * {@link EvolutionaryAlgorithmModule}, the {@link AeSeHModule}, hence, provides
+ * a default configuration for the Epsilon Sampling Epsilon Neighborhood
+ * Evolutionary Algorithm.
  * 
  * @author Fedor Smirnov
  */
@@ -28,13 +34,13 @@ public class AeSeHModule extends OptimizerModule {
 		bindConstant("epsilonSampleDeltaMax", ESamplingSurvivorGeneration.class).to(0.005);
 		bindConstant("epsilonSampleDeltaMin", ESamplingSurvivorGeneration.class).to(0.0001);
 
-		bindConstant("epsilonNeighborhood", AeSeHCoupler.class).to(0.0);
-		bindConstant("epsilonNeighborhoodDelta", AeSeHCoupler.class).to(0.005);
-		bindConstant("epsilonNeighborhoodDeltaMax", AeSeHCoupler.class).to(0.005);
-		bindConstant("epsilonNeighborhoodDeltaMin", AeSeHCoupler.class).to(0.0001);
-		bindConstant("neighborhoodNumber", AeSeHCoupler.class).to(5);
+		bindConstant("epsilonNeighborhood", EpsilonNeighborhoodCoupler.class).to(0.0);
+		bindConstant("epsilonNeighborhoodDelta", EpsilonNeighborhoodCoupler.class).to(0.005);
+		bindConstant("epsilonNeighborhoodDeltaMax", EpsilonNeighborhoodCoupler.class).to(0.005);
+		bindConstant("epsilonNeighborhoodDeltaMin", EpsilonNeighborhoodCoupler.class).to(0.0001);
+		bindConstant("neighborhoodNumber", EpsilonNeighborhoodCoupler.class).to(5);
 
-		bind(Selector.class).to(AeSeHSelector.class);
-		bind(Coupler.class).to(AeSeHCoupler.class);
+		bind(Selector.class).to(EpsilonSamplingSelector.class);
+		bind(Coupler.class).to(EpsilonNeighborhoodCoupler.class);
 	}
 }

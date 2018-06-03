@@ -11,7 +11,7 @@ import com.google.inject.ImplementedBy;
 
 /**
  * The {@link EpsilonMapping} implements the ε mapping used by the
- * {@link AeSeHSelector}.
+ * {@link EpsilonSamplingSelector}.
  * 
  * @author Fedor Smirnov
  *
