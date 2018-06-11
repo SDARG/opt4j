@@ -75,6 +75,7 @@ class DialogLayout implements LayoutManager {
 	 */
 	@Override
 	public void addLayoutComponent(String name, Component comp) {
+		// nothing to be done
 	}
 
 	/*
@@ -84,6 +85,7 @@ class DialogLayout implements LayoutManager {
 	 */
 	@Override
 	public void removeLayoutComponent(Component comp) {
+		// nothing to be done
 	}
 
 	/*

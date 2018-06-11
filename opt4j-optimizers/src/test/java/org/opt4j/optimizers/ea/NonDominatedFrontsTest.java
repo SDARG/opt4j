@@ -3,7 +3,6 @@ package org.opt4j.optimizers.ea;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -35,12 +34,12 @@ public class NonDominatedFrontsTest {
 		when(third.getObjectives()).thenReturn(getObjectives(1, 4));
 		when(fourth.getObjectives()).thenReturn(getObjectives(3, 2));
 		when(fifth.getObjectives()).thenReturn(getObjectives(1, 1));
-		
+
 		Objectives insfeasibleObjectives = new Objectives();
 		insfeasibleObjectives.add(firstObj, Objective.INFEASIBLE);
 		insfeasibleObjectives.add(secondObj, Objective.INFEASIBLE);
 		when(infeasible.getObjectives()).thenReturn(insfeasibleObjectives);
-		
+
 		when(first.toString()).thenReturn("first");
 		when(second.toString()).thenReturn("second");
 		when(third.toString()).thenReturn("third");
@@ -66,29 +65,19 @@ public class NonDominatedFrontsTest {
 	}
 
 	@Test
-	public void testGetExtremeIndividuals() {
-		NonDominatedFronts fronts = new NonDominatedFronts(getIndividualSet());
-		Set<Individual> extremes = fronts.getExtremeIndividuals();
-		assertEquals(2, extremes.size());
-		assertTrue(extremes.contains(first));
-		assertTrue(extremes.contains(third));
-	}
-
-	@Test
 	public void testGenerateFronts() {
-		List<List<Individual>> fronts = new NonDominatedFronts(getIndividualSet());
-		assertEquals(4, fronts.size());
+		NonDominatedFronts fronts = new NonDominatedFronts(getIndividualSet());
+		assertEquals(4, fronts.getFrontNumber());
 
-		assertEquals(3, fronts.get(0).size());
-		assertTrue(fronts.get(0).contains(first));
-		assertTrue(fronts.get(0).contains(second));
-		assertTrue(fronts.get(0).contains(third));
+		assertEquals(3, fronts.getFrontAtIndex(0).size());
+		assertTrue(fronts.getFrontAtIndex(0).contains(first));
+		assertTrue(fronts.getFrontAtIndex(0).contains(second));
+		assertTrue(fronts.getFrontAtIndex(0).contains(third));
 
-		assertEquals(1, fronts.get(1).size());
-		assertTrue(fronts.get(1).contains(fourth));
+		assertEquals(1, fronts.getFrontAtIndex(1).size());
+		assertTrue(fronts.getFrontAtIndex(1).contains(fourth));
 
-		assertEquals(1, fronts.get(2).size());
-		assertTrue(fronts.get(2).contains(fifth));
+		assertEquals(1, fronts.getFrontAtIndex(2).size());
+		assertTrue(fronts.getFrontAtIndex(2).contains(fifth));
 	}
-
 }

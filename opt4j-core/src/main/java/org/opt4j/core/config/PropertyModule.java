@@ -209,7 +209,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 
 					Property p = getProperty(required.property());
 					if (p == null) {
-						throw new NullPointerException("Unknown property " + required.property() + " in annotation "
+						throw new IllegalArgumentException("Unknown property " + required.property() + " in annotation "
 								+ required + " in module " + this.getClass());
 					}
 

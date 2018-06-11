@@ -66,6 +66,8 @@ import org.opt4j.core.Genotype;
  */
 public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenotype<K, V> {
 
+	private static final long serialVersionUID = 1L;
+	
 	protected final List<K> keys;
 	protected final Map<K, List<V>> values;
 
@@ -250,8 +252,6 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 		}
 		return s + "]";
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	/*
 	 * (non-Javadoc)

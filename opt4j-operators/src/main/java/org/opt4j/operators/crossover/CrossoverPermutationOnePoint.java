@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.crossover;
 
@@ -104,36 +103,85 @@ public class CrossoverPermutationOnePoint implements CrossoverPermutation {
 			Set<Object> elements1 = new HashSet<Object>();
 			Set<Object> elements2 = new HashSet<Object>();
 
-			int offset = rotation ? random.nextInt(size) : 0;
+			crossoverToCutpoint(p1, p2, o1, o2, elements1, elements2);
+			crossoverFill(p1, p2, o1, o2, elements1, elements2);
 
-			int cutpoint = random.nextInt(size);
-
-			for (int i = 0; i < cutpoint; i++) {
-				final int pos = (offset + i) % size;
-				Object e1 = p1.get(pos);
-				Object e2 = p2.get(pos);
-				o1.add(e1);
-				o2.add(e2);
-				elements1.add(e1);
-				elements2.add(e2);
-			}
-
-			offset = rotation ? random.nextInt(size) : 0;
-
-			for (int i = 0; i < size; i++) {
-				final int pos = (offset + i) % size;
-				Object e1 = p1.get(pos);
-				Object e2 = p2.get(pos);
-				if (!elements1.contains(e2)) {
-					o1.add(e2);
-				}
-				if (!elements2.contains(e1)) {
-					o2.add(e1);
-				}
-			}
 		}
 
 		Pair<PermutationGenotype<?>> offspring = new Pair<PermutationGenotype<?>>(o1, o2);
 		return offspring;
 	}
+
+	/**
+	 * Helper function for crossover() to crossover and rotate up to the coined cut
+	 * point.
+	 * 
+	 * @param p1
+	 *            parent one
+	 * @param p2
+	 *            parent two
+	 * @param o1
+	 *            child one
+	 * @param o2
+	 *            child two
+	 * @param elements1
+	 *            elements of genotype child one
+	 * @param elements2
+	 *            elements of genotype child two
+	 */
+	protected void crossoverToCutpoint(PermutationGenotype<?> p1, PermutationGenotype<?> p2,
+			PermutationGenotype<Object> o1, PermutationGenotype<Object> o2, Set<Object> elements1,
+			Set<Object> elements2) {
+		int size = p1.size();
+		int offset = rotation ? random.nextInt(size) : 0;
+
+		int cutpoint = random.nextInt(size);
+
+		for (int i = 0; i < cutpoint; i++) {
+			final int pos = (offset + i) % size;
+			Object e1 = p1.get(pos);
+			Object e2 = p2.get(pos);
+			o1.add(e1);
+			o2.add(e2);
+			elements1.add(e1);
+			elements2.add(e2);
+		}
+
+	}
+
+	/**
+	 * Helper function for crossover() to fill and rotate after the cut point.
+	 * 
+	 * @param p1
+	 *            parent one
+	 * @param p2
+	 *            parent two
+	 * @param o1
+	 *            child one
+	 * @param o2
+	 *            child two
+	 * @param elements1
+	 *            elements of genotype child one
+	 * @param elements2
+	 *            elements of genotype child two
+	 */
+	protected void crossoverFill(PermutationGenotype<?> p1, PermutationGenotype<?> p2, PermutationGenotype<Object> o1,
+			PermutationGenotype<Object> o2, Set<Object> elements1, Set<Object> elements2) {
+		int size = p1.size();
+		int offset = rotation ? random.nextInt(size) : 0;
+
+		for (int i = 0; i < size; i++) {
+			final int pos = (offset + i) % size;
+			Object e1 = p1.get(pos);
+			Object e2 = p2.get(pos);
+			if (!elements1.contains(e2)) {
+				o1.add(e2);
+			}
+			if (!elements2.contains(e1)) {
+				o2.add(e1);
+			}
+		}
+
+	}
+
 }

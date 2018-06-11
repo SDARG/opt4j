@@ -6,8 +6,8 @@ import org.opt4j.core.problem.Creator;
 import com.google.inject.Provider;
 
 public class DefaultIndividualFactoryTest extends AbstractIndividualFactoryTest {
-	Individual individual = new Individual();
-	PermutationGenotype<Object> genotype = new PermutationGenotype<Object>();
+	protected Individual individual = new Individual();
+	protected PermutationGenotype<Object> genotype = new PermutationGenotype<Object>();
 
 	@Override
 	public AbstractIndividualFactory<Individual> getFactory() {

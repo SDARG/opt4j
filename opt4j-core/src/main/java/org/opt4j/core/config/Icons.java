@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.core.config;
 
 import java.awt.Component;
@@ -185,13 +184,6 @@ public class Icons {
 	 * A text sheet.
 	 */
 	public static final String TEXT = "icons/text.png";
-
-	/**
-	 * Constructs {@link Icons}.
-	 */
-	public Icons() {
-		super();
-	}
 
 	/**
 	 * Returns the {@link URL} of a file.

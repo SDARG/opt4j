@@ -6,7 +6,7 @@ import org.opt4j.core.Individual;
 
 /**
  * The {@link NeighborhoodScheduler} manages the schedule according to which the
- * neighborhoods are chosen by the {@link AeSeHCoupler} to pick the crossover
+ * neighborhoods are chosen by the {@link EpsilonNeighborhoodCoupler} to pick the crossover
  * parents.
  * 
  * @author Fedor Smirnov

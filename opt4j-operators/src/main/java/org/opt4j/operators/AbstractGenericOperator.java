@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators;
 
@@ -55,8 +54,14 @@ import com.google.inject.Injector;
  * @param <Q>
  *            The specified {@link Operator} with a wildcard (?).
  */
-public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends Operator<?>> implements
-		GenericOperator<O> {
+public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends Operator<?>>
+		implements GenericOperator<O> {
+
+	protected SortedMap<Class<? extends Genotype>, O> classOperators = new TreeMap<Class<? extends Genotype>, O>(
+			new ClassComparator());
+	protected Map<OperatorPredicate, O> genericOperators = new HashMap<OperatorPredicate, O>();
+
+	protected List<Class<? extends Q>> cldef = new ArrayList<Class<? extends Q>>();
 
 	/**
 	 * Comparator for a specific order: Superclasses always are sorted after
@@ -88,12 +93,6 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 		}
 
 	}
-
-	protected SortedMap<Class<? extends Genotype>, O> classOperators = new TreeMap<Class<? extends Genotype>, O>(
-			new ClassComparator());
-	protected Map<OperatorPredicate, O> genericOperators = new HashMap<OperatorPredicate, O>();
-
-	protected List<Class<? extends Q>> cldef = new ArrayList<Class<? extends Q>>();
 
 	/**
 	 * Constructs an {@link AbstractGenericOperator} class with the given
@@ -173,7 +172,8 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 					return operator;
 				}
 			}
-			throw new IncompatibilityException("No handler found for " + genotype.getClass() + " in " + this.getClass());
+			throw new IncompatibilityException(
+					"No handler found for " + genotype.getClass() + " in " + this.getClass());
 		}
 
 	}

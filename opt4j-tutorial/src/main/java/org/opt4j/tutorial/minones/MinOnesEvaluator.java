@@ -7,7 +7,7 @@ import org.opt4j.core.problem.Evaluator;
 
 public class MinOnesEvaluator implements Evaluator<MinOnesResult> {
 
-	Objective ones = new Objective("ones", Sign.MIN);
+	protected Objective ones = new Objective("ones", Sign.MIN);
 
 	@Override
 	public Objectives evaluate(MinOnesResult minOnesResult) {

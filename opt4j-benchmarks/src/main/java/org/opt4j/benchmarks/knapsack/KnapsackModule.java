@@ -27,8 +27,9 @@ import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * The multiobjective 0/1 ILP knapsack problem as proposed in Zitzler and Thiele 1999. Either one of the nine benchmark
- * problems from Zitzler and Thiele 1999 can be selected or the number of knapsacks and items can be set manually.
+ * The multiobjective 0/1 ILP knapsack problem as proposed in Zitzler and Thiele
+ * 1999. Either one of the nine benchmark problems from Zitzler and Thiele 1999
+ * can be selected or the number of knapsacks and items can be set manually.
  * 
  * @see <a href=
  *      "http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
@@ -130,7 +131,7 @@ public class KnapsackModule extends ProblemModule {
 		}
 
 		switch (representation) {
-		case BITSTRING:
+		default: // BITSTRING
 			bindProblem(KnapsackBinaryCreatorDecoder.class, KnapsackBinaryCreatorDecoder.class,
 					KnapsackProfitEvaluator.class);
 			break;

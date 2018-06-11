@@ -64,14 +64,13 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		when(rand.nextInt(anyInt())).thenReturn(0);
 
 		adaptation = mock(EpsilonAdaptation.class);
-		when(adaptation.getSamplingEpsilon()).thenReturn(0.2);
 		mapping = new EpsilonMappingAdditive();
 	}
-	
+
 	@Test
 	public void testGetSurvivors() {
 		Set<Individual> extremes = new HashSet<Individual>();
-		Individual firstExtreme = getIndividual(0.0, 6.0); 
+		Individual firstExtreme = getIndividual(0.0, 6.0);
 		Individual secondExtreme = getIndividual(6.0, 0.0);
 		Individual dominated = getIndividual(1.0, 1.0);
 		extremes.add(firstExtreme);
@@ -79,60 +78,64 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		Set<Individual> population = new HashSet<Individual>(nonDominated);
 		population.addAll(extremes);
 		population.add(dominated);
-		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
+				adaptation, .2, .0, .0, .0);
 		Set<Individual> survivors = survivorGeneration.getSurvivors(population, 3);
 		assertEquals(3, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
 		assertTrue(survivors.contains(secondExtreme));
 		assertFalse(survivors.contains(dominated));
-		
+
 		survivors = survivorGeneration.getSurvivors(population, 7);
 		assertEquals(7, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
 		assertTrue(survivors.contains(secondExtreme));
 		assertTrue(survivors.contains(dominated));
 	}
-	
+
 	@Test
 	public void addNonDominatedSurvivorsTestTooFewSurvivors() {
 		Set<Individual> extremes = new HashSet<Individual>();
-		Individual firstExtreme = getIndividual(0.0, 6.0); 
+		Individual firstExtreme = getIndividual(0.0, 6.0);
 		Individual secondExtreme = getIndividual(6.0, 0.0);
-		// make sure we always have epsilon-dominance 
+		// make sure we always have epsilon-dominance
 		Individual addition = getIndividual(1.2, 2.9);
 		extremes.add(firstExtreme);
 		extremes.add(secondExtreme);
 		Set<Individual> firstFront = new HashSet<Individual>(nonDominated);
 		firstFront.addAll(extremes);
 		firstFront.add(addition);
-		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
+				adaptation, .2, .0, .0, .0);
 		Set<Individual> survivors = survivorGeneration.addNonDominatedSurvivors(extremes, firstFront, 7);
 		assertEquals(7, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
 		assertTrue(survivors.contains(secondExtreme));
-		verify(adaptation).adaptSamplingEpsilon(false);
+		verify(adaptation).adaptEpsilon(survivorGeneration.adaptiveEpsilonSampling, true);
 	}
-	
+
 	@Test
 	public void addNonDominatedSurvivorsTestTooManySurvivors() {
 		Set<Individual> extremes = new HashSet<Individual>();
-		Individual firstExtreme = getIndividual(0.0, 6.0); 
+		Individual firstExtreme = getIndividual(0.0, 6.0);
 		Individual secondExtreme = getIndividual(6.0, 0.0);
 		extremes.add(firstExtreme);
 		extremes.add(secondExtreme);
 		Set<Individual> firstFront = new HashSet<Individual>(nonDominated);
 		firstFront.addAll(extremes);
-		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
+				adaptation, .2, .0, .0, .0);
 		Set<Individual> survivors = survivorGeneration.addNonDominatedSurvivors(extremes, firstFront, 3);
 		assertEquals(3, survivors.size());
 		assertTrue(survivors.contains(firstExtreme));
 		assertTrue(survivors.contains(secondExtreme));
-		verify(adaptation).adaptSamplingEpsilon(true);
+		verify(adaptation).adaptEpsilon(survivorGeneration.adaptiveEpsilonSampling, false);
 	}
 
 	@Test
 	public void testApplyEpsilonSampling() {
-		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping, adaptation);
+		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
+				adaptation, .2, .0, .0, .0);
 		Set<Individual> dominant = new HashSet<Individual>();
 		Set<Individual> dominated = new HashSet<Individual>();
 		survivorGeneration.applyEpsilonSampling(nonDominated, dominant, dominated, 0.05);

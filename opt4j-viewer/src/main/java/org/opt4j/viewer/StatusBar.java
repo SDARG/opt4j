@@ -168,6 +168,7 @@ public class StatusBar implements OptimizerIterationListener, OptimizerStateList
 	 */
 	@Override
 	public void optimizationStarted(Optimizer optimizer) {
+		// nothing to be done
 	}
 
 	/*

@@ -91,7 +91,7 @@ public class Nsga2 implements Selector {
 		List<Individual> all = new ArrayList<Individual>(population);
 		List<Individual> parents = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = new NonDominatedFronts(all);
+		NonDominatedFronts fronts = new NonDominatedFronts(all);
 		Map<Individual, Integer> rank = getRank(fronts);
 		Map<Individual, Double> distance = new HashMap<Individual, Double>();
 
@@ -109,7 +109,7 @@ public class Nsga2 implements Selector {
 					// distance
 
 					if (!distance.containsKey(winner)) {
-						List<Individual> front = fronts.get(rank.get(winner));
+						List<Individual> front = new ArrayList<Individual>(fronts.getFrontAtIndex(rank.get(winner)));
 						distance.putAll(indicator.getDensityValues(front));
 					}
 
@@ -136,10 +136,9 @@ public class Nsga2 implements Selector {
 	public Collection<Individual> getLames(int size, Collection<Individual> population) {
 		List<Individual> lames = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = new NonDominatedFronts(population);
-		Collections.reverse(fronts);
-
-		for (List<Individual> front : fronts) {
+		NonDominatedFronts fronts = new NonDominatedFronts(population);
+		for (int i = fronts.getFrontNumber() - 1; i >= 0; i--) {
+			List<Individual> front = new ArrayList<Individual>(fronts.getFrontAtIndex(i));
 			if (lames.size() + front.size() < size) {
 				lames.addAll(front);
 			} else {
@@ -163,10 +162,10 @@ public class Nsga2 implements Selector {
 	 *            the fronts
 	 * @return the ranks
 	 */
-	protected Map<Individual, Integer> getRank(List<List<Individual>> fronts) {
+	protected Map<Individual, Integer> getRank(NonDominatedFronts fronts) {
 		Map<Individual, Integer> ranks = new HashMap<Individual, Integer>();
-		for (int i = 0; i < fronts.size(); i++) {
-			for (Individual p : fronts.get(i)) {
+		for (int i = 0; i < fronts.getFrontNumber(); i++) {
+			for (Individual p : fronts.getFrontAtIndex(i)) {
 				ranks.put(p, i);
 			}
 		}

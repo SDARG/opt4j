@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.common.archive;
 
@@ -52,7 +51,8 @@ public class PopulationArchive extends AbstractArchive {
 
 		List<Individual> candidates = new ArrayList<Individual>(individuals);
 
-		Objectives o1, o2;
+		Objectives o1;
+		Objectives o2;
 		for (int i = 0; i < candidates.size() - 1; i++) {
 			o1 = candidates.get(i).getObjectives();
 			for (int j = i + 1; j < candidates.size(); j++) {

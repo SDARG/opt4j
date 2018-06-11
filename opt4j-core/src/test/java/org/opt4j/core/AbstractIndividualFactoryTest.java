@@ -8,10 +8,10 @@ import org.opt4j.core.genotype.PermutationGenotype;
 
 public abstract class AbstractIndividualFactoryTest {
 
-	IndividualStateListener listener = new IndividualStateListener() {
+	protected IndividualStateListener listener = new IndividualStateListener() {
 		@Override
 		public void inidividualStateChanged(Individual individual) {
-
+			// nothing to be done
 		}
 	};
 

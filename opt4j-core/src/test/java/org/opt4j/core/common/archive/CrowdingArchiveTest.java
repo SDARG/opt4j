@@ -42,8 +42,8 @@ public class CrowdingArchiveTest {
 
 	protected final static int SIZE = 200;
 
-	Set<Individual> set = new HashSet<Individual>();
-	CrowdingArchive crowdingArchive = null;
+	protected Set<Individual> set = new HashSet<Individual>();
+	protected CrowdingArchive crowdingArchive = null;
 
 	protected static class MockProblem implements Creator<Genotype>, Decoder<Genotype, Object>, Evaluator<Object> {
 		@Override

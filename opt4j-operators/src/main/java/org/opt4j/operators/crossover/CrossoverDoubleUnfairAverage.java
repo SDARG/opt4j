@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.operators.crossover;
 
 import java.util.List;
@@ -93,7 +92,10 @@ public class CrossoverDoubleUnfairAverage extends CrossoverDouble {
 	 */
 	@Override
 	protected void crossover(List<Double> p1, List<Double> p2, List<Double> o1, List<Double> o2) {
-		double z1, z2, x, y;
+		double z1;
+		double z2;
+		double x;
+		double y;
 
 		int size = p1.size();
 		int j = random.nextInt(size);

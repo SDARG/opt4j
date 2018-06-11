@@ -304,7 +304,7 @@ public class WFGModule extends ProblemModule {
 		Class<? extends Evaluator<?>> evaluator = null;
 
 		switch (encoding) {
-		case BINARY:
+		default: //BINARY
 			creator = BinaryCreator.class;
 			decoder = BinaryToDoubleDecoder.class;
 			break;

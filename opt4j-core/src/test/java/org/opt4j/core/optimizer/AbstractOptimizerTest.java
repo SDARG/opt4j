@@ -9,8 +9,13 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 
 public class AbstractOptimizerTest {
+	
+	protected boolean started = false;
+	protected boolean archiveHasRun = false;
+	protected boolean completerHasRun = false;
+	
 	class MockOptimizer extends AbstractOptimizer {
-		TestMethod t;
+		protected TestMethod t;
 
 		public MockOptimizer(Population population, Archive archive, IndividualCompleter completer, Control control,
 				Iteration iteration) {
@@ -78,8 +83,6 @@ public class AbstractOptimizerTest {
 		Assert.assertFalse(optimizer.isRunning());
 	}
 
-	boolean started = false;
-
 	@Test
 	public void startOptimizationWithListener() throws TerminationException {
 		final MockOptimizer optimizer = new MockOptimizer(null, null, null, null, null);
@@ -94,6 +97,7 @@ public class AbstractOptimizerTest {
 
 			@Override
 			public void optimizationStopped(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 		};
@@ -102,14 +106,12 @@ public class AbstractOptimizerTest {
 		optimizer.setOptimizeTest(new TestMethod() {
 			@Override
 			public void test() throws TerminationException, StopException {
+				// nothing to be done
 			}
 		});
 		optimizer.startOptimization();
 		Assert.assertTrue(started);
 	}
-
-	boolean archiveHasRun = false;
-	boolean completerHasRun = false;
 
 	@Test
 	public void nextIteration() throws TerminationException {
@@ -172,10 +174,12 @@ public class AbstractOptimizerTest {
 
 			@Override
 			public void complete(Individual... individuals) throws TerminationException {
+				// nothing to be done
 			}
 
 			@Override
 			public void complete(Iterable<? extends Individual> iterable) throws TerminationException {
+				// nothing to be done
 			}
 		};
 		final MockOptimizer optimizer = new MockOptimizer(p, a, completer, c, new Iteration(10));
@@ -215,10 +219,12 @@ public class AbstractOptimizerTest {
 		}, new IndividualCompleter() {
 			@Override
 			public void complete(Individual... individuals) throws TerminationException {
+				// nothing to be done
 			}
 
 			@Override
 			public void complete(Iterable<? extends Individual> iterable) throws TerminationException {
+				// nothing to be done
 			}
 		}, c, new Iteration(4));
 		Assert.assertFalse(optimizer.isRunning());
@@ -241,6 +247,7 @@ public class AbstractOptimizerTest {
 		OptimizerIterationListener l = new OptimizerIterationListener() {
 			@Override
 			public void iterationComplete(int iteration) {
+				// nothing to be done
 			}
 		};
 		optimizer.addOptimizerIterationListener(l);
@@ -255,10 +262,12 @@ public class AbstractOptimizerTest {
 		OptimizerStateListener l = new OptimizerStateListener() {
 			@Override
 			public void optimizationStarted(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 			@Override
 			public void optimizationStopped(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 		};
@@ -274,6 +283,7 @@ public class AbstractOptimizerTest {
 		OptimizerIterationListener l = new OptimizerIterationListener() {
 			@Override
 			public void iterationComplete(int iteration) {
+				// nothing to be done
 			}
 		};
 		optimizer.addOptimizerIterationListener(l);
@@ -287,10 +297,12 @@ public class AbstractOptimizerTest {
 		OptimizerStateListener l = new OptimizerStateListener() {
 			@Override
 			public void optimizationStarted(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 			@Override
 			public void optimizationStopped(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 		};
@@ -306,15 +318,18 @@ public class AbstractOptimizerTest {
 		OptimizerIterationListener l1 = new OptimizerIterationListener() {
 			@Override
 			public void iterationComplete(int iteration) {
+				// nothing to be done
 			}
 		};
 		OptimizerStateListener l2 = new OptimizerStateListener() {
 			@Override
 			public void optimizationStarted(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 			@Override
 			public void optimizationStopped(Optimizer optimizer) {
+				// nothing to be done
 			}
 
 		};

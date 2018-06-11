@@ -44,15 +44,16 @@ public class NormalizeDoubleWrap extends NormalizeDoubleElementwise {
 	@Override
 	public double normalize(double value, double lb, double ub) {
 		double diff = ub - lb;
-		if (value < lb) {
-			double distance = lb - value;
-			value += Math.ceil(distance / diff) * diff;
+		double result = value;
+		if (result < lb) {
+			double distance = lb - result;
+			result += Math.ceil(distance / diff) * diff;
 		}
-		if (value > ub) {
-			double distance = value - ub;
-			value -= Math.ceil(distance / diff) * diff;
+		if (result > ub) {
+			double distance = result - ub;
+			result -= Math.ceil(distance / diff) * diff;
 		}
-		return value;
+		return result;
 	}
 
 }

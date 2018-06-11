@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.operators.crossover;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -68,12 +67,12 @@ import com.google.inject.Inject;
  */
 public class CrossoverDoubleSBX extends CrossoverDoubleElementwise {
 
+	protected double nu;
+
 	@Retention(RUNTIME)
 	@BindingAnnotation
 	protected @interface Nu {
 	}
-
-	protected double nu;
 
 	/**
 	 * Constructs a {@link CrossoverDoubleSBX} with a nu value and a random

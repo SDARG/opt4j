@@ -41,13 +41,6 @@ public class Model {
 	protected final Map<Object, Boolean> map = new HashMap<Object, Boolean>();
 
 	/**
-	 * Constructs a {@link Model}.
-	 */
-	public Model() {
-		super();
-	}
-
-	/**
 	 * Returns the value of the variable, or null if this variable is not
 	 * defined.
 	 * 

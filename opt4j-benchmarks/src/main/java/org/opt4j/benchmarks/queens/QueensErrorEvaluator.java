@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.benchmarks.queens;
 
 import static org.opt4j.core.Objective.Sign.MIN;
@@ -82,6 +81,22 @@ public class QueensErrorEvaluator implements Evaluator<QueensBoard> {
 	 */
 	private int countErrors(QueensBoard queensBoard) {
 		int errorcount = 0;
+
+		errorcount += countErrorsRowsColumns(queensBoard);
+		errorcount += countErrorsDiagonals(queensBoard);
+
+		return errorcount;
+	}
+
+	/**
+	 * Helper function to count the errors in rows and columns.
+	 * 
+	 * @param queensBoard
+	 *            the board
+	 * @return the error count in rows and columns
+	 */
+	protected int countErrorsRowsColumns(QueensBoard queensBoard) {
+		int errorcount = 0;
 		int size = problem.size();
 
 		for (int i = 0; i < size; i++) {
@@ -105,6 +120,20 @@ public class QueensErrorEvaluator implements Evaluator<QueensBoard> {
 			sum = Math.abs(1 - sum);
 			errorcount += sum;
 		}
+
+		return errorcount;
+	}
+
+	/**
+	 * Helper function to count the errors in diagonals.
+	 * 
+	 * @param queensBoard
+	 *            the board
+	 * @return the error count in diagonals
+	 */
+	protected int countErrorsDiagonals(QueensBoard queensBoard) {
+		int errorcount = 0;
+		int size = problem.size();
 
 		for (int k = -size + 1; k < size; k++) {
 			// diagonal 1

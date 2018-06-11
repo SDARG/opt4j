@@ -63,6 +63,8 @@ import org.opt4j.core.Genotype;
 public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<K, Double> {
 
 	protected final List<K> keys;
+	
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a {@link DoubleMapGenotype}.
@@ -189,8 +191,6 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 		}
 		return keys.indexOf(key);
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	/*
 	 * (non-Javadoc)

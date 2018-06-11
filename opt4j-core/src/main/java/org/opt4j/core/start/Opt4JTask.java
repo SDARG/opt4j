@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.start;
 
 import java.lang.reflect.Type;
@@ -130,7 +130,7 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	public synchronized void open() {
 		if (injector == null && !isClosed) {
 			if (!isInit) {
-				throw new RuntimeException("Task is not initialized. Call method init(modules) first.");
+				throw new IllegalStateException("Task is not initialized. Call method init(modules) first.");
 			}
 			if (parentInjector == null) {
 				injector = Guice.createInjector(modules);
@@ -208,14 +208,30 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 			evaluators = injector.getInstance(Key.get(new TypeLiteral<Set<Evaluator<Object>>>() {
 			}));
 		} catch (Exception e) {
-			throw new RuntimeException("Problem configuration Exception: \n" + e.getLocalizedMessage(), e);
+			throw new IllegalStateException("Problem configuration Exception: \n" + e.getLocalizedMessage(), e);
 		}
 		try {
 			injector.getInstance(Optimizer.class);
 		} catch (Exception e) {
-			throw new RuntimeException("Optimizer configuration Exception: \n" + e.getLocalizedMessage(), e);
+			throw new IllegalStateException("Optimizer configuration Exception: \n" + e.getLocalizedMessage(), e);
 		}
 
+		checkInjectedCreatorDecoderEvaluators(creator, decoder, evaluators);
+	}
+
+	/**
+	 * Helper function for check() to check the injected creator, decoder, and
+	 * evaluators.
+	 * 
+	 * @param creator
+	 *            the creator
+	 * @param decoder
+	 *            the decoder
+	 * @param evaluators
+	 *            the set of evaluators
+	 */
+	private void checkInjectedCreatorDecoderEvaluators(Creator<Genotype> creator, Decoder<Genotype, Object> decoder,
+			Set<Evaluator<Object>> evaluators) {
 		try {
 
 			Type creatorType0 = Parameters.getType(Creator.class, creator, "G");
@@ -267,7 +283,7 @@ public class Opt4JTask extends Task implements ControlListener, OptimizerIterati
 	 * optimizer.Control.State)
 	 */
 	@Override
-	public void stateChanged(org.opt4j.core.optimizer.Control.State state) {
+	public void stateChanged(Control.State state) {
 		stateChanged();
 	}
 

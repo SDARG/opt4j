@@ -11,14 +11,14 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The {@link AeSeHSelector} implements a selection process based on the
+ * The {@link EpsilonSamplingSelector} implements a selection process based on the
  * ε-sampling.
  * 
  * @author Fedor Smirnov
  *
  */
 @Singleton
-public class AeSeHSelector implements Selector {
+public class EpsilonSamplingSelector implements Selector {
 
 	protected final ESamplingSurvivorGeneration survivorGeneration;
 
@@ -30,7 +30,7 @@ public class AeSeHSelector implements Selector {
 	 *            {@link Individual}s that will survive and act as potential parents
 	 */
 	@Inject
-	public AeSeHSelector(ESamplingSurvivorGeneration survivorGeneration) {
+	public EpsilonSamplingSelector(ESamplingSurvivorGeneration survivorGeneration) {
 		this.survivorGeneration = survivorGeneration;
 	}
 

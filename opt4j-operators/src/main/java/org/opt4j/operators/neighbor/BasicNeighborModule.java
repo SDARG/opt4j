@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.neighbor;
 
@@ -86,13 +85,6 @@ public class BasicNeighborModule extends NeighborModule {
 		this.permutationType = permutationMode;
 	}
 
-	/**
-	 * Constructs a {@link BasicNeighborModule}.
-	 */
-	public BasicNeighborModule() {
-		super();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -114,6 +106,9 @@ public class BasicNeighborModule extends NeighborModule {
 			break;
 		case REVERT:
 			permutation = NeighborPermutationRevert.class;
+			break;
+		default:
+			permutation = NeighborPermutationMixed.class;
 			break;
 		}
 		bind(NeighborPermutation.class).to(permutation).in(SINGLETON);
