@@ -20,7 +20,7 @@ import com.google.inject.Inject;
 /**
  * The {@link ESamplingSurvivorGenerationBasic} implements the basic survivor
  * selection used by the Adaptive ε-sampling and ε-hood for evolutionary
- * many-objective optimization, without any extensions.
+ * many-objective optimization.
  * 
  * @author Fedor Smirnov
  *
