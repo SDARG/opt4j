@@ -10,7 +10,7 @@ import org.opt4j.optimizers.ea.Selector;
 import org.opt4j.optimizers.ea.SelectorModule;
 
 /**
- * Binds the {@link EpsilonSamplingSelector} as {@link Selector}
+ * Binds the {@link EpsilonSamplingSelector} as {@link Selector}.
  * 
  * 
  * @author Fedor Smirnov
