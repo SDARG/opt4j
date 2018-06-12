@@ -108,7 +108,7 @@ public class CompositeGenotypeTest {
 
 		CompositeGenotype<String, Genotype> composite2 = composite.newInstance();
 		Assert.assertEquals(0, composite2.size());
-		Assert.assertTrue(composite != composite2);
+		Assert.assertFalse(composite.equals(composite2));
 	}
 
 	@Test
