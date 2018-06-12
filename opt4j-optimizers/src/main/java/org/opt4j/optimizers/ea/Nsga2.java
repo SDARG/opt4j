@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.Random;
 
 import org.opt4j.core.Individual;
-import org.opt4j.core.Objectives;
 import org.opt4j.core.common.archive.FrontDensityIndicator;
 import org.opt4j.core.common.random.Rand;
 import org.opt4j.core.start.Constant;
@@ -92,7 +91,7 @@ public class Nsga2 implements Selector {
 		List<Individual> all = new ArrayList<Individual>(population);
 		List<Individual> parents = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = fronts(all);
+		NonDominatedFronts fronts = new NonDominatedFronts(all);
 		Map<Individual, Integer> rank = getRank(fronts);
 		Map<Individual, Double> distance = new HashMap<Individual, Double>();
 
@@ -110,7 +109,7 @@ public class Nsga2 implements Selector {
 					// distance
 
 					if (!distance.containsKey(winner)) {
-						List<Individual> front = fronts.get(rank.get(winner));
+						List<Individual> front = new ArrayList<Individual>(fronts.getFrontAtIndex(rank.get(winner)));
 						distance.putAll(indicator.getDensityValues(front));
 					}
 
@@ -137,10 +136,9 @@ public class Nsga2 implements Selector {
 	public Collection<Individual> getLames(int size, Collection<Individual> population) {
 		List<Individual> lames = new ArrayList<Individual>();
 
-		List<List<Individual>> fronts = fronts(population);
-		Collections.reverse(fronts);
-
-		for (List<Individual> front : fronts) {
+		NonDominatedFronts fronts = new NonDominatedFronts(population);
+		for (int i = fronts.getFrontNumber() - 1; i >= 0; i--) {
+			List<Individual> front = new ArrayList<Individual>(fronts.getFrontAtIndex(i));
 			if (lames.size() + front.size() < size) {
 				lames.addAll(front);
 			} else {
@@ -164,99 +162,13 @@ public class Nsga2 implements Selector {
 	 *            the fronts
 	 * @return the ranks
 	 */
-	protected Map<Individual, Integer> getRank(List<List<Individual>> fronts) {
+	protected Map<Individual, Integer> getRank(NonDominatedFronts fronts) {
 		Map<Individual, Integer> ranks = new HashMap<Individual, Integer>();
-		for (int i = 0; i < fronts.size(); i++) {
-			for (Individual p : fronts.get(i)) {
+		for (int i = 0; i < fronts.getFrontNumber(); i++) {
+			for (Individual p : fronts.getFrontAtIndex(i)) {
 				ranks.put(p, i);
 			}
 		}
 		return ranks;
 	}
-
-	/**
-	 * Evaluate the fronts and set the correspondent rank values.
-	 * 
-	 * @param individuals
-	 *            the individuals
-	 * @return the fronts
-	 */
-	public List<List<Individual>> fronts(Collection<Individual> individuals) {
-
-		List<Individual> population = new ArrayList<Individual>(individuals);
-		Map<Individual, Integer> individualIDs = new HashMap<Individual, Integer>();
-		for (int i = 0; i < population.size(); i++) {
-			individualIDs.put(population.get(i), i);
-		}
-
-		List<List<Individual>> fronts = new ArrayList<List<Individual>>();
-
-		Map<Individual, List<Individual>> dominatedIndividuals = new HashMap<Individual, List<Individual>>();
-		int[] numberOfDominations = new int[population.size()];
-
-		for (Individual e : population) {
-			dominatedIndividuals.put(e, new ArrayList<Individual>());
-			numberOfDominations[individualIDs.get(e)] = 0;
-		}
-
-		frontsResolveDomination(population, numberOfDominations, individualIDs, dominatedIndividuals);
-
-		List<Individual> f1 = new ArrayList<Individual>();
-		for (Individual i : population) {
-			if (numberOfDominations[individualIDs.get(i)] == 0) {
-				f1.add(i);
-			}
-		}
-		fronts.add(f1);
-		List<Individual> fi = f1;
-		while (!fi.isEmpty()) {
-			List<Individual> h = new ArrayList<Individual>();
-			for (Individual p : fi) {
-				for (Individual q : dominatedIndividuals.get(p)) {
-					numberOfDominations[individualIDs.get(q)]--;
-					if (numberOfDominations[individualIDs.get(q)] == 0) {
-						h.add(q);
-					}
-				}
-			}
-			fronts.add(h);
-			fi = h;
-		}
-		return fronts;
-	}
-
-	/**
-	 * Helper function for fronts() that determines the number of dominations
-	 * and the dominated individuals for each individual
-	 * 
-	 * @param population
-	 *            the individuals to consider
-	 * @param numberOfDominations
-	 *            the number of dominations
-	 * @param individualID
-	 *            helper ID for the individuals
-	 * @param dominatedIndividuals
-	 *            the individuals dominated by each individual
-	 */
-	protected void frontsResolveDomination(List<Individual> population, int[] numberOfDominations,
-			Map<Individual, Integer> individualID, Map<Individual, List<Individual>> dominatedIndividuals) {
-		for (int i = 0; i < population.size(); i++) {
-			for (int j = i + 1; j < population.size(); j++) {
-				Individual p = population.get(i);
-				Individual q = population.get(j);
-
-				Objectives po = p.getObjectives();
-				Objectives qo = q.getObjectives();
-
-				if (po.dominates(qo)) {
-					dominatedIndividuals.get(p).add(q);
-					numberOfDominations[individualID.get(q)]++;
-				} else if (qo.dominates(po)) {
-					dominatedIndividuals.get(q).add(p);
-					numberOfDominations[individualID.get(p)]++;
-				}
-			}
-		}
-	}
-
 }

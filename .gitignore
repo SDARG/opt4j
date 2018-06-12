@@ -2,6 +2,9 @@
 bin
 build
 
+# Temporary files created when working on Linux
+*~
+
 # Eclipse files are created with `gradlew eclipse`
 .classpath
 .project
