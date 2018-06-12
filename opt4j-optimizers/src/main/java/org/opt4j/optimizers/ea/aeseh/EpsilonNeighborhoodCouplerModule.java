@@ -10,7 +10,7 @@ import org.opt4j.optimizers.ea.Coupler;
 import org.opt4j.optimizers.ea.CouplerModule;
 
 /**
- * Binds the {@link EpsilonNeighborhoodCoupler} as the {@link Coupler}
+ * Binds the {@link EpsilonNeighborhoodCoupler} as the {@link Coupler}.
  * 
  * @author Fedor Smirnov
  *
