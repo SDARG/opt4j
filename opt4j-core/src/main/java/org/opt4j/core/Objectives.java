@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core;
@@ -28,7 +33,8 @@ import java.util.TreeMap;
 import org.opt4j.core.Objective.Sign;
 
 /**
- * The {@link Objectives} contains the {@link Objective}-{@link Value}s pairs of an {@link Individual}.
+ * The {@link Objectives} contain the {@link Objective}-{@link Value} pairs of
+ * an {@link Individual}.
  * 
  * @see Value
  * @see Objective
@@ -52,8 +58,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Returns an array of all values which all have to be minimized. Do not call this method before all objectives were
-	 * added!
+	 * Returns an array of all values which all have to be minimized. Do not
+	 * call this method before all objectives were added!
 	 * 
 	 * @see Value#getDouble()
 	 * @return an array containing values which have to be minimized
@@ -120,7 +126,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Returns the value that is assigned to the given objective. Returns {@code null} if the objective does not exist.
+	 * Returns the value that is assigned to the given objective. Returns
+	 * {@code null} if the objective does not exist.
 	 * 
 	 * @param objective
 	 *            the given objective
@@ -131,7 +138,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Returns the objective that is assigned to the given value. Returns {@code null} if the value does not exist.
+	 * Returns the objective that is assigned to the given value. Returns
+	 * {@code null} if the value does not exist.
 	 * 
 	 * @param value
 	 *            the given value
@@ -234,7 +242,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Adds all objective with the specified value specified in {@link Objectives}.
+	 * Adds all objective with the specified value specified in
+	 * {@link Objectives}.
 	 * 
 	 * @param objectives
 	 *            the objectives
@@ -245,12 +254,13 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Returns {@code true} if this objectives weakly dominates the specified objectives. This comparison is based on
-	 * the {@link #array()} values.
+	 * Returns {@code true} if this objectives weakly dominates the specified
+	 * objectives. This comparison is based on the {@link #array()} values.
 	 * 
 	 * @param opponent
 	 *            other objectives
-	 * @return {@code true} if this objectives weakly dominate the {@code opponent}
+	 * @return {@code true} if this objectives weakly dominate the
+	 *         {@code opponent}
 	 */
 	public boolean weaklyDominates(Objectives opponent) {
 		double[] va = this.array();
@@ -264,8 +274,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Returns {@code true} if this objectives dominate the specified objectives. This comparison is based on the
-	 * {@link #array()} values.
+	 * Returns {@code true} if this objectives dominate the specified
+	 * objectives. This comparison is based on the {@link #array()} values.
 	 * 
 	 * @param opponent
 	 *            other objectives
@@ -287,8 +297,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Returns {@code true} if this objectives are equal to the specified objectives. This comparison is based on the
-	 * {@link #array()} values.
+	 * Returns {@code true} if this objectives are equal to the specified
+	 * objectives. This comparison is based on the {@link #array()} values.
 	 * 
 	 * @param opponent
 	 *            other objectives
@@ -307,8 +317,8 @@ public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 	}
 
 	/**
-	 * Calculates the euclidean distance of two {@link Objectives}. This calculation is based on the {@link #array()}
-	 * values.
+	 * Calculates the euclidean distance of two {@link Objectives}. This
+	 * calculation is based on the {@link #array()} values.
 	 * 
 	 * @param other
 	 *            the second objectives
