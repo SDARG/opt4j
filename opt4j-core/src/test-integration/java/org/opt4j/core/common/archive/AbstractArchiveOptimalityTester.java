@@ -14,8 +14,8 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 
 /**
- * The {@link AbstractArchiveOptimalityTester} tests an Archive configured with the given {@link Opt4JModule} against
- * different optimality criterions.
+ * The {@link AbstractArchiveOptimalityTester} tests an Archive configured with
+ * the given {@link Opt4JModule} against different optimality criteria.
  * <p>
  * This class can be reused for additional {@link Archive}s to test.
  * 
@@ -42,11 +42,8 @@ public class AbstractArchiveOptimalityTester {
 	protected void archiveOptimalityTest(Opt4JModule archiveModule) {
 		Injector injector = Guice.createInjector(archiveModule);
 		Archive archive = injector.getInstance(Archive.class);
-		System.out.println("Testing " + archive.getClass());
 
 		fillArchive(injector, archive);
-
-		System.out.println("archive size after adding " + NUMBER_OF_INDIVUDUALS + " individuals: " + archive.size());
 
 		Assert.assertTrue(archive.contains(first));
 		Assert.assertTrue(archive.contains(last));
@@ -56,8 +53,8 @@ public class AbstractArchiveOptimalityTester {
 	}
 
 	/**
-	 * This tests fail if an individual is found in the {@link Archive} which is dominated by other {@link Individual}s
-	 * in the {@link Archive}.
+	 * This tests fail if an individual is found in the {@link Archive} which is
+	 * dominated by other {@link Individual}s in the {@link Archive}.
 	 * 
 	 * @param archive
 	 *            the archive under test
@@ -82,7 +79,8 @@ public class AbstractArchiveOptimalityTester {
 	}
 
 	/**
-	 * Initializes the {@link Archive} with NUMBER_OF_INDIVIDUALS different {@link Individual}s.
+	 * Initializes the {@link Archive} with NUMBER_OF_INDIVIDUALS different
+	 * {@link Individual}s.
 	 * <p>
 	 * Therefore. three {@link Objective}s are added:
 	 * <ul>
