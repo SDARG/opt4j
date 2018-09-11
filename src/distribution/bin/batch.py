@@ -458,8 +458,10 @@ def doResults(basefolder):
     zenit = getMin(zenit)
     
     # adjust nadir in case an objective is equal for nadir and zenit
-    nadmin = [x if x < y else x + 1 for x, y in zip(nadir.minvalues, zenit.minvalues)]
-    nadir = Sample(Sample.invValues(nadmin));
+    # the values are inverted at this point (all Objectives are to be minimized) => in the normal case, x, the nadir
+    # value, has to be worse, that is bigger
+    nadmin = [x if x > y else x + 1 for x, y in zip(nadir.minvalues, zenit.minvalues)]
+    nadir = Sample(Sample.invValues(nadmin))
     
     global gNadir
     gNadir = nadir.values
