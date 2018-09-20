@@ -1,5 +1,6 @@
 dependencies {
 	compile project(':opt4j-core')
+	compile group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
 }
 
 javadoc {

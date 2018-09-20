@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -43,6 +43,12 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.opt4j.core.Objective;
 import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.visualization.DelayTask;
@@ -51,8 +57,6 @@ import org.opt4j.core.optimizer.OptimizerIterationListener;
 import org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener;
 
 import com.google.inject.Inject;
-
-import ptolemy.plot.Plot;
 
 /**
  * The {@link ConvergencePlotWidget} plots the convergence for each
@@ -70,7 +74,7 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	protected final Selection selection;
 
 	protected final JPanel panel;
-	protected final Plot plot;
+	protected final XYPlot plot;
 
 	/**
 	 * Constructs a {@link ConvergencePlotWidget}.
@@ -84,8 +88,7 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 	 *            optimization problem
 	 */
 	@Inject
-	public ConvergencePlotWidget(Optimizer optimizer, ConvergencePlotData data, ObjectivesMonitor objectivesMonitor,
-			AutoZoomButton autoZoom) {
+	public ConvergencePlotWidget(Optimizer optimizer, ConvergencePlotData data, ObjectivesMonitor objectivesMonitor) {
 		super();
 		this.data = data;
 		selection = new Selection();
@@ -93,24 +96,25 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
-		plot = new Plot();
-		plot.addLegend(0, "Max");
-		plot.addLegend(1, "Mean");
-		plot.addLegend(2, "Min");
+		XYSeriesCollection collection = new XYSeriesCollection();
+		collection.addSeries(mean);
+		collection.addSeries(max);
+		collection.addSeries(min);
+		JFreeChart chart = ChartFactory.createXYLineChart(null, "iteration", "", collection);
+		plot = chart.getXYPlot();
+
 		Color[] colors = new Color[3];
 		colors[0] = Color.RED;
 		colors[1] = Color.LIGHT_GRAY;
 		colors[2] = Color.BLUE;
-		plot.setColors(colors);
+		// plot.setColors(colors);
 
-		panel.add(plot);
+		panel.add(new ChartPanel(chart));
 
 		JToolBar menu = new JToolBar();
 		menu.setFloatable(false);
 		menu.add(selection);
 		menu.addSeparator();
-		autoZoom.setPlotBox(plot);
-		menu.add(autoZoom);
 
 		Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, menu.getBackground().darker());
 		menu.setBorder(border);
@@ -248,28 +252,28 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				plot.clear(false);
-
-				plot.setXLabel("iteration");
+				// chart.getPlot().clear(false);
 
 				if (objective != null) {
-					plot.setYLabel(objective.getName());
-
-					paintList(data.getMaxPoints(objective), 0);
-					paintList(data.getMeanPoints(objective), 1);
-					paintList(data.getMinPoints(objective), 2);
+					// chart.getXYPlot().getDomainAxis(1).setLabel(objective.getName());
+					plot.getRangeAxis().setLabel(objective.getName());
+					paintList(data.getMaxPoints(objective), max);
+					paintList(data.getMeanPoints(objective), mean);
+					paintList(data.getMinPoints(objective), min);
 				} else {
-					plot.setYLabel("");
+					plot.getRangeAxis().setLabel("");
 				}
-
-				plot.revalidate();
-				plot.repaint();
 			}
 		});
 	}
 
-	private void paintList(List<Double> list, int dataset) {
+	XYSeries max = new XYSeries("Max");
+	XYSeries min = new XYSeries("Mean");
+	XYSeries mean = new XYSeries("Min");
+
+	private void paintList(List<Double> list, XYSeries min2) {
 		final int iteration = data.getIteration();
+		min2.clear();
 
 		for (int i = 0; i < list.size(); i++) {
 			Point2D.Double p1 = list.get(i);
@@ -277,15 +281,17 @@ public class ConvergencePlotWidget implements Widget, OptimizerIterationListener
 			double x = p1.getX();
 			double y = p1.getY();
 
-			plot.addPoint(dataset, x, y, i != 0);
+			min2.add(x, y, false);
+			// chart.getXYPlot().getDataset(min2).plot.addPoint(min2, x, y, i !=
+			// 0);
 		}
 
 		if (!list.isEmpty() && iteration > 0) {
 			Point2D.Double p1 = list.get(list.size() - 1);
 			double x = iteration;
 			double y = p1.getY();
-
-			plot.addPoint(dataset, x, y, true);
+			min2.add(x, y);
+			// plot.addPoint(min2, x, y, true);
 		}
 	}
 

@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,7 +23,6 @@
 package org.opt4j.viewer;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -40,6 +39,13 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
@@ -53,13 +59,12 @@ import org.opt4j.core.optimizer.Population;
 import org.opt4j.viewer.ConvergencePlotWidget.ObjectiveDropDown;
 import org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener;
 
-import ptolemy.plot.Plot;
-
 import com.google.inject.Inject;
 
 /**
  * The {@link ParetoPlotWidget} is a widget that displays the {@link Population}
- * and {@link Archive} in two dimensional plot.
+ * and {@link Archive} in two dimensional plot, with an optional color coding
+ * for a third dimension.
  * 
  * @author lukasiewycz
  * 
@@ -73,30 +78,26 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 
 	protected final DelayTask task = new DelayTask(40);
 
-	protected final Plot plot;
+	protected final XYPlot plot;
 
-	protected final Selection selection;
+	protected final SelectionMenu selection;
 
 	protected final JPanel panel = new JPanel();
 
 	/**
-	 * The selection box for the current two objectives.
+	 * The selection box for the current three objectives.
 	 * 
 	 * @author lukasiewycz
 	 * 
 	 */
-	protected class Selection extends JToolBar implements ActionListener {
+	protected class SelectionMenu extends JToolBar implements ActionListener {
 
 		private static final long serialVersionUID = 1L;
 
-		protected ObjectiveDropDown firstComboBox;
+		protected final ObjectiveDropDown firstComboBox = new ObjectiveDropDown();
+		protected final ObjectiveDropDown secondComboBox = new ObjectiveDropDown();
 
-		protected ObjectiveDropDown secondComboBox;
-
-		public Selection() {
-			firstComboBox = new ObjectiveDropDown();
-			secondComboBox = new ObjectiveDropDown();
-
+		public SelectionMenu() {
 			firstComboBox.addActionListener(this);
 			secondComboBox.addActionListener(this);
 
@@ -105,11 +106,10 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 			addSeparator();
 			add(new JLabel("y-Axis: "));
 			add(secondComboBox);
-			setFloatable(false);
 
+			setFloatable(false);
 			Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, getBackground().darker());
 			setBorder(border);
-
 		}
 
 		public void init(Collection<Objective> objectives) {
@@ -128,10 +128,16 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 
 			final Objective objective1 = objectives.get(0);
 			final Objective objective2;
+			final Objective objective3;
 			if (objectives.size() > 1) {
 				objective2 = objectives.get(1);
 			} else {
 				objective2 = objectives.get(0);
+			}
+			if (objectives.size() > 2) {
+				objective3 = objectives.get(2);
+			} else {
+				objective3 = objectives.get(0);
 			}
 			firstComboBox.setSelected(objective1);
 			secondComboBox.setSelected(objective2);
@@ -151,6 +157,10 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 		}
 	}
 
+	XYSeries archiveSeries = new XYSeries("archive", false, true);
+	XYSeries populationSeries = new XYSeries("population", false, true);
+	XYSeriesCollection series = new XYSeriesCollection();
+
 	/**
 	 * Constructs a {@link ParetoPlotWidget}.
 	 * 
@@ -162,30 +172,29 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 	 *            the button to reset zooming
 	 */
 	@Inject
-	public ParetoPlotWidget(Population population, Archive archive, AutoZoomButton autoZoomButton) {
+	public ParetoPlotWidget(Population population, Archive archive) {
 		this.population = new SynchronizedIndividualSet(population);
 		this.archive = new SynchronizedIndividualSet(archive);
 
-		selection = new Selection();
-		selection.addSeparator();
-		selection.add(autoZoomButton);
+		selection = new SelectionMenu();
 
-		plot = new Plot();
-		autoZoomButton.setPlotBox(plot);
+		JFreeChart chart = ChartFactory.createScatterPlot(null, null, null, series);
+		plot = chart.getXYPlot();
 
-		plot.addLegend(0, "Archive");
-		plot.addLegend(1, "Population");
-		plot.setMarksStyle("dots");
+		// autoZoomButton.setPlotBox(plot);
 
-		Color[] colors = new Color[3];
-		colors[0] = Color.RED;
-		colors[1] = Color.LIGHT_GRAY;
-		colors[2] = Color.BLUE;
-		plot.setColors(colors);
+		series.addSeries(archiveSeries);
+		series.addSeries(populationSeries);
+		/*
+		 * plot.setMarksStyle("dots");
+		 * 
+		 * Color[] colors = new Color[3]; colors[0] = Color.RED; colors[1] =
+		 * Color.LIGHT_GRAY; colors[2] = Color.BLUE; plot.setColors(colors);
+		 */
 
 		panel.setLayout(new BorderLayout());
 		panel.add(selection, BorderLayout.NORTH);
-		panel.add(plot, BorderLayout.CENTER);
+		panel.add(new ChartPanel(chart), BorderLayout.CENTER);
 	}
 
 	/**
@@ -304,20 +313,19 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				plot.clear(false);
-				plot.setXLabel(one != null ? one.getName() : "");
-				plot.setYLabel(two != null ? two.getName() : "");
+				plot.getDomainAxis().setLabel(one != null ? one.getName() : "");
+				plot.getRangeAxis().setLabel(two != null ? two.getName() : "");
 
+				archiveSeries.clear();
 				for (Point2D.Double point : archivePoints) {
-					plot.addPoint(0, point.getX(), point.getY(), false);
+					archiveSeries.add(point.getX(), point.getY(), false);
 				}
 
+				populationSeries.clear();
 				for (Point2D.Double point : populationPoints) {
-					plot.addPoint(1, point.getX(), point.getY(), false);
+					populationSeries.add(point.getX(), point.getY(), false);
 				}
-
-				plot.revalidate();
-				plot.repaint();
+				plot.datasetChanged(new DatasetChangeEvent(this, plot.getDataset()));
 			}
 		});
 	}

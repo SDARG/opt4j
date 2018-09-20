@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.viewer;
 
 import org.opt4j.core.config.Icons;
@@ -30,8 +30,6 @@ import org.opt4j.core.start.Opt4J;
 import org.opt4j.core.start.Progress;
 import org.opt4j.viewer.Viewer.CloseEvent;
 
-import ptolemy.plot.DefaultFonts;
-
 /**
  * The {@link ViewerModule} configures the optimization process viewer.
  * 
@@ -41,13 +39,6 @@ import ptolemy.plot.DefaultFonts;
 @Icon(Icons.APPLICATION)
 @Info("A graphical viewer to observe the optimization process.")
 public class ViewerModule extends VisualizationModule {
-
-	static {
-		// initialize ptolemy plot once the viewer module is on the classpath
-		if (DefaultFonts.LABElFONT == null) {
-			throw new IllegalStateException();
-		}
-	}
 
 	@Info("The title of the viewer frame.")
 	@Constant(value = "title", namespace = Viewer.class)
