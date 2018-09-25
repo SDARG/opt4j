@@ -58,6 +58,6 @@ public class UnboundedArchiveTest {
 	@Test
 	public void updateWithNone() {
 		UnboundedArchive archive = new UnboundedArchive();
-		Assert.assertFalse(archive.updateWithNondominated(Collections.emptySet()));
+		Assert.assertFalse(archive.updateWithNondominated(Collections.<Individual> emptySet()));
 	}
 }
