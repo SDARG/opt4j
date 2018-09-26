@@ -364,7 +364,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 
 		// map from the modules (categories) to their categories
 		// (supercategories)
-		Map<Class<?>, Class<?>> map = new HashMap<Class<?>, Class<?>>();
+		Map<Class<?>, Class<?>> map = new HashMap<>();
 
 		for (Class<? extends Module> module : allModules) {
 			Class<?> category = getCategory(module, false);
@@ -375,7 +375,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 		int size;
 		do {
 			size = map.size();
-			Set<Class<?>> values = new HashSet<Class<?>>(map.values());
+			Set<Class<?>> values = new HashSet<>(map.values());
 			for (Class<?> cat : values) {
 				if (cat != null) {
 					Class<?> category = getCategory(cat, false);
@@ -385,9 +385,9 @@ public class DefaultModulesPanel extends ModulesPanel {
 		} while (map.size() != size);
 
 		// create all nodes
-		Map<Class<?>, CategoryTreeNode> ctn = new HashMap<Class<?>, CategoryTreeNode>();
-		Map<Class<?>, ModuleTreeNode> mtn = new HashMap<Class<?>, ModuleTreeNode>();
-		Map<Class<?>, DefaultMutableTreeNode> atn = new HashMap<Class<?>, DefaultMutableTreeNode>();
+		Map<Class<?>, CategoryTreeNode> ctn = new HashMap<>();
+		Map<Class<?>, ModuleTreeNode> mtn = new HashMap<>();
+		Map<Class<?>, DefaultMutableTreeNode> atn = new HashMap<>();
 
 		for (Class<?> clazz : map.keySet()) {
 			if (isCategory(clazz)) {
@@ -602,7 +602,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 			return;
 		}
 
-		List<UserNode> nodes = new ArrayList<UserNode>();
+		List<UserNode> nodes = new ArrayList<>();
 
 		Enumeration<?> children = node.children();
 

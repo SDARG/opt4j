@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.algebra;
 
@@ -41,8 +40,8 @@ import com.google.inject.Singleton;
  * 
  */
 @Singleton
-public class AlgebraGenericImplementation extends AbstractGenericOperator<Algebra<Genotype>, Algebra<?>> implements
-		Algebra<Genotype> {
+public class AlgebraGenericImplementation extends AbstractGenericOperator<Algebra<Genotype>, Algebra<?>>
+		implements Algebra<Genotype> {
 
 	/**
 	 * Constructs the {@link AlgebraGenericImplementation}.
@@ -72,7 +71,7 @@ public class AlgebraGenericImplementation extends AbstractGenericOperator<Algebr
 
 	protected CompositeGenotype<?, ?> algebraComposite(Term term, Genotype... genotypes) {
 		int n = genotypes.length;
-		List<CompositeGenotype<?, ?>> composites = new ArrayList<CompositeGenotype<?, ?>>();
+		List<CompositeGenotype<?, ?>> composites = new ArrayList<>();
 		for (int i = 0; i < n; i++) {
 			composites.add((CompositeGenotype<?, ?>) genotypes[i]);
 		}

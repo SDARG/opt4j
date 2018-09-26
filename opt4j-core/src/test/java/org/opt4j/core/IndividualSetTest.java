@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.opt4j.core.optimizer.Population;
@@ -35,7 +34,7 @@ public class IndividualSetTest {
 
 	protected final static int SIZE = 10000;
 
-	protected List<Individual> list = new ArrayList<Individual>();
+	protected List<Individual> list = new ArrayList<>();
 
 	@Before
 	public void setUp() throws Exception {

@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.optimizers.ea;
@@ -96,11 +101,11 @@ public class Hypervolume implements FrontDensityIndicator {
 			throw new IllegalArgumentException("Individuals is empty.");
 		}
 
-		List<Individual> orderIndividuals = new ArrayList<Individual>(individuals);
+		List<Individual> orderIndividuals = new ArrayList<>(individuals);
 		int m = individuals.iterator().next().getObjectives().size();
 
 		if (m < 2) {
-			Map<Individual, Double> result = new HashMap<Individual, Double>();
+			Map<Individual, Double> result = new HashMap<>();
 			for (Individual individual : individuals) {
 				result.put(individual, 0.0);
 			}
@@ -122,7 +127,7 @@ public class Hypervolume implements FrontDensityIndicator {
 	 * @return the map of density values
 	 */
 	protected Map<Individual, Double> calculateHypervolumeContributionN(List<Individual> individuals, double offset) {
-		Map<Individual, Double> result = new HashMap<Individual, Double>();
+		Map<Individual, Double> result = new HashMap<>();
 		List<double[]> front = invert(normalize(getMinValues(individuals)), offset);
 
 		int m = front.get(0).length;
@@ -130,7 +135,7 @@ public class Hypervolume implements FrontDensityIndicator {
 		double hvAll = calculateHypervolume(front, m);
 
 		for (int i = 0; i < front.size(); i++) {
-			List<double[]> iFront = new ArrayList<double[]>(front);
+			List<double[]> iFront = new ArrayList<>(front);
 			iFront.remove(i);
 			double iHv = calculateHypervolume(iFront, m);
 			result.put(individuals.get(i), hvAll - iHv);
@@ -149,9 +154,9 @@ public class Hypervolume implements FrontDensityIndicator {
 	 * @return the map of density values
 	 */
 	protected Map<Individual, Double> calculateHypervolumeContribution2D(List<Individual> individuals, double offset) {
-		Map<Individual, Double> result = new HashMap<Individual, Double>();
+		Map<Individual, Double> result = new HashMap<>();
 		List<double[]> front = invert(normalize(getMinValues(individuals)), offset);
-		List<double[]> sorted = new ArrayList<double[]>(front);
+		List<double[]> sorted = new ArrayList<>(front);
 
 		Collections.sort(sorted, new Comparator<double[]>() {
 			@Override
@@ -184,7 +189,7 @@ public class Hypervolume implements FrontDensityIndicator {
 	 * @return the front of vectors that is minimized
 	 */
 	protected List<double[]> getMinValues(List<Individual> individuals) {
-		List<double[]> minValues = new ArrayList<double[]>();
+		List<double[]> minValues = new ArrayList<>();
 		for (Individual individual : individuals) {
 			minValues.add(individual.getObjectives().array());
 		}
@@ -220,7 +225,7 @@ public class Hypervolume implements FrontDensityIndicator {
 			}
 		}
 
-		List<double[]> normalized = new ArrayList<double[]>();
+		List<double[]> normalized = new ArrayList<>();
 		for (double[] p : front) {
 			double[] pn = new double[m];
 			for (int i = 0; i < m; i++) {
@@ -247,7 +252,7 @@ public class Hypervolume implements FrontDensityIndicator {
 		double[] nadir = new double[m];
 		Arrays.fill(nadir, 1.0 + offset);
 
-		List<double[]> inverted = new ArrayList<double[]>();
+		List<double[]> inverted = new ArrayList<>();
 		for (double[] element : front) {
 			double[] in = new double[element.length];
 			for (int i = 0; i < element.length; i++) {
@@ -293,7 +298,7 @@ public class Hypervolume implements FrontDensityIndicator {
 	}
 
 	protected List<double[]> filterNondominatedSet(List<double[]> front, int nObjectives) {
-		List<double[]> nondominated = new ArrayList<double[]>();
+		List<double[]> nondominated = new ArrayList<>();
 
 		for (double[] p1 : front) {
 			boolean dominated = false;
@@ -340,7 +345,7 @@ public class Hypervolume implements FrontDensityIndicator {
 	}
 
 	protected void reduceNondominatedSet(List<double[]> front, int objective, double threshold) {
-		List<double[]> lames = new ArrayList<double[]>();
+		List<double[]> lames = new ArrayList<>();
 
 		for (double[] p : front) {
 			if (p[objective] <= threshold) {

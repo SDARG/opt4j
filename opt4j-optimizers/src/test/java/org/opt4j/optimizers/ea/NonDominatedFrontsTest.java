@@ -1,6 +1,9 @@
 package org.opt4j.optimizers.ea;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,10 +12,7 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
-
 import org.opt4j.core.Objectives;
-
-import static org.mockito.Mockito.*;
 
 public class NonDominatedFrontsTest {
 
@@ -27,7 +27,7 @@ public class NonDominatedFrontsTest {
 	protected static Individual infeasible = mock(Individual.class);
 
 	protected static Set<Individual> getIndividualSet() {
-		Set<Individual> result = new HashSet<Individual>();
+		Set<Individual> result = new HashSet<>();
 
 		when(first.getObjectives()).thenReturn(getObjectives(5, 1));
 		when(second.getObjectives()).thenReturn(getObjectives(3, 3));

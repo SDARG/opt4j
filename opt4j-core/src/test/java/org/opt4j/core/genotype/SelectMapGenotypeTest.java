@@ -1,6 +1,9 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,32 +24,32 @@ public class SelectMapGenotypeTest {
 		protected List<Integer> second;
 
 		public Inputs() {
-			this.list = new ArrayList<Integer>();
+			this.list = new ArrayList<>();
 			list.add(1);
 			list.add(2);
-			this.map = new HashMap<Integer, List<Integer>>();
-			this.first = new ArrayList<Integer>();
+			this.map = new HashMap<>();
+			this.first = new ArrayList<>();
 			first.add(3);
-			this.second = new ArrayList<Integer>();
+			this.second = new ArrayList<>();
 			second.add(3);
 			second.add(4);
 			map.put(1, first);
 			map.put(2, second);
 		}
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testSetWrongValue(){
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetWrongValue() {
 		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
 		genotype.init(new Random());
 		genotype.setValue(2, 5);
 	}
-	
+
 	@Test
-	public void testSetValue(){
+	public void testSetValue() {
 		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
 		genotype.init(new Random());
 		genotype.setValue(2, 3);
 		assertEquals(3, (long) genotype.getValue(2));
@@ -58,7 +61,7 @@ public class SelectMapGenotypeTest {
 	public void testMapConstructor() {
 		Inputs inputs = new Inputs();
 		inputs.map.get(2).remove(1);
-		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
 		Collection<Integer> keys = genotype.getKeys();
 		assertTrue(keys.contains(1));
 		assertTrue(keys.contains(2));
@@ -75,43 +78,42 @@ public class SelectMapGenotypeTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidKey() {
 		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> geno = new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		SelectMapGenotype<Integer, Integer> geno = new SelectMapGenotype<>(inputs.list, inputs.map);
 		geno.getIndexOf(4);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testListMapMismatch2() {
 		Inputs inputs = new Inputs();
-		inputs.map.put(3, new ArrayList<Integer>());
-		new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		inputs.map.put(3, new ArrayList<>());
+		new SelectMapGenotype<>(inputs.list, inputs.map);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testListMapMismatch1() {
 		Inputs inputs = new Inputs();
 		inputs.list.add(3);
-		new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		new SelectMapGenotype<>(inputs.list, inputs.map);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNonUniqueKeys2() {
 		Inputs inputs = new Inputs();
 		inputs.list.add(1);
-		new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map.get(1));
+		new SelectMapGenotype<>(inputs.list, inputs.map.get(1));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNonUniqueKeys1() {
 		Inputs inputs = new Inputs();
 		inputs.list.add(1);
-		new SelectMapGenotype<Integer, Integer>(inputs.list, inputs.map);
+		new SelectMapGenotype<>(inputs.list, inputs.map);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testListConstructor() {
 		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<Integer, Integer>(inputs.list,
-				inputs.map.get(1));
+		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map.get(1));
 		Random rand = new Random();
 		genotype.init(rand, 2);
 	}
@@ -120,14 +122,14 @@ public class SelectMapGenotypeTest {
 	public void testEmptyMap() {
 		Inputs inputs = new Inputs();
 		inputs.list.add(3);
-		inputs.map.put(3, new ArrayList<Integer>());
-		new SelectBounds<Integer, Integer>(inputs.list, inputs.map);
+		inputs.map.put(3, new ArrayList<>());
+		new SelectBounds<>(inputs.list, inputs.map);
 	}
 
 	@Test
 	public void testSelectBounds() {
 		Inputs inputs = new Inputs();
-		SelectBounds<Integer, Integer> bounds = new SelectBounds<Integer, Integer>(inputs.list, inputs.map);
+		SelectBounds<Integer, Integer> bounds = new SelectBounds<>(inputs.list, inputs.map);
 		assertEquals(0, (long) bounds.getLowerBound(0));
 		assertEquals(0, (long) bounds.getUpperBound(0));
 		assertEquals(0, (long) bounds.getLowerBound(1));

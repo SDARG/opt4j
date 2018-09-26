@@ -81,7 +81,7 @@ public class PropertyPanel extends JPanel {
 
 	protected final JPanel panel;
 
-	protected final Map<Property, Component> components = new HashMap<Property, Component>();
+	protected final Map<Property, Component> components = new HashMap<>();
 
 	/**
 	 * Constructs a {@link PropertyPanel} for one {@link PropertyModule}
@@ -120,7 +120,7 @@ public class PropertyPanel extends JPanel {
 			for (int k = 0; k < obj.length; k++) {
 				obj[k] = type.getEnumConstants()[k];
 			}
-			final JComboBox<Object> box = new JComboBox<Object>(obj);
+			final JComboBox<Object> box = new JComboBox<>(obj);
 			box.setSelectedItem(value);
 
 			box.addActionListener(new ActionListener() {

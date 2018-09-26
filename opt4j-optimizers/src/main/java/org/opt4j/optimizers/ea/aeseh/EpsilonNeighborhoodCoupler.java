@@ -18,8 +18,8 @@ import org.opt4j.optimizers.ea.Coupler;
 import com.google.inject.Inject;
 
 /**
- * The {@link EpsilonNeighborhoodCoupler} implements a parent selection process based on by
- * the ε-neighborhood.
+ * The {@link EpsilonNeighborhoodCoupler} implements a parent selection process
+ * based on by the ε-neighborhood.
  * 
  * @author Fedor Smirnov
  *
@@ -79,7 +79,7 @@ public class EpsilonNeighborhoodCoupler implements Coupler {
 	 */
 	@Override
 	public Collection<Pair<Individual>> getCouples(int size, List<Individual> survivors) {
-		Collection<Pair<Individual>> result = new HashSet<Pair<Individual>>();
+		Collection<Pair<Individual>> result = new HashSet<>();
 		List<Set<Individual>> neighborhoods = createNeighborhoods(survivors);
 		NeighborhoodSchedulerRoundRobin scheduler = new NeighborhoodSchedulerRoundRobin(neighborhoods);
 		for (int i = 0; i < size; i++) {
@@ -100,12 +100,12 @@ public class EpsilonNeighborhoodCoupler implements Coupler {
 	protected Pair<Individual> pickCouple(Set<Individual> neighborhood) {
 		if (neighborhood.size() == 1) {
 			Individual hermit = neighborhood.iterator().next();
-			return new Pair<Individual>(hermit, hermit);
+			return new Pair<>(hermit, hermit);
 		}
-		List<Individual> individualList = new ArrayList<Individual>(neighborhood);
+		List<Individual> individualList = new ArrayList<>(neighborhood);
 		Individual first = individualList.remove(random.nextInt(individualList.size()));
 		Individual second = individualList.remove(random.nextInt(individualList.size()));
-		return new Pair<Individual>(first, second);
+		return new Pair<>(first, second);
 	}
 
 	/**
@@ -117,22 +117,23 @@ public class EpsilonNeighborhoodCoupler implements Coupler {
 	 *         neighborhood.
 	 */
 	protected List<Set<Individual>> createNeighborhoods(List<Individual> survivorPool) {
-		List<Set<Individual>> neighborhoods = new ArrayList<Set<Individual>>();
+		List<Set<Individual>> neighborhoods = new ArrayList<>();
 		Map<Objective, Double> objectiveAmplitudes = epsilonMapping
-				.findObjectiveAmplitudes(new HashSet<Individual>(survivorPool));
-		List<Individual> survivors = new ArrayList<Individual>(survivorPool);
+				.findObjectiveAmplitudes(new HashSet<>(survivorPool));
+		List<Individual> survivors = new ArrayList<>(survivorPool);
 		while (!survivors.isEmpty()) {
 			// pick a random individual
 			int idx = random.nextInt(survivors.size());
 			Individual reference = survivors.remove(idx);
-			Set<Individual> neighborhood = new HashSet<Individual>();
+			Set<Individual> neighborhood = new HashSet<>();
 			Objectives epsilonEnhancedObjectives = epsilonMapping.mapObjectives(reference.getObjectives(),
 					adaptiveEpsilonNeighborhood.getEpsilon(), objectiveAmplitudes);
 			// put the individuals epsilon-dominated by the reference into its
 			// neighborhood
 			for (Individual candidate : survivors) {
-				if (epsilonEnhancedObjectives.dominates(candidate.getObjectives()))
+				if (epsilonEnhancedObjectives.dominates(candidate.getObjectives())) {
 					neighborhood.add(candidate);
+				}
 			}
 			survivors.removeAll(neighborhood);
 			neighborhood.add(reference);

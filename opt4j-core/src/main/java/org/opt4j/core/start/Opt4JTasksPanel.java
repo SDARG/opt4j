@@ -66,7 +66,7 @@ import com.google.inject.Module;
 @SuppressWarnings("serial")
 public class Opt4JTasksPanel extends DefaultTasksPanel {
 
-	protected final Map<Task, Progress> progessMap = new WeakHashMap<Task, Progress>();
+	protected final Map<Task, Progress> progessMap = new WeakHashMap<>();
 
 	protected final SelectedModules selectedModules;
 

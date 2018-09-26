@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,7 +25,6 @@ package org.opt4j.optimizers.ea;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,12 +87,12 @@ public class Nsga2 implements Selector {
 	 */
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
-		List<Individual> all = new ArrayList<Individual>(population);
-		List<Individual> parents = new ArrayList<Individual>();
+		List<Individual> all = new ArrayList<>(population);
+		List<Individual> parents = new ArrayList<>();
 
 		NonDominatedFronts fronts = new NonDominatedFronts(all);
 		Map<Individual, Integer> rank = getRank(fronts);
-		Map<Individual, Double> distance = new HashMap<Individual, Double>();
+		Map<Individual, Double> distance = new HashMap<>();
 
 		final int size = all.size();
 
@@ -109,7 +108,7 @@ public class Nsga2 implements Selector {
 					// distance
 
 					if (!distance.containsKey(winner)) {
-						List<Individual> front = new ArrayList<Individual>(fronts.getFrontAtIndex(rank.get(winner)));
+						List<Individual> front = new ArrayList<>(fronts.getFrontAtIndex(rank.get(winner)));
 						distance.putAll(indicator.getDensityValues(front));
 					}
 
@@ -134,21 +133,16 @@ public class Nsga2 implements Selector {
 	 */
 	@Override
 	public Collection<Individual> getLames(int size, Collection<Individual> population) {
-		List<Individual> lames = new ArrayList<Individual>();
+		List<Individual> lames = new ArrayList<>();
 
 		NonDominatedFronts fronts = new NonDominatedFronts(population);
 		for (int i = fronts.getFrontNumber() - 1; i >= 0; i--) {
-			List<Individual> front = new ArrayList<Individual>(fronts.getFrontAtIndex(i));
+			List<Individual> front = new ArrayList<>(fronts.getFrontAtIndex(i));
 			if (lames.size() + front.size() < size) {
 				lames.addAll(front);
 			} else {
 				final Map<Individual, Double> density = indicator.getDensityValues(front);
-				Collections.sort(front, new Comparator<Individual>() {
-					@Override
-					public int compare(Individual o1, Individual o2) {
-						return density.get(o1).compareTo(density.get(o2));
-					}
-				});
+				Collections.sort(front, (Individual o1, Individual o2) -> density.get(o1).compareTo(density.get(o2)));
 				lames.addAll(front.subList(0, size - lames.size()));
 			}
 		}
@@ -163,7 +157,7 @@ public class Nsga2 implements Selector {
 	 * @return the ranks
 	 */
 	protected Map<Individual, Integer> getRank(NonDominatedFronts fronts) {
-		Map<Individual, Integer> ranks = new HashMap<Individual, Integer>();
+		Map<Individual, Integer> ranks = new HashMap<>();
 		for (int i = 0; i < fronts.getFrontNumber(); i++) {
 			for (Individual p : fronts.getFrontAtIndex(i)) {
 				ranks.put(p, i);

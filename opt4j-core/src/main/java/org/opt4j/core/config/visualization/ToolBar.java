@@ -100,7 +100,7 @@ public class ToolBar extends JToolBar implements FileOperationsListener, Startup
 				setFocusable(false);
 				setMnemonic(KeyEvent.VK_R);
 				addActionListener((ActionEvent e) -> {
-					Set<Module> modules = new HashSet<Module>();
+					Set<Module> modules = new HashSet<>();
 					modules.addAll(selectedModules);
 					executionEnvironment.execute(modules);
 				});

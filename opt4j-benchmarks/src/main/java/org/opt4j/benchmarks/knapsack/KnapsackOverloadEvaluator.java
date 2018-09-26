@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -48,7 +48,7 @@ import com.google.inject.Inject;
 @Priority(-10)
 public class KnapsackOverloadEvaluator implements Evaluator<ItemSelection> {
 	protected Objective objectiveOverload = new Objective("overload", MIN);
-	protected final Map<Knapsack, Objective> profitObjectives = new HashMap<Knapsack, Objective>();
+	protected final Map<Knapsack, Objective> profitObjectives = new HashMap<>();
 	protected KnapsackProblem problem;
 
 	/**

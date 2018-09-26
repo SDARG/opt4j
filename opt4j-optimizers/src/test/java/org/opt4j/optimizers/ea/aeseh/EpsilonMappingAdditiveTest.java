@@ -1,19 +1,19 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
-import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
 import org.opt4j.core.Objectives;
-
-import static org.mockito.Mockito.*;
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class EpsilonMappingAdditiveTest {
 
@@ -32,7 +32,7 @@ public class EpsilonMappingAdditiveTest {
 		Objectives thirdObj = new Objectives();
 		thirdObj.add(first, 2);
 		thirdObj.add(second, 2);
-		
+
 		Objectives infeasibleObj = new Objectives();
 		infeasibleObj.add(first, Objective.INFEASIBLE);
 		infeasibleObj.add(second, Objective.INFEASIBLE);
@@ -46,7 +46,7 @@ public class EpsilonMappingAdditiveTest {
 		Individual infeasible = mock(Individual.class);
 		when(infeasible.getObjectives()).thenReturn(infeasibleObj);
 
-		Set<Individual> indis = new HashSet<Individual>();
+		Set<Individual> indis = new HashSet<>();
 		indis.add(first);
 		indis.add(second);
 		indis.add(third);

@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.operators.crossover;
 
@@ -92,7 +91,7 @@ public class CrossoverPermutationBucket implements CrossoverPermutation {
 		assert (size == p2.size()) : "Permutation is undefined for genotypes with different lengths.";
 		assert p1.containsAll(p2) : "Permutation is undefined for different domains.";
 
-		Set<Object> elements = new HashSet<Object>();
+		Set<Object> elements = new HashSet<>();
 
 		int i = 0;
 		int j = 0;
@@ -118,7 +117,7 @@ public class CrossoverPermutationBucket implements CrossoverPermutation {
 			}
 		}
 
-		Pair<PermutationGenotype<?>> offspring = new Pair<PermutationGenotype<?>>(o1, o2);
+		Pair<PermutationGenotype<?>> offspring = new Pair<>(o1, o2);
 		return offspring;
 	}
 }

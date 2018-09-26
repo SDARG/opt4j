@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core.common.completer;
@@ -38,11 +43,13 @@ import com.google.inject.Inject;
 
 /**
  * <p>
- * The {@link SequentialIndividualCompleter} completes the {@link Individual}s sequentially.
+ * The {@link SequentialIndividualCompleter} completes the {@link Individual}s
+ * sequentially.
  * </p>
  * <p>
- * It updates the {@link State} of the {@link Individual} according to the state of the completion process. It uses
- * {@link Control} between the different (possibly time consuming) completion steps to allow the user to control the
+ * It updates the {@link State} of the {@link Individual} according to the state
+ * of the completion process. It uses {@link Control} between the different
+ * (possibly time consuming) completion steps to allow the user to control the
  * completion process.
  * </p>
  * 
@@ -95,7 +102,8 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.core.optimizer.Completer#complete(org.opt4j.core.Individual[])
+	 * @see
+	 * org.opt4j.core.optimizer.Completer#complete(org.opt4j.core.Individual[])
 	 */
 	@Override
 	public void complete(Individual... individuals) throws TerminationException {
@@ -104,8 +112,9 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	}
 
 	/**
-	 * Evaluates the phenotype of the {@link Individual}. After this operation, the {@link Individual} is in
-	 * {@link State} {@link State#EVALUATED} and {@link Individual#getObjectives()} returns the {@link Objectives}.
+	 * Evaluates the phenotype of the {@link Individual}. After this operation,
+	 * the {@link Individual} is in {@link State} {@link State#EVALUATED} and
+	 * {@link Individual#getObjectives()} returns the {@link Objectives}.
 	 * 
 	 * @param individual
 	 */
@@ -126,8 +135,10 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	}
 
 	/**
-	 * Decodes the {@link Genotype} of the {@link Individual}. After this operation, the {@link Individual} is in
-	 * {@link State} {@link State#PHENOTYPED} and {@link Individual#getPhenotype()} returns the phenotype.
+	 * Decodes the {@link Genotype} of the {@link Individual}. After this
+	 * operation, the {@link Individual} is in {@link State}
+	 * {@link State#PHENOTYPED} and {@link Individual#getPhenotype()} returns
+	 * the phenotype.
 	 * 
 	 * @param individual
 	 */
@@ -147,14 +158,15 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	private Set<Objective> objectives = null;
 
 	/**
-	 * Check if the given {@link Objectives} have the same length as prior evaluated ones.
+	 * Check if the given {@link Objectives} have the same length as prior
+	 * evaluated ones.
 	 * 
 	 * @param objectives
 	 *            the objectives to check
 	 * @return true if the number of objectives is constant
 	 */
 	private boolean isSameLength(Collection<Objective> objectives) {
-		Set<Objective> set = new HashSet<Objective>(objectives);
+		Set<Objective> set = new HashSet<>(objectives);
 		if (this.objectives == null) {
 			this.objectives = set;
 			return true;

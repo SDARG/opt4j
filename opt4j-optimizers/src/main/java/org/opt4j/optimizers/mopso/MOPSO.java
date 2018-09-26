@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.optimizers.mopso;
 
 import java.util.ArrayList;
@@ -113,14 +113,8 @@ public class MOPSO implements IterativeOptimizer {
 	 *            the size of the archive for the global leaders
 	 */
 	@Inject
-	public MOPSO(
-			Population population,
-			IndividualFactory individualFactory,
-			IndividualCompleter completer,
-			Rand random,
-			MutateDoubleUniform uniform,
-			MutateDoubleNonUniform nonUniform,
-			MutationRate mutationRate,
+	public MOPSO(Population population, IndividualFactory individualFactory, IndividualCompleter completer, Rand random,
+			MutateDoubleUniform uniform, MutateDoubleNonUniform nonUniform, MutationRate mutationRate,
 			@Constant(value = "size", namespace = MOPSO.class) int size,
 			@Constant(value = "archiveSize", namespace = MOPSO.class) int archiveSize) {
 		this.particleFactory = (ParticleFactory) individualFactory;
@@ -172,10 +166,8 @@ public class MOPSO implements IterativeOptimizer {
 				particle.setId(id++);
 				Genotype genotype = particle.getGenotype();
 				if (!(genotype instanceof DoubleGenotype)) {
-					throw new IncompatibilityException(
-							"MOPSO is restricted to " + DoubleGenotype.class
-									+ ", current Genotype is: "
-									+ genotype.getClass());
+					throw new IncompatibilityException("MOPSO is restricted to " + DoubleGenotype.class
+							+ ", current Genotype is: " + genotype.getClass());
 				}
 				population.add(particle);
 			}
@@ -210,9 +202,8 @@ public class MOPSO implements IterativeOptimizer {
 	 *            the map for the global leaders
 	 * @return the map of the old to the new particle
 	 */
-	protected Map<Particle, Particle> move(Population population,
-			Map<Particle, Particle> leaders) {
-		Map<Particle, Particle> map = new HashMap<Particle, Particle>();
+	protected Map<Particle, Particle> move(Population population, Map<Particle, Particle> leaders) {
+		Map<Particle, Particle> map = new HashMap<>();
 
 		for (Individual individual : population) {
 
@@ -223,16 +214,13 @@ public class MOPSO implements IterativeOptimizer {
 			DoubleGenotype best = (DoubleGenotype) particle.getBest();
 			int id = particle.getId();
 
-			DoubleGenotype leader = (DoubleGenotype) leaders.get(particle)
-					.getGenotype();
+			DoubleGenotype leader = (DoubleGenotype) leaders.get(particle).getGenotype();
 
 			velocityTerm.randomize();
 
-			DoubleGenotype nextVelocity = algebra.algebra(velocityTerm,
-					position, velocity, best, leader);
+			DoubleGenotype nextVelocity = algebra.algebra(velocityTerm, position, velocity, best, leader);
 
-			DoubleGenotype nextPosition = algebra.algebra(positionTerm,
-					position, nextVelocity);
+			DoubleGenotype nextPosition = algebra.algebra(positionTerm, position, nextVelocity);
 
 			for (int k = 0; k < nextPosition.size(); k++) {
 				double value = nextPosition.get(k);
@@ -321,15 +309,14 @@ public class MOPSO implements IterativeOptimizer {
 	 *            the population
 	 * @return the map of each particle to its leader
 	 */
-	protected Map<Particle, Particle> getLeaders(Archive leaders,
-			Population population) {
-		Map<Particle, Particle> map = new HashMap<Particle, Particle>();
+	protected Map<Particle, Particle> getLeaders(Archive leaders, Population population) {
+		Map<Particle, Particle> map = new HashMap<>();
 
 		Crowding crowding = new Crowding();
 		Map<Individual, Double> values = crowding.getDensityValues(leaders);
 
-		List<Individual> l = new ArrayList<Individual>(leaders);
-		List<Individual> best = new ArrayList<Individual>();
+		List<Individual> l = new ArrayList<>(leaders);
+		List<Individual> best = new ArrayList<>();
 
 		for (int i = 0; i < population.size(); i++) {
 			Individual i1 = l.get(random.nextInt(l.size()));

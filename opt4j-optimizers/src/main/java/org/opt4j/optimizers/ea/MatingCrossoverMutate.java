@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -130,9 +130,9 @@ public class MatingCrossoverMutate implements Mating {
 	 * @return the offspring
 	 */
 	protected Collection<Individual> getOffspringInternal(int size, Collection<Individual> parents) {
-		Collection<Individual> offspring = new ArrayList<Individual>();
+		Collection<Individual> offspring = new ArrayList<>();
 		Collection<Pair<Individual>> couples = coupler.getCouples((int) Math.ceil(((double) size / 2)),
-				new ArrayList<Individual>(parents));
+				new ArrayList<>(parents));
 
 		for (Pair<Individual> couple : couples) {
 			boolean crossover = random.nextDouble() <= crossoverRate.get();
@@ -183,7 +183,7 @@ public class MatingCrossoverMutate implements Mating {
 		Individual i1 = individualFactory.create(o1);
 		Individual i2 = individualFactory.create(o2);
 
-		Pair<Individual> individuals = new Pair<Individual>(i1, i2);
+		Pair<Individual> individuals = new Pair<>(i1, i2);
 		return individuals;
 	}
 

@@ -57,8 +57,8 @@ public class Crowding implements FrontDensityIndicator {
 	 * @return a map of the individuals to the corresponding crowding distance
 	 */
 	private Map<Individual, Double> getValues(Collection<Individual> individuals) {
-		Map<Individual, Double> map = new HashMap<Individual, Double>();
-		List<Individual> list = new ArrayList<Individual>(individuals);
+		Map<Individual, Double> map = new HashMap<>();
+		List<Individual> list = new ArrayList<>(individuals);
 
 		for (Individual individual : list) {
 			map.put(individual, 0.0);
@@ -102,7 +102,7 @@ public class Crowding implements FrontDensityIndicator {
 	 * @return the sorted list of individuals based on their crowding distance
 	 */
 	public List<Individual> order(final Map<Individual, Double> values) {
-		List<Individual> list = new ArrayList<Individual>(values.keySet());
+		List<Individual> list = new ArrayList<>(values.keySet());
 		Comparator<Individual> valueCompare = (Individual o1, Individual o2) -> values.get(o2)
 				.compareTo(values.get(o1));
 		Collections.sort(list, valueCompare);

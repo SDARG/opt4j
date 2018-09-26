@@ -55,8 +55,8 @@ public class KnapsackProblemFile implements KnapsackProblem {
 	protected static final String POSINT = "[-]?\\d+"; // skip +
 	protected static final String POSDOUBLE = "[-]?\\d+(\\.\\d*)?"; // skip +
 
-	protected final List<Knapsack> knapsacks = new ArrayList<Knapsack>();
-	protected final List<Item> items = new ArrayList<Item>();
+	protected final List<Knapsack> knapsacks = new ArrayList<>();
+	protected final List<Item> items = new ArrayList<>();
 
 	/**
 	 * Constructs a {@link KnapsackProblemFile} with a given file name.

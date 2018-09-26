@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core.genotype;
@@ -25,7 +30,8 @@ import org.opt4j.core.Genotype;
 
 /**
  * <p>
- * The {@link DoubleGenotype} consists of double values that can be used as a {@link Genotype}.
+ * The {@link DoubleGenotype} consists of double values that can be used as a
+ * {@link Genotype}.
  * </p>
  * <p>
  * Example problem: Select filling level of five bottles<br/>
@@ -36,8 +42,8 @@ import org.opt4j.core.Genotype;
  * genotype.init(new Random(), 5);
  * </pre>
  * 
- * </blockquote> Example instance: [0.5035947840006195, 0.9693492473483428, 0.12786372316728167, 0.5299369900029843,
- * 0.8055193291478467]<br/>
+ * </blockquote> Example instance: [0.5035947840006195, 0.9693492473483428,
+ * 0.12786372316728167, 0.5299369900029843, 0.8055193291478467]<br/>
  * Example search space size: [0;1]<sup>5</sup>
  * </p>
  * 
@@ -50,14 +56,16 @@ public class DoubleGenotype extends ArrayList<Double> implements ListGenotype<Do
 	protected final Bounds<Double> bounds;
 
 	/**
-	 * Constructs a {@link DoubleGenotype} with lower bounds {@code 0.0} and upper bounds {@code 1.0}.
+	 * Constructs a {@link DoubleGenotype} with lower bounds {@code 0.0} and
+	 * upper bounds {@code 1.0}.
 	 */
 	public DoubleGenotype() {
 		this(0, 1);
 	}
 
 	/**
-	 * Constructs a {@link DoubleGenotype} with a specified lower and upper bound for all values.
+	 * Constructs a {@link DoubleGenotype} with a specified lower and upper
+	 * bound for all values.
 	 * 
 	 * @param lowerBound
 	 *            the lower bound
@@ -65,7 +73,7 @@ public class DoubleGenotype extends ArrayList<Double> implements ListGenotype<Do
 	 *            the upper bound
 	 */
 	public DoubleGenotype(double lowerBound, double upperBound) {
-		this(new FixedBounds<Double>(lowerBound, upperBound));
+		this(new FixedBounds<>(lowerBound, upperBound));
 	}
 
 	/**

@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-
 
 package org.opt4j.benchmarks.queens;
 
@@ -44,8 +43,8 @@ import com.google.inject.Inject;
  * @author lukasiewycz
  * 
  */
-public class QueensPermutationDecoder implements Decoder<PermutationGenotype<Integer>, QueensBoard>,
-		Creator<PermutationGenotype<Integer>> {
+public class QueensPermutationDecoder
+		implements Decoder<PermutationGenotype<Integer>, QueensBoard>, Creator<PermutationGenotype<Integer>> {
 
 	protected final QueensProblem problem;
 	protected final Random random;
@@ -74,7 +73,7 @@ public class QueensPermutationDecoder implements Decoder<PermutationGenotype<Int
 	public PermutationGenotype<Integer> create() {
 		int size = problem.size();
 
-		PermutationGenotype<Integer> genotype = new PermutationGenotype<Integer>();
+		PermutationGenotype<Integer> genotype = new PermutationGenotype<>();
 		for (int i = 0; i < size; i++) {
 			genotype.add(i);
 		}

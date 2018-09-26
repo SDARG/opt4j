@@ -54,9 +54,9 @@ public class ExecutionEnvironment implements TaskStateListener {
 
 	protected final ExecutorService executor;
 
-	protected final List<Task> tasks = new ArrayList<Task>();
+	protected final List<Task> tasks = new ArrayList<>();
 
-	protected final Set<TaskListener> listeners = new CopyOnWriteArraySet<TaskListener>();
+	protected final Set<TaskListener> listeners = new CopyOnWriteArraySet<>();
 
 	/**
 	 * Constructs a {@link ExecutionEnvironment}.

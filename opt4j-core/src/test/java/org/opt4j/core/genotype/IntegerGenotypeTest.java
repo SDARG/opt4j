@@ -15,11 +15,11 @@ public class IntegerGenotypeTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testWrongBoundSettingList() {
 		Random rand = new Random();
-		List<Integer> lowerBounds = new ArrayList<Integer>();
+		List<Integer> lowerBounds = new ArrayList<>();
 		lowerBounds.add(1);
 		lowerBounds.add(2);
 		lowerBounds.add(3);
-		List<Integer> upperBounds = new ArrayList<Integer>();
+		List<Integer> upperBounds = new ArrayList<>();
 		upperBounds.add(2);
 		upperBounds.add(3);
 		upperBounds.add(4);

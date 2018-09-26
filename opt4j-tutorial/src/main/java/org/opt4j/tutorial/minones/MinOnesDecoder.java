@@ -28,12 +28,12 @@ public class MinOnesDecoder extends AbstractSATDecoder<Genotype, MinOnesResult> 
 	// solution (and with the seed 0 of random it does ;) ).
 	@Override
 	public Set<Constraint> createConstraints() {
-		Set<Constraint> constraints = new HashSet<Constraint>();
+		Set<Constraint> constraints = new HashSet<>();
 		Random random = new Random(0);
 
 		for (int i = 0; i < 1000; i++) {
 			Constraint clause = new Constraint(">=", 1);
-			HashSet<Integer> vars = new HashSet<Integer>();
+			HashSet<Integer> vars = new HashSet<>();
 			do {
 				vars.add(random.nextInt(1000));
 			} while (vars.size() < 3);

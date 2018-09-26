@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -55,7 +55,7 @@ import com.google.inject.Singleton;
 @Singleton
 class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListener {
 
-	protected final Map<Objective, PlotDataObjective> map = new HashMap<Objective, PlotDataObjective>();
+	protected final Map<Objective, PlotDataObjective> map = new HashMap<>();
 
 	protected int iteration = 0;
 
@@ -74,12 +74,12 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 	 */
 	protected static class PlotDataObjective {
 		protected final Objective objective;
-		protected final List<Point2D.Double> minValues = new CopyOnWriteArrayList<Point2D.Double>();
-		protected final List<Point2D.Double> maxValues = new CopyOnWriteArrayList<Point2D.Double>();
-		protected final List<Point2D.Double> meanValues = new CopyOnWriteArrayList<Point2D.Double>();
+		protected final List<Point2D.Double> minValues = new CopyOnWriteArrayList<>();
+		protected final List<Point2D.Double> maxValues = new CopyOnWriteArrayList<>();
+		protected final List<Point2D.Double> meanValues = new CopyOnWriteArrayList<>();
 		protected final int MAXVALUES = 2000;
 
-		protected final Set<Double> currentIteration = new HashSet<Double>();
+		protected final Set<Double> currentIteration = new HashSet<>();
 
 		PlotDataObjective(Objective objective) {
 			this.objective = objective;
@@ -100,9 +100,9 @@ class ConvergencePlotData implements OptimizerIterationListener, ObjectivesListe
 
 		protected synchronized void simplify(List<Point2D.Double> values) {
 			if (values.size() > MAXVALUES) {
-				List<Point2D.Double> copy = new ArrayList<Point2D.Double>(values);
+				List<Point2D.Double> copy = new ArrayList<>(values);
 
-				final Map<Point2D.Double, Double> dist = new HashMap<Point2D.Double, Double>();
+				final Map<Point2D.Double, Double> dist = new HashMap<>();
 				for (int i = 1; i < copy.size() - 1; i += 2) {
 					Point2D.Double p0 = copy.get(i - 1);
 					Point2D.Double p1 = copy.get(i);

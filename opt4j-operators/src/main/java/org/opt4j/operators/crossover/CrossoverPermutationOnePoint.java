@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -100,21 +100,21 @@ public class CrossoverPermutationOnePoint implements CrossoverPermutation {
 		assert p1.containsAll(p2) : "Permutation is undefined for different domains.";
 
 		if (size > 0) {
-			Set<Object> elements1 = new HashSet<Object>();
-			Set<Object> elements2 = new HashSet<Object>();
+			Set<Object> elements1 = new HashSet<>();
+			Set<Object> elements2 = new HashSet<>();
 
 			crossoverToCutpoint(p1, p2, o1, o2, elements1, elements2);
 			crossoverFill(p1, p2, o1, o2, elements1, elements2);
 
 		}
 
-		Pair<PermutationGenotype<?>> offspring = new Pair<PermutationGenotype<?>>(o1, o2);
+		Pair<PermutationGenotype<?>> offspring = new Pair<>(o1, o2);
 		return offspring;
 	}
 
 	/**
-	 * Helper function for crossover() to crossover and rotate up to the coined cut
-	 * point.
+	 * Helper function for crossover() to crossover and rotate up to the coined
+	 * cut point.
 	 * 
 	 * @param p1
 	 *            parent one

@@ -56,7 +56,7 @@ public class ModuleAutoFinder implements ModuleList {
 
 	protected final Transformer<Class<? extends Module>, Boolean> ignore;
 
-	protected final Set<ModuleAutoFinderListener> listeners = new CopyOnWriteArraySet<ModuleAutoFinderListener>();
+	protected final Set<ModuleAutoFinderListener> listeners = new CopyOnWriteArraySet<>();
 
 	protected ClassLoader classLoader;
 
@@ -133,7 +133,7 @@ public class ModuleAutoFinder implements ModuleList {
 
 		files.addAll(getFilesFromClasspath());
 
-		List<Class<?>> classes = new ArrayList<Class<?>>();
+		List<Class<?>> classes = new ArrayList<>();
 
 		for (File file : files) {
 
@@ -153,7 +153,7 @@ public class ModuleAutoFinder implements ModuleList {
 			}
 		}
 
-		List<Class<? extends Module>> modules = new ArrayList<Class<? extends Module>>();
+		List<Class<? extends Module>> modules = new ArrayList<>();
 
 		for (Class<?> clazz : classes) {
 			if (Opt4JModule.class.isAssignableFrom(clazz) && !Modifier.isAbstract(clazz.getModifiers())) {
@@ -177,7 +177,7 @@ public class ModuleAutoFinder implements ModuleList {
 	 * @return set of directories and jar archives given in the classpath
 	 */
 	protected Set<File> getFilesFromClasspath() {
-		Set<File> files = new HashSet<File>();
+		Set<File> files = new HashSet<>();
 		String paths = System.getProperty("java.class.path");
 
 		// split classpathes like a.jar;b.jar
@@ -245,7 +245,7 @@ public class ModuleAutoFinder implements ModuleList {
 	 * @return the list of all found classes
 	 */
 	protected List<Class<?>> getAllClasses(File root, File file) {
-		List<Class<?>> classes = new ArrayList<Class<?>>();
+		List<Class<?>> classes = new ArrayList<>();
 		if (file.isDirectory()) {
 			for (File f : file.listFiles()) {
 				classes.addAll(getAllClasses(root, f));
@@ -283,7 +283,7 @@ public class ModuleAutoFinder implements ModuleList {
 	 */
 	protected List<Class<?>> getAllClasses(ZipFile zipFile) {
 		invokeOut(zipFile.toString());
-		List<Class<?>> classes = new ArrayList<Class<?>>();
+		List<Class<?>> classes = new ArrayList<>();
 
 		List<? extends ZipEntry> entries = Collections.list(zipFile.entries());
 		for (int i = 0; i < entries.size(); i++) {
