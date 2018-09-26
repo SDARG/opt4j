@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.core.config.visualization;
 
 import java.awt.BorderLayout;
@@ -69,9 +69,8 @@ public class DefaultTasksPanel extends TasksPanel implements TaskListener {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * javax.swing.JTable#prepareRenderer(javax.swing.table.TableCellRenderer
-		 * , int, int)
+		 * @see javax.swing.JTable#prepareRenderer(javax.swing.table.
+		 * TableCellRenderer , int, int)
 		 */
 		@Override
 		public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -105,7 +104,7 @@ public class DefaultTasksPanel extends TasksPanel implements TaskListener {
 	 * The {@link Model}.
 	 */
 	protected class Model extends AbstractTableModel {
-		
+
 		protected String[] columnNames = { "Task", "State" };
 
 		@Override
@@ -209,17 +208,7 @@ public class DefaultTasksPanel extends TasksPanel implements TaskListener {
 	public void added(Task task) {
 		table.revalidate();
 		table.repaint();
-		SwingUtilities.invokeLater(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see java.lang.Runnable#run()
-			 */
-			@Override
-			public void run() {
-				scroll.getVerticalScrollBar().setValue(table.getRowCount() * 120);
-			}
-		});
+		SwingUtilities.invokeLater(() -> scroll.getVerticalScrollBar().setValue(table.getRowCount() * 120));
 	}
 
 	/*
@@ -230,17 +219,9 @@ public class DefaultTasksPanel extends TasksPanel implements TaskListener {
 	 */
 	@Override
 	public void stateChanged(Task task) {
-		delay.execute(new Runnable() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see java.lang.Runnable#run()
-			 */
-			@Override
-			public void run() {
-				table.revalidate();
-				table.repaint();
-			}
+		delay.execute(() -> {
+			table.revalidate();
+			table.repaint();
 		});
 	}
 }

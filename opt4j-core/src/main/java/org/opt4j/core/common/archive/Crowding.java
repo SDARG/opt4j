@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core.common.archive;
@@ -28,12 +33,15 @@ import java.util.Map;
 import org.opt4j.core.Individual;
 
 /**
- * The {@link Crowding}, see "A fast and elitist multiobjective genetic algorithm : NSGA-II, K. Deb, A. Pratap, S.
- * Agarwal, and T. Meyarivan Evolutionary Computation, IEEETransactions on, vol. 6, no. 2, pp. 182-197, August 2002.",
- * calculates the crowding distance of {@link Individual}s as used for instance in the the {@code Nsga2} algorithm. A
- * bounding box around each individual is defined and restricted by the neighboring individuals in each dimension. The
- * crowding distance is the sum of the side-lengths of the bounding box. If an individual does not have neighbors on all
- * sides, the crowding distance is maximal. A normalization in each dimension is applied.
+ * The {@link Crowding}, see "A fast and elitist multiobjective genetic
+ * algorithm : NSGA-II, K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan
+ * Evolutionary Computation, IEEETransactions on, vol. 6, no. 2, pp. 182-197,
+ * August 2002.", calculates the crowding distance of {@link Individual}s as
+ * used for instance in the the {@code Nsga2} algorithm. A bounding box around
+ * each individual is defined and restricted by the neighboring individuals in
+ * each dimension. The crowding distance is the sum of the side-lengths of the
+ * bounding box. If an individual does not have neighbors on all sides, the
+ * crowding distance is maximal. A normalization in each dimension is applied.
  * 
  * @author lukasiewycz
  * 
@@ -60,14 +68,9 @@ public class Crowding implements FrontDensityIndicator {
 
 		for (int i = 0; i < m; i++) {
 			final int dim = i;
-			Collections.sort(list, new Comparator<Individual>() {
-				@Override
-				public int compare(Individual o1, Individual o2) {
-					double i1 = o1.getObjectives().array()[dim];
-					double i2 = o2.getObjectives().array()[dim];
-					return (int) Math.signum(i1 - i2);
-				}
-			});
+			Comparator<Individual> foo = (Individual o1, Individual o2) -> (int) Math
+					.signum(o1.getObjectives().array()[dim] - o2.getObjectives().array()[dim]);
+			Collections.sort(list, foo);
 
 			Individual minIndividual = list.get(0);
 			Individual maxIndividual = list.get(list.size() - 1);
@@ -90,8 +93,9 @@ public class Crowding implements FrontDensityIndicator {
 	}
 
 	/**
-	 * Returns an ordered list of the {@link Individual}s corresponding to their crowding distance. {@link Individual}s
-	 * with a high crowding distance are sorted to the front.
+	 * Returns an ordered list of the {@link Individual}s corresponding to their
+	 * crowding distance. {@link Individual}s with a high crowding distance are
+	 * sorted to the front.
 	 * 
 	 * @param values
 	 *            the map of individuals to their crowding distance values
@@ -99,19 +103,18 @@ public class Crowding implements FrontDensityIndicator {
 	 */
 	public List<Individual> order(final Map<Individual, Double> values) {
 		List<Individual> list = new ArrayList<Individual>(values.keySet());
-		Collections.sort(list, new Comparator<Individual>() {
-			@Override
-			public int compare(Individual o1, Individual o2) {
-				return values.get(o2).compareTo(values.get(o1));
-			}
-		});
+		Comparator<Individual> valueCompare = (Individual o1, Individual o2) -> values.get(o2)
+				.compareTo(values.get(o1));
+		Collections.sort(list, valueCompare);
 		return list;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.optimizer.ea.FrontDensityIndicator#getDensityValues(java.util .Collection)
+	 * @see
+	 * org.opt4j.optimizer.ea.FrontDensityIndicator#getDensityValues(java.util
+	 * .Collection)
 	 */
 	@Override
 	public Map<Individual, Double> getDensityValues(Collection<Individual> individuals) {

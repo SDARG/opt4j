@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
@@ -34,7 +33,6 @@ import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceAdapter;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -258,7 +256,7 @@ public class DefaultModulesPanel extends ModulesPanel {
 	protected static class MyTree extends JTree implements DragGestureListener {
 
 		protected DragSource dragSource = null;
-		
+
 		protected DragSourceListener dragSourceListener = new DragSourceAdapter() {
 		};
 
@@ -562,20 +560,10 @@ public class DefaultModulesPanel extends ModulesPanel {
 				moduleMenu.removeAll();
 
 				JMenuItem add = new JMenuItem("Add Module", Icons.getIcon(Icons.ADD));
-				add.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						add(module);
-					}
-				});
+				add.addActionListener((ActionEvent event) -> add(module));
 
 				JMenuItem remove = new JMenuItem("Remove Module", Icons.getIcon(Icons.DELETE));
-				remove.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						remove(module);
-					}
-				});
+				remove.addActionListener((ActionEvent event) -> remove(module));
 
 				if (selectedModules.contains(module)) {
 					add.setEnabled(false);
@@ -586,7 +574,6 @@ public class DefaultModulesPanel extends ModulesPanel {
 				moduleMenu.add(add);
 				moduleMenu.add(remove);
 				moduleMenu.show(e.getComponent(), e.getX(), e.getY());
-
 			}
 
 		}
