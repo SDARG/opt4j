@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config;
 
@@ -45,11 +44,11 @@ public abstract class Task implements Callable<Void> {
 
 	protected Exception e = null;
 
-	protected final List<Module> modules = new ArrayList<Module>();
+	protected final List<Module> modules = new ArrayList<>();
 
 	protected boolean isInit = false;
 
-	protected final Set<TaskStateListener> listeners = new CopyOnWriteArraySet<TaskStateListener>();
+	protected final Set<TaskStateListener> listeners = new CopyOnWriteArraySet<>();
 
 	/**
 	 * The {@link State} of a task.
@@ -207,7 +206,7 @@ public abstract class Task implements Callable<Void> {
 	 * @return a set of modules
 	 */
 	public Collection<Module> getModules() {
-		List<Module> clones = new ArrayList<Module>();
+		List<Module> clones = new ArrayList<>();
 		for (Module module : modules) {
 			PropertyModule pModule;
 			if (module instanceof PropertyModule) {

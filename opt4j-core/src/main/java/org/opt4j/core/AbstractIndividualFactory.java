@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core;
 
@@ -48,7 +47,7 @@ public class AbstractIndividualFactory<I extends Individual> implements Individu
 	protected final Creator<Genotype> creator;
 	protected final Provider<I> individualProvider;
 
-	protected final Set<IndividualStateListener> individualStateListeners = new CopyOnWriteArraySet<IndividualStateListener>();
+	protected final Set<IndividualStateListener> individualStateListeners = new CopyOnWriteArraySet<>();
 
 	/**
 	 * Constructs an {@link AbstractIndividualFactory} with a {@link Provider}

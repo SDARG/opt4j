@@ -1,19 +1,10 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.opt4j.core.Individual;
-import org.opt4j.core.Objective;
-import org.opt4j.core.Objectives;
-import org.opt4j.core.Objective.Sign;
-import org.opt4j.operators.crossover.Pair;
-import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
-import org.opt4j.optimizers.ea.aeseh.EpsilonNeighborhoodCoupler;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDelta;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation;
-
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import org.junit.Test;
+import org.opt4j.core.Individual;
+import org.opt4j.core.Objective;
+import org.opt4j.core.Objective.Sign;
+import org.opt4j.core.Objectives;
+import org.opt4j.operators.crossover.Pair;
 
 public class EpsilonNeighborhoodCouplerTest {
 
@@ -37,7 +35,7 @@ public class EpsilonNeighborhoodCouplerTest {
 	protected static Individual fourth = mock(Individual.class);
 
 	protected static List<Individual> getSurvivors() {
-		List<Individual> survivors = new ArrayList<Individual>();
+		List<Individual> survivors = new ArrayList<>();
 		when(first.getObjectives()).thenReturn(getObj(5, 1));
 		survivors.add(first);
 		when(second.getObjectives()).thenReturn(getObj(3, 3));
@@ -50,7 +48,8 @@ public class EpsilonNeighborhoodCouplerTest {
 	}
 
 	protected static EpsilonNeighborhoodCoupler makeDefaultCoupler() {
-		return new EpsilonNeighborhoodCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 10, 0.0001, 0, 0, 0);
+		return new EpsilonNeighborhoodCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 10, 0.0001, 0,
+				0, 0);
 	}
 
 	protected static Objectives getObj(int firstValue, int secondValue) {
@@ -70,14 +69,15 @@ public class EpsilonNeighborhoodCouplerTest {
 	@Test
 	public void testCreateNeighborhoods() {
 		EpsilonNeighborhoodCoupler coupler = makeDefaultCoupler();
-		Map<Objective, Double> amplitudeMap = new HashMap<Objective, Double>();
+		Map<Objective, Double> amplitudeMap = new HashMap<>();
 		amplitudeMap.put(firstObj, 0.001);
 		amplitudeMap.put(secondObj, 0.001);
 		List<Individual> survivors = getSurvivors();
 		List<Set<Individual>> neighborhoods = coupler.createNeighborhoods(survivors);
 		assertEquals(3, neighborhoods.size());
 		verify(mockAdaption).adaptEpsilon(coupler.adaptiveEpsilonNeighborhood, true);
-		coupler = new EpsilonNeighborhoodCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 2, 0.0001, 0, 0, 0);
+		coupler = new EpsilonNeighborhoodCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 2, 0.0001, 0,
+				0, 0);
 		neighborhoods = coupler.createNeighborhoods(survivors);
 		verify(mockAdaption).adaptEpsilon(coupler.adaptiveEpsilonNeighborhood, false);
 	}
@@ -87,7 +87,7 @@ public class EpsilonNeighborhoodCouplerTest {
 		EpsilonNeighborhoodCoupler coupler = makeDefaultCoupler();
 		Individual first = mock(Individual.class);
 		Individual second = mock(Individual.class);
-		Set<Individual> indiSet = new HashSet<Individual>();
+		Set<Individual> indiSet = new HashSet<>();
 		indiSet.add(first);
 		indiSet.add(second);
 		Pair<Individual> couple = coupler.pickCouple(indiSet);

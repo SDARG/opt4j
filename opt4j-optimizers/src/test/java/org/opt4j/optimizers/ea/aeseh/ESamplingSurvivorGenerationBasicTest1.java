@@ -1,19 +1,10 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.opt4j.core.Individual;
-import org.opt4j.core.Objective;
-import org.opt4j.core.Objectives;
-import org.opt4j.core.Objective.Sign;
-import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDelta;
-import org.opt4j.optimizers.ea.NonDominatedFronts;
-import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGenerationBasic;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation;
-
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +12,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import org.junit.Test;
+import org.opt4j.core.Individual;
+import org.opt4j.core.Objective;
+import org.opt4j.core.Objective.Sign;
+import org.opt4j.core.Objectives;
+import org.opt4j.optimizers.ea.NonDominatedFronts;
 
 public class ESamplingSurvivorGenerationBasicTest1 {
 
@@ -34,10 +32,10 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 	protected static Individual third = mock(Individual.class);
 	protected static Individual fourth = mock(Individual.class);
 	protected static Individual fifth = mock(Individual.class);
-	
+
 	protected static final Objective firstObj = new Objective("first", Sign.MAX);
 	protected static final Objective secondObj = new Objective("second", Sign.MAX);
-	
+
 	protected static Objectives getObjectives(int f, int s) {
 		Objectives result = new Objectives();
 		result.add(firstObj, f);
@@ -46,7 +44,7 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 	}
 
 	public static List<Individual> getFirstFront() {
-		List<Individual> result = new ArrayList<Individual>();
+		List<Individual> result = new ArrayList<>();
 		result.add(extremeIndividual);
 
 		when(dominant.dominates(dominated)).thenReturn(true);
@@ -76,14 +74,14 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		Individual fifth = mock(Individual.class);
 		Individual sixth = mock(Individual.class);
 
-		List<List<Individual>> fronts = new ArrayList<List<Individual>>();
-		List<Individual> firstFront = new ArrayList<Individual>();
+		List<List<Individual>> fronts = new ArrayList<>();
+		List<Individual> firstFront = new ArrayList<>();
 		firstFront.add(first);
 		firstFront.add(second);
 		firstFront.add(third);
-		List<Individual> secondFront = new ArrayList<Individual>();
+		List<Individual> secondFront = new ArrayList<>();
 		secondFront.add(fourth);
-		List<Individual> thirdFront = new ArrayList<Individual>();
+		List<Individual> thirdFront = new ArrayList<>();
 		thirdFront.add(fifth);
 		thirdFront.add(sixth);
 		fronts.add(firstFront);
@@ -112,21 +110,21 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		verify(mockRandom).nextInt(2);
 
 	}
-	
+
 	@Test
-	public void testGetExtremeInividuals(){
-		Set<Individual> indis = new HashSet<Individual>();
+	public void testGetExtremeInividuals() {
+		Set<Individual> indis = new HashSet<>();
 
 		when(first.getObjectives()).thenReturn(getObjectives(5, 1));
 		when(second.getObjectives()).thenReturn(getObjectives(3, 3));
 		when(third.getObjectives()).thenReturn(getObjectives(1, 4));
 		when(fourth.getObjectives()).thenReturn(getObjectives(3, 2));
 		when(fifth.getObjectives()).thenReturn(getObjectives(1, 1));
-		
+
 		Objectives insfeasibleObjectives = new Objectives();
 		insfeasibleObjectives.add(firstObj, Objective.INFEASIBLE);
 		insfeasibleObjectives.add(secondObj, Objective.INFEASIBLE);
-		
+
 		when(first.toString()).thenReturn("first");
 		when(second.toString()).thenReturn("second");
 		when(third.toString()).thenReturn("third");
@@ -138,13 +136,13 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		indis.add(third);
 		indis.add(fourth);
 		indis.add(fifth);
-		
+
 		Random mockRandom = mock(Random.class);
 		when(mockRandom.nextInt(2)).thenReturn(0);
 		EpsilonAdaptation mockAdaption = mock(EpsilonAdaptationDelta.class);
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(mockRandom,
 				new EpsilonMappingAdditive(), mockAdaption, 0.0, .0, .0, .0);
-		
+
 		Collection<Individual> extremes = survivorGeneration.getExtremeIndividuals(indis);
 		assertEquals(2, extremes.size());
 		assertTrue(extremes.contains(first));

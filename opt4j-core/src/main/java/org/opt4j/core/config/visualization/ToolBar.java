@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,12 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.HashSet;
@@ -101,13 +99,10 @@ public class ToolBar extends JToolBar implements FileOperationsListener, Startup
 			{
 				setFocusable(false);
 				setMnemonic(KeyEvent.VK_R);
-				addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						Set<Module> modules = new HashSet<Module>();
-						modules.addAll(selectedModules);
-						executionEnvironment.execute(modules);
-					}
+				addActionListener((ActionEvent e) -> {
+					Set<Module> modules = new HashSet<>();
+					modules.addAll(selectedModules);
+					executionEnvironment.execute(modules);
 				});
 			}
 		};
@@ -116,12 +111,7 @@ public class ToolBar extends JToolBar implements FileOperationsListener, Startup
 			{
 				setFocusable(false);
 				setMnemonic(KeyEvent.VK_L);
-				addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						fileOperations.load();
-					}
-				});
+				addActionListener((ActionEvent e) -> fileOperations.load());
 			}
 		};
 		save = new JButton("Save ", Icons.getIcon(Icons.DISK)) {
@@ -129,24 +119,14 @@ public class ToolBar extends JToolBar implements FileOperationsListener, Startup
 				setFocusable(false);
 				setMnemonic(KeyEvent.VK_S);
 				setEnabled(false);
-				addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						fileOperations.save();
-					}
-				});
+				addActionListener((ActionEvent e) -> fileOperations.save());
 			}
 		};
 		saveAs = new JButton("Save As ... ", Icons.getIcon(Icons.DISK)) {
 			{
 				setFocusable(false);
 				setMnemonic(KeyEvent.VK_A);
-				addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						fileOperations.saveAs();
-					}
-				});
+				addActionListener((ActionEvent e) -> fileOperations.saveAs());
 			}
 		};
 
@@ -154,14 +134,11 @@ public class ToolBar extends JToolBar implements FileOperationsListener, Startup
 			{
 				setFocusable(false);
 				setMnemonic(KeyEvent.VK_X);
-				addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						ModuleSaver saver = new ModuleSaver();
-						ClipboardFrame clipboardFrame = new ClipboardFrame(saver.toXMLString(selectedModules));
-						clipboardFrame.pack();
-						clipboardFrame.setVisible(true);
-					}
+				addActionListener((ActionEvent e) -> {
+					ModuleSaver saver = new ModuleSaver();
+					ClipboardFrame clipboardFrame = new ClipboardFrame(saver.toXMLString(selectedModules));
+					clipboardFrame.pack();
+					clipboardFrame.setVisible(true);
 				});
 			}
 		};

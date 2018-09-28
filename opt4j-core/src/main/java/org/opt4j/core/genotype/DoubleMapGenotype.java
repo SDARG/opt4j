@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -63,7 +63,7 @@ import org.opt4j.core.Genotype;
 public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<K, Double> {
 
 	protected final List<K> keys;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -76,7 +76,7 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 	 */
 	public DoubleMapGenotype(List<K> keys, Bounds<Double> bounds) {
 		super(bounds);
-		Set<K> uniqueKeys = new HashSet<K>(keys);
+		Set<K> uniqueKeys = new HashSet<>(keys);
 		if (uniqueKeys.size() < keys.size()) {
 			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
 		}
@@ -137,8 +137,9 @@ public class DoubleMapGenotype<K> extends DoubleGenotype implements MapGenotype<
 			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_INVALID_KEY);
 		}
 		int i = keys.indexOf(key);
-		if (value < bounds.getLowerBound(i) || value > bounds.getUpperBound(i))
+		if (value < bounds.getLowerBound(i) || value > bounds.getUpperBound(i)) {
 			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_OUT_OF_BOUNDS);
+		}
 		while (size() <= i) {
 			add(bounds.getLowerBound(i));
 		}

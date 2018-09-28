@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.benchmarks.wfg;
 
@@ -48,7 +47,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 	protected final int M;
 	protected final int k;
 
-	protected final List<Objective> keys = new ArrayList<Objective>();
+	protected final List<Objective> keys = new ArrayList<>();
 
 	/**
 	 * Constructs a {@link WFGEvaluator}.
@@ -91,7 +90,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 	protected static List<Boolean> createA(final int M, final boolean degenerate) {
 		assert (M >= 2);
 
-		List<Boolean> A = new ArrayList<Boolean>();
+		List<Boolean> A = new ArrayList<>();
 		for (int i = 0; i < M - 1; i++) {
 			A.add(!degenerate || i == 0);
 		}
@@ -104,7 +103,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 
 		final int M = h.size();
 
-		List<Double> S = new ArrayList<Double>();
+		List<Double> S = new ArrayList<>();
 		for (int m = 1; m <= M; m++) {
 			S.add(m * 2.0);
 		}
@@ -113,7 +112,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 	}
 
 	protected static List<Double> normalizeZ(final List<Double> z, final List<Double> z_max) {
-		final List<Double> result = new ArrayList<Double>();
+		final List<Double> result = new ArrayList<>();
 
 		for (int i = 0; i < z.size(); i++) {
 			assert (z.get(i) >= 0.0);
@@ -132,7 +131,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 		assert (size != 0);
 		assert (A.size() == t_p.size() - 1);
 
-		final List<Double> result = new ArrayList<Double>();
+		final List<Double> result = new ArrayList<>();
 
 		for (int i = 0; i < t_p.size() - 1; i++) {
 			int A_i = A.get(i) ? 1 : 0;
@@ -150,7 +149,7 @@ public abstract class WFGEvaluator implements Evaluator<DoubleString> {
 		assert (x.size() == h.size());
 		assert (h.size() == S.size());
 
-		final List<Double> result = new ArrayList<Double>();
+		final List<Double> result = new ArrayList<>();
 
 		for (int i = 0; i < h.size(); i++) {
 			assert (S.get(i) > 0.0);

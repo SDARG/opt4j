@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -29,10 +29,10 @@ import org.opt4j.core.Genotype;
 import org.opt4j.core.common.random.Rand;
 import org.opt4j.satdecoding.AbstractSATDecoder;
 import org.opt4j.satdecoding.Constraint;
+import org.opt4j.satdecoding.Constraint.Operator;
 import org.opt4j.satdecoding.Literal;
 import org.opt4j.satdecoding.Model;
 import org.opt4j.satdecoding.SATManager;
-import org.opt4j.satdecoding.Constraint.Operator;
 
 import com.google.inject.Inject;
 
@@ -64,7 +64,7 @@ public class KnapsackSATCreatorDecoder extends AbstractSATDecoder<Genotype, Item
 
 	@Override
 	public Set<Constraint> createConstraints() {
-		Set<Constraint> constraints = new HashSet<Constraint>();
+		Set<Constraint> constraints = new HashSet<>();
 
 		for (Knapsack knapsack : problem.getKnapsacks()) {
 			Constraint constraint = new Constraint(Operator.LE, (int) Math.floor(knapsack.getCapacity()));

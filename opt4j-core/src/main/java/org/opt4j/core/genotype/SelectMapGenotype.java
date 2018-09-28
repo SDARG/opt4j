@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -67,7 +67,7 @@ import org.opt4j.core.Genotype;
 public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenotype<K, V> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected final List<K> keys;
 	protected final Map<K, List<V>> values;
 
@@ -105,11 +105,11 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	 *            the values
 	 */
 	public SelectMapGenotype(List<K> keys, Map<K, List<V>> values) {
-		super(new SelectBounds<K, V>(keys, values));
+		super(new SelectBounds<>(keys, values));
 		if (!keys.containsAll(values.keySet()) || !values.keySet().containsAll(keys)) {
 			throw new IllegalArgumentException("The provided list does not match the provided map");
 		}
-		if (new HashSet<K>(keys).size() < keys.size()) {
+		if (new HashSet<>(keys).size() < keys.size()) {
 			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
 		}
 		this.keys = keys;
@@ -117,10 +117,10 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	}
 
 	private static <K, V> Map<K, List<V>> toMap(List<K> keys, List<V> values) {
-		if (new HashSet<K>(keys).size() < keys.size()) {
+		if (new HashSet<>(keys).size() < keys.size()) {
 			throw new IllegalArgumentException(MapGenotype.ERROR_MESSAGE_NON_UNIQUE_KEYS);
 		}
-		Map<K, List<V>> map = new HashMap<K, List<V>>();
+		Map<K, List<V>> map = new HashMap<>();
 		for (K key : keys) {
 			map.put(key, values);
 		}
@@ -137,7 +137,7 @@ public class SelectMapGenotype<K, V> extends IntegerGenotype implements MapGenot
 	 *            the values
 	 */
 	public SelectMapGenotype(List<K> keys, List<V> values) {
-		super(new SelectBounds<K, V>(keys, toMap(keys, values)));
+		super(new SelectBounds<>(keys, toMap(keys, values)));
 		this.keys = keys;
 		this.values = toMap(keys, values);
 	}

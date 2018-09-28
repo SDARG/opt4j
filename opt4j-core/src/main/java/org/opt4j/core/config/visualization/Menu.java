@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,12 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config.visualization;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -97,38 +95,20 @@ public class Menu extends JMenuBar implements FileOperationsListener, Startupabl
 		add(etc);
 
 		load.setMnemonic(KeyEvent.VK_L);
-		load.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fileOperations.load();
-			}
-		});
+		load.addActionListener((ActionEvent e) -> fileOperations.load());
 
 		save.setMnemonic(KeyEvent.VK_S);
-		save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fileOperations.save();
-			}
-		});
+		save.addActionListener((ActionEvent e) -> fileOperations.save());
 		save.setEnabled(false);
 
 		saveAs.setMnemonic(KeyEvent.VK_A);
-		saveAs.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fileOperations.saveAs();
-			}
-		});
+		saveAs.addActionListener((ActionEvent e) -> fileOperations.saveAs());
 
 		about.setMnemonic(KeyEvent.VK_A);
-		about.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JDialog dialog = aboutInfo.getDialog(frame.get());
-				dialog.pack();
-				dialog.setVisible(true);
-			}
+		about.addActionListener((ActionEvent e) -> {
+			JDialog dialog = aboutInfo.getDialog(frame.get());
+			dialog.pack();
+			dialog.setVisible(true);
 		});
 
 		file.add(load);

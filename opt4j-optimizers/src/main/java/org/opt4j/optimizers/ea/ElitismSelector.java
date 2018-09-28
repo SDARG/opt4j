@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.ea;
 
@@ -49,7 +48,7 @@ public class ElitismSelector implements Selector {
 
 	protected final Random random;
 
-	protected final Map<Individual, Double> fitness = new HashMap<Individual, Double>();
+	protected final Map<Individual, Double> fitness = new HashMap<>();
 
 	/**
 	 * Comparator that sorts the {@link Individual}s based on their fitness
@@ -91,12 +90,12 @@ public class ElitismSelector implements Selector {
 	 */
 	@Override
 	public Collection<Individual> getLames(int lambda, Collection<Individual> population) {
-		List<Individual> list = new ArrayList<Individual>(population);
+		List<Individual> list = new ArrayList<>(population);
 		calculateFitness(list);
 		Collections.sort(list, new FitnessComparator());
 		Collections.reverse(list);
 
-		List<Individual> lames = new ArrayList<Individual>();
+		List<Individual> lames = new ArrayList<>();
 		for (int i = 0; i < lambda; i++) {
 			lames.add(list.get(i));
 		}
@@ -111,8 +110,8 @@ public class ElitismSelector implements Selector {
 	 */
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
-		List<Individual> parents = new ArrayList<Individual>();
-		List<Individual> individuals = new ArrayList<Individual>(population);
+		List<Individual> parents = new ArrayList<>();
+		List<Individual> individuals = new ArrayList<>(population);
 
 		for (int i = 0; i < mu; i++) {
 			int r = random.nextInt(individuals.size());

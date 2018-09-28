@@ -1,25 +1,25 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.opt4j.core.Individual;
-import org.opt4j.core.Objective;
-import org.opt4j.core.Objective.Sign;
-import org.opt4j.optimizers.ea.aeseh.EpsilonMappingAdditive;
-import org.opt4j.optimizers.ea.aeseh.ESamplingSurvivorGenerationBasic;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptation;
-import org.opt4j.optimizers.ea.aeseh.EpsilonMapping;
-import org.opt4j.core.Objectives;
-
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.opt4j.core.Individual;
+import org.opt4j.core.Objective;
+import org.opt4j.core.Objective.Sign;
+import org.opt4j.core.Objectives;
 
 public class ESamplingSurvivorGenerationBasicTest2 {
 
@@ -50,7 +50,7 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 
 	@Before
 	public void init() {
-		nonDominated = new ArrayList<Individual>();
+		nonDominated = new ArrayList<>();
 		firstIndi = getIndividual(1.0, 5.0);
 		secondIndi = getIndividual(1.1, 3.0);
 		thirdIndi = getIndividual(3.0, 1.1);
@@ -69,13 +69,13 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 
 	@Test
 	public void testGetSurvivors() {
-		Set<Individual> extremes = new HashSet<Individual>();
+		Set<Individual> extremes = new HashSet<>();
 		Individual firstExtreme = getIndividual(0.0, 6.0);
 		Individual secondExtreme = getIndividual(6.0, 0.0);
 		Individual dominated = getIndividual(1.0, 1.0);
 		extremes.add(firstExtreme);
 		extremes.add(secondExtreme);
-		Set<Individual> population = new HashSet<Individual>(nonDominated);
+		Set<Individual> population = new HashSet<>(nonDominated);
 		population.addAll(extremes);
 		population.add(dominated);
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
@@ -95,14 +95,14 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 
 	@Test
 	public void addNonDominatedSurvivorsTestTooFewSurvivors() {
-		Set<Individual> extremes = new HashSet<Individual>();
+		Set<Individual> extremes = new HashSet<>();
 		Individual firstExtreme = getIndividual(0.0, 6.0);
 		Individual secondExtreme = getIndividual(6.0, 0.0);
 		// make sure we always have epsilon-dominance
 		Individual addition = getIndividual(1.2, 2.9);
 		extremes.add(firstExtreme);
 		extremes.add(secondExtreme);
-		Set<Individual> firstFront = new HashSet<Individual>(nonDominated);
+		Set<Individual> firstFront = new HashSet<>(nonDominated);
 		firstFront.addAll(extremes);
 		firstFront.add(addition);
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
@@ -116,12 +116,12 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 
 	@Test
 	public void addNonDominatedSurvivorsTestTooManySurvivors() {
-		Set<Individual> extremes = new HashSet<Individual>();
+		Set<Individual> extremes = new HashSet<>();
 		Individual firstExtreme = getIndividual(0.0, 6.0);
 		Individual secondExtreme = getIndividual(6.0, 0.0);
 		extremes.add(firstExtreme);
 		extremes.add(secondExtreme);
-		Set<Individual> firstFront = new HashSet<Individual>(nonDominated);
+		Set<Individual> firstFront = new HashSet<>(nonDominated);
 		firstFront.addAll(extremes);
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
 				adaptation, .2, .0, .0, .0);
@@ -136,8 +136,8 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 	public void testApplyEpsilonSampling() {
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
 				adaptation, .2, .0, .0, .0);
-		Set<Individual> dominant = new HashSet<Individual>();
-		Set<Individual> dominated = new HashSet<Individual>();
+		Set<Individual> dominant = new HashSet<>();
+		Set<Individual> dominated = new HashSet<>();
 		survivorGeneration.applyEpsilonSampling(nonDominated, dominant, dominated, 0.05);
 		assertEquals(2, dominant.size());
 		assertEquals(2, dominated.size());

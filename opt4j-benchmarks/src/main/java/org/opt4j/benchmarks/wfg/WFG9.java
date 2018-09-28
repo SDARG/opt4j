@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.benchmarks.wfg;
 
@@ -55,12 +54,12 @@ public class WFG9 extends WFGEvaluator {
 	protected static List<Double> t1(final List<Double> y) {
 		final int n = y.size();
 
-		List<Double> w = new ArrayList<Double>();
+		List<Double> w = new ArrayList<>();
 		for (int i = 0; i < n; i++) {
 			w.add(1.0);
 		}
 
-		List<Double> t = new ArrayList<Double>();
+		List<Double> t = new ArrayList<>();
 
 		for (int i = 0; i < n - 1; i++) {
 			final List<Double> y_sub = y.subList(i + 1, n);
@@ -82,7 +81,7 @@ public class WFG9 extends WFGEvaluator {
 		assert (k >= 1);
 		assert (k < n);
 
-		List<Double> t = new ArrayList<Double>();
+		List<Double> t = new ArrayList<>();
 
 		for (int i = 0; i < k; i++) {
 			t.add(WFGTransFunctions.sDecept(y.get(i), 0.35, 0.001, 0.05));

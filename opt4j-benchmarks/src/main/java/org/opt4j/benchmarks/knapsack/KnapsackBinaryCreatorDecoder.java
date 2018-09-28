@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -41,9 +41,9 @@ import com.google.inject.Inject;
  * @author reimann
  * 
  */
-public class KnapsackBinaryCreatorDecoder implements Creator<BooleanMapGenotype<Item>>,
-		Decoder<BooleanMapGenotype<Item>, ItemSelection> {
-	private final List<Item> itemList = new ArrayList<Item>();
+public class KnapsackBinaryCreatorDecoder
+		implements Creator<BooleanMapGenotype<Item>>, Decoder<BooleanMapGenotype<Item>, ItemSelection> {
+	private final List<Item> itemList = new ArrayList<>();
 	private final Rand random;
 
 	/**
@@ -81,7 +81,7 @@ public class KnapsackBinaryCreatorDecoder implements Creator<BooleanMapGenotype<
 	 */
 	@Override
 	public BooleanMapGenotype<Item> create() {
-		BooleanMapGenotype<Item> b = new BooleanMapGenotype<Item>(itemList);
+		BooleanMapGenotype<Item> b = new BooleanMapGenotype<>(itemList);
 		b.init(random);
 		return b;
 	}

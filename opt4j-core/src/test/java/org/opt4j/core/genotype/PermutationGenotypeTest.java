@@ -1,6 +1,8 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -13,7 +15,7 @@ public class PermutationGenotypeTest {
 	@Test
 	public void testEmptyConstructor() {
 		Random rand = new Random();
-		PermutationGenotype<Integer> permutationGenotype = new PermutationGenotype<Integer>();
+		PermutationGenotype<Integer> permutationGenotype = new PermutationGenotype<>();
 		permutationGenotype.add(1);
 		permutationGenotype.add(2);
 		permutationGenotype.add(3);
@@ -33,11 +35,11 @@ public class PermutationGenotypeTest {
 	@Test
 	public void testCollectionConstructor() {
 		Random rand = new Random();
-		Set<Integer> inputCollection = new HashSet<Integer>();
+		Set<Integer> inputCollection = new HashSet<>();
 		inputCollection.add(1);
 		inputCollection.add(2);
 		inputCollection.add(3);
-		PermutationGenotype<Integer> permutationGenotype = new PermutationGenotype<Integer>(inputCollection);
+		PermutationGenotype<Integer> permutationGenotype = new PermutationGenotype<>(inputCollection);
 
 		assertEquals(3, permutationGenotype.size());
 		permutationGenotype.init(rand);

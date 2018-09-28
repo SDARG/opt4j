@@ -9,11 +9,11 @@ import org.junit.Test;
 import org.opt4j.core.Individual;
 
 public class AbstractOptimizerTest {
-	
+
 	protected boolean started = false;
 	protected boolean archiveHasRun = false;
 	protected boolean completerHasRun = false;
-	
+
 	class MockOptimizer extends AbstractOptimizer {
 		protected TestMethod t;
 
@@ -185,13 +185,10 @@ public class AbstractOptimizerTest {
 		final MockOptimizer optimizer = new MockOptimizer(p, a, completer, c, new Iteration(10));
 
 		started = false;
-		OptimizerIterationListener l1 = new OptimizerIterationListener() {
-			@Override
-			public void iterationComplete(int iteration) {
-				Assert.assertFalse(started);
-				Assert.assertEquals(1, iteration);
-				started = true;
-			}
+		OptimizerIterationListener l1 = (int iteration) -> {
+			Assert.assertFalse(started);
+			Assert.assertEquals(1, iteration);
+			started = true;
 		};
 		optimizer.addOptimizerIterationListener(l1);
 
@@ -244,11 +241,8 @@ public class AbstractOptimizerTest {
 	@Test
 	public void addOptimizerIterationListener() {
 		final MockOptimizer optimizer = new MockOptimizer(null, null, null, null, null);
-		OptimizerIterationListener l = new OptimizerIterationListener() {
-			@Override
-			public void iterationComplete(int iteration) {
-				// nothing to be done
-			}
+		OptimizerIterationListener l = (int iteration) -> {
+			// nothing to be done
 		};
 		optimizer.addOptimizerIterationListener(l);
 
@@ -280,11 +274,8 @@ public class AbstractOptimizerTest {
 	@Test
 	public void removeOptimizerIterationListener() {
 		final MockOptimizer optimizer = new MockOptimizer(null, null, null, null, null);
-		OptimizerIterationListener l = new OptimizerIterationListener() {
-			@Override
-			public void iterationComplete(int iteration) {
-				// nothing to be done
-			}
+		OptimizerIterationListener l = (int iteration) -> {
+			// nothing to be done
 		};
 		optimizer.addOptimizerIterationListener(l);
 		optimizer.removeOptimizerIterationListener(l);
@@ -315,11 +306,8 @@ public class AbstractOptimizerTest {
 	@Test
 	public void injectListeners() {
 		final MockOptimizer optimizer = new MockOptimizer(null, null, null, null, null);
-		OptimizerIterationListener l1 = new OptimizerIterationListener() {
-			@Override
-			public void iterationComplete(int iteration) {
-				// nothing to be done
-			}
+		OptimizerIterationListener l1 = (int iteration) -> {
+			// nothing to be done
 		};
 		OptimizerStateListener l2 = new OptimizerStateListener() {
 			@Override

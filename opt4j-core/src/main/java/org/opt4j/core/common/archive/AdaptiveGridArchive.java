@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.core.common.archive;
@@ -33,9 +38,10 @@ import org.opt4j.core.start.Constant;
 import com.google.inject.Inject;
 
 /**
- * The {@link AdaptiveGridArchive} uses an adaptive grid in order to bound the size of the {@link Archive}, see
- * "Properties of an Adaptive Archiving Algorithm for Storing Nondominated Vectors, J. Knowles, D. Corne, Transactions
- * of Evolutionary Computation, Vol. 7, No. 2, April 2003".
+ * The {@link AdaptiveGridArchive} uses an adaptive grid in order to bound the
+ * size of the {@link Archive}, see "Properties of an Adaptive Archiving
+ * Algorithm for Storing Nondominated Vectors, J. Knowles, D. Corne,
+ * Transactions of Evolutionary Computation, Vol. 7, No. 2, April 2003".
  * 
  * @author lukasiewycz, helwig
  * 
@@ -48,9 +54,9 @@ public class AdaptiveGridArchive extends BoundedArchive {
 
 	protected final Rand random;
 
-	protected final Map<Long, Cell> cells = new LinkedHashMap<Long, Cell>();
+	protected final Map<Long, Cell> cells = new LinkedHashMap<>();
 
-	protected final List<Individual> extrema = new ArrayList<Individual>();
+	protected final List<Individual> extrema = new ArrayList<>();
 
 	protected double[] lb;
 
@@ -113,7 +119,9 @@ public class AdaptiveGridArchive extends BoundedArchive {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.opt4j.common.archive.AbstractArchive#updateWithNondominated(java. util.Collection)
+	 * @see
+	 * org.opt4j.common.archive.AbstractArchive#updateWithNondominated(java.
+	 * util.Collection)
 	 */
 	@Override
 	protected boolean updateWithNondominated(Collection<Individual> candidates) {
@@ -137,7 +145,7 @@ public class AdaptiveGridArchive extends BoundedArchive {
 			while (candidates.size() > capacity) {
 				Cell cell = getMostCrowdedCell();
 
-				List<Individual> list = new ArrayList<Individual>(cell);
+				List<Individual> list = new ArrayList<>(cell);
 				list.removeAll(extrema);
 
 				Individual individual = list.get(random.nextInt(list.size()));
@@ -221,7 +229,7 @@ public class AdaptiveGridArchive extends BoundedArchive {
 		Cell mc = null;
 		int size = 0;
 
-		Set<Individual> extrema = new LinkedHashSet<Individual>(this.extrema);
+		Set<Individual> extrema = new LinkedHashSet<>(this.extrema);
 
 		for (Cell cell : cells.values()) {
 			int s = 0;
@@ -269,7 +277,8 @@ public class AdaptiveGridArchive extends BoundedArchive {
 	}
 
 	/**
-	 * Adds all {@link Individual}s to theirs {@link Cell}s and the {@link Cell} s to the {@link Archive}.
+	 * Adds all {@link Individual}s to theirs {@link Cell}s and the {@link Cell}
+	 * s to the {@link Archive}.
 	 * 
 	 * @param individuals
 	 *            the individuals to be added
@@ -283,8 +292,9 @@ public class AdaptiveGridArchive extends BoundedArchive {
 	}
 
 	/**
-	 * Removes this {@link Individual} from its {@link Cell} and removes the {@link Cell} from the
-	 * {@link org.opt4j.core.optimizer.Archive} if it is empty.
+	 * Removes this {@link Individual} from its {@link Cell} and removes the
+	 * {@link Cell} from the {@link org.opt4j.core.optimizer.Archive} if it is
+	 * empty.
 	 * 
 	 * @param individual
 	 *            the individual to be removed
@@ -298,7 +308,8 @@ public class AdaptiveGridArchive extends BoundedArchive {
 	}
 
 	/**
-	 * Determines the new bounds for the individuals and returns {@code true} if the bounds have changed.
+	 * Determines the new bounds for the individuals and returns {@code true} if
+	 * the bounds have changed.
 	 * 
 	 * @param individuals
 	 *            the individuals

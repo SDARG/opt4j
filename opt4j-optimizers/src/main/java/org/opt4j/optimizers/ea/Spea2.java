@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -65,10 +65,10 @@ public class Spea2 implements Selector {
 	protected final Rand random;
 	protected final int tournament;
 
-	protected final Map<Individual, Spea2IndividualSet> map = new LinkedHashMap<Individual, Spea2IndividualSet>();
-	protected final Set<Spea2IndividualSet> individualSets = new LinkedHashSet<Spea2IndividualSet>();
+	protected final Map<Individual, Spea2IndividualSet> map = new LinkedHashMap<>();
+	protected final Set<Spea2IndividualSet> individualSets = new LinkedHashSet<>();
 
-	protected final LinkedList<Integer> freeIDs = new LinkedList<Integer>();
+	protected final LinkedList<Integer> freeIDs = new LinkedList<>();
 	protected double[][] distance;
 	protected boolean fitnessDirty = true;
 
@@ -194,9 +194,9 @@ public class Spea2 implements Selector {
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
 		update(population);
 
-		List<Individual> parents = new ArrayList<Individual>();
+		List<Individual> parents = new ArrayList<>();
 
-		List<Individual> candidates = new ArrayList<Individual>(population);
+		List<Individual> candidates = new ArrayList<>(population);
 		int size = candidates.size();
 
 		for (int i = 0; i < mu; i++) {
@@ -242,7 +242,7 @@ public class Spea2 implements Selector {
 
 		assert (lambda <= population.size());
 
-		Set<Individual> lames = new LinkedHashSet<Individual>();
+		Set<Individual> lames = new LinkedHashSet<>();
 
 		if (lambda > 0) {
 			List<Spea2IndividualSet> dominated = getDominated();
@@ -250,7 +250,7 @@ public class Spea2 implements Selector {
 			if (countIndividuals(dominated) >= lambda) {
 
 				Collections.sort(dominated);
-				List<Individual> lameCandidates = new ArrayList<Individual>();
+				List<Individual> lameCandidates = new ArrayList<>();
 
 				int i = 0;
 				while (lameCandidates.size() < lambda) {
@@ -286,12 +286,12 @@ public class Spea2 implements Selector {
 	 * @return a collection of the lame individuals
 	 */
 	public Collection<Individual> getLamesFromNonDominated(int count) {
-		Set<Individual> set = new LinkedHashSet<Individual>();
+		Set<Individual> set = new LinkedHashSet<>();
 
 		while (set.size() < count) {
 			int maxsize = 0;
 
-			List<Spea2IndividualSet> candidates = new ArrayList<Spea2IndividualSet>();
+			List<Spea2IndividualSet> candidates = new ArrayList<>();
 			for (Spea2IndividualSet individualSet : getNonDominated()) {
 				if (individualSet.size() > maxsize) {
 					maxsize = individualSet.size();
@@ -337,12 +337,12 @@ public class Spea2 implements Selector {
 
 		assert (candidates.size() > n);
 
-		List<Spea2IndividualSet> lames = new ArrayList<Spea2IndividualSet>();
+		List<Spea2IndividualSet> lames = new ArrayList<>();
 
 		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = getNearestPreOrder(candidates);
 
 		while (lames.size() < n) {
-			List<Spea2IndividualSet> lcandidates = new ArrayList<Spea2IndividualSet>(orderedLists.keySet());
+			List<Spea2IndividualSet> lcandidates = new ArrayList<>(orderedLists.keySet());
 
 			int size = lcandidates.size();
 
@@ -391,10 +391,10 @@ public class Spea2 implements Selector {
 	 */
 	protected Map<Spea2IndividualSet, List<Spea2IndividualSet>> getNearestPreOrder(
 			Collection<Spea2IndividualSet> candidates) {
-		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = new LinkedHashMap<Spea2IndividualSet, List<Spea2IndividualSet>>();
+		Map<Spea2IndividualSet, List<Spea2IndividualSet>> orderedLists = new LinkedHashMap<>();
 
 		for (Spea2IndividualSet w0 : candidates) {
-			List<Spea2IndividualSet> list = new ArrayList<Spea2IndividualSet>();
+			List<Spea2IndividualSet> list = new ArrayList<>();
 			for (Spea2IndividualSet w1 : candidates) {
 				if (w0 != w1) {
 					w1.setNextDistance(distance(w0, w1));
@@ -437,14 +437,14 @@ public class Spea2 implements Selector {
 	 *            the current population
 	 */
 	protected void update(Collection<Individual> population) {
-		Set<Individual> popSet = new LinkedHashSet<Individual>(population);
+		Set<Individual> popSet = new LinkedHashSet<>(population);
 
 		if (!popSet.equals(map.keySet())) {
 
-			Set<Individual> adds = new LinkedHashSet<Individual>(popSet);
+			Set<Individual> adds = new LinkedHashSet<>(popSet);
 			adds.removeAll(map.keySet());
 
-			Set<Individual> removes = new LinkedHashSet<Individual>(map.keySet());
+			Set<Individual> removes = new LinkedHashSet<>(map.keySet());
 			removes.removeAll(popSet);
 
 			for (Individual individual : removes) {
@@ -576,7 +576,7 @@ public class Spea2 implements Selector {
 	 * @return all dominated IndividualSets
 	 */
 	protected List<Spea2IndividualSet> getDominated() {
-		List<Spea2IndividualSet> dominated = new ArrayList<Spea2IndividualSet>();
+		List<Spea2IndividualSet> dominated = new ArrayList<>();
 
 		for (Spea2IndividualSet w0 : individualSets) {
 			if (w0.getFitness() > 0.0) {
@@ -593,7 +593,7 @@ public class Spea2 implements Selector {
 	 * @return all non-dominated individualSets
 	 */
 	protected List<Spea2IndividualSet> getNonDominated() {
-		List<Spea2IndividualSet> dominated = new ArrayList<Spea2IndividualSet>();
+		List<Spea2IndividualSet> dominated = new ArrayList<>();
 
 		for (Spea2IndividualSet w0 : individualSets) {
 			if (w0.getFitness() == 0.0) {
