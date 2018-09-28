@@ -1,4 +1,22 @@
+ext.moduleName = 'org.opt4j.benchmarks' 
+
 dependencies {
 	compile project(':opt4j-core')
 	compile project(':opt4j-satdecoding')
 }
+
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+	options.compilerArgs = [
+	    '--module-path', classpath.asPath,
+	]
+	classpath = files()  
+    }
+}
+
+javadoc {
+	options.addStringOption('-module-path', classpath.asPath)
+	options.addStringOption('-html5')
+}
+

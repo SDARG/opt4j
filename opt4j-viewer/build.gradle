@@ -1,3 +1,5 @@
+ext.moduleName = 'org.opt4j.viewer' 
+
 dependencies {
 	compile project(':opt4j-core')
 }
@@ -5,3 +7,19 @@ dependencies {
 javadoc {
    exclude 'ptolemy/**'
 }
+
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+	options.compilerArgs = [
+	    '--module-path', classpath.asPath,
+	]
+	classpath = files()  
+    }
+}
+
+javadoc {
+	options.addStringOption('-module-path', classpath.asPath)
+	options.addStringOption('-html5')
+}
+

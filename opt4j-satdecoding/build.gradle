@@ -1,3 +1,5 @@
+ext.moduleName = 'org.opt4j.satdecoding' 
+
 dependencies {
 	compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: '2.3.5'
 	compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: '2.3.5'
@@ -6,3 +8,19 @@ dependencies {
 	
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+	options.compilerArgs = [
+	    '--module-path', classpath.asPath,
+	]
+	classpath = files()  
+    }
+}
+
+javadoc {
+	options.addStringOption('-module-path', classpath.asPath)
+	options.addStringOption('-html5')
+}
+

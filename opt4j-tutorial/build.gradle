@@ -1,12 +1,29 @@
 import org.apache.tools.ant.filters.*
 import java.util.regex.*
 
+ext.moduleName = 'org.opt4j.tutorial' 
+
 dependencies {
 	compile project(':opt4j-core')
 	compile project(':opt4j-satdecoding')
 	compile project(':opt4j-optimizers')
 	compile project(':opt4j-operators')
 	compile project(':opt4j-viewer')
+}
+
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+	options.compilerArgs = [
+	    '--module-path', classpath.asPath,
+	]
+	classpath = files()  
+    }
+}
+
+javadoc {
+	options.addStringOption('-module-path', classpath.asPath)
+	options.addStringOption('-html5')
 }
 
 task filterSources(type: Copy) {

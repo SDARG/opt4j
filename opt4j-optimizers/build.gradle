@@ -1,3 +1,5 @@
+ext.moduleName = 'org.opt4j.optimizers' 
+
 dependencies {
 	compile project(':opt4j-core')
 	compile project(':opt4j-operators')
@@ -5,3 +7,19 @@ dependencies {
 	testCompile	group: 'junit',	name: 'junit', version: '4.12'
 	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
 }
+
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+	options.compilerArgs = [
+	    '--module-path', classpath.asPath,
+	]
+	classpath = files()  
+    }
+}
+
+javadoc {
+	options.addStringOption('-module-path', classpath.asPath)
+	options.addStringOption('-html5')
+}
+

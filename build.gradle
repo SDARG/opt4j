@@ -59,16 +59,16 @@ def descriptions = [
 ]
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-    apply plugin: 'signing'
-    apply plugin: 'eclipse'
-    apply plugin: 'jacoco'
+	apply plugin: 'java'
+	apply plugin: 'maven'
+	apply plugin: 'signing'
+	apply plugin: 'eclipse'
+	apply plugin: 'jacoco'
 
-    sourceCompatibility = 10
-    targetCompatibility = 10
+	sourceCompatibility = 10
+	targetCompatibility = 10
 
-    version = parent.version
+	version = parent.version
 
 	sourceSets {
 		integrationTest {
