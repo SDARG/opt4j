@@ -1,18 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2014 Opt4J
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  *******************************************************************************/
 
 package org.opt4j.benchmarks.knapsack;
@@ -33,8 +38,8 @@ import com.google.inject.Inject;
 
 /**
  * 
- * The {@link KnapsackProblemFile} is a {@link KnapsackProblem} that is initialized by a file. The format can be found
- * on the referenced website.
+ * The {@link KnapsackProblemFile} is a {@link KnapsackProblem} that is
+ * initialized by a file. The format can be found on the referenced website.
  * 
  * @see <a href=
  *      "http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/">http://www.tik.ee.ethz.ch/sop/download/supplementary/testProblemSuite/</a>
@@ -50,8 +55,8 @@ public class KnapsackProblemFile implements KnapsackProblem {
 	protected static final String POSINT = "[-]?\\d+"; // skip +
 	protected static final String POSDOUBLE = "[-]?\\d+(\\.\\d*)?"; // skip +
 
-	protected final List<Knapsack> knapsacks = new ArrayList<Knapsack>();
-	protected final List<Item> items = new ArrayList<Item>();
+	protected final List<Knapsack> knapsacks = new ArrayList<>();
+	protected final List<Item> items = new ArrayList<>();
 
 	/**
 	 * Constructs a {@link KnapsackProblemFile} with a given file name.
@@ -61,16 +66,7 @@ public class KnapsackProblemFile implements KnapsackProblem {
 	 */
 	@Inject
 	public KnapsackProblemFile(@Constant(value = "filename", namespace = KnapsackProblemFile.class) String filename) {
-		FileReader fileReader;
-		try {
-			fileReader = new FileReader(filename);
-		} catch (FileNotFoundException e1) {
-			throw new IllegalArgumentException("Knapsack problem file not found " + filename, e1);
-		}
-
-		BufferedReader reader = new BufferedReader(fileReader);
-		try {
-
+		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 			String line;
 
 			Knapsack knapsack = null;
@@ -102,13 +98,10 @@ public class KnapsackProblemFile implements KnapsackProblem {
 					knapsack.setProfit(item, profit);
 				}
 			}
+		} catch (FileNotFoundException e1) {
+			throw new IllegalArgumentException("Knapsack problem file not found " + filename, e1);
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
-		} finally {
-			try {
-				reader.close();
-			} catch (IOException e) {
-			}
 		}
 	}
 

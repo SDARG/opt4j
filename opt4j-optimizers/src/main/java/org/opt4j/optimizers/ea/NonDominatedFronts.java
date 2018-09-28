@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objectives;
 
@@ -40,28 +41,28 @@ public class NonDominatedFronts {
 	 * @return the non-dominated fronts
 	 */
 	protected List<Collection<Individual>> generateFronts(Collection<Individual> individuals) {
-		List<Collection<Individual>> fronts = new ArrayList<Collection<Individual>>();
+		List<Collection<Individual>> fronts = new ArrayList<>();
 		// Assigns an id to each individual that corresponds to its index in an
 		// array.
-		Map<Individual, Integer> indexMap = new HashMap<Individual, Integer>();
+		Map<Individual, Integer> indexMap = new HashMap<>();
 		int index = 0;
 		for (Individual individual : individuals) {
 			indexMap.put(individual, index++);
 		}
 		// Initializes a map where an individual is assigned to the individuals
 		// that it dominates.
-		Map<Individual, List<Individual>> dominatedIndividualsMap = new HashMap<Individual, List<Individual>>();
+		Map<Individual, List<Individual>> dominatedIndividualsMap = new HashMap<>();
 		// Creates an array where for each individual, the number of individuals
 		// that dominate it is stored.
 		int[] dominatingIndividualNumber = new int[individuals.size()];
 		for (Individual e : individuals) {
-			dominatedIndividualsMap.put(e, new ArrayList<Individual>());
+			dominatedIndividualsMap.put(e, new ArrayList<>());
 			dominatingIndividualNumber[indexMap.get(e)] = 0;
 		}
 		determineDomination(individuals, dominatedIndividualsMap, dominatingIndividualNumber, indexMap);
 		// The first front consists of individuals that are dominated by zero
 		// other individuals.
-		List<Individual> f1 = new ArrayList<Individual>();
+		List<Individual> f1 = new ArrayList<>();
 		for (Individual i : individuals) {
 			if (dominatingIndividualNumber[indexMap.get(i)] == 0) {
 				f1.add(i);
@@ -76,8 +77,9 @@ public class NonDominatedFronts {
 		while (!currentFront.isEmpty()) {
 			List<Individual> nextFront = getNextFront(currentFront, dominatedIndividualsMap, dominatingIndividualNumber,
 					indexMap);
-			if (!nextFront.isEmpty())
+			if (!nextFront.isEmpty()) {
 				fronts.add(nextFront);
+			}
 			currentFront = nextFront;
 		}
 		return fronts;
@@ -126,7 +128,7 @@ public class NonDominatedFronts {
 	protected List<Individual> getNextFront(List<Individual> currentFront,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
 			Map<Individual, Integer> individual2IndexMap) {
-		List<Individual> nextFront = new ArrayList<Individual>();
+		List<Individual> nextFront = new ArrayList<>();
 		for (Individual dominant : currentFront) {
 			for (Individual dominated : dominatedIndividualsMap.get(dominant)) {
 				dominatingIndividualNumber[individual2IndexMap.get(dominated)]--;
@@ -161,7 +163,7 @@ public class NonDominatedFronts {
 	protected void determineDomination(Collection<Individual> individuals,
 			Map<Individual, List<Individual>> dominatedIndividualsMap, int[] dominatingIndividualNumber,
 			Map<Individual, Integer> individual2IndexMap) {
-		List<Individual> individualList = new ArrayList<Individual>(individuals);
+		List<Individual> individualList = new ArrayList<>(individuals);
 		// compare each individual with each other individual
 		for (int i = 0; i < individualList.size(); i++) {
 			for (int j = i + 1; j < individualList.size(); j++) {

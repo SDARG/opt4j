@@ -78,7 +78,7 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 	protected final SynchronizedIndividualList population;
 	protected List<Individual> swtIndividuals = Collections.emptyList();
 
-	protected final List<Objective> objectives = new ArrayList<Objective>();
+	protected final List<Objective> objectives = new ArrayList<>();
 
 	protected final JPanel panel = new JPanel();
 
@@ -88,7 +88,7 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 
 	protected final DelayTask task = new DelayTask(40);
 
-	protected final List<IndividualMouseListener> individualMouseListeners = new CopyOnWriteArrayList<IndividualMouseListener>();
+	protected final List<IndividualMouseListener> individualMouseListeners = new CopyOnWriteArrayList<>();
 
 	/**
 	 * The {@link Table}.
@@ -294,7 +294,7 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 		task.execute(new Runnable() {
 			@Override
 			public void run() {
-				final List<Individual> temp = new ArrayList<Individual>();
+				final List<Individual> temp = new ArrayList<>();
 				temp.addAll(population);
 
 				SwingUtilities.invokeLater(new Runnable() {
@@ -355,9 +355,9 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 	}
 
 	protected void sortIndividiualMouseListeners() {
-		List<IndividualMouseListener> list = new ArrayList<IndividualMouseListener>();
+		List<IndividualMouseListener> list = new ArrayList<>();
 		list.addAll(individualMouseListeners);
-		Collections.sort(list, new ToolBarOrderComparator<IndividualMouseListener>());
+		Collections.sort(list, new ToolBarOrderComparator<>());
 		individualMouseListeners.clear();
 		individualMouseListeners.addAll(list);
 	}

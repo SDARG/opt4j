@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -84,7 +84,7 @@ public abstract class CrossoverListXPoint<G extends ListGenotype<?>> implements 
 			throw new IllegalArgumentException(this.getClass() + " : x is " + x + " for binary vector size " + size);
 		}
 
-		SortedSet<Integer> points = new TreeSet<Integer>();
+		SortedSet<Integer> points = new TreeSet<>();
 
 		while (points.size() < x) {
 			points.add(random.nextInt(size - 1) + 1);
@@ -112,7 +112,7 @@ public abstract class CrossoverListXPoint<G extends ListGenotype<?>> implements 
 			}
 		}
 
-		Pair<G> offspring = new Pair<G>((G) o1, (G) o2);
+		Pair<G> offspring = new Pair<>((G) o1, (G) o2);
 		return offspring;
 	}
 

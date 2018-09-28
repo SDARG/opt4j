@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.viewer;
 
 import java.util.ArrayList;
@@ -44,11 +44,11 @@ import org.opt4j.core.IndividualSetListener;
  */
 class SynchronizedIndividualList implements List<Individual>, IndividualSetListener {
 
-	private final List<Individual> list = new ArrayList<Individual>();
+	private final List<Individual> list = new ArrayList<>();
 
 	private final Object mutex;
 
-	protected final Set<IndividualSetListener> listeners = new CopyOnWriteArraySet<IndividualSetListener>();
+	protected final Set<IndividualSetListener> listeners = new CopyOnWriteArraySet<>();
 
 	public void addListener(IndividualSetListener listener) {
 		listeners.add(listener);

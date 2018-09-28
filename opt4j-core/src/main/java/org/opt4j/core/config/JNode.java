@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-
 
 package org.opt4j.core.config;
 
@@ -92,7 +91,7 @@ public class JNode {
 	 */
 	public Map<String, String> getAttributes() {
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 
 		try {
 
@@ -182,7 +181,7 @@ public class JNode {
 	 */
 	public List<JNode> getChildren() {
 
-		List<JNode> list = new LinkedList<JNode>();
+		List<JNode> list = new LinkedList<>();
 		NodeList children = node.getChildNodes();
 
 		for (int i = 0; i < children.getLength(); i++) {
@@ -203,7 +202,7 @@ public class JNode {
 	public List<JNode> getChildren(String name) {
 
 		List<JNode> list = getChildren();
-		List<JNode> namedList = new LinkedList<JNode>();
+		List<JNode> namedList = new LinkedList<>();
 
 		for (JNode node : list) {
 			if (node.getName().equalsIgnoreCase(name)) {

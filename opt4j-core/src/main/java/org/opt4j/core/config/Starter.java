@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config;
 
@@ -90,7 +89,7 @@ public class Starter {
 		ModuleLoader loader = new ModuleLoader(new ModuleRegister(new ModuleAutoFinder()));
 
 		for (String filename : filenames) {
-			Set<Module> modules = new HashSet<Module>();
+			Set<Module> modules = new HashSet<>();
 			modules.addAll(loader.load(filename));
 			Task task = taskClass.newInstance();
 			task.init(modules);
@@ -107,11 +106,11 @@ public class Starter {
 	 */
 	public Collection<File> addPlugins() {
 
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 
 		try {
 
-			List<String> dirs = new ArrayList<String>();
+			List<String> dirs = new ArrayList<>();
 			dirs.add("plugins");
 			dirs.add("../plugins");
 			URL url = getClass().getProtectionDomain().getCodeSource().getLocation();

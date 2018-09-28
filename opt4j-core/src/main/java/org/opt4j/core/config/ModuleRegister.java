@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config;
 
@@ -47,10 +46,8 @@ import com.google.inject.Singleton;
 @Singleton
 public class ModuleRegister implements Iterable<Class<? extends Module>> {
 
-	protected final Map<Class<? extends Module>, PropertyModule> map = Collections
-			.synchronizedMap(new HashMap<Class<? extends Module>, PropertyModule>());
-	protected final Set<Class<? extends Module>> set = Collections
-			.synchronizedSet(new HashSet<Class<? extends Module>>());
+	protected final Map<Class<? extends Module>, PropertyModule> map = Collections.synchronizedMap(new HashMap<>());
+	protected final Set<Class<? extends Module>> set = Collections.synchronizedSet(new HashSet<>());
 
 	protected final ModuleList finder;
 

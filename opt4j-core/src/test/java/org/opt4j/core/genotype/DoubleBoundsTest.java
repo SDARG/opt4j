@@ -1,6 +1,6 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ public class DoubleBoundsTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void differentSizeTest() {
-		List<Double> lowerBounds = new ArrayList<Double>();
+		List<Double> lowerBounds = new ArrayList<>();
 		lowerBounds.add(-1.0);
 		lowerBounds.add(0.0);
-		List<Double> upperBounds = new ArrayList<Double>();
+		List<Double> upperBounds = new ArrayList<>();
 		upperBounds.add(0.0);
 		upperBounds.add(1.0);
 		upperBounds.add(2.0);
@@ -43,11 +43,11 @@ public class DoubleBoundsTest {
 
 	@Test
 	public void testListBounds() {
-		List<Double> lowerBounds = new ArrayList<Double>();
+		List<Double> lowerBounds = new ArrayList<>();
 		lowerBounds.add(-1.0);
 		lowerBounds.add(0.0);
 		lowerBounds.add(1.0);
-		List<Double> upperBounds = new ArrayList<Double>();
+		List<Double> upperBounds = new ArrayList<>();
 		upperBounds.add(0.0);
 		upperBounds.add(1.0);
 		upperBounds.add(2.0);

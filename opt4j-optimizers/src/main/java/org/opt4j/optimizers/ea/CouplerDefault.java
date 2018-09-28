@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.optimizers.ea;
 
@@ -46,11 +45,11 @@ public class CouplerDefault implements Coupler {
 	 */
 	@Override
 	public Collection<Pair<Individual>> getCouples(int size, List<Individual> parents) {
-		List<Pair<Individual>> couples = new ArrayList<Pair<Individual>>();
+		List<Pair<Individual>> couples = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
 			Individual first = parents.get((2 * i) % parents.size());
 			Individual second = parents.get((2 * i + 1) % parents.size());
-			Pair<Individual> pair = new Pair<Individual>(first, second);
+			Pair<Individual> pair = new Pair<>(first, second);
 			couples.add(pair);
 		}
 		return couples;

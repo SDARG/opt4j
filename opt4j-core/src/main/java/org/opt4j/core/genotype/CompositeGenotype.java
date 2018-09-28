@@ -72,7 +72,7 @@ import org.opt4j.core.Genotype;
  */
 public class CompositeGenotype<K, V extends Genotype> implements Genotype, Iterable<Entry<K, V>> {
 
-	protected final Map<K, V> map = new HashMap<K, V>();
+	protected final Map<K, V> map = new HashMap<>();
 
 	/**
 	 * Constructs a {@link CompositeGenotype}.

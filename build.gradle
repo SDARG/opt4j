@@ -65,8 +65,8 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
 
-    sourceCompatibility = 1.6 
-	targetCompatibility = 1.6
+    sourceCompatibility = 1.8 
+	targetCompatibility = 1.8
     
     version = parent.version
 
@@ -274,9 +274,7 @@ task alldocs(type: Javadoc) {
 
 task release(dependsOn: [distZip,website] ){}
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.4.1'
-}
+wrapper.gradleVersion = '4.10.2'
 
 task fatjar(dependsOn: subprojects.jar, type: Jar) {
     destinationDir = new File(project.buildDir, 'fatjar')

@@ -43,7 +43,7 @@ import org.opt4j.core.Objective.Sign;
  */
 public class Objectives implements Iterable<Entry<Objective, Value<?>>> {
 
-	protected final SortedMap<Objective, Value<?>> map = new TreeMap<Objective, Value<?>>();
+	protected final SortedMap<Objective, Value<?>> map = new TreeMap<>();
 
 	protected double[] array = null;
 

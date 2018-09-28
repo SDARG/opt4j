@@ -17,8 +17,9 @@ public class SalesmanCreator implements Creator<PermutationGenotype<City>> {
 		this.problem = problem;
 	}
 
+	@Override
 	public PermutationGenotype<City> create() {
-		PermutationGenotype<City> genotype = new PermutationGenotype<City>();
+		PermutationGenotype<City> genotype = new PermutationGenotype<>();
 		for (City city : problem.getCities()) {
 			genotype.add(city);
 		}

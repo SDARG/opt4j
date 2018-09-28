@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -89,7 +89,7 @@ public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 
 	protected final FileChooser fileChooser;
 
-	protected final Map<PropertyModule, PropertyPanel> map = new HashMap<PropertyModule, PropertyPanel>();
+	protected final Map<PropertyModule, PropertyPanel> map = new HashMap<>();
 
 	protected final DropTarget dropTarget;
 
@@ -418,8 +418,8 @@ public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 	 * Update the tab names. Consider multiple tabs of the same module.
 	 */
 	protected void updateTabNames() {
-		Set<Class<? extends Module>> exist = new HashSet<Class<? extends Module>>();
-		Set<Class<? extends Module>> multi = new HashSet<Class<? extends Module>>();
+		Set<Class<? extends Module>> exist = new HashSet<>();
+		Set<Class<? extends Module>> multi = new HashSet<>();
 		for (PropertyModule pm : map.keySet()) {
 			Class<? extends Module> module = pm.getModule().getClass();
 			if (exist.contains(module)) {
@@ -429,7 +429,7 @@ public class DefaultSelectedPanel extends SelectedPanel implements SetListener {
 			}
 		}
 
-		Map<Class<? extends Module>, Integer> counter = new HashMap<Class<? extends Module>, Integer>();
+		Map<Class<? extends Module>, Integer> counter = new HashMap<>();
 		for (Class<? extends Module> module : multi) {
 			counter.put(module, 1);
 		}

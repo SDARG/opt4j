@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -53,9 +53,9 @@ import org.opt4j.core.optimizer.Population;
 import org.opt4j.viewer.ConvergencePlotWidget.ObjectiveDropDown;
 import org.opt4j.viewer.ObjectivesMonitor.ObjectivesListener;
 
-import ptolemy.plot.Plot;
-
 import com.google.inject.Inject;
+
+import ptolemy.plot.Plot;
 
 /**
  * The {@link ParetoPlotWidget} is a widget that displays the {@link Population}
@@ -118,7 +118,7 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 				secondComboBox.addItem(objective);
 			}
 
-			initSelection(new ArrayList<Objective>(objectives));
+			initSelection(new ArrayList<>(objectives));
 		}
 
 		private void initSelection(List<Objective> objectives) {
@@ -242,7 +242,7 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 	 */
 	protected Set<Point2D.Double> getPoints(Collection<Individual> indivualCollection, Objective one, Objective two) {
 
-		Set<Point2D.Double> points = new HashSet<Point2D.Double>();
+		Set<Point2D.Double> points = new HashSet<>();
 		for (Individual individual : indivualCollection) {
 			if (individual != null && individual.isEvaluated()) {
 				Objectives objectives = individual.getObjectives();
@@ -276,11 +276,11 @@ public class ParetoPlotWidget implements OptimizerIterationListener, Widget, Obj
 		task.execute(new Runnable() {
 			@Override
 			public void run() {
-				final Collection<Individual> a = new HashSet<Individual>();
+				final Collection<Individual> a = new HashSet<>();
 				synchronized (archive) {
 					a.addAll(archive);
 				}
-				final Collection<Individual> p = new HashSet<Individual>();
+				final Collection<Individual> p = new HashSet<>();
 				synchronized (population) {
 					p.addAll(population);
 				}

@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -88,7 +88,7 @@ public class QueensSATDecoder extends AbstractSATDecoder<Genotype, QueensBoard> 
 	 */
 	@Override
 	public Set<Constraint> createConstraints() {
-		Set<Constraint> constraints = new HashSet<Constraint>();
+		Set<Constraint> constraints = new HashSet<>();
 
 		constraints.addAll(createConstraintsRowsColumns());
 		constraints.addAll(createConstraintsDiagonal());
@@ -96,13 +96,14 @@ public class QueensSATDecoder extends AbstractSATDecoder<Genotype, QueensBoard> 
 	}
 
 	/**
-	 * Helper function for createConstraints() that creates the constraints regarding rows and columns.
+	 * Helper function for createConstraints() that creates the constraints
+	 * regarding rows and columns.
 	 * 
 	 * @return constraints regarding rows and columns
 	 */
 	protected Set<Constraint> createConstraintsRowsColumns() {
 		int size = problem.size();
-		Set<Constraint> constraints = new HashSet<Constraint>();
+		Set<Constraint> constraints = new HashSet<>();
 
 		for (int i = 0; i < size; i++) {
 
@@ -129,13 +130,14 @@ public class QueensSATDecoder extends AbstractSATDecoder<Genotype, QueensBoard> 
 	}
 
 	/**
-	 * Helper function for createConstraints() that creates the constraints regarding diagonals.
+	 * Helper function for createConstraints() that creates the constraints
+	 * regarding diagonals.
 	 * 
 	 * @return constraints regarding diagonals
 	 */
 	protected Set<Constraint> createConstraintsDiagonal() {
 		int size = problem.size();
-		Set<Constraint> constraints = new HashSet<Constraint>();
+		Set<Constraint> constraints = new HashSet<>();
 
 		for (int k = -size + 1; k < size; k++) {
 			// diagonal 1

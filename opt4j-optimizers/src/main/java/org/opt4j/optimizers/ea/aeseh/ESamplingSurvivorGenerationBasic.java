@@ -89,13 +89,13 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	 */
 	protected Set<Individual> addNonDominatedSurvivors(Collection<Individual> extremeIndividuals,
 			Collection<Individual> firstFront, int survivorNumber) {
-		Set<Individual> survivors = new HashSet<Individual>();
-		List<Individual> nonDominatedIndividuals = new ArrayList<Individual>(firstFront);
+		Set<Individual> survivors = new HashSet<>();
+		List<Individual> nonDominatedIndividuals = new ArrayList<>(firstFront);
 		// the extreme values always survive
 		survivors.addAll(extremeIndividuals);
 		nonDominatedIndividuals.removeAll(extremeIndividuals);
-		Set<Individual> epsilonDominantIndividuals = new HashSet<Individual>();
-		Set<Individual> epsilonDominatedIndividuals = new HashSet<Individual>();
+		Set<Individual> epsilonDominantIndividuals = new HashSet<>();
+		Set<Individual> epsilonDominatedIndividuals = new HashSet<>();
 		applyEpsilonSampling(nonDominatedIndividuals, epsilonDominantIndividuals, epsilonDominatedIndividuals,
 				adaptiveEpsilonSampling.getEpsilon());
 		boolean tooManyEpsilonDominantIndividuals = (extremeIndividuals.size()
@@ -105,7 +105,7 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 		epsilonAdaption.adaptEpsilon(adaptiveEpsilonSampling, epsilonTooBig);
 		if (tooManyEpsilonDominantIndividuals) {
 			// add a random subset of the epsilon dominant individuals
-			List<Individual> survivalCandidates = new ArrayList<Individual>(epsilonDominantIndividuals);
+			List<Individual> survivalCandidates = new ArrayList<>(epsilonDominantIndividuals);
 			while (survivors.size() < survivorNumber) {
 				int idx = random.nextInt(survivalCandidates.size());
 				Individual survivor = survivalCandidates.get(idx);
@@ -115,7 +115,7 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 		} else {
 			// add a random subset from the epsilon dominated individuals
 			survivors.addAll(epsilonDominantIndividuals);
-			List<Individual> survivorCandidates = new ArrayList<Individual>(epsilonDominatedIndividuals);
+			List<Individual> survivorCandidates = new ArrayList<>(epsilonDominatedIndividuals);
 			while (survivors.size() < survivorNumber) {
 				int idx = random.nextInt(survivorCandidates.size());
 				Individual survivor = survivorCandidates.get(idx);
@@ -144,13 +144,13 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	protected void applyEpsilonSampling(List<Individual> firstFront, Set<Individual> epsilonDominantIndividuals,
 			Set<Individual> epsilonDominatedIndividuals, double samplingEpsilon) {
 		// apply epsilon sampling until the individual list is empty
-		List<Individual> nonDominatedIndividuals = new ArrayList<Individual>(firstFront);
+		List<Individual> nonDominatedIndividuals = new ArrayList<>(firstFront);
 		Map<Objective, Double> objectiveAmplitudes = epsilonMapping
-				.findObjectiveAmplitudes(new HashSet<Individual>(nonDominatedIndividuals));
+				.findObjectiveAmplitudes(new HashSet<>(nonDominatedIndividuals));
 		while (!nonDominatedIndividuals.isEmpty()) {
 			// pick a random individual
 			Individual epsilonDominant = nonDominatedIndividuals.get(random.nextInt(nonDominatedIndividuals.size()));
-			Set<Individual> epsilonDominated = new HashSet<Individual>();
+			Set<Individual> epsilonDominated = new HashSet<>();
 			nonDominatedIndividuals.remove(epsilonDominant);
 			Objectives epsilonEnhancedObjectives = epsilonMapping.mapObjectives(epsilonDominant.getObjectives(),
 					samplingEpsilon, objectiveAmplitudes);
@@ -178,7 +178,7 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	 *            the non-dominated fronts
 	 */
 	protected Set<Individual> addDominatedSurvivors(int survivorNumber, NonDominatedFronts fronts) {
-		Set<Individual> survivors = new HashSet<Individual>();
+		Set<Individual> survivors = new HashSet<>();
 		// non-dominated solutions do not suffice to generate the number of
 		// survivors => add dominated solutions
 		survivors.addAll(fronts.getFrontAtIndex(0));
@@ -188,7 +188,7 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 			survivors.addAll(fronts.getFrontAtIndex(frontIndex));
 			frontIndex++;
 		}
-		List<Individual> currentFront = new ArrayList<Individual>(fronts.getFrontAtIndex(frontIndex));
+		List<Individual> currentFront = new ArrayList<>(fronts.getFrontAtIndex(frontIndex));
 		while (survivorNumber > survivors.size()) {
 			// choose a random survivor from the current front
 			Individual survivor = currentFront.get(random.nextInt(currentFront.size()));
@@ -209,10 +209,10 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 	 * @return the set of the extreme individuals
 	 */
 	protected Set<Individual> getExtremeIndividuals(Collection<Individual> firstFront) {
-		Map<Objective, Individual> bestIndis = new HashMap<Objective, Individual>();
-		Map<Objective, Double> extremeValues = new HashMap<Objective, Double>();
+		Map<Objective, Individual> bestIndis = new HashMap<>();
+		Map<Objective, Double> extremeValues = new HashMap<>();
 		Individual firstIndi = firstFront.iterator().next();
-		List<Objective> objList = new ArrayList<Objective>(firstIndi.getObjectives().getKeys());
+		List<Objective> objList = new ArrayList<>(firstIndi.getObjectives().getKeys());
 		// iterate the individuals
 		for (Individual indi : firstFront) {
 			// iterate the objectives and their values
@@ -226,6 +226,6 @@ public class ESamplingSurvivorGenerationBasic implements ESamplingSurvivorGenera
 				}
 			}
 		}
-		return new HashSet<Individual>(bestIndis.values());
+		return new HashSet<>(bestIndis.values());
 	}
 }

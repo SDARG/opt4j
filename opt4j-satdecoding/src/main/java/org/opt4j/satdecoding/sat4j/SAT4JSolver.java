@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-
 
 package org.opt4j.satdecoding.sat4j;
 
@@ -37,6 +36,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.start.Constant;
 import org.opt4j.satdecoding.Constraint;
+import org.opt4j.satdecoding.Constraint.Operator;
 import org.opt4j.satdecoding.ContradictionException;
 import org.opt4j.satdecoding.Literal;
 import org.opt4j.satdecoding.Model;
@@ -44,7 +44,6 @@ import org.opt4j.satdecoding.Order;
 import org.opt4j.satdecoding.Solver;
 import org.opt4j.satdecoding.TimeoutException;
 import org.opt4j.satdecoding.VarOrder;
-import org.opt4j.satdecoding.Constraint.Operator;
 import org.sat4j.core.Vec;
 import org.sat4j.core.VecInt;
 import org.sat4j.minisat.core.LearningStrategy;
@@ -89,11 +88,11 @@ public class SAT4JSolver implements Solver {
 		RAPID;
 	}
 
-	protected final Queue<Constraint> constraints = new ConcurrentLinkedQueue<Constraint>();
+	protected final Queue<Constraint> constraints = new ConcurrentLinkedQueue<>();
 
 	protected final PBSolverResolution solver;
 
-	protected final Map<Object, Integer> variables = new HashMap<Object, Integer>();
+	protected final Map<Object, Integer> variables = new HashMap<>();
 
 	protected int nextVariable = 1;
 
@@ -125,13 +124,13 @@ public class SAT4JSolver implements Solver {
 			if (clauseLearningLength < 0) {
 				throw new IllegalArgumentException("learning length must not be less than 0.");
 			}
-			l = new FixedLengthLearning<PBDataStructureFactory>(clauseLearningLength);
+			l = new FixedLengthLearning<>(clauseLearningLength);
 			break;
 		case MINISAT:
-			l = new MiniSATLearning<PBDataStructureFactory>();
+			l = new MiniSATLearning<>();
 			break;
 		case CLAUSEONLY:
-			l = new ClauseOnlyLearning<PBDataStructureFactory>();
+			l = new ClauseOnlyLearning<>();
 			break;
 		default:
 			throw new IllegalArgumentException("Learning strategy not supported: " + learning);
@@ -242,7 +241,7 @@ public class SAT4JSolver implements Solver {
 
 		VecInt lits = toVecInt(constraint.getLiterals());
 
-		IVec<BigInteger> coeffs = new Vec<BigInteger>();
+		IVec<BigInteger> coeffs = new Vec<>();
 
 		for (Integer value : constraint.getCoefficients()) {
 			coeffs.push(BigInteger.valueOf(value));

@@ -50,7 +50,8 @@ public class AbstractArchiveTest {
 	}
 
 	/**
-	 * Tests {@link AbstractArchive#removeDominatedCandidates(List)} with two nondominated individuals.
+	 * Tests {@link AbstractArchive#removeDominatedCandidates(List)} with two
+	 * nondominated individuals.
 	 */
 	@Test
 	public void removeDominatedCandidatesTest() {
@@ -74,7 +75,7 @@ public class AbstractArchiveTest {
 		objectives1.add(o1, 1);
 		i1.setObjectives(objectives1);
 
-		List<Individual> list = new ArrayList<Individual>();
+		List<Individual> list = new ArrayList<>();
 		list.add(i0);
 		list.add(i1);
 		archive.removeDominatedCandidates(list);
@@ -85,7 +86,8 @@ public class AbstractArchiveTest {
 	}
 
 	/**
-	 * Tests {@link AbstractArchive#removeDominatedCandidates(List)} with two individuals which dominate themselves.
+	 * Tests {@link AbstractArchive#removeDominatedCandidates(List)} with two
+	 * individuals which dominate themselves.
 	 */
 	@Test
 	public void removeDominatedCandidatesTest2() {
@@ -109,7 +111,7 @@ public class AbstractArchiveTest {
 		objectives1.add(o1, 1);
 		i1.setObjectives(objectives1);
 
-		List<Individual> list = new ArrayList<Individual>();
+		List<Individual> list = new ArrayList<>();
 		list.add(i0);
 		list.add(i1);
 		archive.removeDominatedCandidates(list);
@@ -127,7 +129,8 @@ public class AbstractArchiveTest {
 	}
 
 	/**
-	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with two nondominated individuals.
+	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with two
+	 * nondominated individuals.
 	 */
 	@Test
 	public void removeArchiveDominatedTest() {
@@ -164,7 +167,7 @@ public class AbstractArchiveTest {
 		objectives1.add(o1, 1);
 		i1.setObjectives(objectives1);
 
-		List<Individual> list = new ArrayList<Individual>();
+		List<Individual> list = new ArrayList<>();
 		list.add(i0);
 		list.add(i1);
 		archive.removeArchiveDominated(list);
@@ -176,7 +179,8 @@ public class AbstractArchiveTest {
 	}
 
 	/**
-	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with a dominated individual.
+	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with a
+	 * dominated individual.
 	 */
 	@Test
 	public void removeArchiveDominatedTest2() {
@@ -207,7 +211,7 @@ public class AbstractArchiveTest {
 		objectives0.add(o1, 4);
 		i0.setObjectives(objectives0);
 
-		List<Individual> list = new ArrayList<Individual>();
+		List<Individual> list = new ArrayList<>();
 		list.add(i0);
 		archive.removeArchiveDominated(list);
 
@@ -216,8 +220,10 @@ public class AbstractArchiveTest {
 	}
 
 	/**
-	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with a candidate which has the same objectives as an
-	 * individual in the archive. To avoid unnecessary archive updates, the candidate is expected to be discarded here.
+	 * Tests {@link AbstractArchive#removeArchiveDominated(List)} with a
+	 * candidate which has the same objectives as an individual in the archive.
+	 * To avoid unnecessary archive updates, the candidate is expected to be
+	 * discarded here.
 	 */
 	@Test
 	public void removeArchiveDominatedTest3() {
@@ -242,7 +248,7 @@ public class AbstractArchiveTest {
 		objectives0.add(o1, 0);
 		i0.setObjectives(objectives0);
 
-		List<Individual> list = new ArrayList<Individual>();
+		List<Individual> list = new ArrayList<>();
 		list.add(i0);
 		archive.removeArchiveDominated(list);
 

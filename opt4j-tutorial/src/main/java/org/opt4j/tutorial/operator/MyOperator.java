@@ -27,6 +27,6 @@ public class MyOperator implements Crossover<BooleanGenotype> {
 
 		// The crossover operator returns two new genotypes based on the two
 		// parents.
-		return new Pair<BooleanGenotype>(g1, g2);
+		return new Pair<>(g1, g2);
 	}
 }
