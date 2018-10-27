@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-
 
 package org.opt4j.optimizers.de;
 
@@ -106,13 +105,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 	 *            the scaling factor F
 	 */
 	@Inject
-	public DifferentialEvolution(
-			Population population,
-			IndividualFactory individualFactory,
-			IndividualCompleter completer,
-			Algebra<Genotype> algebra,
-			Selector selector,
-			Rand random,
+	public DifferentialEvolution(Population population, IndividualFactory individualFactory,
+			IndividualCompleter completer, Algebra<Genotype> algebra, Selector selector, Rand random,
 			Crossover<Genotype> crossover,
 			@Constant(value = "alpha", namespace = DifferentialEvolution.class) int alpha,
 			@Constant(value = "scalingFactor", namespace = DifferentialEvolution.class) double scalingFactor) {
@@ -162,11 +156,8 @@ public class DifferentialEvolution implements IterativeOptimizer {
 
 			Genotype genotype = individual.getGenotype();
 			if (!(genotype instanceof DoubleGenotype)) {
-				throw new IncompatibilityException(
-						"DifferentialEvolution is restricted to "
-								+ DoubleGenotype.class
-								+ ", current Genotype is: "
-								+ genotype.getClass());
+				throw new IncompatibilityException("DifferentialEvolution is restricted to " + DoubleGenotype.class
+						+ ", current Genotype is: " + genotype.getClass());
 			}
 
 			population.add(individual);
@@ -177,13 +168,13 @@ public class DifferentialEvolution implements IterativeOptimizer {
 		/*
 		 * Map from each parent to its offspring
 		 */
-		Map<Individual, Individual> relation = new HashMap<Individual, Individual>();
+		Map<Individual, Individual> relation = new HashMap<>();
 
 		/*
 		 * Create an offspring for each parent individual in the population and
 		 * add the offspring to the population and evaluate their objectives
 		 */
-		List<Individual> list = new ArrayList<Individual>(population);
+		List<Individual> list = new ArrayList<>(population);
 		for (Individual parent : population) {
 			Individual offspring = createOffspring(parent, list, term);
 			relation.put(parent, offspring);
@@ -199,8 +190,7 @@ public class DifferentialEvolution implements IterativeOptimizer {
 			Individual parent = entry.getKey();
 			Individual offspring = entry.getValue();
 
-			if (parent.getObjectives().weaklyDominates(
-					offspring.getObjectives())) {
+			if (parent.getObjectives().weaklyDominates(offspring.getObjectives())) {
 				population.remove(offspring);
 			}
 		}
@@ -208,13 +198,11 @@ public class DifferentialEvolution implements IterativeOptimizer {
 		/*
 		 * Truncate the population size to alpha
 		 */
-		Collection<Individual> lames = selector.getLames(population.size()
-				- alpha, population);
+		Collection<Individual> lames = selector.getLames(population.size() - alpha, population);
 		population.removeAll(lames);
 	}
 
-	protected Individual createOffspring(Individual parent,
-			List<Individual> individuals, Term term) {
+	protected Individual createOffspring(Individual parent, List<Individual> individuals, Term term) {
 		Triple triple = getTriple(parent, individuals);
 
 		Genotype g0 = triple.getFirst().getGenotype();
@@ -246,8 +234,7 @@ public class DifferentialEvolution implements IterativeOptimizer {
 
 		protected final Individual third;
 
-		public Triple(final Individual first, final Individual second,
-				final Individual third) {
+		public Triple(final Individual first, final Individual second, final Individual third) {
 			super();
 			this.first = first;
 			this.second = second;
@@ -279,12 +266,9 @@ public class DifferentialEvolution implements IterativeOptimizer {
 	 */
 	protected Triple getTriple(Individual parent, List<Individual> individuals) {
 		individuals.remove(parent);
-		Individual ind0 = individuals
-				.remove(random.nextInt(individuals.size()));
-		Individual ind1 = individuals
-				.remove(random.nextInt(individuals.size()));
-		Individual ind2 = individuals
-				.remove(random.nextInt(individuals.size()));
+		Individual ind0 = individuals.remove(random.nextInt(individuals.size()));
+		Individual ind1 = individuals.remove(random.nextInt(individuals.size()));
+		Individual ind2 = individuals.remove(random.nextInt(individuals.size()));
 
 		Triple triple = new Triple(ind0, ind1, ind2);
 

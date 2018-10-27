@@ -10,7 +10,7 @@ import com.google.inject.Inject;
 
 public class SalesmanProblem {
 
-	protected Set<City> cities = new HashSet<City>();
+	protected Set<City> cities = new HashSet<>();
 
 	public class City {
 		protected final double x;

@@ -1,6 +1,9 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,17 +50,22 @@ public class IntegerMapGenotypeTest {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
+			if (this == obj) {
 				return true;
-			if (obj == null)
+			}
+			if (obj == null) {
 				return false;
-			if (getClass() != obj.getClass())
+			}
+			if (getClass() != obj.getClass()) {
 				return false;
+			}
 			MockObject other = (MockObject) obj;
-			if (!getOuterType().equals(other.getOuterType()))
+			if (!getOuterType().equals(other.getOuterType())) {
 				return false;
-			if (Double.doubleToLongBits(field1) != Double.doubleToLongBits(other.field1))
+			}
+			if (Double.doubleToLongBits(field1) != Double.doubleToLongBits(other.field1)) {
 				return false;
+			}
 			return field2 == other.field2;
 		}
 
@@ -75,12 +83,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup1 = new MockObject(1.0, 1);
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		integerMapGenotype.init(rand, 3);
 	}
 
@@ -92,12 +99,12 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup1 = new MockObject(1.0, 1);
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
 		inputList.add(mockup1);
-		new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(inputList, bounds);
+		new IntegerMapGenotype<>(inputList, bounds);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -105,10 +112,9 @@ public class IntegerMapGenotypeTest {
 		int lower = 1;
 		int upper = 2;
 		MockObject m1 = new MockObject(1.0, 1);
-		List<MockObject> list = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> list = new ArrayList<>();
 		list.add(m1);
-		IntegerMapGenotype<MockObject> geno = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(list, lower,
-				upper);
+		IntegerMapGenotype<MockObject> geno = new IntegerMapGenotype<>(list, lower, upper);
 		geno.getValue(new MockObject(1.0, 2));
 	}
 
@@ -117,10 +123,10 @@ public class IntegerMapGenotypeTest {
 		int lower = 1;
 		int upper = 2;
 		MockObject m1 = new MockObject(1.0, 1);
-		List<MockObject> list = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> list = new ArrayList<>();
 		list.add(m1);
 		list.add(m1);
-		new IntegerMapGenotype<MockObject>(list, lower, upper);
+		new IntegerMapGenotype<>(list, lower, upper);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -132,12 +138,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
 		MockObject mockup4 = new MockObject(4.0, 4);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		integerMapGenotype.getIndexOf(mockup4);
 	}
 
@@ -150,12 +155,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
 		MockObject mockup4 = new MockObject(4.0, 4);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		integerMapGenotype.setValue(mockup4, 1);
 	}
 
@@ -167,12 +171,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup1 = new MockObject(1.0, 1);
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		integerMapGenotype.setValue(mockup3, -1);
 	}
 
@@ -184,12 +187,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup1 = new MockObject(1.0, 1);
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		integerMapGenotype.setValue(mockup3, 5);
 	}
 
@@ -202,12 +204,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup1 = new MockObject(1.0, 1);
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		integerMapGenotype.init(rand);
 		assertEquals("[mock=1;mock=2;mock=3;]", integerMapGenotype.toString());
 	}
@@ -217,12 +218,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup1 = new MockObject(1.0, 1);
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, 1, 3);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, 1, 3);
 		for (int i = 1; i < 4; i++) {
 			assertEquals(1, integerMapGenotype.getLowerBound(i));
 			assertEquals(3, integerMapGenotype.getUpperBound(i));
@@ -239,12 +239,11 @@ public class IntegerMapGenotypeTest {
 		MockObject mockup2 = new MockObject(2.0, 2);
 		MockObject mockup3 = new MockObject(3.0, 3);
 		MockObject mockup4 = new MockObject(4.0, 4);
-		List<MockObject> inputList = new ArrayList<IntegerMapGenotypeTest.MockObject>();
+		List<MockObject> inputList = new ArrayList<>();
 		inputList.add(mockup1);
 		inputList.add(mockup2);
 		inputList.add(mockup3);
-		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<IntegerMapGenotypeTest.MockObject>(
-				inputList, bounds);
+		IntegerMapGenotype<MockObject> integerMapGenotype = new IntegerMapGenotype<>(inputList, bounds);
 		assertTrue(integerMapGenotype.isEmpty());
 		assertEquals(integerMapGenotype.getLowerBound(0), 1);
 		assertEquals(integerMapGenotype.getLowerBound(1), 2);

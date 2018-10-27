@@ -11,8 +11,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * The {@link EpsilonSamplingSelector} implements a selection process based on the
- * ε-sampling.
+ * The {@link EpsilonSamplingSelector} implements a selection process based on
+ * the ε-sampling.
  * 
  * @author Fedor Smirnov
  *
@@ -27,7 +27,8 @@ public class EpsilonSamplingSelector implements Selector {
 	 * 
 	 * @param survivorGeneration
 	 *            the {@link ESamplingSurvivorGeneration} used for picking the
-	 *            {@link Individual}s that will survive and act as potential parents
+	 *            {@link Individual}s that will survive and act as potential
+	 *            parents
 	 */
 	@Inject
 	public EpsilonSamplingSelector(ESamplingSurvivorGeneration survivorGeneration) {
@@ -36,7 +37,8 @@ public class EpsilonSamplingSelector implements Selector {
 
 	@Override
 	public Collection<Individual> getParents(int mu, Collection<Individual> population) {
-		// Does nothing. In the AeSeH algorithm, all survivors are considered as possible
+		// Does nothing. In the AeSeH algorithm, all survivors are considered as
+		// possible
 		// parents.
 		return population;
 	}
@@ -45,7 +47,7 @@ public class EpsilonSamplingSelector implements Selector {
 	public Collection<Individual> getLames(int lambda, Collection<Individual> population) {
 		int survivorNumber = population.size() - lambda;
 		Set<Individual> survivors = survivorGeneration.getSurvivors(population, survivorNumber);
-		Set<Individual> lames = new HashSet<Individual>(population);
+		Set<Individual> lames = new HashSet<>(population);
 		lames.removeAll(survivors);
 		return lames;
 	}

@@ -157,7 +157,7 @@ public class IndividiualSetTest {
 		Individual i2 = new Individual();
 		Individual i3 = new Individual();
 
-		Set<Individual> is = new HashSet<Individual>();
+		Set<Individual> is = new HashSet<>();
 		is.add(i1);
 		is.add(i2);
 
@@ -218,7 +218,7 @@ public class IndividiualSetTest {
 		set.add(i1);
 		set.add(i2);
 
-		Set<Individual> rem = new HashSet<Individual>();
+		Set<Individual> rem = new HashSet<>();
 		rem.add(i1);
 		rem.add(i2);
 
@@ -236,7 +236,7 @@ public class IndividiualSetTest {
 		set.add(i1);
 		set.add(i2);
 
-		Set<Individual> rem = new HashSet<Individual>();
+		Set<Individual> rem = new HashSet<>();
 		rem.add(i2);
 
 		Assert.assertTrue(set.retainAll(rem));

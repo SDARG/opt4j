@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -63,8 +63,8 @@ import com.google.inject.Inject;
  */
 public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> implements Decoder<G, P>, Creator<G> {
 
-	private final List<Constraint> constraints = new ArrayList<Constraint>();
-	private final List<Object> variables = new ArrayList<Object>();
+	private final List<Constraint> constraints = new ArrayList<>();
+	private final List<Object> variables = new ArrayList<>();
 
 	protected Map<Object, Double> lowerBounds;
 
@@ -102,7 +102,7 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 
 				Set<Constraint> constraints = createConstraints();
 
-				Set<Object> variables = new HashSet<Object>();
+				Set<Object> variables = new HashSet<>();
 
 				for (Constraint constraint : constraints) {
 					solver.addConstraint(constraint);
@@ -185,7 +185,7 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 	 * @return the variables to be ignored
 	 */
 	public Set<Object> ignoreVariables(Set<Object> variables) {
-		return new HashSet<Object>();
+		return new HashSet<>();
 	}
 
 	/**
@@ -196,7 +196,7 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 	 * @return the lower bounds
 	 */
 	public Map<Object, Double> getLowerBounds(Set<Object> variables) {
-		return new HashMap<Object, Double>();
+		return new HashMap<>();
 	}
 
 	/**
@@ -207,7 +207,7 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 	 * @return the upper bounds
 	 */
 	public Map<Object, Double> getUpperBounds(Set<Object> variables) {
-		return new HashMap<Object, Double>();
+		return new HashMap<>();
 	}
 
 	/**
@@ -241,8 +241,8 @@ public abstract class AbstractSATDecoder<G extends Genotype, P extends Object> i
 			init();
 		}
 
-		Map<Object, Double> priorities = new HashMap<Object, Double>();
-		Map<Object, Boolean> phases = new HashMap<Object, Boolean>();
+		Map<Object, Double> priorities = new HashMap<>();
+		Map<Object, Boolean> phases = new HashMap<>();
 
 		randomize(variables, lowerBounds, upperBounds, priorities, phases);
 

@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
+
 package org.opt4j.viewer;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ObjectivesMonitor implements IndividualStateListener {
 
 	protected List<Objective> objectives = null;
 
-	protected Set<ObjectivesListener> listeners = new CopyOnWriteArraySet<ObjectivesListener>();
+	protected Set<ObjectivesListener> listeners = new CopyOnWriteArraySet<>();
 
 	/**
 	 * The {@link ObjectivesListener} is an interface for classes that need the
@@ -134,7 +134,7 @@ public class ObjectivesMonitor implements IndividualStateListener {
 
 	protected synchronized void publishObjectives(Individual individual) {
 		if (!done) {
-			objectives = new ArrayList<Objective>(individual.getObjectives().getKeys());
+			objectives = new ArrayList<>(individual.getObjectives().getKeys());
 			for (ObjectivesListener listener : listeners) {
 				listener.objectives(objectives);
 			}

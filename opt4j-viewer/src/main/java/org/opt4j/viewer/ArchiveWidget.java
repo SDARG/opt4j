@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -82,9 +82,9 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	protected final SynchronizedIndividualSet archive;
 	protected List<Individual> swtIndividuals = Collections.emptyList();
 
-	protected final List<Objective> objectives = new ArrayList<Objective>();
+	protected final List<Objective> objectives = new ArrayList<>();
 
-	protected final List<Objective> order = new ArrayList<Objective>();
+	protected final List<Objective> order = new ArrayList<>();
 
 	protected final JPanel panel = new JPanel();
 
@@ -96,7 +96,7 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 
 	protected boolean changed = true;
 
-	protected final List<IndividualMouseListener> individualMouseListeners = new CopyOnWriteArrayList<IndividualMouseListener>();
+	protected final List<IndividualMouseListener> individualMouseListeners = new CopyOnWriteArrayList<>();
 
 	protected final DelayTask task = new DelayTask(40);
 
@@ -331,9 +331,9 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 	}
 
 	protected void sortIndividiualMouseListeners() {
-		List<IndividualMouseListener> list = new ArrayList<IndividualMouseListener>();
+		List<IndividualMouseListener> list = new ArrayList<>();
 		list.addAll(individualMouseListeners);
-		Collections.sort(list, new ToolBarOrderComparator<IndividualMouseListener>());
+		Collections.sort(list, new ToolBarOrderComparator<>());
 		individualMouseListeners.clear();
 		individualMouseListeners.addAll(list);
 	}
@@ -353,7 +353,7 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 			return false;
 		}
 
-		List<Objective> list = new ArrayList<Objective>();
+		List<Objective> list = new ArrayList<>();
 		TableColumnModel model = table.getColumnModel();
 
 		for (int i = 0; i < model.getColumnCount(); i++) {
@@ -379,7 +379,7 @@ public class ArchiveWidget implements OptimizerIterationListener, IndividualSetL
 		task.execute(new Runnable() {
 			@Override
 			public void run() {
-				final List<Individual> temp = new ArrayList<Individual>();
+				final List<Individual> temp = new ArrayList<>();
 				temp.addAll(archive);
 				Collections.sort(temp, new Comp());
 

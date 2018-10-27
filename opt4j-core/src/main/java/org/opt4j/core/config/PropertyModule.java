@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.config;
 
@@ -65,7 +64,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 
 	protected final Module module;
 
-	protected final List<Property> properties = new ArrayList<Property>();
+	protected final List<Property> properties = new ArrayList<>();
 
 	protected static int c = 0;
 
@@ -110,10 +109,10 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 		}
 
 		// search all bean methods and their annotations
-		Map<String, Method> getters = new HashMap<String, Method>();
-		Map<String, Method> setters = new HashMap<String, Method>();
-		Map<String, Class<?>> types = new HashMap<String, Class<?>>();
-		Map<String, Collection<Annotation>> annotations = new HashMap<String, Collection<Annotation>>();
+		Map<String, Method> getters = new HashMap<>();
+		Map<String, Method> setters = new HashMap<>();
+		Map<String, Class<?>> types = new HashMap<>();
+		Map<String, Collection<Annotation>> annotations = new HashMap<>();
 
 		for (Method method : module.getClass().getMethods()) {
 			String name = method.getName();
@@ -140,7 +139,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 					letters[0] = Character.toLowerCase(letters[0]);
 					name = new String(letters);
 
-					Collection<Annotation> a = new HashSet<Annotation>();
+					Collection<Annotation> a = new HashSet<>();
 
 					Class<?> clazz = module.getClass();
 					while (!clazz.equals(Object.class)) {
@@ -218,7 +217,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 					if (type.isEnum()) {
 
 						String[] values = required.elements();
-						Collection<Object> elements = new HashSet<Object>();
+						Collection<Object> elements = new HashSet<>();
 
 						for (String value : values) {
 							elements.add(toEnumElement(value, type.asSubclass(Enum.class)));
@@ -241,7 +240,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 		}
 
 		// sort the properties
-		final Map<Property, List<Property>> hierarchy = new HashMap<Property, List<Property>>();
+		final Map<Property, List<Property>> hierarchy = new HashMap<>();
 
 		for (Property property : properties) {
 			Property parent = null;
@@ -252,7 +251,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 
 			List<Property> level = hierarchy.get(parent);
 			if (level == null) {
-				level = new ArrayList<Property>();
+				level = new ArrayList<>();
 				hierarchy.put(parent, level);
 			}
 			level.add(property);
@@ -279,7 +278,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 		}
 
 		properties.clear();
-		LinkedList<Property> added = new LinkedList<Property>();
+		LinkedList<Property> added = new LinkedList<>();
 		added.add(null);
 
 		while (!added.isEmpty()) {
@@ -376,7 +375,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 	public void setConfiguration(Node node) {
 		JNode xode = new JNode(node);
 
-		Map<String, String> values = new HashMap<String, String>();
+		Map<String, String> values = new HashMap<>();
 
 		List<JNode> propertyNodes = xode.getChildren("property");
 		for (JNode propertyNode : propertyNodes) {

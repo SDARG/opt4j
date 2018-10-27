@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -66,7 +66,7 @@ import com.google.inject.Module;
 @SuppressWarnings("serial")
 public class Opt4JTasksPanel extends DefaultTasksPanel {
 
-	protected final Map<Task, Progress> progessMap = new WeakHashMap<Task, Progress>();
+	protected final Map<Task, Progress> progessMap = new WeakHashMap<>();
 
 	protected final SelectedModules selectedModules;
 
@@ -373,30 +373,10 @@ public class Opt4JTasksPanel extends DefaultTasksPanel {
 			JMenuItem pause = new JMenuItem("Pause", Icons.getIcon(Icons.CONTROL_PAUSE));
 			JMenuItem stop = new JMenuItem("STOP", Icons.getIcon(Icons.CONTROL_STOP));
 			JMenuItem terminate = new JMenuItem("Terminate", Icons.getIcon(Icons.CONTROL_TERM));
-			terminate.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					control.doTerminate();
-				}
-			});
-			start.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					control.doStart();
-				}
-			});
-			pause.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					control.doPause();
-				}
-			});
-			stop.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					control.doStop();
-				}
-			});
+			terminate.addActionListener((ActionEvent e) -> control.doTerminate());
+			start.addActionListener((ActionEvent e) -> control.doStart());
+			pause.addActionListener((ActionEvent e) -> control.doPause());
+			stop.addActionListener((ActionEvent e) -> control.doStop());
 
 			if (control != null) {
 				switch (control.getState()) {

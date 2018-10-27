@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -57,11 +57,10 @@ import com.google.inject.Injector;
 public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends Operator<?>>
 		implements GenericOperator<O> {
 
-	protected SortedMap<Class<? extends Genotype>, O> classOperators = new TreeMap<Class<? extends Genotype>, O>(
-			new ClassComparator());
-	protected Map<OperatorPredicate, O> genericOperators = new HashMap<OperatorPredicate, O>();
+	protected SortedMap<Class<? extends Genotype>, O> classOperators = new TreeMap<>(new ClassComparator());
+	protected Map<OperatorPredicate, O> genericOperators = new HashMap<>();
 
-	protected List<Class<? extends Q>> cldef = new ArrayList<Class<? extends Q>>();
+	protected List<Class<? extends Q>> cldef = new ArrayList<>();
 
 	/**
 	 * Comparator for a specific order: Superclasses always are sorted after
@@ -185,7 +184,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	 */
 	@Override
 	public Collection<O> getOperators() {
-		Set<O> set = new HashSet<O>();
+		Set<O> set = new HashSet<>();
 		set.addAll(classOperators.values());
 		set.addAll(genericOperators.values());
 		return set;
@@ -222,19 +221,19 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	protected static class OperatorHolder<P> {
 
 		@Inject(optional = true)
-		protected Map<OperatorPredicate, P> map = new HashMap<OperatorPredicate, P>();
+		protected Map<OperatorPredicate, P> map = new HashMap<>();
 
 		@Inject
 		protected Injector injector;
 
-		protected Collection<Class<? extends P>> clazzes = new ArrayList<Class<? extends P>>();
+		protected Collection<Class<? extends P>> clazzes = new ArrayList<>();
 
 		public void add(Collection<Class<? extends P>> clazzes) {
 			this.clazzes.addAll(clazzes);
 		}
 
 		public Map<OperatorPredicate, P> getMap() {
-			Map<OperatorPredicate, P> map = new HashMap<OperatorPredicate, P>();
+			Map<OperatorPredicate, P> map = new HashMap<>();
 
 			for (Class<? extends P> clazz : clazzes) {
 				P p = injector.getInstance(clazz);

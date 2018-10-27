@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
- 
 
 package org.opt4j.core.start;
 
@@ -112,7 +111,7 @@ public class Parameters {
 		Collection<Class<?>> classes = getAllClasses(clazz);
 		Collection<ParameterizedType> paramTypes = getParameterizedTypes(classes);
 
-		Map<Type, ParameterizedType> map = new HashMap<Type, ParameterizedType>();
+		Map<Type, ParameterizedType> map = new HashMap<>();
 
 		for (ParameterizedType p : paramTypes) {
 			map.put(p.getRawType(), p);
@@ -122,7 +121,7 @@ public class Parameters {
 	}
 
 	protected static Collection<Class<?>> getAllClasses(final Class<?> clazz) {
-		Collection<Class<?>> set = new HashSet<Class<?>>();
+		Collection<Class<?>> set = new HashSet<>();
 		if (clazz != null && !clazz.equals(Object.class)) {
 			set.add(clazz);
 
@@ -137,7 +136,7 @@ public class Parameters {
 	}
 
 	protected static Collection<ParameterizedType> getParameterizedTypes(Collection<Class<?>> classes) {
-		Collection<ParameterizedType> paramTypes = new HashSet<ParameterizedType>();
+		Collection<ParameterizedType> paramTypes = new HashSet<>();
 
 		for (Class<?> clazz : classes) {
 
