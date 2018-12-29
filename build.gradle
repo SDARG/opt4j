@@ -123,8 +123,8 @@ subprojects {
 	               url 'http://www.opt4j.org'
 	 
 	               scm {
-	                   url 'http://hg.code.sf.net/p/opt4j/hgroot'
-	                   connection 'http://hg.code.sf.net/p/opt4j/hgroot'
+	                   url 'https://github.com/felixreimann/opt4j'
+	                   connection 'https://github.com/felixreimann/opt4j.git'
 	               }
 	 
 	               licenses {
@@ -141,12 +141,20 @@ subprojects {
 	                       name 'Martin Lukasiewycz'
 	                   }
 	                   developer {
-	                       id 'reimann'
+	                       id 'felixreimann'
 	                       name 'Felix Reimann'
 	                   }
 	                   developer {
 	                       id 'glass'
 	                       name 'Michael Glass'
+	                   }
+	                   developer {
+	                       id 'fedorsmirnov89'
+	                       name 'Fedor Smirnov'
+	                   }
+	                   developer {
+	                       id 'vrichthammer'
+	                       name 'Valentina Richthammer'
 	                   }
 	               }
 	           }
@@ -269,7 +277,6 @@ task alldocs(type: Javadoc) {
 			classpath = subproject.sourceSets.main.output + subproject.sourceSets.main.compileClasspath
 		}
 	}
-
 }
 
 task release(dependsOn: [distZip,website] ){}
@@ -285,7 +292,6 @@ task fatjar(dependsOn: subprojects.jar, type: Jar) {
     }
 }
 
-import org.apache.tools.ant.filters.ReplaceTokens
 applicationDistribution.from("src/distribution") {
     filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
 }
@@ -329,3 +335,4 @@ tasks.coveralls {
   dependsOn jacocoRootReport
   onlyIf { System.env.'CI' && !JavaVersion.current().isJava9Compatible() }
 }
+
