@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.core;
 
 import java.util.Set;
@@ -127,33 +126,27 @@ public class Individual {
 		}
 
 		/**
-		 * Returns {@code true} if the individual is decoded in the current
-		 * state.
+		 * Returns {@code true} if the individual is decoded in the current state.
 		 * 
-		 * @return {@code true} if the individual is decoded in the current
-		 *         state
+		 * @return {@code true} if the individual is decoded in the current state
 		 */
 		public boolean isDecoded() {
 			return decoded;
 		}
 
 		/**
-		 * Returns {@code true} if the individual is evaluated in the current
-		 * state.
+		 * Returns {@code true} if the individual is evaluated in the current state.
 		 * 
-		 * @return {@code true} if the individual is evaluated in the current
-		 *         state
+		 * @return {@code true} if the individual is evaluated in the current state
 		 */
 		public boolean isEvaluated() {
 			return evaluated;
 		}
 
 		/**
-		 * Returns {@code true} if the individual is processing in the current
-		 * state.
+		 * Returns {@code true} if the individual is processing in the current state.
 		 * 
-		 * @return {@code true} if the individual is processing in the current
-		 *         state
+		 * @return {@code true} if the individual is processing in the current state
 		 */
 		public boolean isProcessing() {
 			return processing;
@@ -291,5 +284,18 @@ public class Individual {
 	 */
 	protected void setIndividualStatusListeners(Set<IndividualStateListener> individualStateListeners) {
 		this.individualStateListeners = individualStateListeners;
+	}
+
+	/**
+	 * Returns {@code true} if this individual dominates the given individual, that
+	 * is if the given individual is worse in all optimization aspects.
+	 * 
+	 * @param otherIndividual
+	 * @return
+	 */
+	public boolean dominates(Individual otherIndividual) {
+		// in the default case, the dominance is dictated by the objectives only
+		Objectives otherObjectives = otherIndividual.getObjectives();
+		return getObjectives().dominates(otherObjectives);
 	}
 }

@@ -75,6 +75,33 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		Individual dominated = getIndividual(1.0, 1.0);
 		extremes.add(firstExtreme);
 		extremes.add(secondExtreme);
+		
+		for (Individual indi : nonDominated) {
+			for (Individual otherIndi : nonDominated) {
+				when(indi.dominates(otherIndi)).thenReturn(false);
+			}
+			for (Individual otherIndi : extremes) {
+				when(indi.dominates(otherIndi)).thenReturn(false);
+			}
+			when(indi.dominates(dominated)).thenReturn(true);
+		}
+		for (Individual indi : extremes) {
+			for (Individual otherIndi : nonDominated) {
+				when(indi.dominates(otherIndi)).thenReturn(false);
+			}
+			for (Individual otherIndi : extremes) {
+				when(indi.dominates(otherIndi)).thenReturn(false);
+			}
+			when(indi.dominates(dominated)).thenReturn(true);
+		}
+		for (Individual otherIndi : nonDominated) {
+			when(dominated.dominates(otherIndi)).thenReturn(false);
+		}
+		for (Individual otherIndi : extremes) {
+			when(dominated.dominates(otherIndi)).thenReturn(false);
+		}
+		
+		
 		Set<Individual> population = new HashSet<>(nonDominated);
 		population.addAll(extremes);
 		population.add(dominated);
