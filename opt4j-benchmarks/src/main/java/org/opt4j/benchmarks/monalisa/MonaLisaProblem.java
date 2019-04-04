@@ -44,7 +44,6 @@ public class MonaLisaProblem {
 
 	private void initialize() {
 		File img = new File("./opt4j-benchmarks/images/monaLisa.jpg");
-		monaLisa = null;
 		try {
 			monaLisa = ImageIO.read(img);
 		} catch (IOException e) {
@@ -62,7 +61,6 @@ public class MonaLisaProblem {
 			@Override
 			protected void paintComponent(Graphics g) {
 				File img = new File("./opt4j-benchmarks/images/monaLisa.jpg");
-				monaLisa = null;
 				try {
 					monaLisa = ImageIO.read(img);
 				} catch (IOException e) {
