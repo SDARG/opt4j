@@ -21,34 +21,48 @@ import org.opt4j.core.config.Icons;
 import org.opt4j.core.config.annotations.Icon;
 import org.opt4j.core.config.annotations.Info;
 import org.opt4j.core.config.annotations.Order;
+import org.opt4j.core.config.annotations.File;
+import org.opt4j.core.config.annotations.Required;
 import org.opt4j.core.problem.ProblemModule;
 import org.opt4j.core.start.Constant;
 
 /**
- * The {@link MonaLisaModule} is used for the configuration of the Mona Lisa problem. It contains the image to resemble,
- * the number of polygons as well as how many different color are to be considered.
+ * The {@link MonaLisaModule} is used for the configuration of the Mona Lisa problem. It defines the image to resemble,
+ * the number of polygons as well as how many different colors are to be considered.
  * 
- * @author michaelhglass
+ * @author felixreimann, michaelglass
  * 
  */
 @Icon(Icons.PROBLEM)
 @Info("The Mona Lisa problem as formulated in https://rogerjohansson.blog/2008/12/07/genetic-programming-evolution-of-mona-lisa/ which basically tries to resemble a given image by means of a number of semi-transparent colored polygons.")
 public class MonaLisaModule extends ProblemModule {
 
+	enum Encoding {
+		RECTANGLES,
+		PIXELS
+	}
+
 	@Info("The number of polygons to be used.")
 	@Order(1)
 	@Constant(value = "numberOfPolygons", namespace = MonaLisaProblem.class)
+	@Required(property = "encoding", elements = { "RECTANGLES" })
 	protected int numberOfPolygons = 50;
 
 	@Info("The number of colors per color channel.")
-	@Order(1)
+	@Order(2)
 	@Constant(value = "colorsPerChannel", namespace = MonaLisaProblem.class)
 	protected int colorsPerChannel = 10;
 
 	@Info("The filename of the image.")
 	@Order(0)
 	@Constant(value = "filename", namespace = MonaLisaProblem.class)
+	@File
 	protected String filename = "./opt4j-benchmarks/images/monaLisa.jpg";
+	
+	@Info("The encoding to be used.")
+	@Order(3)
+	protected Encoding encoding = Encoding.RECTANGLES;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -59,7 +73,15 @@ public class MonaLisaModule extends ProblemModule {
 
 		bind(MonaLisaProblem.class).in(SINGLETON);
 
-		bindProblem(MonaLisaCreatorDecoder.class, MonaLisaCreatorDecoder.class, MonaLisaEvaluator.class);
+		switch (encoding) {
+			case PIXELS:
+				bindProblem(PixelCreatorDecoder.class, PixelCreatorDecoder.class, MonaLisaEvaluator.class);
+				break;
+			case RECTANGLES:
+			default:
+				bindProblem(MonaLisaCreatorDecoder.class, MonaLisaCreatorDecoder.class, MonaLisaEvaluator.class);
+				break;
+		}
 	}
 
 	public String getFilename() {
@@ -86,4 +108,11 @@ public class MonaLisaModule extends ProblemModule {
 		this.colorsPerChannel = colorsPerChannel;
 	}
 
+	public Encoding getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(Encoding encoding) {
+		this.encoding = encoding;
+	}
 }
