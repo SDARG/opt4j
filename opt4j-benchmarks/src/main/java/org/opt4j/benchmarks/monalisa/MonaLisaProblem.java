@@ -29,26 +29,24 @@ public class MonaLisaProblem {
 	protected BufferedImage monaLisa;
 
 	@Inject
-	public MonaLisaProblem(@Constant(value = "width", namespace = MonaLisaProblem.class) int width,
-			@Constant(value = "height", namespace = MonaLisaProblem.class) int height,
+	public MonaLisaProblem(@Constant(value = "filename", namespace = MonaLisaProblem.class) String filename,
 			@Constant(value = "numberOfPolygons", namespace = MonaLisaProblem.class) int numberOfPolygons,
 			@Constant(value = "colorsPerChannel", namespace = MonaLisaProblem.class) int colorsPerChannel) {
-		this.width = width;
-		this.height = height;
 		this.numberOfPolygons = numberOfPolygons;
 		this.colorsPerChannel = colorsPerChannel;
 
-		initialize();
-
+		initialize(filename);
 	}
 
-	private void initialize() {
-		File img = new File("./opt4j-benchmarks/images/monaLisa.jpg");
+	private void initialize(String filename) {
+		File img = new File(filename);
 		try {
 			monaLisa = ImageIO.read(img);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		width = monaLisa.getWidth();
+		height = monaLisa.getHeight();
 
 		JFrame mainMap = new JFrame();
 		mainMap.setResizable(false);
@@ -60,18 +58,12 @@ public class MonaLisaProblem {
 
 			@Override
 			protected void paintComponent(Graphics g) {
-				File img = new File("./opt4j-benchmarks/images/monaLisa.jpg");
-				try {
-					monaLisa = ImageIO.read(img);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 				g.drawImage(monaLisa, 0, 0, null);
 			}
 
 			@Override
 			public Dimension getPreferredSize() {
-				return new Dimension(200, 300);
+				return new Dimension(width, height);
 			}
 		};
 
