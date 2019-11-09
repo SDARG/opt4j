@@ -34,13 +34,14 @@ public class MonaLisaWidgetService implements IndividualMouseListener {
 		public MyPanel(Individual individual) {
 			super();
 			this.individual = individual;
-			setPreferredSize(new Dimension(200, 300));
+			int x = ((BufferedImage) individual.getPhenotype()).getWidth();
+			int y = ((BufferedImage) individual.getPhenotype()).getHeight();
+			setPreferredSize(new Dimension(x, y));
 		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
 			g.drawImage((BufferedImage) individual.getPhenotype(), 0, 0, this);
-
 		}
 	}
 
@@ -74,6 +75,7 @@ public class MonaLisaWidgetService implements IndividualMouseListener {
 		this.viewport = viewport;
 	}
 
+	@Override
 	public void onDoubleClick(Individual individual, Component table, Point p) {
 		paintMonaLisa(individual);
 	}
