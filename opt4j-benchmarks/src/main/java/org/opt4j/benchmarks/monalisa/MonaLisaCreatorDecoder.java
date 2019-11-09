@@ -35,15 +35,15 @@ public class MonaLisaCreatorDecoder implements Creator<MonaLisaGenotype>, Decode
 		genotype.put(MonaLisaGenotype.YPOSITIONS, yPositions);
 
 		IntegerGenotype reds = new IntegerGenotype(0, problem.getColorsPerChannel());
-		reds.init(random, problem.getNumberOfPolygons());
+		reds.init(random, problem.getNumberOfPolygons() + 1);
 		genotype.put(MonaLisaGenotype.REDS, reds);
 
 		IntegerGenotype greens = new IntegerGenotype(0, problem.getColorsPerChannel());
-		greens.init(random, problem.getNumberOfPolygons());
+		greens.init(random, problem.getNumberOfPolygons() + 1);
 		genotype.put(MonaLisaGenotype.GREENS, greens);
 
 		IntegerGenotype blues = new IntegerGenotype(0, problem.getColorsPerChannel());
-		blues.init(random, problem.getNumberOfPolygons());
+		blues.init(random, problem.getNumberOfPolygons() + 1);
 		genotype.put(MonaLisaGenotype.BLUES, blues);
 
 		IntegerGenotype alphas = new IntegerGenotype(0, problem.getColorsPerChannel());
@@ -70,16 +70,19 @@ public class MonaLisaCreatorDecoder implements Creator<MonaLisaGenotype>, Decode
 
 		int colorOffset = 255 / problem.getColorsPerChannel();
 
+		canvas.setBackground(new Color(reds.get(polygons) * colorOffset, greens.get(polygons) * colorOffset,
+				blues.get(polygons) * colorOffset));
+		canvas.clearRect(0, 0, problem.getWidth(), problem.getHeight());
+
 		// draw each polygon
 		for (int i = 0; i < polygons; i++) {
 			Polygon polygon = new Polygon();
+			int index = i * vertices;
 			for (int offset = 0; offset < vertices; offset++) {
-				int index = i * vertices;
 				polygon.addPoint(xPositions.get(index + offset), yPositions.get(index + offset));
 			}
 			canvas.setColor(new Color(reds.get(i) * colorOffset, greens.get(i) * colorOffset,
 					blues.get(i) * colorOffset, alphas.get(i) * colorOffset));
-			canvas.drawPolygon(polygon);
 			canvas.fillPolygon(polygon);
 		}
 
