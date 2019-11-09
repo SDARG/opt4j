@@ -21,7 +21,6 @@ public class MonaLisaEvaluator implements Evaluator<BufferedImage> {
 	@Inject
 	public MonaLisaEvaluator(MonaLisaProblem problem) {
 		this.problem = problem;
-
 	}
 
 	@Inject
@@ -30,16 +29,15 @@ public class MonaLisaEvaluator implements Evaluator<BufferedImage> {
 		height = problem.getHeight();
 		monaLisa = problem.getMonaLisa();
 
-		colorsML = new int[height * width * 4];
+		colorsML = new int[height * width * 3];
 
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				synchronized (monaLisa) {
 					int colorML = monaLisa.getRGB(x, y);
-					colorsML[x * y * 4 + y * 4 + 0] = colorML & 0xff;
-					colorsML[x * y * 4 + y * 4 + 1] = (colorML & 0xff00) >> 8;
-					colorsML[x * y * 4 + y * 4 + 2] = (colorML & 0xff0000) >> 16;
-					colorsML[x * y * 4 + y * 4 + 3] = (colorML & 0xff000000) >>> 24;
+					colorsML[x * y * 3 + y * 3 + 0] = colorML & 0xff;
+					colorsML[x * y * 3 + y * 3 + 1] = (colorML & 0xff00) >> 8;
+					colorsML[x * y * 3 + y * 3 + 2] = (colorML & 0xff0000) >> 16;
 				}
 			}
 		}
@@ -49,24 +47,22 @@ public class MonaLisaEvaluator implements Evaluator<BufferedImage> {
 	public Objectives evaluate(BufferedImage phenotype) {
 		Objectives objectives = new Objectives();
 
-		double difference = 0;
+		double difference = 0.0;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				int color = phenotype.getRGB(x, y);
-				int[] colors = new int[4];
+				int[] colors = new int[3];
 				colors[0] = color & 0xff;
 				colors[1] = (color & 0xff00) >> 8;
 				colors[2] = (color & 0xff0000) >> 16;
-				colors[3] = (color & 0xff000000) >>> 24;
 
-				difference += Math.abs(colorsML[x * y * 4 + y * 4 + 0] - colors[0]);
-				difference += Math.abs(colorsML[x * y * 4 + y * 4 + 1] - colors[1]);
-				difference += Math.abs(colorsML[x * y * 4 + y * 4 + 2] - colors[2]);
-				difference += Math.abs(colorsML[x * y * 4 + y * 4 + 3] - colors[3]);
+				difference += Math.abs(colorsML[x * y * 3 + y * 3 + 0] - colors[0]);
+				difference += Math.abs(colorsML[x * y * 3 + y * 3 + 1] - colors[1]);
+				difference += Math.abs(colorsML[x * y * 3 + y * 3 + 2] - colors[2]);
 			}
 		}
-
-		objectives.add(differenceObjective, difference);
+		double maxDifference = 0xffffff * width * height;
+		objectives.add(differenceObjective, difference / maxDifference);
 		return objectives;
 
 	}
