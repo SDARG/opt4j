@@ -292,4 +292,17 @@ public class Individual {
 	protected void setIndividualStatusListeners(Set<IndividualStateListener> individualStateListeners) {
 		this.individualStateListeners = individualStateListeners;
 	}
+	
+	/**
+	 * Returns {@code true} if this individual dominates the given individual, that
+	 * is if the given individual is worse in all optimization aspects.
+	 * 
+	 * @param otherIndividual
+	 * @return
+	 */
+	public boolean dominates(Individual otherIndividual) {
+		// in the default case, the dominance is dictated by the objectives only
+		Objectives otherObjectives = otherIndividual.getObjectives();
+		return getObjectives().dominates(otherObjectives);
+	}
 }

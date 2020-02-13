@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.opt4j.core.Individual;
-import org.opt4j.core.Objectives;
 
 /**
  * The {@link NonDominatedFronts} sorts each evaluated {@link Individual} into
@@ -169,12 +168,10 @@ public class NonDominatedFronts {
 			for (int j = i + 1; j < individualList.size(); j++) {
 				Individual p = individualList.get(i);
 				Individual q = individualList.get(j);
-				Objectives po = p.getObjectives();
-				Objectives qo = q.getObjectives();
-				if (po.dominates(qo)) {
+				if (p.dominates(q)) {
 					dominatedIndividualsMap.get(p).add(q);
 					dominatingIndividualNumber[individual2IndexMap.get(q)]++;
-				} else if (qo.dominates(po)) {
+				} else if (q.dominates(p)) {
 					dominatedIndividualsMap.get(q).add(p);
 					dominatingIndividualNumber[individual2IndexMap.get(p)]++;
 				}
