@@ -45,7 +45,7 @@ import com.google.inject.Singleton;
 @Singleton
 public class MixedSATManager implements SATManager {
 
-	protected final Solver solver;
+	protected Solver solver;
 
 	/**
 	 * Constructs a {@link MixedSATManager}.
