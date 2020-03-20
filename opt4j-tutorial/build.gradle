@@ -2,11 +2,12 @@ import org.apache.tools.ant.filters.*
 import java.util.regex.*
 
 dependencies {
-	compile project(':opt4j-core')
-	compile project(':opt4j-satdecoding')
-	compile project(':opt4j-optimizers')
-	compile project(':opt4j-operators')
-	compile project(':opt4j-viewer')
+	implementation	group: 'com.google.inject', name: 'guice', version: '4.2.1'
+	implementation project(':opt4j-core')
+	implementation project(':opt4j-satdecoding')
+	implementation project(':opt4j-optimizers')
+	implementation project(':opt4j-operators')
+	implementation project(':opt4j-viewer')
 }
 
 task filterSources(type: Copy) {

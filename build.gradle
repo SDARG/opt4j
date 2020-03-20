@@ -60,7 +60,7 @@ def descriptions = [
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
@@ -68,8 +68,6 @@ subprojects {
 		toolVersion = "0.8.2"
 	}
 
-    sourceCompatibility = 1.11 
-	targetCompatibility = 1.11
     
     version = parent.version
 
@@ -109,64 +107,64 @@ subprojects {
 	    sign configurations.archives
 	}
 	
-	uploadArchives {
-	    repositories {
-	        mavenDeployer {
-	            configuration = configurations.deployerJars
-	            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-	 
-	            repository(url: stagingURL) {
-	              authentication(userName: sonatypeUsername, password: sonatypePassword)
-	            }
-	 
-	            pom.project {
-	               name 'Opt4J'
-	               packaging 'jar'
-	               description descriptions[project.name]
-	               url 'http://www.opt4j.org'
-	 
-	               scm {
-	                   url 'http://hg.code.sf.net/p/opt4j/hgroot'
-	                   connection 'http://hg.code.sf.net/p/opt4j/hgroot'
-	               }
-	 
-	               licenses {
-	                   license {
-	                       name 'GNU Lesser General Public License'
-	                       url 'http://www.gnu.org/licenses/lgpl.txt'
-	                       distribution 'repo'
-	                   }
-	               }
-	 
-	               developers {
-	                   developer {
-	                       id 'lukasiewycz'
-	                       name 'Martin Lukasiewycz'
-	                   }
-	                   developer {
-	                       id 'reimann'
-	                       name 'Felix Reimann'
-	                   }
-	                   developer {
-	                       id 'glass'
-	                       name 'Michael Glass'
-	                   }
-	               }
-	           }
-	        }
-	    }
-	}
+//	uploadArchives {
+//	    repositories {
+//	        mavenDeployer {
+//	            configuration = configurations.deployerJars
+//	            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//	 
+//	            repository(url: stagingURL) {
+//	              authentication(userName: sonatypeUsername, password: sonatypePassword)
+//	            }
+//	 
+//	            pom.project {
+//	               name 'Opt4J'
+//	               packaging 'jar'
+//	               description descriptions[project.name]
+//	               url 'http://www.opt4j.org'
+//	 
+//	               scm {
+//	                   url 'http://hg.code.sf.net/p/opt4j/hgroot'
+//	                   connection 'http://hg.code.sf.net/p/opt4j/hgroot'
+//	               }
+//	 
+//	               licenses {
+//	                   license {
+//	                       name 'GNU Lesser General Public License'
+//	                       url 'http://www.gnu.org/licenses/lgpl.txt'
+//	                       distribution 'repo'
+//	                   }
+//	               }
+//	 
+//	               developers {
+//	                   developer {
+//	                       id 'lukasiewycz'
+//	                       name 'Martin Lukasiewycz'
+//	                   }
+//	                   developer {
+//	                       id 'reimann'
+//	                       name 'Felix Reimann'
+//	                   }
+//	                   developer {
+//	                       id 'glass'
+//	                       name 'Michael Glass'
+//	                   }
+//	               }
+//	           }
+//	        }
+//	    }
+//	}
 
-	jacocoTestReport {
-		additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
-		sourceDirectories = files(sourceSets.main.allSource.srcDirs)
-		classDirectories =  files(sourceSets.main.output)
-		reports {
-		    html.enabled = true
-		    xml.enabled = true
-		    csv.enabled = false
-		}
-	}
+//	jacocoTestReport {
+//		additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+//		sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+//		classDirectories =  files(sourceSets.main.output)
+//		reports {
+//		    html.enabled = true
+//		    xml.enabled = true
+//		    csv.enabled = false
+//		}
+//	}
 }
 
 compileJava  {
@@ -181,13 +179,13 @@ uploadArchives.doFirst {
 }
 
 dependencies {
-	runtime project(':opt4j-core')
-	runtime project(':opt4j-satdecoding')
-	runtime project(':opt4j-operators')
-	runtime project(':opt4j-optimizers')
-	runtime project(':opt4j-benchmarks')
-	runtime project(':opt4j-viewer')
-	runtime project(':opt4j-tutorial')
+	implementation project(':opt4j-core')
+	implementation project(':opt4j-satdecoding')
+	implementation project(':opt4j-operators')
+	implementation project(':opt4j-optimizers')
+	implementation project(':opt4j-benchmarks')
+	implementation project(':opt4j-viewer')
+	implementation project(':opt4j-tutorial')
 }
 
 jar {
@@ -277,10 +275,10 @@ task alldocs(type: Javadoc) {
 
 task release(dependsOn: [distZip,website] ){}
 
-wrapper.gradleVersion = '4.10.2'
+//wrapper.gradleVersion = '4.10.2'
 
 task fatjar(dependsOn: subprojects.jar, type: Jar) {
-    destinationDir = new File(project.buildDir, 'fatjar')
+    destinationDirectory = new File(project.buildDir, 'fatjar')
     from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest {
 		attributes 'Main-Class': mainClassName
@@ -295,40 +293,40 @@ applicationDistribution.from("src/distribution") {
 
 applicationDefaultJvmArgs = ["-splash:opt4j-core/src/main/resources/img/splash.png"]
 
-task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-    dependsOn = subprojects.test
-    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
-    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output)
-    executionData = files(subprojects.jacocoTestReport.executionData)
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        csv.enabled = false
-    }
-    onlyIf = {
-        true
-    }
-    doFirst {
-        executionData = files(executionData.findAll {
-            it.exists()
-        })
-    }
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['ptolemy/**', 'org/opt4j/tutorial/**', 'org/opt4j/viewer/**', 'org/opt4j/core/config/visualization/**'])
-        })
-    }
-}
+//task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+//    dependsOn = subprojects.test
+//   additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+//    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+//    classDirectories = files(subprojects.sourceSets.main.output)
+//    executionData = files(subprojects.jacocoTestReport.executionData)
+//    reports {
+//        html.enabled = true
+//        xml.enabled = true
+//        csv.enabled = false
+//    }
+//    onlyIf = {
+//        true
+//    }
+//    doFirst {
+//        executionData = files(executionData.findAll {
+//            it.exists()
+//        })
+//    }
+//    afterEvaluate {
+//        classDirectories = files(classDirectories.files.collect {
+//            fileTree(dir: it, exclude: ['ptolemy/**', 'org/opt4j/tutorial/**', 'org/opt4j/viewer/**', 'org/opt4j/core/config/visualization/**'])
+//        })
+//    }
+//}
 
-coveralls {
-	sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
-	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
-}
-tasks.coveralls {
-  group = 'Documentation'
-  description = 'Uploads the aggregated coverage report to Coveralls'
+//coveralls {
+//	sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
+//	jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+//}
+//tasks.coveralls {
+//  group = 'Documentation'
+//  description = 'Uploads the aggregated coverage report to Coveralls'
 
-  dependsOn jacocoRootReport
-  onlyIf { System.env.'CI' && !JavaVersion.current().isJava9Compatible() }
-}
+//  dependsOn jacocoRootReport
+//  onlyIf { System.env.'CI' && !JavaVersion.current().isJava9Compatible() }
+//}
