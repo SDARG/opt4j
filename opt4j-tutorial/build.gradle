@@ -2,7 +2,6 @@ import org.apache.tools.ant.filters.*
 import java.util.regex.*
 
 dependencies {
-	implementation	group: 'com.google.inject', name: 'guice', version: '4.2.1'
 	implementation project(':opt4j-core')
 	implementation project(':opt4j-satdecoding')
 	implementation project(':opt4j-optimizers')

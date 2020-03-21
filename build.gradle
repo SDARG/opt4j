@@ -182,13 +182,13 @@ uploadArchives.doFirst {
 }
 
 dependencies {
-	implementation project(':opt4j-core')
-	implementation project(':opt4j-satdecoding')
-	implementation project(':opt4j-operators')
-	implementation project(':opt4j-optimizers')
-	implementation project(':opt4j-benchmarks')
-	implementation project(':opt4j-viewer')
-	implementation project(':opt4j-tutorial')
+	runtime project(':opt4j-core')
+	runtime project(':opt4j-satdecoding')
+	runtime project(':opt4j-operators')
+	runtime project(':opt4j-optimizers')
+	runtime project(':opt4j-benchmarks')
+	runtime project(':opt4j-viewer')
+	runtime project(':opt4j-tutorial')
 }
 
 jar {

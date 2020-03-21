@@ -1,7 +1,6 @@
 dependencies {
 	implementation group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: '2.3.5'
 	implementation group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: '2.3.5'
-	implementation	group: 'com.google.inject', name: 'guice', version: '4.2.1'
 	
 	implementation project(':opt4j-core')
 	
