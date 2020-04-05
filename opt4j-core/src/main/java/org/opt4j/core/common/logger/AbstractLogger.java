@@ -165,7 +165,7 @@ public abstract class AbstractLogger implements OptimizerStateListener, Optimize
 	 * .core.Individual)
 	 */
 	@Override
-	public void inidividualStateChanged(Individual individual) {
+	public void individualStateChanged(Individual individual) {
 		if (individual.getState() == State.EVALUATED) {
 			if (isFirst) {
 				synchronized (this) {

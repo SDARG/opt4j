@@ -266,7 +266,7 @@ public class Individual {
 
 			if (individualStateListeners != null) {
 				for (IndividualStateListener listener : individualStateListeners) {
-					listener.inidividualStateChanged(this);
+					listener.individualStateChanged(this);
 				}
 			}
 		}
