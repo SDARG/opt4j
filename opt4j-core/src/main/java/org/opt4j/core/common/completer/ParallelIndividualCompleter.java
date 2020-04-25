@@ -32,6 +32,7 @@ import java.util.concurrent.Future;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
+import org.opt4j.core.ObjectivesWrapper;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.Optimizer;
 import org.opt4j.core.optimizer.OptimizerStateListener;
@@ -67,10 +68,8 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 		/**
 		 * Constructs {@link Complete} with an {@link Individual}.
 		 * 
-		 * @param individual
-		 *            the individual to complete
-		 * @param control
-		 *            the control
+		 * @param individual the individual to complete
+		 * @param control    the control
 		 */
 		public Complete(final Individual individual, final Control control) {
 			this.individual = individual;
@@ -99,20 +98,17 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	 * Constructs a {@link ParallelIndividualCompleter} with a specified maximal
 	 * number of concurrent threads.
 	 * 
-	 * @param control
-	 *            the control
-	 * @param decoder
-	 *            the decoder
-	 * @param evaluator
-	 *            the evaluator
-	 * @param maxThreads
-	 *            the maximal number of parallel threads (using namespace
-	 *            {@link ParallelIndividualCompleter})
+	 * @param control    the control
+	 * @param decoder    the decoder
+	 * @param evaluator  the evaluator
+	 * @param maxThreads the maximal number of parallel threads (using namespace
+	 *                   {@link ParallelIndividualCompleter})
 	 */
 	@Inject
 	public ParallelIndividualCompleter(Control control, Decoder<Genotype, Object> decoder, Evaluator<Object> evaluator,
+			ObjectivesWrapper objWrapper,
 			@Constant(value = "maxThreads", namespace = ParallelIndividualCompleter.class) int maxThreads) {
-		super(control, decoder, evaluator);
+		super(control, decoder, evaluator, objWrapper);
 
 		if (maxThreads < 1) {
 			throw new IllegalArgumentException("Invalid number of threads: " + maxThreads);
@@ -178,8 +174,7 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opt4j.core.optimizer.OptimizerStateListener#optimizationStarted(org
+	 * @see org.opt4j.core.optimizer.OptimizerStateListener#optimizationStarted(org
 	 * .opt4j.core.optimizer.Optimizer)
 	 */
 	@Override
@@ -190,8 +185,7 @@ public class ParallelIndividualCompleter extends SequentialIndividualCompleter i
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opt4j.core.optimizer.OptimizerStateListener#optimizationStopped(org
+	 * @see org.opt4j.core.optimizer.OptimizerStateListener#optimizationStopped(org
 	 * .opt4j.core.optimizer.Optimizer)
 	 */
 	@Override

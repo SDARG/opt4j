@@ -3,9 +3,6 @@ package org.opt4j.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.opt4j.core.Individual.State;
-
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
@@ -15,16 +12,11 @@ import com.google.inject.Singleton;
  * @author Fedor Smirnov
  */
 @Singleton
-public class ObjectivesWrapper implements IndividualStateListener {
+public class ObjectivesWrapper {
 
 	protected boolean objectivesInit = false;
 	protected final List<Objective> optimizationObjectives = new ArrayList<>();
 
-	@Inject
-	public ObjectivesWrapper(IndividualFactory indiFactory) {
-		indiFactory.addIndividualStateListener(this);
-	}
-	
 	/**
 	 * Returns the list of the objectives of the current optimization (same order as
 	 * in {@link Objectives}). Throws en {@link IllegalStateException} if called
@@ -41,14 +33,19 @@ public class ObjectivesWrapper implements IndividualStateListener {
 		}
 	}
 
-	@Override
-	public void individualStateChanged(Individual individual) {
-		if (individual.getState().equals(State.EVALUATED) && !objectivesInit) {
-			Objectives objs = individual.getObjectives();
-			for (Objective obj : objs.getKeys()) {
-				optimizationObjectives.add(obj);
-			}
+	/**
+	 * Initializes the objectives
+	 * 
+	 * @param the objectives obtained from an evaluated individual
+	 */
+	public void init(Objectives objs) {
+		for (Objective obj : objs.getKeys()) {
+			optimizationObjectives.add(obj);
 			objectivesInit = true;
 		}
+	}
+
+	public boolean isObjectivesInit() {
+		return objectivesInit;
 	}
 }
