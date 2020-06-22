@@ -25,8 +25,8 @@ def getVersionName = { ->
 }
 version=getVersionName()
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 14
+targetCompatibility = 14
 
 def stagingURL = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
 def snapshotURL = 'https://oss.sonatype.org/content/repositories/snapshots/'
@@ -68,7 +68,7 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
     jacoco {
-		toolVersion = "0.8.2"
+		toolVersion = "0.8.5"
 	}
 
     
