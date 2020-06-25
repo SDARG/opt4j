@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 dependencies {
-	compile	group: 'com.google.inject', name: 'guice', version: '4.2.1'
+	compile	group: 'com.google.inject', name: 'guice', version: '4.2.3'
 	
 	testImplementation	group: 'junit', name: 'junit', version: '4.12'
 	testImplementation ("org.mockito:mockito-core:2.23.4")
