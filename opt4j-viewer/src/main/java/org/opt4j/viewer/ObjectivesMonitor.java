@@ -126,7 +126,7 @@ public class ObjectivesMonitor implements IndividualStateListener {
 	 * .core.Individual)
 	 */
 	@Override
-	public void inidividualStateChanged(Individual individual) {
+	public void individualStateChanged(Individual individual) {
 		if (!done && individual.getState() == State.EVALUATED) {
 			publishObjectives(individual);
 		}

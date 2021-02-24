@@ -263,7 +263,7 @@ public class PopulationWidget implements IndividualStateListener, IndividualSetL
 	 * .core.Individual)
 	 */
 	@Override
-	public void inidividualStateChanged(Individual individual) {
+	public void individualStateChanged(Individual individual) {
 		paint();
 	}
 

@@ -1,4 +1,4 @@
 dependencies {
-	compile project(':opt4j-core')
-	compile project(':opt4j-satdecoding')
+	implementation project(':opt4j-core')
+	implementation project(':opt4j-satdecoding')
 }

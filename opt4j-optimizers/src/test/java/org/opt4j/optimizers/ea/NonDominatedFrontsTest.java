@@ -29,16 +29,41 @@ public class NonDominatedFrontsTest {
 	protected static Set<Individual> getIndividualSet() {
 		Set<Individual> result = new HashSet<>();
 
-		when(first.getObjectives()).thenReturn(getObjectives(5, 1));
-		when(second.getObjectives()).thenReturn(getObjectives(3, 3));
-		when(third.getObjectives()).thenReturn(getObjectives(1, 4));
-		when(fourth.getObjectives()).thenReturn(getObjectives(3, 2));
-		when(fifth.getObjectives()).thenReturn(getObjectives(1, 1));
+		when(first.dominates(fourth)).thenReturn(true);
+		when(first.dominates(fifth)).thenReturn(true);
+		when(first.dominates(infeasible)).thenReturn(true);
+		when(first.dominates(second)).thenReturn(false);
+		when(first.dominates(third)).thenReturn(false);
 
-		Objectives insfeasibleObjectives = new Objectives();
-		insfeasibleObjectives.add(firstObj, Objective.INFEASIBLE);
-		insfeasibleObjectives.add(secondObj, Objective.INFEASIBLE);
-		when(infeasible.getObjectives()).thenReturn(insfeasibleObjectives);
+		when(second.dominates(fourth)).thenReturn(true);
+		when(second.dominates(fifth)).thenReturn(true);
+		when(second.dominates(infeasible)).thenReturn(true);
+		when(second.dominates(first)).thenReturn(false);
+		when(second.dominates(third)).thenReturn(false);
+
+		when(third.dominates(fourth)).thenReturn(false);
+		when(third.dominates(fifth)).thenReturn(true);
+		when(third.dominates(infeasible)).thenReturn(true);
+		when(third.dominates(second)).thenReturn(false);
+		when(third.dominates(first)).thenReturn(false);
+
+		when(fourth.dominates(first)).thenReturn(false);
+		when(fourth.dominates(second)).thenReturn(false);
+		when(fourth.dominates(third)).thenReturn(false);
+		when(fourth.dominates(fifth)).thenReturn(true);
+		when(fourth.dominates(infeasible)).thenReturn(true);
+
+		when(fifth.dominates(first)).thenReturn(false);
+		when(fifth.dominates(second)).thenReturn(false);
+		when(fifth.dominates(third)).thenReturn(false);
+		when(fifth.dominates(fourth)).thenReturn(false);
+		when(fifth.dominates(infeasible)).thenReturn(true);
+		
+		when(infeasible.dominates(first)).thenReturn(false);
+		when(infeasible.dominates(second)).thenReturn(false);
+		when(infeasible.dominates(third)).thenReturn(false);
+		when(infeasible.dominates(fourth)).thenReturn(false);
+		when(infeasible.dominates(fifth)).thenReturn(false);
 
 		when(first.toString()).thenReturn("first");
 		when(second.toString()).thenReturn("second");

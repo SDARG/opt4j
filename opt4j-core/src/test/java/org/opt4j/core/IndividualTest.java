@@ -46,7 +46,7 @@ public class IndividualTest {
 
 		IndividualStateListener listener = new IndividualStateListener() {
 			@Override
-			public void inidividualStateChanged(Individual individual) {
+			public void individualStateChanged(Individual individual) {
 				stateChanged = true;
 			}
 		};

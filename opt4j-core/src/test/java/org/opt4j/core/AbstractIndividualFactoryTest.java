@@ -10,7 +10,7 @@ public abstract class AbstractIndividualFactoryTest {
 
 	protected IndividualStateListener listener = new IndividualStateListener() {
 		@Override
-		public void inidividualStateChanged(Individual individual) {
+		public void individualStateChanged(Individual individual) {
 			// nothing to be done
 		}
 	};
@@ -34,7 +34,7 @@ public abstract class AbstractIndividualFactoryTest {
 
 		IndividualStateListener listener2 = new IndividualStateListener() {
 			@Override
-			public void inidividualStateChanged(Individual individual) {
+			public void individualStateChanged(Individual individual) {
 
 			}
 		};
@@ -70,7 +70,7 @@ public abstract class AbstractIndividualFactoryTest {
 
 		IndividualStateListener listener2 = new IndividualStateListener() {
 			@Override
-			public void inidividualStateChanged(Individual individual) {
+			public void individualStateChanged(Individual individual) {
 
 			}
 		};

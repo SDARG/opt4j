@@ -22,8 +22,10 @@
 
 package org.opt4j.satdecoding;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.opt4j.core.Genotype;
 import org.opt4j.core.genotype.BooleanGenotype;
@@ -45,7 +47,8 @@ import com.google.inject.Singleton;
 @Singleton
 public class MixedSATManager implements SATManager {
 
-	protected final Solver solver;
+	protected Solver solver;
+	protected final Set<SatSolvingListener> solvingListeners = new HashSet<>();
 
 	/**
 	 * Constructs a {@link MixedSATManager}.
@@ -137,6 +140,7 @@ public class MixedSATManager implements SATManager {
 		} catch (TimeoutException e) {
 			System.err.println("timeout");
 		}
+		notifyListeners(satGenotype, model);
 		return model;
 	}
 
@@ -148,6 +152,28 @@ public class MixedSATManager implements SATManager {
 	@Override
 	public Solver getSolver() {
 		return solver;
+	}
+
+	@Override
+	public boolean registerSolvingListener(SatSolvingListener listener) {
+		return solvingListeners.add(listener);
+	}
+
+	@Override
+	public boolean unregisterSolvingListener(SatSolvingListener listener) {
+		return solvingListeners.remove(listener);
+	}
+	
+	/**
+	 * Notifies all solving listeners that resolving the constraints following the genotype resulted in the model. 
+	 * 
+	 * @param genotype the genotype (solution strategy)
+	 * @param model the model (feasible solution)
+	 */
+	protected void notifyListeners(SATGenotype genotype, Model model) {
+		for (SatSolvingListener l : solvingListeners) {
+			l.notifyListener(genotype, model);
+		}
 	}
 
 }

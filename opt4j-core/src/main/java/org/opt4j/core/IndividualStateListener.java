@@ -42,5 +42,5 @@ public interface IndividualStateListener {
 	 * @param individual
 	 *            the individual that changes the state
 	 */
-	public void inidividualStateChanged(Individual individual);
+	public void individualStateChanged(Individual individual);
 }

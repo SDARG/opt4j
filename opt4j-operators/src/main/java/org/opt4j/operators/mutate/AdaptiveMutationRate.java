@@ -95,7 +95,7 @@ public class AdaptiveMutationRate implements MutationRate, IndividualStateListen
 	 * .core.Individual)
 	 */
 	@Override
-	public synchronized void inidividualStateChanged(Individual individual) {
+	public synchronized void individualStateChanged(Individual individual) {
 		if (!isInit && individual.getState() != EMPTY) {
 			final int size = individual.getGenotype().size();
 			if (size > 0) {

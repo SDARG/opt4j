@@ -33,6 +33,7 @@ import org.opt4j.core.Individual;
 import org.opt4j.core.Individual.State;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
+import org.opt4j.core.ObjectivesWrapper;
 import org.opt4j.core.optimizer.Control;
 import org.opt4j.core.optimizer.IndividualCompleter;
 import org.opt4j.core.optimizer.TerminationException;
@@ -62,23 +63,23 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	protected final Evaluator<Object> evaluator;
 	protected final Control control;
 
+	protected final ObjectivesWrapper objWrapper;
+
 	/**
 	 * Constructs a {@link SequentialIndividualCompleter}.
 	 * 
-	 * @param control
-	 *            the optimization control
-	 * @param decoder
-	 *            the decoder
-	 * @param evaluator
-	 *            the evaluator
+	 * @param control   the optimization control
+	 * @param decoder   the decoder
+	 * @param evaluator the evaluator
 	 */
 	@Inject
 	public SequentialIndividualCompleter(Control control, Decoder<Genotype, Object> decoder,
-			Evaluator<Object> evaluator) {
+			Evaluator<Object> evaluator, ObjectivesWrapper objWrapper) {
 		super();
 		this.control = control;
 		this.decoder = decoder;
 		this.evaluator = evaluator;
+		this.objWrapper = objWrapper;
 	}
 
 	/*
@@ -102,8 +103,7 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.opt4j.core.optimizer.Completer#complete(org.opt4j.core.Individual[])
+	 * @see org.opt4j.core.optimizer.Completer#complete(org.opt4j.core.Individual[])
 	 */
 	@Override
 	public void complete(Individual... individuals) throws TerminationException {
@@ -112,8 +112,8 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	}
 
 	/**
-	 * Evaluates the phenotype of the {@link Individual}. After this operation,
-	 * the {@link Individual} is in {@link State} {@link State#EVALUATED} and
+	 * Evaluates the phenotype of the {@link Individual}. After this operation, the
+	 * {@link Individual} is in {@link State} {@link State#EVALUATED} and
 	 * {@link Individual#getObjectives()} returns the {@link Objectives}.
 	 * 
 	 * @param individual
@@ -126,6 +126,9 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 			Object phenotype = individual.getPhenotype();
 
 			Objectives objectives = evaluator.evaluate(phenotype);
+			if (!objWrapper.isObjectivesInit()) {
+				objWrapper.init(objectives);
+			}
 			assert isSameLength(objectives.getKeys()) : "Objectives changed: " + objectives.getKeys();
 
 			individual.setObjectives(objectives);
@@ -135,10 +138,9 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	}
 
 	/**
-	 * Decodes the {@link Genotype} of the {@link Individual}. After this
-	 * operation, the {@link Individual} is in {@link State}
-	 * {@link State#PHENOTYPED} and {@link Individual#getPhenotype()} returns
-	 * the phenotype.
+	 * Decodes the {@link Genotype} of the {@link Individual}. After this operation,
+	 * the {@link Individual} is in {@link State} {@link State#PHENOTYPED} and
+	 * {@link Individual#getPhenotype()} returns the phenotype.
 	 * 
 	 * @param individual
 	 */
@@ -158,11 +160,10 @@ public class SequentialIndividualCompleter implements IndividualCompleter {
 	private Set<Objective> objectives = null;
 
 	/**
-	 * Check if the given {@link Objectives} have the same length as prior
-	 * evaluated ones.
+	 * Check if the given {@link Objectives} have the same length as prior evaluated
+	 * ones.
 	 * 
-	 * @param objectives
-	 *            the objectives to check
+	 * @param objectives the objectives to check
 	 * @return true if the number of objectives is constant
 	 */
 	private boolean isSameLength(Collection<Objective> objectives) {

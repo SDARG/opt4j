@@ -76,5 +76,22 @@ public interface SATManager {
 	 * @return the model
 	 */
 	public Model decodeSATGenotype(List<Object> variables, Genotype genotype);
-
+	
+	/**
+	 * Registers a {@link SatSolvingListener}
+	 *  
+	 * @param listener a {@link SatSolvingListener}
+	 * @return {@code true} if listeners changed
+	 * 
+	 */
+	public boolean registerSolvingListener(SatSolvingListener listener);
+	
+	/**
+	 * Unregisters a {@link SatSolvingListener}
+	 * 
+	 * @param listener a {@link SatSolvingListener}
+	 * @return {@code true} if listeners changed
+	 */
+	public boolean unregisterSolvingListener(SatSolvingListener listener);
+	
 }
