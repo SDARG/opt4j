@@ -4,6 +4,8 @@ apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 
+
+
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
 ext {
@@ -12,6 +14,10 @@ ext {
 
 allprojects {
 	group = 'org.opt4j'
+
+	jacoco {
+		toolVersion = "0.8.5"
+	}
 
 	repositories {
 		mavenCentral()
@@ -41,43 +47,45 @@ subprojects {
 
 	version = parent.version
 
-	sourceSets {
-		integrationTest {
-			java {
-				compileClasspath += main.output + main.compileClasspath + test.compileClasspath
-				runtimeClasspath += main.output + main.compileClasspath + test.compileClasspath
-				srcDir file('src/test-integration/java')
-			}
-			resources.srcDir file('src/test-integration/resources')
-		}
-	}
-	task integrationTest(type: Test) {
-		testClassesDirs = sourceSets.integrationTest.output.classesDirs
-		classpath = sourceSets.integrationTest.runtimeClasspath
-	}
-
-	task sourcesJar(type: Jar, dependsOn:classes) {
-		from sourceSets.main.allSource
-		classifier = 'sources'
-	}
-
-	task javadocJar(type: Jar, dependsOn:javadoc) {
-		from javadoc.destinationDir
-		classifier = 'javadoc'
-	}
 
 	jacocoTestReport {
+		getAdditionalSourceDirs().setFrom(sourceSets.main.allSource.srcDirs)
+		getSourceDirectories().setFrom(sourceSets.main.allSource.srcDirs)
+		getClassDirectories().setFrom(sourceSets.main.output)
 		reports {
-			xml.enabled true
+
+			html.enabled true
+			html.destination(file("${buildDir}/reports/jacoco"))
 		}
 	}
 }
 
 task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
 	dependsOn = subprojects.test
-	reports {		
-		xml.enabled = true		
+	getAdditionalSourceDirs().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
+	getSourceDirectories().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
+	getClassDirectories().setFrom(subprojects.sourceSets.main.output)
+	getExecutionData().setFrom(subprojects.jacocoTestReport.executionData)
+	reports {
+		html.enabled true
+		html.destination(file("${buildDir}/reports/jacoco"))
+		xml.enabled = true
+		csv.enabled = false
 	}
+
+
+	doFirst {
+		getExecutionData().setFrom(executionData.findAll {
+			it.exists()
+		})
+	}
+	/*
+	afterEvaluate {
+		getClassDirectories().setFrom(classDirectories.files.collect {
+			fileTree(dir: it, exclude: ['ptolemy/**', 'org/opt4j/tutorial/**', 'org/opt4j/viewer/**', 'org/opt4j/core/config/visualization/**'])
+		})
+	}
+	*/
 }
 
 dependencies {
@@ -98,8 +106,11 @@ jar {
 
 task fatjar(dependsOn: subprojects.jar, type: Jar) {
 	destinationDirectory = new File(project.buildDir, 'fatjar')
-	from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it)
-		} }
+	from {
+		configurations.runtime.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
 	manifest {
 		attributes 'Main-Class': mainClassName
 		attributes 'SplashScreen-Image': 'img/splash.png'
