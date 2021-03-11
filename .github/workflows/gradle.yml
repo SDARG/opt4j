@@ -35,8 +35,8 @@ jobs:
 #      with:
 #        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 #        coverage-reports: ./build/reports/jacoco/test/jacocoTestReport.xml
-#    - name: Run codacy-analysis-cli
-#      uses: codacy/codacy-analysis-cli-action@master
-#      with:
-#        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-#        max-allowed-issues: 10
+    - name: Run codacy-analysis-cli
+      uses: codacy/codacy-analysis-cli-action@master
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        max-allowed-issues: 400
