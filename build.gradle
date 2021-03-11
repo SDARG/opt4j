@@ -11,35 +11,35 @@ ext {
 }
 
 allprojects {
-    group = 'org.opt4j'
-   
-    repositories {
-    	mavenCentral()
-    }
+	group = 'org.opt4j'
+
+	repositories {
+		mavenCentral()
+	}
 }
 
 def descriptions = [
-	'opt4j-core' : 'The core module of Opt4J', 
+	'opt4j-core' : 'The core module of Opt4J',
 	'opt4j-benchmarks' : 'A set of benchmarks for Opt4J',
-	'opt4j-operators' : 'A set of operators for Opt4J', 
+	'opt4j-operators' : 'A set of operators for Opt4J',
 	'opt4j-optimizers' : 'A set of optimizers for Opt4J',
-	'opt4j-satdecoding' : 'The SAT decoding module for Opt4J', 
+	'opt4j-satdecoding' : 'The SAT decoding module for Opt4J',
 	'opt4j-tutorial' : 'The tutorial classes for Opt4J',
 	'opt4j-viewer' : 'The viewer module for Opt4J'
 ]
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-    apply plugin: 'signing'
-    apply plugin: 'eclipse'
-    apply plugin: 'jacoco'
-    jacoco {
+	apply plugin: 'java'
+	apply plugin: 'maven'
+	apply plugin: 'signing'
+	apply plugin: 'eclipse'
+	apply plugin: 'jacoco'
+	jacoco {
 		toolVersion = "0.8.5"
 	}
 
-    
-    version = parent.version
+
+	version = parent.version
 
 	sourceSets {
 		integrationTest {
@@ -57,13 +57,26 @@ subprojects {
 	}
 
 	task sourcesJar(type: Jar, dependsOn:classes) {
-		from sourceSets.main.allSource 
-		classifier = 'sources' 
-	} 
+		from sourceSets.main.allSource
+		classifier = 'sources'
+	}
 
 	task javadocJar(type: Jar, dependsOn:javadoc) {
-		from javadoc.destinationDir 
-		classifier = 'javadoc' 
+		from javadoc.destinationDir
+		classifier = 'javadoc'
+	}
+
+	jacocoTestReport {
+		reports {
+			xml.enabled true
+		}
+	}
+}
+
+task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+	dependsOn = subprojects.test
+	reports {		
+		xml.enabled = true		
 	}
 }
 
@@ -78,19 +91,22 @@ dependencies {
 }
 
 jar {
-	manifest { 
+	manifest {
 		attributes 'Main-Class': mainClassName
 	}
 }
 
 task fatjar(dependsOn: subprojects.jar, type: Jar) {
-    destinationDirectory = new File(project.buildDir, 'fatjar')
-    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
-    manifest {
+	destinationDirectory = new File(project.buildDir, 'fatjar')
+	from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it)
+		} }
+	manifest {
 		attributes 'Main-Class': mainClassName
 		attributes 'SplashScreen-Image': 'img/splash.png'
-    }
+	}
 }
 
-applicationDefaultJvmArgs = ["-splash:opt4j-core/src/main/resources/img/splash.png"]
+applicationDefaultJvmArgs = [
+	"-splash:opt4j-core/src/main/resources/img/splash.png"
+]
 
