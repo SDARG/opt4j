@@ -4,3 +4,4 @@ exclude_paths:
   - '**/src/integration-test/**/*'
   - '**/*.py'
   - '**/*.js'
+  - '**/*.css'
