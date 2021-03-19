@@ -3,6 +3,8 @@ apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 
+import org.apache.tools.ant.filters.ReplaceTokens
+
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
 /*
@@ -116,6 +118,34 @@ if (JavaVersion.current().isJava8Compatible()) {
 		}
 	}
 }
+
+task copyWebsite(type: Copy){
+	from('src/main/website/') {
+		include '**/*.html'
+		filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
+	}
+	from('src/main/website/') {
+		exclude '**/*.html'
+	}
+	into 'build/website/'
+}
+
+task copyJavadoc(type: Copy, dependsOn: 'alldocs'){
+	from new File(project.buildDir, 'docs/javadoc')
+	into 'build/website/javadoc/'+version
+}
+
+task copyTutorial(type: Copy, dependsOn: ":opt4j-tutorial:tutorial"){
+	from new File(project(':opt4j-tutorial').buildDir,'tutorial')
+	into 'build/website/documentation/'+version
+}
+
+task website(dependsOn: [copyWebsite, copyJavadoc, copyTutorial]) {
+	description = 'build the website to deploy it when releasing'
+	group = 'distribution'
+}
+
+
 
 task alldocs(type: Javadoc) {
 	title = "Opt4J version $version Project API Documentation"
