@@ -1,0 +1,500 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * all copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.core.config;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.lang.annotation.Annotation;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.lang.reflect.Constructor;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.lang.reflect.InvocationTargetException;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.lang.reflect.Method;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.lang.reflect.ParameterizedType;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.lang.reflect.Type;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.lang.reflect.WildcardType;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.ArrayList;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.Collection;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.HashMap;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.Map;</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">import com.google.inject.Module;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/**</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * The {@link Property} contains information about a single property of a</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * {@link PropertyModule}.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * </a>
+<span class="sourceLineNo">043</span><a id="line.43"> * @author lukasiewycz</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * </a>
+<span class="sourceLineNo">045</span><a id="line.45"> */</a>
+<span class="sourceLineNo">046</span><a id="line.46">public class Property {</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">        protected final Module module;</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">        protected final String name;</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">        protected final Class&lt;?&gt; type;</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">        protected final Method getter;</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">        protected final Method setter;</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">        protected String info = "";</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        protected int order = 10000;</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">        protected final Collection&lt;Requirement&gt; requirements = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">        protected final Map&lt;Class&lt;? extends Annotation&gt;, Annotation&gt; annotations = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">        /**</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * Constructs a {@link Property} .</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * </a>
+<span class="sourceLineNo">069</span><a id="line.69">         * @param module</a>
+<span class="sourceLineNo">070</span><a id="line.70">         *            the module</a>
+<span class="sourceLineNo">071</span><a id="line.71">         * @param name</a>
+<span class="sourceLineNo">072</span><a id="line.72">         *            the name</a>
+<span class="sourceLineNo">073</span><a id="line.73">         * @param type</a>
+<span class="sourceLineNo">074</span><a id="line.74">         *            the type</a>
+<span class="sourceLineNo">075</span><a id="line.75">         * @param getter</a>
+<span class="sourceLineNo">076</span><a id="line.76">         *            the getter method</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * @param setter</a>
+<span class="sourceLineNo">078</span><a id="line.78">         *            the setter method</a>
+<span class="sourceLineNo">079</span><a id="line.79">         * </a>
+<span class="sourceLineNo">080</span><a id="line.80">         * @param annotations</a>
+<span class="sourceLineNo">081</span><a id="line.81">         *            the annotations</a>
+<span class="sourceLineNo">082</span><a id="line.82">         */</a>
+<span class="sourceLineNo">083</span><a id="line.83">        public Property(Module module, String name, Class&lt;?&gt; type, Method getter, Method setter,</a>
+<span class="sourceLineNo">084</span><a id="line.84">                        Iterable&lt;Annotation&gt; annotations) {</a>
+<span class="sourceLineNo">085</span><a id="line.85">                super();</a>
+<span class="sourceLineNo">086</span><a id="line.86">                this.module = module;</a>
+<span class="sourceLineNo">087</span><a id="line.87">                this.name = name;</a>
+<span class="sourceLineNo">088</span><a id="line.88">                this.type = type;</a>
+<span class="sourceLineNo">089</span><a id="line.89">                this.getter = getter;</a>
+<span class="sourceLineNo">090</span><a id="line.90">                this.setter = setter;</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">                for (Annotation annotation : annotations) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                        Class&lt;? extends Annotation&gt; clazz = annotation.annotationType();</a>
+<span class="sourceLineNo">094</span><a id="line.94">                        this.annotations.put(clazz, annotation);</a>
+<span class="sourceLineNo">095</span><a id="line.95">                }</a>
+<span class="sourceLineNo">096</span><a id="line.96">        }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">        /**</a>
+<span class="sourceLineNo">099</span><a id="line.99">         * Returns the info.</a>
+<span class="sourceLineNo">100</span><a id="line.100">         * </a>
+<span class="sourceLineNo">101</span><a id="line.101">         * @see #setInfo</a>
+<span class="sourceLineNo">102</span><a id="line.102">         * @return the info</a>
+<span class="sourceLineNo">103</span><a id="line.103">         */</a>
+<span class="sourceLineNo">104</span><a id="line.104">        public String getInfo() {</a>
+<span class="sourceLineNo">105</span><a id="line.105">                return info;</a>
+<span class="sourceLineNo">106</span><a id="line.106">        }</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">        /**</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * Sets the info.</a>
+<span class="sourceLineNo">110</span><a id="line.110">         * </a>
+<span class="sourceLineNo">111</span><a id="line.111">         * @see #getInfo</a>
+<span class="sourceLineNo">112</span><a id="line.112">         * @param info</a>
+<span class="sourceLineNo">113</span><a id="line.113">         *            the info to set</a>
+<span class="sourceLineNo">114</span><a id="line.114">         */</a>
+<span class="sourceLineNo">115</span><a id="line.115">        public void setInfo(String info) {</a>
+<span class="sourceLineNo">116</span><a id="line.116">                this.info = info;</a>
+<span class="sourceLineNo">117</span><a id="line.117">        }</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">        /**</a>
+<span class="sourceLineNo">120</span><a id="line.120">         * Returns the order.</a>
+<span class="sourceLineNo">121</span><a id="line.121">         * </a>
+<span class="sourceLineNo">122</span><a id="line.122">         * @see #setOrder</a>
+<span class="sourceLineNo">123</span><a id="line.123">         * @return the order</a>
+<span class="sourceLineNo">124</span><a id="line.124">         */</a>
+<span class="sourceLineNo">125</span><a id="line.125">        public int getOrder() {</a>
+<span class="sourceLineNo">126</span><a id="line.126">                return order;</a>
+<span class="sourceLineNo">127</span><a id="line.127">        }</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">        /**</a>
+<span class="sourceLineNo">130</span><a id="line.130">         * Sets the order.</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * </a>
+<span class="sourceLineNo">132</span><a id="line.132">         * @see #getOrder</a>
+<span class="sourceLineNo">133</span><a id="line.133">         * @param order</a>
+<span class="sourceLineNo">134</span><a id="line.134">         *            the order to set</a>
+<span class="sourceLineNo">135</span><a id="line.135">         */</a>
+<span class="sourceLineNo">136</span><a id="line.136">        public void setOrder(int order) {</a>
+<span class="sourceLineNo">137</span><a id="line.137">                this.order = order;</a>
+<span class="sourceLineNo">138</span><a id="line.138">        }</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">        /**</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * Returns the name.</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * </a>
+<span class="sourceLineNo">143</span><a id="line.143">         * @return the name</a>
+<span class="sourceLineNo">144</span><a id="line.144">         */</a>
+<span class="sourceLineNo">145</span><a id="line.145">        public String getName() {</a>
+<span class="sourceLineNo">146</span><a id="line.146">                return name;</a>
+<span class="sourceLineNo">147</span><a id="line.147">        }</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">        /**</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * Returns the type.</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * </a>
+<span class="sourceLineNo">152</span><a id="line.152">         * @return the type</a>
+<span class="sourceLineNo">153</span><a id="line.153">         */</a>
+<span class="sourceLineNo">154</span><a id="line.154">        public Class&lt;?&gt; getType() {</a>
+<span class="sourceLineNo">155</span><a id="line.155">                return type;</a>
+<span class="sourceLineNo">156</span><a id="line.156">        }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        /**</a>
+<span class="sourceLineNo">159</span><a id="line.159">         * Returns the getter method.</a>
+<span class="sourceLineNo">160</span><a id="line.160">         * </a>
+<span class="sourceLineNo">161</span><a id="line.161">         * @return the getter</a>
+<span class="sourceLineNo">162</span><a id="line.162">         */</a>
+<span class="sourceLineNo">163</span><a id="line.163">        public Method getGetter() {</a>
+<span class="sourceLineNo">164</span><a id="line.164">                return getter;</a>
+<span class="sourceLineNo">165</span><a id="line.165">        }</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">        /**</a>
+<span class="sourceLineNo">168</span><a id="line.168">         * Returns the setter method.</a>
+<span class="sourceLineNo">169</span><a id="line.169">         * </a>
+<span class="sourceLineNo">170</span><a id="line.170">         * @return the setter</a>
+<span class="sourceLineNo">171</span><a id="line.171">         */</a>
+<span class="sourceLineNo">172</span><a id="line.172">        public Method getSetter() {</a>
+<span class="sourceLineNo">173</span><a id="line.173">                return setter;</a>
+<span class="sourceLineNo">174</span><a id="line.174">        }</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">        /**</a>
+<span class="sourceLineNo">177</span><a id="line.177">         * Adds a {@link Requirement}.</a>
+<span class="sourceLineNo">178</span><a id="line.178">         * </a>
+<span class="sourceLineNo">179</span><a id="line.179">         * @param requirement</a>
+<span class="sourceLineNo">180</span><a id="line.180">         *            the requirement to add</a>
+<span class="sourceLineNo">181</span><a id="line.181">         */</a>
+<span class="sourceLineNo">182</span><a id="line.182">        public void addRequirement(Requirement requirement) {</a>
+<span class="sourceLineNo">183</span><a id="line.183">                requirements.add(requirement);</a>
+<span class="sourceLineNo">184</span><a id="line.184">        }</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">        /**</a>
+<span class="sourceLineNo">187</span><a id="line.187">         * Returns {@code true} if the property is active, i.e., all</a>
+<span class="sourceLineNo">188</span><a id="line.188">         * {@link Requirement}s must be fulfilled.</a>
+<span class="sourceLineNo">189</span><a id="line.189">         * </a>
+<span class="sourceLineNo">190</span><a id="line.190">         * @return {@code true} if the property is active</a>
+<span class="sourceLineNo">191</span><a id="line.191">         */</a>
+<span class="sourceLineNo">192</span><a id="line.192">        public boolean isActive() {</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">                for (Requirement requirement : requirements) {</a>
+<span class="sourceLineNo">195</span><a id="line.195">                        if (!requirement.isFulfilled()) {</a>
+<span class="sourceLineNo">196</span><a id="line.196">                                return false;</a>
+<span class="sourceLineNo">197</span><a id="line.197">                        }</a>
+<span class="sourceLineNo">198</span><a id="line.198">                }</a>
+<span class="sourceLineNo">199</span><a id="line.199">                return true;</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">        }</a>
+<span class="sourceLineNo">202</span><a id="line.202"></a>
+<span class="sourceLineNo">203</span><a id="line.203">        /**</a>
+<span class="sourceLineNo">204</span><a id="line.204">         * Returns the requirements.</a>
+<span class="sourceLineNo">205</span><a id="line.205">         * </a>
+<span class="sourceLineNo">206</span><a id="line.206">         * @return the requirements</a>
+<span class="sourceLineNo">207</span><a id="line.207">         */</a>
+<span class="sourceLineNo">208</span><a id="line.208">        public Collection&lt;Requirement&gt; getRequirements() {</a>
+<span class="sourceLineNo">209</span><a id="line.209">                return requirements;</a>
+<span class="sourceLineNo">210</span><a id="line.210">        }</a>
+<span class="sourceLineNo">211</span><a id="line.211"></a>
+<span class="sourceLineNo">212</span><a id="line.212">        /**</a>
+<span class="sourceLineNo">213</span><a id="line.213">         * Returns the value of the property.</a>
+<span class="sourceLineNo">214</span><a id="line.214">         * </a>
+<span class="sourceLineNo">215</span><a id="line.215">         * @see #setValue</a>
+<span class="sourceLineNo">216</span><a id="line.216">         * @return the value of the property</a>
+<span class="sourceLineNo">217</span><a id="line.217">         */</a>
+<span class="sourceLineNo">218</span><a id="line.218">        public Object getValue() {</a>
+<span class="sourceLineNo">219</span><a id="line.219">                try {</a>
+<span class="sourceLineNo">220</span><a id="line.220">                        return getter.invoke(module);</a>
+<span class="sourceLineNo">221</span><a id="line.221">                } catch (IllegalAccessException e) {</a>
+<span class="sourceLineNo">222</span><a id="line.222">                } catch (IllegalArgumentException e) {</a>
+<span class="sourceLineNo">223</span><a id="line.223">                } catch (InvocationTargetException e) {</a>
+<span class="sourceLineNo">224</span><a id="line.224">                }</a>
+<span class="sourceLineNo">225</span><a id="line.225">                return null;</a>
+<span class="sourceLineNo">226</span><a id="line.226">        }</a>
+<span class="sourceLineNo">227</span><a id="line.227"></a>
+<span class="sourceLineNo">228</span><a id="line.228">        /**</a>
+<span class="sourceLineNo">229</span><a id="line.229">         * Sets the value of the property.</a>
+<span class="sourceLineNo">230</span><a id="line.230">         * </a>
+<span class="sourceLineNo">231</span><a id="line.231">         * @see #getValue</a>
+<span class="sourceLineNo">232</span><a id="line.232">         * @param value</a>
+<span class="sourceLineNo">233</span><a id="line.233">         *            the value to set</a>
+<span class="sourceLineNo">234</span><a id="line.234">         * @throws InvocationTargetException</a>
+<span class="sourceLineNo">235</span><a id="line.235">         *             thrown if the value cannot be assigned</a>
+<span class="sourceLineNo">236</span><a id="line.236">         */</a>
+<span class="sourceLineNo">237</span><a id="line.237">        public void setValue(Object value) throws InvocationTargetException {</a>
+<span class="sourceLineNo">238</span><a id="line.238">                setValueObject(value);</a>
+<span class="sourceLineNo">239</span><a id="line.239">        }</a>
+<span class="sourceLineNo">240</span><a id="line.240"></a>
+<span class="sourceLineNo">241</span><a id="line.241">        /**</a>
+<span class="sourceLineNo">242</span><a id="line.242">         * Sets the value of the property. The property has first to be converted to</a>
+<span class="sourceLineNo">243</span><a id="line.243">         * the corresponding type.</a>
+<span class="sourceLineNo">244</span><a id="line.244">         * </a>
+<span class="sourceLineNo">245</span><a id="line.245">         * @param value</a>
+<span class="sourceLineNo">246</span><a id="line.246">         *            the value to set</a>
+<span class="sourceLineNo">247</span><a id="line.247">         * @throws InvocationTargetException</a>
+<span class="sourceLineNo">248</span><a id="line.248">         *             thrown if the value cannot be assigned</a>
+<span class="sourceLineNo">249</span><a id="line.249">         */</a>
+<span class="sourceLineNo">250</span><a id="line.250">        public void setValue(String value) throws InvocationTargetException {</a>
+<span class="sourceLineNo">251</span><a id="line.251">                Class&lt;?&gt; type = this.type;</a>
+<span class="sourceLineNo">252</span><a id="line.252">                String valueToSet = value;</a>
+<span class="sourceLineNo">253</span><a id="line.253"></a>
+<span class="sourceLineNo">254</span><a id="line.254">                if (type.equals(Integer.TYPE)) {</a>
+<span class="sourceLineNo">255</span><a id="line.255">                        type = Integer.class;</a>
+<span class="sourceLineNo">256</span><a id="line.256">                } else if (type.equals(Long.TYPE)) {</a>
+<span class="sourceLineNo">257</span><a id="line.257">                        type = Long.class;</a>
+<span class="sourceLineNo">258</span><a id="line.258">                } else if (type.equals(Double.TYPE)) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">                        type = Double.class;</a>
+<span class="sourceLineNo">260</span><a id="line.260">                } else if (type.equals(Float.TYPE)) {</a>
+<span class="sourceLineNo">261</span><a id="line.261">                        type = Float.class;</a>
+<span class="sourceLineNo">262</span><a id="line.262">                } else if (type.equals(Boolean.TYPE)) {</a>
+<span class="sourceLineNo">263</span><a id="line.263">                        type = Boolean.class;</a>
+<span class="sourceLineNo">264</span><a id="line.264">                } else if (type.equals(Byte.TYPE)) {</a>
+<span class="sourceLineNo">265</span><a id="line.265">                        type = Byte.class;</a>
+<span class="sourceLineNo">266</span><a id="line.266">                } else if (type.equals(Short.TYPE)) {</a>
+<span class="sourceLineNo">267</span><a id="line.267">                        type = Short.class;</a>
+<span class="sourceLineNo">268</span><a id="line.268">                } else if (type.equals(String.class) &amp;&amp; valueToSet == null) {</a>
+<span class="sourceLineNo">269</span><a id="line.269">                        valueToSet = "";</a>
+<span class="sourceLineNo">270</span><a id="line.270">                }</a>
+<span class="sourceLineNo">271</span><a id="line.271"></a>
+<span class="sourceLineNo">272</span><a id="line.272">                Object object = null;</a>
+<span class="sourceLineNo">273</span><a id="line.273">                try {</a>
+<span class="sourceLineNo">274</span><a id="line.274">                        if (Character.TYPE.equals(type) || Character.class.equals(type)) {</a>
+<span class="sourceLineNo">275</span><a id="line.275">                                object = valueToSet.toCharArray()[0];</a>
+<span class="sourceLineNo">276</span><a id="line.276">                        } else if (type.isEnum()) {</a>
+<span class="sourceLineNo">277</span><a id="line.277">                                object = PropertyModule.toEnumElement(valueToSet, type.asSubclass(Enum.class));</a>
+<span class="sourceLineNo">278</span><a id="line.278">                        } else if (type.equals(Class.class)) {</a>
+<span class="sourceLineNo">279</span><a id="line.279">                                if (valueToSet != null &amp;&amp; !valueToSet.equals("")) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                        Class&lt;?&gt; c = Class.forName(valueToSet);</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">                                        Type gtype = getter.getGenericReturnType();</a>
+<span class="sourceLineNo">283</span><a id="line.283">                                        Type actual = getEnclosingType(gtype);</a>
+<span class="sourceLineNo">284</span><a id="line.284"></a>
+<span class="sourceLineNo">285</span><a id="line.285">                                        if (isAssignable(actual, c)) {</a>
+<span class="sourceLineNo">286</span><a id="line.286">                                                object = c;</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                        } else {</a>
+<span class="sourceLineNo">288</span><a id="line.288">                                                System.err.println("Can not assign " + c + " to Class&lt;" + actual + "&gt;");</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                        }</a>
+<span class="sourceLineNo">290</span><a id="line.290">                                }</a>
+<span class="sourceLineNo">291</span><a id="line.291">                        } else {</a>
+<span class="sourceLineNo">292</span><a id="line.292">                                // for Byte/Integer/Long/Float/Double/String/Boolean</a>
+<span class="sourceLineNo">293</span><a id="line.293">                                // and all objects that have a constructor that accepts one</a>
+<span class="sourceLineNo">294</span><a id="line.294">                                // string</a>
+<span class="sourceLineNo">295</span><a id="line.295">                                Constructor&lt;?&gt; constructor = type.getConstructor(String.class);</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                object = constructor.newInstance(valueToSet.trim());</a>
+<span class="sourceLineNo">297</span><a id="line.297">                        }</a>
+<span class="sourceLineNo">298</span><a id="line.298">                } catch (Exception e) {</a>
+<span class="sourceLineNo">299</span><a id="line.299">                        Throwable t = e;</a>
+<span class="sourceLineNo">300</span><a id="line.300">                        while (t.getCause() != null) {</a>
+<span class="sourceLineNo">301</span><a id="line.301">                                t = t.getCause();</a>
+<span class="sourceLineNo">302</span><a id="line.302">                        }</a>
+<span class="sourceLineNo">303</span><a id="line.303">                        String message = t.getLocalizedMessage();</a>
+<span class="sourceLineNo">304</span><a id="line.304"></a>
+<span class="sourceLineNo">305</span><a id="line.305">                        throw new InvocationTargetException(e,</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                        "Failed assignment: module=" + module.getClass().getName() + " property=\"" + getName()</a>
+<span class="sourceLineNo">307</span><a id="line.307">                                                        + "\" value=\"" + valueToSet + "\" (" + t.getClass().getName()</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                                        + (message != null ? ": " + message : "") + ")");</a>
+<span class="sourceLineNo">309</span><a id="line.309">                }</a>
+<span class="sourceLineNo">310</span><a id="line.310">                setValueObject(object);</a>
+<span class="sourceLineNo">311</span><a id="line.311">        }</a>
+<span class="sourceLineNo">312</span><a id="line.312"></a>
+<span class="sourceLineNo">313</span><a id="line.313">        /**</a>
+<span class="sourceLineNo">314</span><a id="line.314">         * Returns {@code true} if the property represents a number.</a>
+<span class="sourceLineNo">315</span><a id="line.315">         * </a>
+<span class="sourceLineNo">316</span><a id="line.316">         * @return {@code true} if the property represents a number</a>
+<span class="sourceLineNo">317</span><a id="line.317">         */</a>
+<span class="sourceLineNo">318</span><a id="line.318">        public boolean isNumber() {</a>
+<span class="sourceLineNo">319</span><a id="line.319">                boolean isNumber = false;</a>
+<span class="sourceLineNo">320</span><a id="line.320">                if (type.equals(Integer.TYPE)) {</a>
+<span class="sourceLineNo">321</span><a id="line.321">                        isNumber = true;</a>
+<span class="sourceLineNo">322</span><a id="line.322">                } else if (type.equals(Long.TYPE)) {</a>
+<span class="sourceLineNo">323</span><a id="line.323">                        isNumber = true;</a>
+<span class="sourceLineNo">324</span><a id="line.324">                } else if (type.equals(Double.TYPE)) {</a>
+<span class="sourceLineNo">325</span><a id="line.325">                        isNumber = true;</a>
+<span class="sourceLineNo">326</span><a id="line.326">                } else if (type.equals(Float.TYPE)) {</a>
+<span class="sourceLineNo">327</span><a id="line.327">                        isNumber = true;</a>
+<span class="sourceLineNo">328</span><a id="line.328">                } else if (type.equals(Byte.TYPE)) {</a>
+<span class="sourceLineNo">329</span><a id="line.329">                        isNumber = true;</a>
+<span class="sourceLineNo">330</span><a id="line.330">                } else if (type.equals(Short.TYPE)) {</a>
+<span class="sourceLineNo">331</span><a id="line.331">                        isNumber = true;</a>
+<span class="sourceLineNo">332</span><a id="line.332">                }</a>
+<span class="sourceLineNo">333</span><a id="line.333">                return isNumber;</a>
+<span class="sourceLineNo">334</span><a id="line.334">        }</a>
+<span class="sourceLineNo">335</span><a id="line.335"></a>
+<span class="sourceLineNo">336</span><a id="line.336">        /**</a>
+<span class="sourceLineNo">337</span><a id="line.337">         * Returns the enclosing actual type of a class.</a>
+<span class="sourceLineNo">338</span><a id="line.338">         * </a>
+<span class="sourceLineNo">339</span><a id="line.339">         * @param gtype</a>
+<span class="sourceLineNo">340</span><a id="line.340">         *            the type of the class</a>
+<span class="sourceLineNo">341</span><a id="line.341">         * @return the enclosing actual type</a>
+<span class="sourceLineNo">342</span><a id="line.342">         */</a>
+<span class="sourceLineNo">343</span><a id="line.343">        private Type getEnclosingType(Type gtype) {</a>
+<span class="sourceLineNo">344</span><a id="line.344">                if (gtype instanceof ParameterizedType) {</a>
+<span class="sourceLineNo">345</span><a id="line.345">                        ParameterizedType ptype = (ParameterizedType) gtype;</a>
+<span class="sourceLineNo">346</span><a id="line.346">                        Type rtype = ptype.getRawType();</a>
+<span class="sourceLineNo">347</span><a id="line.347">                        if (rtype.equals(Class.class)) {</a>
+<span class="sourceLineNo">348</span><a id="line.348">                                Type actual = ptype.getActualTypeArguments()[0];</a>
+<span class="sourceLineNo">349</span><a id="line.349">                                return actual;</a>
+<span class="sourceLineNo">350</span><a id="line.350">                        }</a>
+<span class="sourceLineNo">351</span><a id="line.351">                }</a>
+<span class="sourceLineNo">352</span><a id="line.352">                return null;</a>
+<span class="sourceLineNo">353</span><a id="line.353">        }</a>
+<span class="sourceLineNo">354</span><a id="line.354"></a>
+<span class="sourceLineNo">355</span><a id="line.355">        /**</a>
+<span class="sourceLineNo">356</span><a id="line.356">         * Verifies if a class is assignable to a type.</a>
+<span class="sourceLineNo">357</span><a id="line.357">         * </a>
+<span class="sourceLineNo">358</span><a id="line.358">         * @param type</a>
+<span class="sourceLineNo">359</span><a id="line.359">         *            the type</a>
+<span class="sourceLineNo">360</span><a id="line.360">         * @param clazz</a>
+<span class="sourceLineNo">361</span><a id="line.361">         *            the class</a>
+<span class="sourceLineNo">362</span><a id="line.362">         * @return {@code true} if assignable</a>
+<span class="sourceLineNo">363</span><a id="line.363">         */</a>
+<span class="sourceLineNo">364</span><a id="line.364">        private boolean isAssignable(Type type, Class&lt;?&gt; clazz) {</a>
+<span class="sourceLineNo">365</span><a id="line.365">                if (type instanceof WildcardType) {</a>
+<span class="sourceLineNo">366</span><a id="line.366">                        WildcardType wildcard = (WildcardType) type;</a>
+<span class="sourceLineNo">367</span><a id="line.367">                        for (Type lower : wildcard.getLowerBounds()) {</a>
+<span class="sourceLineNo">368</span><a id="line.368">                                if (lower instanceof Class&lt;?&gt;) {</a>
+<span class="sourceLineNo">369</span><a id="line.369">                                        Class&lt;?&gt; lowerClass = (Class&lt;?&gt;) lower;</a>
+<span class="sourceLineNo">370</span><a id="line.370">                                        if (!clazz.isAssignableFrom(lowerClass)) {</a>
+<span class="sourceLineNo">371</span><a id="line.371">                                                return false;</a>
+<span class="sourceLineNo">372</span><a id="line.372">                                        }</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                }</a>
+<span class="sourceLineNo">374</span><a id="line.374">                        }</a>
+<span class="sourceLineNo">375</span><a id="line.375">                        for (Type upper : wildcard.getUpperBounds()) {</a>
+<span class="sourceLineNo">376</span><a id="line.376">                                if (upper instanceof Class&lt;?&gt;) {</a>
+<span class="sourceLineNo">377</span><a id="line.377">                                        Class&lt;?&gt; upperClass = (Class&lt;?&gt;) upper;</a>
+<span class="sourceLineNo">378</span><a id="line.378">                                        if (!upperClass.isAssignableFrom(clazz)) {</a>
+<span class="sourceLineNo">379</span><a id="line.379">                                                return false;</a>
+<span class="sourceLineNo">380</span><a id="line.380">                                        }</a>
+<span class="sourceLineNo">381</span><a id="line.381">                                }</a>
+<span class="sourceLineNo">382</span><a id="line.382">                        }</a>
+<span class="sourceLineNo">383</span><a id="line.383">                }</a>
+<span class="sourceLineNo">384</span><a id="line.384">                return true;</a>
+<span class="sourceLineNo">385</span><a id="line.385">        }</a>
+<span class="sourceLineNo">386</span><a id="line.386"></a>
+<span class="sourceLineNo">387</span><a id="line.387">        /**</a>
+<span class="sourceLineNo">388</span><a id="line.388">         * Sets the value of the property.</a>
+<span class="sourceLineNo">389</span><a id="line.389">         * </a>
+<span class="sourceLineNo">390</span><a id="line.390">         * @param value</a>
+<span class="sourceLineNo">391</span><a id="line.391">         *            the value to set</a>
+<span class="sourceLineNo">392</span><a id="line.392">         * @throws InvocationTargetException</a>
+<span class="sourceLineNo">393</span><a id="line.393">         *             thrown if the value cannot be assigned</a>
+<span class="sourceLineNo">394</span><a id="line.394">         */</a>
+<span class="sourceLineNo">395</span><a id="line.395">        protected void setValueObject(Object value) throws InvocationTargetException {</a>
+<span class="sourceLineNo">396</span><a id="line.396">                try {</a>
+<span class="sourceLineNo">397</span><a id="line.397">                        setter.invoke(module, value);</a>
+<span class="sourceLineNo">398</span><a id="line.398">                } catch (Exception e) {</a>
+<span class="sourceLineNo">399</span><a id="line.399">                        throw new InvocationTargetException(e);</a>
+<span class="sourceLineNo">400</span><a id="line.400">                }</a>
+<span class="sourceLineNo">401</span><a id="line.401">        }</a>
+<span class="sourceLineNo">402</span><a id="line.402"></a>
+<span class="sourceLineNo">403</span><a id="line.403">        /**</a>
+<span class="sourceLineNo">404</span><a id="line.404">         * Returns the annotations of this property.</a>
+<span class="sourceLineNo">405</span><a id="line.405">         * </a>
+<span class="sourceLineNo">406</span><a id="line.406">         * @return the annotations</a>
+<span class="sourceLineNo">407</span><a id="line.407">         */</a>
+<span class="sourceLineNo">408</span><a id="line.408">        public Collection&lt;Annotation&gt; getAnnotations() {</a>
+<span class="sourceLineNo">409</span><a id="line.409">                return annotations.values();</a>
+<span class="sourceLineNo">410</span><a id="line.410">        }</a>
+<span class="sourceLineNo">411</span><a id="line.411"></a>
+<span class="sourceLineNo">412</span><a id="line.412">        /**</a>
+<span class="sourceLineNo">413</span><a id="line.413">         * Returns the annotation of the specified class or null if not existent.</a>
+<span class="sourceLineNo">414</span><a id="line.414">         * </a>
+<span class="sourceLineNo">415</span><a id="line.415">         * @param &lt;A&gt;</a>
+<span class="sourceLineNo">416</span><a id="line.416">         *            the annotation type</a>
+<span class="sourceLineNo">417</span><a id="line.417">         * @param clazz</a>
+<span class="sourceLineNo">418</span><a id="line.418">         *            the specific annotation class</a>
+<span class="sourceLineNo">419</span><a id="line.419">         * @return the annotation</a>
+<span class="sourceLineNo">420</span><a id="line.420">         */</a>
+<span class="sourceLineNo">421</span><a id="line.421">        @SuppressWarnings("unchecked")</a>
+<span class="sourceLineNo">422</span><a id="line.422">        public &lt;A extends Annotation&gt; A getAnnotation(Class&lt;? extends A&gt; clazz) {</a>
+<span class="sourceLineNo">423</span><a id="line.423">                return (A) annotations.get(clazz);</a>
+<span class="sourceLineNo">424</span><a id="line.424">        }</a>
+<span class="sourceLineNo">425</span><a id="line.425"></a>
+<span class="sourceLineNo">426</span><a id="line.426">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

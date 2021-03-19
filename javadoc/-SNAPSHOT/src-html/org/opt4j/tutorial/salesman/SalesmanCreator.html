@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package org.opt4j.tutorial.salesman;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.util.Collections;</a>
+<span class="sourceLineNo">004</span><a id="line.4"></a>
+<span class="sourceLineNo">005</span><a id="line.5">import org.opt4j.core.genotype.PermutationGenotype;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import org.opt4j.core.problem.Creator;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import org.opt4j.tutorial.salesman.SalesmanProblem.City;</a>
+<span class="sourceLineNo">008</span><a id="line.8"></a>
+<span class="sourceLineNo">009</span><a id="line.9">import com.google.inject.Inject;</a>
+<span class="sourceLineNo">010</span><a id="line.10"></a>
+<span class="sourceLineNo">011</span><a id="line.11">public class SalesmanCreator implements Creator&lt;PermutationGenotype&lt;City&gt;&gt; {</a>
+<span class="sourceLineNo">012</span><a id="line.12"></a>
+<span class="sourceLineNo">013</span><a id="line.13">        protected final SalesmanProblem problem;</a>
+<span class="sourceLineNo">014</span><a id="line.14"></a>
+<span class="sourceLineNo">015</span><a id="line.15">        @Inject</a>
+<span class="sourceLineNo">016</span><a id="line.16">        public SalesmanCreator(SalesmanProblem problem) {</a>
+<span class="sourceLineNo">017</span><a id="line.17">                this.problem = problem;</a>
+<span class="sourceLineNo">018</span><a id="line.18">        }</a>
+<span class="sourceLineNo">019</span><a id="line.19"></a>
+<span class="sourceLineNo">020</span><a id="line.20">        @Override</a>
+<span class="sourceLineNo">021</span><a id="line.21">        public PermutationGenotype&lt;City&gt; create() {</a>
+<span class="sourceLineNo">022</span><a id="line.22">                PermutationGenotype&lt;City&gt; genotype = new PermutationGenotype&lt;&gt;();</a>
+<span class="sourceLineNo">023</span><a id="line.23">                for (City city : problem.getCities()) {</a>
+<span class="sourceLineNo">024</span><a id="line.24">                        genotype.add(city);</a>
+<span class="sourceLineNo">025</span><a id="line.25">                }</a>
+<span class="sourceLineNo">026</span><a id="line.26"></a>
+<span class="sourceLineNo">027</span><a id="line.27">                Collections.shuffle(genotype);</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">                return genotype;</a>
+<span class="sourceLineNo">030</span><a id="line.30">        }</a>
+<span class="sourceLineNo">031</span><a id="line.31">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

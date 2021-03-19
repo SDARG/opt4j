@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in all</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"> </a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.viewer;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import org.opt4j.core.config.Icons;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import org.opt4j.core.config.annotations.Icon;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import org.opt4j.core.config.annotations.Info;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import org.opt4j.core.start.Constant;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.opt4j.core.start.Opt4J;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.opt4j.core.start.Progress;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.opt4j.viewer.Viewer.CloseEvent;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import ptolemy.plot.DefaultFonts;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">/**</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * The {@link ViewerModule} configures the optimization process viewer.</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * </a>
+<span class="sourceLineNo">038</span><a id="line.38"> * @author lukasiewycz</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * </a>
+<span class="sourceLineNo">040</span><a id="line.40"> */</a>
+<span class="sourceLineNo">041</span><a id="line.41">@Icon(Icons.APPLICATION)</a>
+<span class="sourceLineNo">042</span><a id="line.42">@Info("A graphical viewer to observe the optimization process.")</a>
+<span class="sourceLineNo">043</span><a id="line.43">public class ViewerModule extends VisualizationModule {</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">        static {</a>
+<span class="sourceLineNo">046</span><a id="line.46">                // initialize ptolemy plot once the viewer module is on the classpath</a>
+<span class="sourceLineNo">047</span><a id="line.47">                if (DefaultFonts.LABElFONT == null) {</a>
+<span class="sourceLineNo">048</span><a id="line.48">                        throw new IllegalStateException();</a>
+<span class="sourceLineNo">049</span><a id="line.49">                }</a>
+<span class="sourceLineNo">050</span><a id="line.50">        }</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">        @Info("The title of the viewer frame.")</a>
+<span class="sourceLineNo">053</span><a id="line.53">        @Constant(value = "title", namespace = Viewer.class)</a>
+<span class="sourceLineNo">054</span><a id="line.54">        protected String title = "Opt4J " + Opt4J.getVersion() + " Viewer";</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">        @Info("Event for the optimization process if the viewer is closed.")</a>
+<span class="sourceLineNo">057</span><a id="line.57">        @Constant(value = "closeEvent", namespace = Viewer.class)</a>
+<span class="sourceLineNo">058</span><a id="line.58">        protected CloseEvent closeEvent = CloseEvent.STOP;</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">        @Info("Close viewer automatically when the optimization process stops.")</a>
+<span class="sourceLineNo">061</span><a id="line.61">        @Constant(value = "closeOnStop", namespace = Viewer.class)</a>
+<span class="sourceLineNo">062</span><a id="line.62">        protected boolean closeOnStop = false;</a>
+<span class="sourceLineNo">063</span><a id="line.63"></a>
+<span class="sourceLineNo">064</span><a id="line.64">        /**</a>
+<span class="sourceLineNo">065</span><a id="line.65">         * Returns {@code true} if the GUI is automatically closed if the</a>
+<span class="sourceLineNo">066</span><a id="line.66">         * optimization process has stopped.</a>
+<span class="sourceLineNo">067</span><a id="line.67">         * </a>
+<span class="sourceLineNo">068</span><a id="line.68">         * @return {@code true} if the GUI is automatically closed on optimization</a>
+<span class="sourceLineNo">069</span><a id="line.69">         *         stop</a>
+<span class="sourceLineNo">070</span><a id="line.70">         */</a>
+<span class="sourceLineNo">071</span><a id="line.71">        public boolean isCloseOnStop() {</a>
+<span class="sourceLineNo">072</span><a id="line.72">                return closeOnStop;</a>
+<span class="sourceLineNo">073</span><a id="line.73">        }</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        /**</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * Sets the option for automatically closing the GUI if the optimization</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * stops.</a>
+<span class="sourceLineNo">078</span><a id="line.78">         * </a>
+<span class="sourceLineNo">079</span><a id="line.79">         * @param closeOnStop</a>
+<span class="sourceLineNo">080</span><a id="line.80">         *            the closeOnStop to set</a>
+<span class="sourceLineNo">081</span><a id="line.81">         */</a>
+<span class="sourceLineNo">082</span><a id="line.82">        public void setCloseOnStop(boolean closeOnStop) {</a>
+<span class="sourceLineNo">083</span><a id="line.83">                this.closeOnStop = closeOnStop;</a>
+<span class="sourceLineNo">084</span><a id="line.84">        }</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">        /**</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * Returns the event when the GUI is closed.</a>
+<span class="sourceLineNo">088</span><a id="line.88">         * </a>
+<span class="sourceLineNo">089</span><a id="line.89">         * @return the closeEvent</a>
+<span class="sourceLineNo">090</span><a id="line.90">         */</a>
+<span class="sourceLineNo">091</span><a id="line.91">        public CloseEvent getCloseEvent() {</a>
+<span class="sourceLineNo">092</span><a id="line.92">                return closeEvent;</a>
+<span class="sourceLineNo">093</span><a id="line.93">        }</a>
+<span class="sourceLineNo">094</span><a id="line.94"></a>
+<span class="sourceLineNo">095</span><a id="line.95">        /**</a>
+<span class="sourceLineNo">096</span><a id="line.96">         * Sets the event when the GUI is closed.</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * </a>
+<span class="sourceLineNo">098</span><a id="line.98">         * @param closeEvent</a>
+<span class="sourceLineNo">099</span><a id="line.99">         *            the closeEvent to set</a>
+<span class="sourceLineNo">100</span><a id="line.100">         */</a>
+<span class="sourceLineNo">101</span><a id="line.101">        public void setCloseEvent(CloseEvent closeEvent) {</a>
+<span class="sourceLineNo">102</span><a id="line.102">                this.closeEvent = closeEvent;</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        /**</a>
+<span class="sourceLineNo">106</span><a id="line.106">         * Returns the title of the GUI frame.</a>
+<span class="sourceLineNo">107</span><a id="line.107">         * </a>
+<span class="sourceLineNo">108</span><a id="line.108">         * @return the title of the GUI frame</a>
+<span class="sourceLineNo">109</span><a id="line.109">         */</a>
+<span class="sourceLineNo">110</span><a id="line.110">        public String getTitle() {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                return title;</a>
+<span class="sourceLineNo">112</span><a id="line.112">        }</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">        /**</a>
+<span class="sourceLineNo">115</span><a id="line.115">         * Sets the title of the GUI frame.</a>
+<span class="sourceLineNo">116</span><a id="line.116">         * </a>
+<span class="sourceLineNo">117</span><a id="line.117">         * @param title</a>
+<span class="sourceLineNo">118</span><a id="line.118">         *            the title of the GUI frame</a>
+<span class="sourceLineNo">119</span><a id="line.119">         */</a>
+<span class="sourceLineNo">120</span><a id="line.120">        public void setTitle(String title) {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                this.title = title;</a>
+<span class="sourceLineNo">122</span><a id="line.122">        }</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">        /*</a>
+<span class="sourceLineNo">125</span><a id="line.125">         * (non-Javadoc)</a>
+<span class="sourceLineNo">126</span><a id="line.126">         * </a>
+<span class="sourceLineNo">127</span><a id="line.127">         * @see com.google.inject.AbstractModule#configure()</a>
+<span class="sourceLineNo">128</span><a id="line.128">         */</a>
+<span class="sourceLineNo">129</span><a id="line.129">        @Override</a>
+<span class="sourceLineNo">130</span><a id="line.130">        public void config() {</a>
+<span class="sourceLineNo">131</span><a id="line.131">                bind(Viewer.class).in(SINGLETON);</a>
+<span class="sourceLineNo">132</span><a id="line.132">                addOptimizerStateListener(Viewer.class);</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">                bind(StatusBar.class).in(SINGLETON);</a>
+<span class="sourceLineNo">135</span><a id="line.135">                addOptimizerStateListener(StatusBar.class);</a>
+<span class="sourceLineNo">136</span><a id="line.136">                addOptimizerIterationListener(StatusBar.class);</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">                bind(Viewport.class).in(SINGLETON);</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">                addOptimizerIterationListener(Progress.class);</a>
+<span class="sourceLineNo">141</span><a id="line.141">                addOptimizerStateListener(ControlButtons.class);</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">                addOptimizerIterationListener(ConvergencePlotData.class);</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">                addToolBarService(ControlToolBarService.class);</a>
+<span class="sourceLineNo">146</span><a id="line.146">                addToolBarService(ViewsToolBarService.class);</a>
+<span class="sourceLineNo">147</span><a id="line.147">        }</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * all copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.benchmarks.knapsack;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import static org.opt4j.core.Objective.INFEASIBLE;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import static org.opt4j.core.Objective.Sign.MAX;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Collection;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.HashMap;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.Map;</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.opt4j.core.Objective;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.opt4j.core.Objectives;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.opt4j.core.problem.Evaluator;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.opt4j.core.problem.Priority;</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">import com.google.inject.Inject;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/**</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * The {@link KnapsackProfitEvaluator} evaluates a given {@link ItemSelection}</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * using one {@link Objective} to sum up all knapsack overloads and one</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * {@link Objective} for the profit of each knapsack.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * </a>
+<span class="sourceLineNo">044</span><a id="line.44"> * @author reimann, lukasiewycz</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * </a>
+<span class="sourceLineNo">046</span><a id="line.46"> */</a>
+<span class="sourceLineNo">047</span><a id="line.47">@Priority(0)</a>
+<span class="sourceLineNo">048</span><a id="line.48">public class KnapsackProfitEvaluator implements Evaluator&lt;ItemSelection&gt; {</a>
+<span class="sourceLineNo">049</span><a id="line.49">        protected final Map&lt;Knapsack, Objective&gt; profitObjectives = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">050</span><a id="line.50">        protected KnapsackProblem problem;</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">        /**</a>
+<span class="sourceLineNo">053</span><a id="line.53">         * Creates a new {@link KnapsackProfitEvaluator}.</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * </a>
+<span class="sourceLineNo">055</span><a id="line.55">         * @param problem</a>
+<span class="sourceLineNo">056</span><a id="line.56">         *            the problem instance</a>
+<span class="sourceLineNo">057</span><a id="line.57">         */</a>
+<span class="sourceLineNo">058</span><a id="line.58">        @Inject</a>
+<span class="sourceLineNo">059</span><a id="line.59">        public KnapsackProfitEvaluator(KnapsackProblem problem) {</a>
+<span class="sourceLineNo">060</span><a id="line.60">                this.problem = problem;</a>
+<span class="sourceLineNo">061</span><a id="line.61">                int i = 0;</a>
+<span class="sourceLineNo">062</span><a id="line.62">                for (Knapsack knapsack : problem.getKnapsacks()) {</a>
+<span class="sourceLineNo">063</span><a id="line.63">                        profitObjectives.put(knapsack, new Objective("profit" + i++, MAX));</a>
+<span class="sourceLineNo">064</span><a id="line.64">                }</a>
+<span class="sourceLineNo">065</span><a id="line.65">        }</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67">        /*</a>
+<span class="sourceLineNo">068</span><a id="line.68">         * (non-Javadoc)</a>
+<span class="sourceLineNo">069</span><a id="line.69">         * </a>
+<span class="sourceLineNo">070</span><a id="line.70">         * @see org.opt4j.core.problem.Evaluator#evaluate(org.opt4j.core.Phenotype)</a>
+<span class="sourceLineNo">071</span><a id="line.71">         */</a>
+<span class="sourceLineNo">072</span><a id="line.72">        @Override</a>
+<span class="sourceLineNo">073</span><a id="line.73">        public Objectives evaluate(ItemSelection itemSelection) {</a>
+<span class="sourceLineNo">074</span><a id="line.74">                // evaluate profit</a>
+<span class="sourceLineNo">075</span><a id="line.75">                Objectives objectives = new Objectives();</a>
+<span class="sourceLineNo">076</span><a id="line.76">                for (Knapsack knapsack : problem.getKnapsacks()) {</a>
+<span class="sourceLineNo">077</span><a id="line.77">                        if (itemSelection.isFeasible()) {</a>
+<span class="sourceLineNo">078</span><a id="line.78">                                objectives.add(profitObjectives.get(knapsack), getProfit(knapsack, itemSelection));</a>
+<span class="sourceLineNo">079</span><a id="line.79">                        } else {</a>
+<span class="sourceLineNo">080</span><a id="line.80">                                objectives.add(profitObjectives.get(knapsack), INFEASIBLE);</a>
+<span class="sourceLineNo">081</span><a id="line.81">                        }</a>
+<span class="sourceLineNo">082</span><a id="line.82">                }</a>
+<span class="sourceLineNo">083</span><a id="line.83">                return objectives;</a>
+<span class="sourceLineNo">084</span><a id="line.84">        }</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">        /**</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * Computes the profit for the given items for this knapsack.</a>
+<span class="sourceLineNo">088</span><a id="line.88">         * </a>
+<span class="sourceLineNo">089</span><a id="line.89">         * @param knapsack</a>
+<span class="sourceLineNo">090</span><a id="line.90">         *            the knapsack</a>
+<span class="sourceLineNo">091</span><a id="line.91">         * @param items</a>
+<span class="sourceLineNo">092</span><a id="line.92">         *            the items</a>
+<span class="sourceLineNo">093</span><a id="line.93">         * @return the profit</a>
+<span class="sourceLineNo">094</span><a id="line.94">         */</a>
+<span class="sourceLineNo">095</span><a id="line.95">        protected int getProfit(Knapsack knapsack, Collection&lt;Item&gt; items) {</a>
+<span class="sourceLineNo">096</span><a id="line.96">                int profit = 0;</a>
+<span class="sourceLineNo">097</span><a id="line.97">                for (Item i : items) {</a>
+<span class="sourceLineNo">098</span><a id="line.98">                        profit += knapsack.getProfit(i);</a>
+<span class="sourceLineNo">099</span><a id="line.99">                }</a>
+<span class="sourceLineNo">100</span><a id="line.100">                return profit;</a>
+<span class="sourceLineNo">101</span><a id="line.101">        }</a>
+<span class="sourceLineNo">102</span><a id="line.102">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

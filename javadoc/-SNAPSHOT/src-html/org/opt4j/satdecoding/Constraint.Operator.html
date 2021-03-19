@@ -1,0 +1,507 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in all</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.satdecoding;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.ArrayList;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.Iterator;</a>
+<span class="sourceLineNo">027</span><a id="line.27"></a>
+<span class="sourceLineNo">028</span><a id="line.28">/**</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * A linear pseudo-Boolean {@link Constraint} as used in an Integer Linear</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * Program (ILP). A set of {@link Constraint}s specify a search space.</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * &lt;p&gt;</a>
+<span class="sourceLineNo">032</span><a id="line.32"> * </a>
+<span class="sourceLineNo">033</span><a id="line.33"> * This {@link Constraint} consists of a list of {@link Term}s, an</a>
+<span class="sourceLineNo">034</span><a id="line.34"> * {@link Operator} and a right hand side. E.g., {@code 4a - 3b + not(c) &lt;= 7}</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * is a valid {@link Constraint} consisting of three {@link Literal}s</a>
+<span class="sourceLineNo">036</span><a id="line.36"> * {@code a, b, not(c)} with coefficients {@code 4, 3, 1} , the less or equal</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * operator from {@link Operator}, and the right hand side {@code 7}.</a>
+<span class="sourceLineNo">038</span><a id="line.38"> * &lt;p&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * </a>
+<span class="sourceLineNo">040</span><a id="line.40"> * This implementation is a plain data structure, i.e., {@code 4a - 3a + c &lt;= 1}</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * is not simplified to {@code a + c &lt;= 1}. Moreover, two {@link Constraint}s</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * are equal if they have an equal {@link Operator}, right hand side, and equal</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * {@link Term}s in the same order.</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * </a>
+<span class="sourceLineNo">045</span><a id="line.45"> * @author lukasiewycz</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * </a>
+<span class="sourceLineNo">047</span><a id="line.47"> */</a>
+<span class="sourceLineNo">048</span><a id="line.48">public class Constraint extends ArrayList&lt;Term&gt; {</a>
+<span class="sourceLineNo">049</span><a id="line.49"></a>
+<span class="sourceLineNo">050</span><a id="line.50">        protected Operator operator = Operator.GE;</a>
+<span class="sourceLineNo">051</span><a id="line.51">        protected int rhs = 1;</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        private static final long serialVersionUID = 1L;</a>
+<span class="sourceLineNo">054</span><a id="line.54"></a>
+<span class="sourceLineNo">055</span><a id="line.55">        /**</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * The {@link Operator}s correspond to the Boolean operators &amp;lt;=,=,&amp;gt;=.</a>
+<span class="sourceLineNo">057</span><a id="line.57">         */</a>
+<span class="sourceLineNo">058</span><a id="line.58">        public enum Operator {</a>
+<span class="sourceLineNo">059</span><a id="line.59">                /**</a>
+<span class="sourceLineNo">060</span><a id="line.60">                 * Boolean operation &amp;lt;=.</a>
+<span class="sourceLineNo">061</span><a id="line.61">                 */</a>
+<span class="sourceLineNo">062</span><a id="line.62">                LE,</a>
+<span class="sourceLineNo">063</span><a id="line.63">                /**</a>
+<span class="sourceLineNo">064</span><a id="line.64">                 * Boolean operation =.</a>
+<span class="sourceLineNo">065</span><a id="line.65">                 */</a>
+<span class="sourceLineNo">066</span><a id="line.66">                EQ,</a>
+<span class="sourceLineNo">067</span><a id="line.67">                /**</a>
+<span class="sourceLineNo">068</span><a id="line.68">                 * Boolean operation &amp;gt;=.</a>
+<span class="sourceLineNo">069</span><a id="line.69">                 */</a>
+<span class="sourceLineNo">070</span><a id="line.70">                GE;</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">                /**</a>
+<span class="sourceLineNo">073</span><a id="line.73">                 * Returns a {@link String} representation of this {@link Operator}.</a>
+<span class="sourceLineNo">074</span><a id="line.74">                 * </a>
+<span class="sourceLineNo">075</span><a id="line.75">                 * @return a string representation of this operator</a>
+<span class="sourceLineNo">076</span><a id="line.76">                 */</a>
+<span class="sourceLineNo">077</span><a id="line.77">                @Override</a>
+<span class="sourceLineNo">078</span><a id="line.78">                public String toString() {</a>
+<span class="sourceLineNo">079</span><a id="line.79">                        switch (this) {</a>
+<span class="sourceLineNo">080</span><a id="line.80">                        case LE:</a>
+<span class="sourceLineNo">081</span><a id="line.81">                                return "&lt;=";</a>
+<span class="sourceLineNo">082</span><a id="line.82">                        case EQ:</a>
+<span class="sourceLineNo">083</span><a id="line.83">                                return "=";</a>
+<span class="sourceLineNo">084</span><a id="line.84">                        default: // GE</a>
+<span class="sourceLineNo">085</span><a id="line.85">                                return "&gt;=";</a>
+<span class="sourceLineNo">086</span><a id="line.86">                        }</a>
+<span class="sourceLineNo">087</span><a id="line.87">                }</a>
+<span class="sourceLineNo">088</span><a id="line.88"></a>
+<span class="sourceLineNo">089</span><a id="line.89">                /**</a>
+<span class="sourceLineNo">090</span><a id="line.90">                 * Returns {@code true} if {@code lhs} {@link Operator} {@code rhs} is</a>
+<span class="sourceLineNo">091</span><a id="line.91">                 * true.</a>
+<span class="sourceLineNo">092</span><a id="line.92">                 * </a>
+<span class="sourceLineNo">093</span><a id="line.93">                 * @param lhs</a>
+<span class="sourceLineNo">094</span><a id="line.94">                 *            the left hand side value</a>
+<span class="sourceLineNo">095</span><a id="line.95">                 * @param rhs</a>
+<span class="sourceLineNo">096</span><a id="line.96">                 *            the right hand side value</a>
+<span class="sourceLineNo">097</span><a id="line.97">                 * @return {@code true} if the operation is true for the two values</a>
+<span class="sourceLineNo">098</span><a id="line.98">                 */</a>
+<span class="sourceLineNo">099</span><a id="line.99">                public boolean isTrue(int lhs, int rhs) {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        switch (this) {</a>
+<span class="sourceLineNo">101</span><a id="line.101">                        case LE:</a>
+<span class="sourceLineNo">102</span><a id="line.102">                                return (lhs &lt;= rhs);</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        case EQ:</a>
+<span class="sourceLineNo">104</span><a id="line.104">                                return (lhs == rhs);</a>
+<span class="sourceLineNo">105</span><a id="line.105">                        default: // GE</a>
+<span class="sourceLineNo">106</span><a id="line.106">                                return (lhs &gt;= rhs);</a>
+<span class="sourceLineNo">107</span><a id="line.107">                        }</a>
+<span class="sourceLineNo">108</span><a id="line.108">                }</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">                /**</a>
+<span class="sourceLineNo">111</span><a id="line.111">                 * Converts a {@link String} to an operator.</a>
+<span class="sourceLineNo">112</span><a id="line.112">                 * </a>
+<span class="sourceLineNo">113</span><a id="line.113">                 * @param string</a>
+<span class="sourceLineNo">114</span><a id="line.114">                 *            the string (&amp;lt;=,=,&amp;gt;=).</a>
+<span class="sourceLineNo">115</span><a id="line.115">                 * @return the operator</a>
+<span class="sourceLineNo">116</span><a id="line.116">                 */</a>
+<span class="sourceLineNo">117</span><a id="line.117">                public static Operator getOperator(String string) {</a>
+<span class="sourceLineNo">118</span><a id="line.118">                        if ("&lt;=".equals(string)) {</a>
+<span class="sourceLineNo">119</span><a id="line.119">                                return LE;</a>
+<span class="sourceLineNo">120</span><a id="line.120">                        } else if ("=".equals(string)) {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                                return EQ;</a>
+<span class="sourceLineNo">122</span><a id="line.122">                        } else if ("&gt;=".equals(string)) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                return GE;</a>
+<span class="sourceLineNo">124</span><a id="line.124">                        } else {</a>
+<span class="sourceLineNo">125</span><a id="line.125">                                throw new IllegalArgumentException("Unknown operator " + string + ". Allowed operators are: &lt;=,=,&gt;=");</a>
+<span class="sourceLineNo">126</span><a id="line.126">                        }</a>
+<span class="sourceLineNo">127</span><a id="line.127">                }</a>
+<span class="sourceLineNo">128</span><a id="line.128">        }</a>
+<span class="sourceLineNo">129</span><a id="line.129"></a>
+<span class="sourceLineNo">130</span><a id="line.130">        /**</a>
+<span class="sourceLineNo">131</span><a id="line.131">         * Constructs a linear {@link Constraint} with {@code &gt;=1}.</a>
+<span class="sourceLineNo">132</span><a id="line.132">         */</a>
+<span class="sourceLineNo">133</span><a id="line.133">        public Constraint() {</a>
+<span class="sourceLineNo">134</span><a id="line.134">                this(Operator.GE, 1);</a>
+<span class="sourceLineNo">135</span><a id="line.135">        }</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137">        /**</a>
+<span class="sourceLineNo">138</span><a id="line.138">         * Constructs a linear {@link Constraint}.</a>
+<span class="sourceLineNo">139</span><a id="line.139">         * </a>
+<span class="sourceLineNo">140</span><a id="line.140">         * @param operator</a>
+<span class="sourceLineNo">141</span><a id="line.141">         *            the operator (&amp;lt;=,=,&amp;gt;=) as a String</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * @param rhs</a>
+<span class="sourceLineNo">143</span><a id="line.143">         *            the right-hand-side value</a>
+<span class="sourceLineNo">144</span><a id="line.144">         */</a>
+<span class="sourceLineNo">145</span><a id="line.145">        public Constraint(String operator, int rhs) {</a>
+<span class="sourceLineNo">146</span><a id="line.146">                this(Operator.getOperator(operator), rhs);</a>
+<span class="sourceLineNo">147</span><a id="line.147">        }</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">        /**</a>
+<span class="sourceLineNo">150</span><a id="line.150">         * Constructs a linear {@link Constraint}.</a>
+<span class="sourceLineNo">151</span><a id="line.151">         * </a>
+<span class="sourceLineNo">152</span><a id="line.152">         * @param operator</a>
+<span class="sourceLineNo">153</span><a id="line.153">         *            the operator</a>
+<span class="sourceLineNo">154</span><a id="line.154">         * @param rhs</a>
+<span class="sourceLineNo">155</span><a id="line.155">         *            the right-hand-side value</a>
+<span class="sourceLineNo">156</span><a id="line.156">         */</a>
+<span class="sourceLineNo">157</span><a id="line.157">        public Constraint(Operator operator, int rhs) {</a>
+<span class="sourceLineNo">158</span><a id="line.158">                this.operator = operator;</a>
+<span class="sourceLineNo">159</span><a id="line.159">                this.rhs = rhs;</a>
+<span class="sourceLineNo">160</span><a id="line.160">        }</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">        /**</a>
+<span class="sourceLineNo">163</span><a id="line.163">         * Returns an iterable of the coefficients.</a>
+<span class="sourceLineNo">164</span><a id="line.164">         * </a>
+<span class="sourceLineNo">165</span><a id="line.165">         * @return the coefficients</a>
+<span class="sourceLineNo">166</span><a id="line.166">         */</a>
+<span class="sourceLineNo">167</span><a id="line.167">        public Iterable&lt;Integer&gt; getCoefficients() {</a>
+<span class="sourceLineNo">168</span><a id="line.168">                return new Iterable&lt;Integer&gt;() {</a>
+<span class="sourceLineNo">169</span><a id="line.169">                        @Override</a>
+<span class="sourceLineNo">170</span><a id="line.170">                        public Iterator&lt;Integer&gt; iterator() {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                                return new Iterator&lt;Integer&gt;() {</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">                                        int i = 0;</a>
+<span class="sourceLineNo">174</span><a id="line.174"></a>
+<span class="sourceLineNo">175</span><a id="line.175">                                        @Override</a>
+<span class="sourceLineNo">176</span><a id="line.176">                                        public boolean hasNext() {</a>
+<span class="sourceLineNo">177</span><a id="line.177">                                                return (i &lt; size());</a>
+<span class="sourceLineNo">178</span><a id="line.178">                                        }</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">                                        @Override</a>
+<span class="sourceLineNo">181</span><a id="line.181">                                        public Integer next() {</a>
+<span class="sourceLineNo">182</span><a id="line.182">                                                return get(i++).getCoefficient();</a>
+<span class="sourceLineNo">183</span><a id="line.183">                                        }</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">                                        @Override</a>
+<span class="sourceLineNo">186</span><a id="line.186">                                        public void remove() {</a>
+<span class="sourceLineNo">187</span><a id="line.187">                                                throw new UnsupportedOperationException("Do not remove constraint coefficients.");</a>
+<span class="sourceLineNo">188</span><a id="line.188">                                        }</a>
+<span class="sourceLineNo">189</span><a id="line.189">                                };</a>
+<span class="sourceLineNo">190</span><a id="line.190">                        }</a>
+<span class="sourceLineNo">191</span><a id="line.191">                };</a>
+<span class="sourceLineNo">192</span><a id="line.192">        }</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">        /**</a>
+<span class="sourceLineNo">195</span><a id="line.195">         * Returns an iterable of the {@link Literal}s.</a>
+<span class="sourceLineNo">196</span><a id="line.196">         * </a>
+<span class="sourceLineNo">197</span><a id="line.197">         * @return the literals.</a>
+<span class="sourceLineNo">198</span><a id="line.198">         */</a>
+<span class="sourceLineNo">199</span><a id="line.199">        public Iterable&lt;Literal&gt; getLiterals() {</a>
+<span class="sourceLineNo">200</span><a id="line.200">                return new Iterable&lt;Literal&gt;() {</a>
+<span class="sourceLineNo">201</span><a id="line.201">                        @Override</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        public Iterator&lt;Literal&gt; iterator() {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                return new Iterator&lt;Literal&gt;() {</a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">                                        int i = 0;</a>
+<span class="sourceLineNo">206</span><a id="line.206"></a>
+<span class="sourceLineNo">207</span><a id="line.207">                                        @Override</a>
+<span class="sourceLineNo">208</span><a id="line.208">                                        public boolean hasNext() {</a>
+<span class="sourceLineNo">209</span><a id="line.209">                                                return (i &lt; size());</a>
+<span class="sourceLineNo">210</span><a id="line.210">                                        }</a>
+<span class="sourceLineNo">211</span><a id="line.211"></a>
+<span class="sourceLineNo">212</span><a id="line.212">                                        @Override</a>
+<span class="sourceLineNo">213</span><a id="line.213">                                        public Literal next() {</a>
+<span class="sourceLineNo">214</span><a id="line.214">                                                return get(i++).getLiteral();</a>
+<span class="sourceLineNo">215</span><a id="line.215">                                        }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">                                        @Override</a>
+<span class="sourceLineNo">218</span><a id="line.218">                                        public void remove() {</a>
+<span class="sourceLineNo">219</span><a id="line.219">                                                throw new UnsupportedOperationException("Do not remove constraint literals.");</a>
+<span class="sourceLineNo">220</span><a id="line.220">                                        }</a>
+<span class="sourceLineNo">221</span><a id="line.221">                                };</a>
+<span class="sourceLineNo">222</span><a id="line.222">                        }</a>
+<span class="sourceLineNo">223</span><a id="line.223">                };</a>
+<span class="sourceLineNo">224</span><a id="line.224">        }</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">        /**</a>
+<span class="sourceLineNo">227</span><a id="line.227">         * Returns the {@link Operator}.</a>
+<span class="sourceLineNo">228</span><a id="line.228">         * </a>
+<span class="sourceLineNo">229</span><a id="line.229">         * @see #setOperator</a>
+<span class="sourceLineNo">230</span><a id="line.230">         * @return the operator</a>
+<span class="sourceLineNo">231</span><a id="line.231">         */</a>
+<span class="sourceLineNo">232</span><a id="line.232">        public Operator getOperator() {</a>
+<span class="sourceLineNo">233</span><a id="line.233">                return operator;</a>
+<span class="sourceLineNo">234</span><a id="line.234">        }</a>
+<span class="sourceLineNo">235</span><a id="line.235"></a>
+<span class="sourceLineNo">236</span><a id="line.236">        /**</a>
+<span class="sourceLineNo">237</span><a id="line.237">         * Sets the {@link Operator}.</a>
+<span class="sourceLineNo">238</span><a id="line.238">         * </a>
+<span class="sourceLineNo">239</span><a id="line.239">         * @see #getOperator</a>
+<span class="sourceLineNo">240</span><a id="line.240">         * @param operator</a>
+<span class="sourceLineNo">241</span><a id="line.241">         *            the operator to be set</a>
+<span class="sourceLineNo">242</span><a id="line.242">         */</a>
+<span class="sourceLineNo">243</span><a id="line.243">        public void setOperator(Operator operator) {</a>
+<span class="sourceLineNo">244</span><a id="line.244">                this.operator = operator;</a>
+<span class="sourceLineNo">245</span><a id="line.245">        }</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">        /**</a>
+<span class="sourceLineNo">248</span><a id="line.248">         * Return the right hand side value.</a>
+<span class="sourceLineNo">249</span><a id="line.249">         * </a>
+<span class="sourceLineNo">250</span><a id="line.250">         * @see #setRhs</a>
+<span class="sourceLineNo">251</span><a id="line.251">         * @return the right hand side value</a>
+<span class="sourceLineNo">252</span><a id="line.252">         */</a>
+<span class="sourceLineNo">253</span><a id="line.253">        public int getRhs() {</a>
+<span class="sourceLineNo">254</span><a id="line.254">                return rhs;</a>
+<span class="sourceLineNo">255</span><a id="line.255">        }</a>
+<span class="sourceLineNo">256</span><a id="line.256"></a>
+<span class="sourceLineNo">257</span><a id="line.257">        /**</a>
+<span class="sourceLineNo">258</span><a id="line.258">         * Sets the right hand side value.</a>
+<span class="sourceLineNo">259</span><a id="line.259">         * </a>
+<span class="sourceLineNo">260</span><a id="line.260">         * @see #getRhs</a>
+<span class="sourceLineNo">261</span><a id="line.261">         * @param rhs</a>
+<span class="sourceLineNo">262</span><a id="line.262">         *            the right hand side value to set</a>
+<span class="sourceLineNo">263</span><a id="line.263">         */</a>
+<span class="sourceLineNo">264</span><a id="line.264">        public void setRhs(int rhs) {</a>
+<span class="sourceLineNo">265</span><a id="line.265">                this.rhs = rhs;</a>
+<span class="sourceLineNo">266</span><a id="line.266">        }</a>
+<span class="sourceLineNo">267</span><a id="line.267"></a>
+<span class="sourceLineNo">268</span><a id="line.268">        /*</a>
+<span class="sourceLineNo">269</span><a id="line.269">         * (non-Javadoc)</a>
+<span class="sourceLineNo">270</span><a id="line.270">         * </a>
+<span class="sourceLineNo">271</span><a id="line.271">         * @see java.util.AbstractCollection#toString()</a>
+<span class="sourceLineNo">272</span><a id="line.272">         */</a>
+<span class="sourceLineNo">273</span><a id="line.273">        @Override</a>
+<span class="sourceLineNo">274</span><a id="line.274">        public String toString() {</a>
+<span class="sourceLineNo">275</span><a id="line.275">                String s = "";</a>
+<span class="sourceLineNo">276</span><a id="line.276"></a>
+<span class="sourceLineNo">277</span><a id="line.277">                for (int i = 0; i &lt; size(); i++) {</a>
+<span class="sourceLineNo">278</span><a id="line.278">                        s += get(i);</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        if (i &lt; size() - 1) {</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                s += " + ";</a>
+<span class="sourceLineNo">281</span><a id="line.281">                        }</a>
+<span class="sourceLineNo">282</span><a id="line.282">                }</a>
+<span class="sourceLineNo">283</span><a id="line.283"></a>
+<span class="sourceLineNo">284</span><a id="line.284">                s += " " + operator + " ";</a>
+<span class="sourceLineNo">285</span><a id="line.285">                s += rhs;</a>
+<span class="sourceLineNo">286</span><a id="line.286"></a>
+<span class="sourceLineNo">287</span><a id="line.287">                return s;</a>
+<span class="sourceLineNo">288</span><a id="line.288">        }</a>
+<span class="sourceLineNo">289</span><a id="line.289"></a>
+<span class="sourceLineNo">290</span><a id="line.290">        /**</a>
+<span class="sourceLineNo">291</span><a id="line.291">         * Checks, if this constraint is satisfied for a given model.</a>
+<span class="sourceLineNo">292</span><a id="line.292">         * </a>
+<span class="sourceLineNo">293</span><a id="line.293">         * @param model</a>
+<span class="sourceLineNo">294</span><a id="line.294">         *            the model</a>
+<span class="sourceLineNo">295</span><a id="line.295">         * @return true, iff this constraint is satisfied</a>
+<span class="sourceLineNo">296</span><a id="line.296">         */</a>
+<span class="sourceLineNo">297</span><a id="line.297">        public boolean isSatisfied(Model model) {</a>
+<span class="sourceLineNo">298</span><a id="line.298">                int count = getCount(model);</a>
+<span class="sourceLineNo">299</span><a id="line.299">                return operator.isTrue(count, rhs);</a>
+<span class="sourceLineNo">300</span><a id="line.300"></a>
+<span class="sourceLineNo">301</span><a id="line.301">        }</a>
+<span class="sourceLineNo">302</span><a id="line.302"></a>
+<span class="sourceLineNo">303</span><a id="line.303">        /**</a>
+<span class="sourceLineNo">304</span><a id="line.304">         * Specifies if the {@link Constraint} is satisfied for a given</a>
+<span class="sourceLineNo">305</span><a id="line.305">         * {@link Model}.</a>
+<span class="sourceLineNo">306</span><a id="line.306">         * </a>
+<span class="sourceLineNo">307</span><a id="line.307">         * @param model</a>
+<span class="sourceLineNo">308</span><a id="line.308">         *            the model</a>
+<span class="sourceLineNo">309</span><a id="line.309">         * @return {@code true} if this constraint is satisfied for the model</a>
+<span class="sourceLineNo">310</span><a id="line.310">         */</a>
+<span class="sourceLineNo">311</span><a id="line.311">        public int getViolationCount(Model model) {</a>
+<span class="sourceLineNo">312</span><a id="line.312">                int count = getCount(model);</a>
+<span class="sourceLineNo">313</span><a id="line.313"></a>
+<span class="sourceLineNo">314</span><a id="line.314">                switch (operator) {</a>
+<span class="sourceLineNo">315</span><a id="line.315">                case LE:</a>
+<span class="sourceLineNo">316</span><a id="line.316">                        return (count &lt;= rhs) ? 0 : (count - rhs);</a>
+<span class="sourceLineNo">317</span><a id="line.317">                case EQ:</a>
+<span class="sourceLineNo">318</span><a id="line.318">                        return Math.abs(count - rhs);</a>
+<span class="sourceLineNo">319</span><a id="line.319">                default: // GE</a>
+<span class="sourceLineNo">320</span><a id="line.320">                        return (count &gt;= rhs) ? 0 : (rhs - count);</a>
+<span class="sourceLineNo">321</span><a id="line.321">                }</a>
+<span class="sourceLineNo">322</span><a id="line.322">        }</a>
+<span class="sourceLineNo">323</span><a id="line.323"></a>
+<span class="sourceLineNo">324</span><a id="line.324">        /**</a>
+<span class="sourceLineNo">325</span><a id="line.325">         * Add a {@link Literal} with the coefficient {@code 1}.</a>
+<span class="sourceLineNo">326</span><a id="line.326">         * </a>
+<span class="sourceLineNo">327</span><a id="line.327">         * @param lit</a>
+<span class="sourceLineNo">328</span><a id="line.328">         *            the literal</a>
+<span class="sourceLineNo">329</span><a id="line.329">         */</a>
+<span class="sourceLineNo">330</span><a id="line.330">        public void add(Literal lit) {</a>
+<span class="sourceLineNo">331</span><a id="line.331">                add(1, lit);</a>
+<span class="sourceLineNo">332</span><a id="line.332">        }</a>
+<span class="sourceLineNo">333</span><a id="line.333"></a>
+<span class="sourceLineNo">334</span><a id="line.334">        /**</a>
+<span class="sourceLineNo">335</span><a id="line.335">         * Add a {@link Literal} with specified coefficient.</a>
+<span class="sourceLineNo">336</span><a id="line.336">         * </a>
+<span class="sourceLineNo">337</span><a id="line.337">         * @param coeff</a>
+<span class="sourceLineNo">338</span><a id="line.338">         *            the coefficient</a>
+<span class="sourceLineNo">339</span><a id="line.339">         * @param lit</a>
+<span class="sourceLineNo">340</span><a id="line.340">         *            the literal</a>
+<span class="sourceLineNo">341</span><a id="line.341">         */</a>
+<span class="sourceLineNo">342</span><a id="line.342">        public void add(int coeff, Literal lit) {</a>
+<span class="sourceLineNo">343</span><a id="line.343">                Term term = new Term(coeff, lit);</a>
+<span class="sourceLineNo">344</span><a id="line.344">                add(term);</a>
+<span class="sourceLineNo">345</span><a id="line.345">        }</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347">        /**</a>
+<span class="sourceLineNo">348</span><a id="line.348">         * Returns the sum of the left hand side of the constraint for a given</a>
+<span class="sourceLineNo">349</span><a id="line.349">         * model.</a>
+<span class="sourceLineNo">350</span><a id="line.350">         * </a>
+<span class="sourceLineNo">351</span><a id="line.351">         * @param model</a>
+<span class="sourceLineNo">352</span><a id="line.352">         *            the model</a>
+<span class="sourceLineNo">353</span><a id="line.353">         * @return the sum</a>
+<span class="sourceLineNo">354</span><a id="line.354">         */</a>
+<span class="sourceLineNo">355</span><a id="line.355">        private int getCount(Model model) {</a>
+<span class="sourceLineNo">356</span><a id="line.356">                int count = 0;</a>
+<span class="sourceLineNo">357</span><a id="line.357">                for (Term term : this) {</a>
+<span class="sourceLineNo">358</span><a id="line.358">                        Literal literal = term.getLiteral();</a>
+<span class="sourceLineNo">359</span><a id="line.359">                        int coefficient = term.getCoefficient();</a>
+<span class="sourceLineNo">360</span><a id="line.360"></a>
+<span class="sourceLineNo">361</span><a id="line.361">                        Object var = literal.variable();</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        Boolean phase = literal.phase();</a>
+<span class="sourceLineNo">363</span><a id="line.363"></a>
+<span class="sourceLineNo">364</span><a id="line.364">                        if (phase.equals(model.get(var))) {</a>
+<span class="sourceLineNo">365</span><a id="line.365">                                count += coefficient;</a>
+<span class="sourceLineNo">366</span><a id="line.366">                        }</a>
+<span class="sourceLineNo">367</span><a id="line.367">                }</a>
+<span class="sourceLineNo">368</span><a id="line.368">                return count;</a>
+<span class="sourceLineNo">369</span><a id="line.369">        }</a>
+<span class="sourceLineNo">370</span><a id="line.370"></a>
+<span class="sourceLineNo">371</span><a id="line.371">        /**</a>
+<span class="sourceLineNo">372</span><a id="line.372">         * Copies the {@link Constraint}.</a>
+<span class="sourceLineNo">373</span><a id="line.373">         * </a>
+<span class="sourceLineNo">374</span><a id="line.374">         * @return a copy of the constraint</a>
+<span class="sourceLineNo">375</span><a id="line.375">         */</a>
+<span class="sourceLineNo">376</span><a id="line.376">        public Constraint copy() {</a>
+<span class="sourceLineNo">377</span><a id="line.377">                Constraint pb = new Constraint(operator, rhs);</a>
+<span class="sourceLineNo">378</span><a id="line.378">                for (Term term : this) {</a>
+<span class="sourceLineNo">379</span><a id="line.379">                        pb.add(term.copy());</a>
+<span class="sourceLineNo">380</span><a id="line.380">                }</a>
+<span class="sourceLineNo">381</span><a id="line.381">                return pb;</a>
+<span class="sourceLineNo">382</span><a id="line.382">        }</a>
+<span class="sourceLineNo">383</span><a id="line.383"></a>
+<span class="sourceLineNo">384</span><a id="line.384">        /**</a>
+<span class="sourceLineNo">385</span><a id="line.385">         * Returns {@code true} if the {@link Constraint} contains the</a>
+<span class="sourceLineNo">386</span><a id="line.386">         * {@link Literal}.</a>
+<span class="sourceLineNo">387</span><a id="line.387">         * </a>
+<span class="sourceLineNo">388</span><a id="line.388">         * @param literal</a>
+<span class="sourceLineNo">389</span><a id="line.389">         *            the literal</a>
+<span class="sourceLineNo">390</span><a id="line.390">         * </a>
+<span class="sourceLineNo">391</span><a id="line.391">         * @return {@code true} if the constrain} contains the literal</a>
+<span class="sourceLineNo">392</span><a id="line.392">         */</a>
+<span class="sourceLineNo">393</span><a id="line.393">        public boolean contains(Literal literal) {</a>
+<span class="sourceLineNo">394</span><a id="line.394">                for (Term term : this) {</a>
+<span class="sourceLineNo">395</span><a id="line.395">                        if (literal.equals(term.getLiteral())) {</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                return true;</a>
+<span class="sourceLineNo">397</span><a id="line.397">                        }</a>
+<span class="sourceLineNo">398</span><a id="line.398">                }</a>
+<span class="sourceLineNo">399</span><a id="line.399">                return false;</a>
+<span class="sourceLineNo">400</span><a id="line.400">        }</a>
+<span class="sourceLineNo">401</span><a id="line.401"></a>
+<span class="sourceLineNo">402</span><a id="line.402">        /*</a>
+<span class="sourceLineNo">403</span><a id="line.403">         * (non-Javadoc)</a>
+<span class="sourceLineNo">404</span><a id="line.404">         * </a>
+<span class="sourceLineNo">405</span><a id="line.405">         * @see java.util.AbstractList#hashCode()</a>
+<span class="sourceLineNo">406</span><a id="line.406">         */</a>
+<span class="sourceLineNo">407</span><a id="line.407">        @Override</a>
+<span class="sourceLineNo">408</span><a id="line.408">        public int hashCode() {</a>
+<span class="sourceLineNo">409</span><a id="line.409">                final int prime = 31;</a>
+<span class="sourceLineNo">410</span><a id="line.410">                int result = super.hashCode();</a>
+<span class="sourceLineNo">411</span><a id="line.411">                result = prime * result + ((operator == null) ? 0 : operator.hashCode());</a>
+<span class="sourceLineNo">412</span><a id="line.412">                result = prime * result + rhs;</a>
+<span class="sourceLineNo">413</span><a id="line.413">                return result;</a>
+<span class="sourceLineNo">414</span><a id="line.414">        }</a>
+<span class="sourceLineNo">415</span><a id="line.415"></a>
+<span class="sourceLineNo">416</span><a id="line.416">        /*</a>
+<span class="sourceLineNo">417</span><a id="line.417">         * (non-Javadoc)</a>
+<span class="sourceLineNo">418</span><a id="line.418">         * </a>
+<span class="sourceLineNo">419</span><a id="line.419">         * @see java.util.AbstractList#equals(java.lang.Object)</a>
+<span class="sourceLineNo">420</span><a id="line.420">         */</a>
+<span class="sourceLineNo">421</span><a id="line.421">        @Override</a>
+<span class="sourceLineNo">422</span><a id="line.422">        public boolean equals(Object obj) {</a>
+<span class="sourceLineNo">423</span><a id="line.423">                if (this == obj) {</a>
+<span class="sourceLineNo">424</span><a id="line.424">                        return true;</a>
+<span class="sourceLineNo">425</span><a id="line.425">                }</a>
+<span class="sourceLineNo">426</span><a id="line.426">                if (getClass() != obj.getClass()) {</a>
+<span class="sourceLineNo">427</span><a id="line.427">                        return false;</a>
+<span class="sourceLineNo">428</span><a id="line.428">                }</a>
+<span class="sourceLineNo">429</span><a id="line.429">                Constraint other = (Constraint) obj;</a>
+<span class="sourceLineNo">430</span><a id="line.430">                return (super.equals(other) &amp;&amp; operator == other.operator &amp;&amp; rhs == other.rhs);</a>
+<span class="sourceLineNo">431</span><a id="line.431">        }</a>
+<span class="sourceLineNo">432</span><a id="line.432"></a>
+<span class="sourceLineNo">433</span><a id="line.433">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

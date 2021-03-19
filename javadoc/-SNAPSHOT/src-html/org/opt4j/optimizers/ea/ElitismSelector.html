@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * all copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.optimizers.ea;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.util.ArrayList;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.Collection;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Collections;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.Comparator;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.HashMap;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.List;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.Map;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.Random;</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.opt4j.core.Individual;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.opt4j.core.common.random.Rand;</a>
+<span class="sourceLineNo">036</span><a id="line.36"></a>
+<span class="sourceLineNo">037</span><a id="line.37">import com.google.inject.Inject;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/**</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * The {@link ElitismSelector} is a single objective elitism select. If a</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * multi-objective problem is optimized, the objectives are summed up to a</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * single value.</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * </a>
+<span class="sourceLineNo">044</span><a id="line.44"> * @author lukasiewycz</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * </a>
+<span class="sourceLineNo">046</span><a id="line.46"> */</a>
+<span class="sourceLineNo">047</span><a id="line.47">public class ElitismSelector implements Selector {</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">        protected final Random random;</a>
+<span class="sourceLineNo">050</span><a id="line.50"></a>
+<span class="sourceLineNo">051</span><a id="line.51">        protected final Map&lt;Individual, Double&gt; fitness = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">        /**</a>
+<span class="sourceLineNo">054</span><a id="line.54">         * Comparator that sorts the {@link Individual}s based on their fitness</a>
+<span class="sourceLineNo">055</span><a id="line.55">         * values.</a>
+<span class="sourceLineNo">056</span><a id="line.56">         * </a>
+<span class="sourceLineNo">057</span><a id="line.57">         * @author lukasiewycz</a>
+<span class="sourceLineNo">058</span><a id="line.58">         * </a>
+<span class="sourceLineNo">059</span><a id="line.59">         */</a>
+<span class="sourceLineNo">060</span><a id="line.60">        protected class FitnessComparator implements Comparator&lt;Individual&gt; {</a>
+<span class="sourceLineNo">061</span><a id="line.61">                @Override</a>
+<span class="sourceLineNo">062</span><a id="line.62">                public int compare(Individual o1, Individual o2) {</a>
+<span class="sourceLineNo">063</span><a id="line.63">                        final double f1 = fitness.get(o1);</a>
+<span class="sourceLineNo">064</span><a id="line.64">                        final double f2 = fitness.get(o2);</a>
+<span class="sourceLineNo">065</span><a id="line.65">                        if (f1 &lt; f2) {</a>
+<span class="sourceLineNo">066</span><a id="line.66">                                return -1;</a>
+<span class="sourceLineNo">067</span><a id="line.67">                        } else if (f2 &lt; f1) {</a>
+<span class="sourceLineNo">068</span><a id="line.68">                                return 1;</a>
+<span class="sourceLineNo">069</span><a id="line.69">                        } else {</a>
+<span class="sourceLineNo">070</span><a id="line.70">                                return 0;</a>
+<span class="sourceLineNo">071</span><a id="line.71">                        }</a>
+<span class="sourceLineNo">072</span><a id="line.72">                }</a>
+<span class="sourceLineNo">073</span><a id="line.73">        }</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">        /**</a>
+<span class="sourceLineNo">076</span><a id="line.76">         * Constructs an {@link ElitismSelector}.</a>
+<span class="sourceLineNo">077</span><a id="line.77">         * </a>
+<span class="sourceLineNo">078</span><a id="line.78">         * @param random</a>
+<span class="sourceLineNo">079</span><a id="line.79">         *            the random number generator</a>
+<span class="sourceLineNo">080</span><a id="line.80">         */</a>
+<span class="sourceLineNo">081</span><a id="line.81">        @Inject</a>
+<span class="sourceLineNo">082</span><a id="line.82">        public ElitismSelector(Rand random) {</a>
+<span class="sourceLineNo">083</span><a id="line.83">                this.random = random;</a>
+<span class="sourceLineNo">084</span><a id="line.84">        }</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">        /*</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * (non-Javadoc)</a>
+<span class="sourceLineNo">088</span><a id="line.88">         * </a>
+<span class="sourceLineNo">089</span><a id="line.89">         * @see org.opt4j.optimizer.ea.Selector#getLames(int, java.util.Collection)</a>
+<span class="sourceLineNo">090</span><a id="line.90">         */</a>
+<span class="sourceLineNo">091</span><a id="line.91">        @Override</a>
+<span class="sourceLineNo">092</span><a id="line.92">        public Collection&lt;Individual&gt; getLames(int lambda, Collection&lt;Individual&gt; population) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                List&lt;Individual&gt; list = new ArrayList&lt;&gt;(population);</a>
+<span class="sourceLineNo">094</span><a id="line.94">                calculateFitness(list);</a>
+<span class="sourceLineNo">095</span><a id="line.95">                Collections.sort(list, new FitnessComparator());</a>
+<span class="sourceLineNo">096</span><a id="line.96">                Collections.reverse(list);</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">                List&lt;Individual&gt; lames = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">099</span><a id="line.99">                for (int i = 0; i &lt; lambda; i++) {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                        lames.add(list.get(i));</a>
+<span class="sourceLineNo">101</span><a id="line.101">                }</a>
+<span class="sourceLineNo">102</span><a id="line.102">                return lames;</a>
+<span class="sourceLineNo">103</span><a id="line.103">        }</a>
+<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">105</span><a id="line.105">        /*</a>
+<span class="sourceLineNo">106</span><a id="line.106">         * (non-Javadoc)</a>
+<span class="sourceLineNo">107</span><a id="line.107">         * </a>
+<span class="sourceLineNo">108</span><a id="line.108">         * @see org.opt4j.optimizer.ea.Selector#getParents(int,</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * java.util.Collection)</a>
+<span class="sourceLineNo">110</span><a id="line.110">         */</a>
+<span class="sourceLineNo">111</span><a id="line.111">        @Override</a>
+<span class="sourceLineNo">112</span><a id="line.112">        public Collection&lt;Individual&gt; getParents(int mu, Collection&lt;Individual&gt; population) {</a>
+<span class="sourceLineNo">113</span><a id="line.113">                List&lt;Individual&gt; parents = new ArrayList&lt;&gt;();</a>
+<span class="sourceLineNo">114</span><a id="line.114">                List&lt;Individual&gt; individuals = new ArrayList&lt;&gt;(population);</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">                for (int i = 0; i &lt; mu; i++) {</a>
+<span class="sourceLineNo">117</span><a id="line.117">                        int r = random.nextInt(individuals.size());</a>
+<span class="sourceLineNo">118</span><a id="line.118">                        parents.add(individuals.get(r));</a>
+<span class="sourceLineNo">119</span><a id="line.119">                }</a>
+<span class="sourceLineNo">120</span><a id="line.120">                return parents;</a>
+<span class="sourceLineNo">121</span><a id="line.121">        }</a>
+<span class="sourceLineNo">122</span><a id="line.122"></a>
+<span class="sourceLineNo">123</span><a id="line.123">        /**</a>
+<span class="sourceLineNo">124</span><a id="line.124">         * Calculates the fitness of the {@link Individual}s: the sum of all double</a>
+<span class="sourceLineNo">125</span><a id="line.125">         * values (these always have to be minimized) of the objectives.</a>
+<span class="sourceLineNo">126</span><a id="line.126">         * </a>
+<span class="sourceLineNo">127</span><a id="line.127">         * @param individuals</a>
+<span class="sourceLineNo">128</span><a id="line.128">         *            the individuals to process</a>
+<span class="sourceLineNo">129</span><a id="line.129">         */</a>
+<span class="sourceLineNo">130</span><a id="line.130">        protected void calculateFitness(Collection&lt;Individual&gt; individuals) {</a>
+<span class="sourceLineNo">131</span><a id="line.131">                fitness.clear();</a>
+<span class="sourceLineNo">132</span><a id="line.132">                for (Individual individual : individuals) {</a>
+<span class="sourceLineNo">133</span><a id="line.133">                        double f = 0;</a>
+<span class="sourceLineNo">134</span><a id="line.134">                        for (double v : individual.getObjectives().array()) {</a>
+<span class="sourceLineNo">135</span><a id="line.135">                                f += v;</a>
+<span class="sourceLineNo">136</span><a id="line.136">                        }</a>
+<span class="sourceLineNo">137</span><a id="line.137">                        fitness.put(individual, f);</a>
+<span class="sourceLineNo">138</span><a id="line.138">                }</a>
+<span class="sourceLineNo">139</span><a id="line.139">        }</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">        /*</a>
+<span class="sourceLineNo">142</span><a id="line.142">         * (non-Javadoc)</a>
+<span class="sourceLineNo">143</span><a id="line.143">         * </a>
+<span class="sourceLineNo">144</span><a id="line.144">         * @see org.opt4j.optimizer.ea.Selector#init(int)</a>
+<span class="sourceLineNo">145</span><a id="line.145">         */</a>
+<span class="sourceLineNo">146</span><a id="line.146">        @Override</a>
+<span class="sourceLineNo">147</span><a id="line.147">        public void init(int maxsize) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                // do nothing</a>
+<span class="sourceLineNo">149</span><a id="line.149">        }</a>
+<span class="sourceLineNo">150</span><a id="line.150"></a>
+<span class="sourceLineNo">151</span><a id="line.151">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

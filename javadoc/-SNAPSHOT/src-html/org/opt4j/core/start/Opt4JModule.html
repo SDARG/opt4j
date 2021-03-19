@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in all</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"> </a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.core.start;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.io.Serializable;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.lang.annotation.Annotation;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Arrays;</a>
+<span class="sourceLineNo">028</span><a id="line.28"></a>
+<span class="sourceLineNo">029</span><a id="line.29">import org.opt4j.core.IndividualStateListener;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import org.opt4j.core.config.Property;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.opt4j.core.config.PropertyModule;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import org.opt4j.core.config.annotations.Category;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import org.opt4j.core.config.annotations.File;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import org.opt4j.core.config.annotations.Icon;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import org.opt4j.core.config.annotations.Ignore;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import org.opt4j.core.config.annotations.Info;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import org.opt4j.core.config.annotations.Multi;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import org.opt4j.core.config.annotations.Name;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import org.opt4j.core.config.annotations.Order;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import org.opt4j.core.config.annotations.Panel;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import org.opt4j.core.config.annotations.Parent;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import org.opt4j.core.config.annotations.Required;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import org.opt4j.core.optimizer.ControlListener;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import org.opt4j.core.optimizer.OptimizerIterationListener;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import org.opt4j.core.optimizer.OptimizerStateListener;</a>
+<span class="sourceLineNo">046</span><a id="line.46"></a>
+<span class="sourceLineNo">047</span><a id="line.47">import com.google.inject.AbstractModule;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import com.google.inject.Binder;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import com.google.inject.BindingAnnotation;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import com.google.inject.ConfigurationException;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import com.google.inject.Scope;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import com.google.inject.Scopes;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import com.google.inject.binder.ConstantBindingBuilder;</a>
+<span class="sourceLineNo">054</span><a id="line.54">import com.google.inject.multibindings.Multibinder;</a>
+<span class="sourceLineNo">055</span><a id="line.55">import com.google.inject.spi.Message;</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">/**</a>
+<span class="sourceLineNo">058</span><a id="line.58"> * The {@link Opt4JModule} is the superclass for all modules. The class and its</a>
+<span class="sourceLineNo">059</span><a id="line.59"> * fields might be extended with certain annotations. See {@link Constant} and the</a>
+<span class="sourceLineNo">060</span><a id="line.60"> * {@code org.opt4j.core.config.annotations} package.</a>
+<span class="sourceLineNo">061</span><a id="line.61"> * </a>
+<span class="sourceLineNo">062</span><a id="line.62"> * @see Constant</a>
+<span class="sourceLineNo">063</span><a id="line.63"> * @see Category</a>
+<span class="sourceLineNo">064</span><a id="line.64"> * @see File</a>
+<span class="sourceLineNo">065</span><a id="line.65"> * @see Icon</a>
+<span class="sourceLineNo">066</span><a id="line.66"> * @see Ignore</a>
+<span class="sourceLineNo">067</span><a id="line.67"> * @see Info</a>
+<span class="sourceLineNo">068</span><a id="line.68"> * @see Multi</a>
+<span class="sourceLineNo">069</span><a id="line.69"> * @see Name</a>
+<span class="sourceLineNo">070</span><a id="line.70"> * @see Order</a>
+<span class="sourceLineNo">071</span><a id="line.71"> * @see Panel</a>
+<span class="sourceLineNo">072</span><a id="line.72"> * @see Parent</a>
+<span class="sourceLineNo">073</span><a id="line.73"> * @see Required</a>
+<span class="sourceLineNo">074</span><a id="line.74"> * @author lukasiewycz</a>
+<span class="sourceLineNo">075</span><a id="line.75"> * </a>
+<span class="sourceLineNo">076</span><a id="line.76"> * </a>
+<span class="sourceLineNo">077</span><a id="line.77"> */</a>
+<span class="sourceLineNo">078</span><a id="line.78">public abstract class Opt4JModule extends AbstractModule {</a>
+<span class="sourceLineNo">079</span><a id="line.79"></a>
+<span class="sourceLineNo">080</span><a id="line.80">        /**</a>
+<span class="sourceLineNo">081</span><a id="line.81">         * The singleton scope.</a>
+<span class="sourceLineNo">082</span><a id="line.82">         */</a>
+<span class="sourceLineNo">083</span><a id="line.83">        public static Scope SINGLETON = Scopes.SINGLETON;</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">        /**</a>
+<span class="sourceLineNo">086</span><a id="line.86">         * Bind a value.</a>
+<span class="sourceLineNo">087</span><a id="line.87">         * </a>
+<span class="sourceLineNo">088</span><a id="line.88">         * @param annotation</a>
+<span class="sourceLineNo">089</span><a id="line.89">         *            the type of annotation of the value</a>
+<span class="sourceLineNo">090</span><a id="line.90">         * @return the constant binding builder that allows a binding</a>
+<span class="sourceLineNo">091</span><a id="line.91">         */</a>
+<span class="sourceLineNo">092</span><a id="line.92">        public ConstantBindingBuilder bindConstant(Class&lt;? extends Annotation&gt; annotation) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">                return bindConstant().annotatedWith(annotation);</a>
+<span class="sourceLineNo">094</span><a id="line.94">        }</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">        /**</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * Bind a value.</a>
+<span class="sourceLineNo">098</span><a id="line.98">         * </a>
+<span class="sourceLineNo">099</span><a id="line.99">         * @param annotation</a>
+<span class="sourceLineNo">100</span><a id="line.100">         *            the annotation of the value</a>
+<span class="sourceLineNo">101</span><a id="line.101">         * @return the constant binding builder that allows a binding</a>
+<span class="sourceLineNo">102</span><a id="line.102">         */</a>
+<span class="sourceLineNo">103</span><a id="line.103">        public ConstantBindingBuilder bindConstant(Annotation annotation) {</a>
+<span class="sourceLineNo">104</span><a id="line.104">                return bindConstant().annotatedWith(annotation);</a>
+<span class="sourceLineNo">105</span><a id="line.105">        }</a>
+<span class="sourceLineNo">106</span><a id="line.106"></a>
+<span class="sourceLineNo">107</span><a id="line.107">        /*</a>
+<span class="sourceLineNo">108</span><a id="line.108">         * (non-Javadoc)</a>
+<span class="sourceLineNo">109</span><a id="line.109">         * </a>
+<span class="sourceLineNo">110</span><a id="line.110">         * @see com.google.inject.AbstractModule#configure()</a>
+<span class="sourceLineNo">111</span><a id="line.111">         */</a>
+<span class="sourceLineNo">112</span><a id="line.112">        @SuppressWarnings({ "unchecked", "rawtypes" })</a>
+<span class="sourceLineNo">113</span><a id="line.113">        @Override</a>
+<span class="sourceLineNo">114</span><a id="line.114">        protected void configure() {</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">                /**</a>
+<span class="sourceLineNo">117</span><a id="line.117">                 * Configure injected constants.</a>
+<span class="sourceLineNo">118</span><a id="line.118">                 */</a>
+<span class="sourceLineNo">119</span><a id="line.119">                PropertyModule module = new PropertyModule(this);</a>
+<span class="sourceLineNo">120</span><a id="line.120">                for (Property property : module.getProperties()) {</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        for (Annotation annotation : property.getAnnotations()) {</a>
+<span class="sourceLineNo">122</span><a id="line.122">                                if (annotation.annotationType().getAnnotation(BindingAnnotation.class) != null) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">                                        Class&lt;?&gt; type = property.getType();</a>
+<span class="sourceLineNo">124</span><a id="line.124">                                        Object value = property.getValue();</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126">                                        ConstantBindingBuilder builder = bindConstant(annotation);</a>
+<span class="sourceLineNo">127</span><a id="line.127">                                        if (type.equals(Integer.TYPE)) {</a>
+<span class="sourceLineNo">128</span><a id="line.128">                                                builder.to((Integer) value);</a>
+<span class="sourceLineNo">129</span><a id="line.129">                                        } else if (type.equals(Long.TYPE)) {</a>
+<span class="sourceLineNo">130</span><a id="line.130">                                                builder.to((Long) value);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                                        } else if (type.equals(Double.TYPE)) {</a>
+<span class="sourceLineNo">132</span><a id="line.132">                                                builder.to((Double) value);</a>
+<span class="sourceLineNo">133</span><a id="line.133">                                        } else if (type.equals(Float.TYPE)) {</a>
+<span class="sourceLineNo">134</span><a id="line.134">                                                builder.to((Float) value);</a>
+<span class="sourceLineNo">135</span><a id="line.135">                                        } else if (type.equals(Byte.TYPE)) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">                                                builder.to((Byte) value);</a>
+<span class="sourceLineNo">137</span><a id="line.137">                                        } else if (type.equals(Short.TYPE)) {</a>
+<span class="sourceLineNo">138</span><a id="line.138">                                                builder.to((Short) value);</a>
+<span class="sourceLineNo">139</span><a id="line.139">                                        } else if (type.equals(Boolean.TYPE)) {</a>
+<span class="sourceLineNo">140</span><a id="line.140">                                                builder.to((Boolean) value);</a>
+<span class="sourceLineNo">141</span><a id="line.141">                                        } else if (type.equals(Character.TYPE)) {</a>
+<span class="sourceLineNo">142</span><a id="line.142">                                                builder.to((Character) value);</a>
+<span class="sourceLineNo">143</span><a id="line.143">                                        } else if (type.equals(String.class)) {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                                                builder.to((String) value);</a>
+<span class="sourceLineNo">145</span><a id="line.145">                                        } else if (type.equals(Class.class)) {</a>
+<span class="sourceLineNo">146</span><a id="line.146">                                                builder.to((Class&lt;?&gt;) value);</a>
+<span class="sourceLineNo">147</span><a id="line.147">                                        } else if (value instanceof Enum&lt;?&gt;) {</a>
+<span class="sourceLineNo">148</span><a id="line.148">                                                builder.to((Enum) value);</a>
+<span class="sourceLineNo">149</span><a id="line.149">                                        } else {</a>
+<span class="sourceLineNo">150</span><a id="line.150">                                                String message = "Constant type not bindable: " + type + " of field " + property.getName() + " in module "</a>
+<span class="sourceLineNo">151</span><a id="line.151">                                                                + this.getClass().getName();</a>
+<span class="sourceLineNo">152</span><a id="line.152">                                                throw new ConfigurationException(Arrays.asList(new Message(message)));</a>
+<span class="sourceLineNo">153</span><a id="line.153">                                        }</a>
+<span class="sourceLineNo">154</span><a id="line.154">                                }</a>
+<span class="sourceLineNo">155</span><a id="line.155">                        }</a>
+<span class="sourceLineNo">156</span><a id="line.156">                }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">                multi(OptimizerStateListener.class);</a>
+<span class="sourceLineNo">159</span><a id="line.159">                multi(OptimizerIterationListener.class);</a>
+<span class="sourceLineNo">160</span><a id="line.160">                multi(IndividualStateListener.class);</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">                config();</a>
+<span class="sourceLineNo">163</span><a id="line.163">        }</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">        protected void multi(Class&lt;?&gt; clazz) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">                Multibinder.newSetBinder(binder(), clazz);</a>
+<span class="sourceLineNo">167</span><a id="line.167">        }</a>
+<span class="sourceLineNo">168</span><a id="line.168"></a>
+<span class="sourceLineNo">169</span><a id="line.169">        /**</a>
+<span class="sourceLineNo">170</span><a id="line.170">         * Configure the module.</a>
+<span class="sourceLineNo">171</span><a id="line.171">         * </a>
+<span class="sourceLineNo">172</span><a id="line.172">         * Bind constants, listeners, and bind arbitrary classes.</a>
+<span class="sourceLineNo">173</span><a id="line.173">         * </a>
+<span class="sourceLineNo">174</span><a id="line.174">         * @see Binder</a>
+<span class="sourceLineNo">175</span><a id="line.175">         */</a>
+<span class="sourceLineNo">176</span><a id="line.176">        protected abstract void config();</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">        /**</a>
+<span class="sourceLineNo">179</span><a id="line.179">         * Returns the implementation of the {@link Constant} annotation.</a>
+<span class="sourceLineNo">180</span><a id="line.180">         * </a>
+<span class="sourceLineNo">181</span><a id="line.181">         * @param value</a>
+<span class="sourceLineNo">182</span><a id="line.182">         *            the value</a>
+<span class="sourceLineNo">183</span><a id="line.183">         * @param namespace</a>
+<span class="sourceLineNo">184</span><a id="line.184">         *            the namespace</a>
+<span class="sourceLineNo">185</span><a id="line.185">         * @return the constant annotation</a>
+<span class="sourceLineNo">186</span><a id="line.186">         */</a>
+<span class="sourceLineNo">187</span><a id="line.187">        public static ConstantImpl constant(String value, Class&lt;?&gt; namespace) {</a>
+<span class="sourceLineNo">188</span><a id="line.188">                return new ConstantImpl(value, namespace);</a>
+<span class="sourceLineNo">189</span><a id="line.189">        }</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">        /**</a>
+<span class="sourceLineNo">192</span><a id="line.192">         * The {@link ConstantImpl} is the implementation of the {@link Constant}</a>
+<span class="sourceLineNo">193</span><a id="line.193">         * annotation.</a>
+<span class="sourceLineNo">194</span><a id="line.194">         * </a>
+<span class="sourceLineNo">195</span><a id="line.195">         * @author lukasiewycz</a>
+<span class="sourceLineNo">196</span><a id="line.196">         * </a>
+<span class="sourceLineNo">197</span><a id="line.197">         */</a>
+<span class="sourceLineNo">198</span><a id="line.198">        @SuppressWarnings("all")</a>
+<span class="sourceLineNo">199</span><a id="line.199">        static class ConstantImpl implements Serializable, Constant {</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">                private final String value;</a>
+<span class="sourceLineNo">202</span><a id="line.202">                private final Class&lt;?&gt; namespace;</a>
+<span class="sourceLineNo">203</span><a id="line.203"></a>
+<span class="sourceLineNo">204</span><a id="line.204">                /**</a>
+<span class="sourceLineNo">205</span><a id="line.205">                 * Constructs a {@link ConstantImpl}.</a>
+<span class="sourceLineNo">206</span><a id="line.206">                 * </a>
+<span class="sourceLineNo">207</span><a id="line.207">                 * @param value</a>
+<span class="sourceLineNo">208</span><a id="line.208">                 *            the value</a>
+<span class="sourceLineNo">209</span><a id="line.209">                 * @param namespace</a>
+<span class="sourceLineNo">210</span><a id="line.210">                 *            the namespace</a>
+<span class="sourceLineNo">211</span><a id="line.211">                 */</a>
+<span class="sourceLineNo">212</span><a id="line.212">                ConstantImpl(String value, Class&lt;?&gt; namespace) {</a>
+<span class="sourceLineNo">213</span><a id="line.213">                        this.value = value;</a>
+<span class="sourceLineNo">214</span><a id="line.214">                        this.namespace = namespace;</a>
+<span class="sourceLineNo">215</span><a id="line.215">                }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">                /*</a>
+<span class="sourceLineNo">218</span><a id="line.218">                 * (non-Javadoc)</a>
+<span class="sourceLineNo">219</span><a id="line.219">                 * </a>
+<span class="sourceLineNo">220</span><a id="line.220">                 * @see org.opt4j.start.Constant#value()</a>
+<span class="sourceLineNo">221</span><a id="line.221">                 */</a>
+<span class="sourceLineNo">222</span><a id="line.222">                @Override</a>
+<span class="sourceLineNo">223</span><a id="line.223">                public String value() {</a>
+<span class="sourceLineNo">224</span><a id="line.224">                        return value;</a>
+<span class="sourceLineNo">225</span><a id="line.225">                }</a>
+<span class="sourceLineNo">226</span><a id="line.226"></a>
+<span class="sourceLineNo">227</span><a id="line.227">                /*</a>
+<span class="sourceLineNo">228</span><a id="line.228">                 * (non-Javadoc)</a>
+<span class="sourceLineNo">229</span><a id="line.229">                 * </a>
+<span class="sourceLineNo">230</span><a id="line.230">                 * @see org.opt4j.start.Constant#namespace()</a>
+<span class="sourceLineNo">231</span><a id="line.231">                 */</a>
+<span class="sourceLineNo">232</span><a id="line.232">                @Override</a>
+<span class="sourceLineNo">233</span><a id="line.233">                public Class&lt;?&gt; namespace() {</a>
+<span class="sourceLineNo">234</span><a id="line.234">                        return namespace;</a>
+<span class="sourceLineNo">235</span><a id="line.235">                }</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">                /*</a>
+<span class="sourceLineNo">238</span><a id="line.238">                 * (non-Javadoc)</a>
+<span class="sourceLineNo">239</span><a id="line.239">                 * </a>
+<span class="sourceLineNo">240</span><a id="line.240">                 * @see java.lang.Object#hashCode()</a>
+<span class="sourceLineNo">241</span><a id="line.241">                 */</a>
+<span class="sourceLineNo">242</span><a id="line.242">                @Override</a>
+<span class="sourceLineNo">243</span><a id="line.243">                public int hashCode() {</a>
+<span class="sourceLineNo">244</span><a id="line.244">                        return ((127 * "value".hashCode()) ^ value.hashCode()) + ((127 * "namespace".hashCode()) ^ namespace.hashCode());</a>
+<span class="sourceLineNo">245</span><a id="line.245">                }</a>
+<span class="sourceLineNo">246</span><a id="line.246"></a>
+<span class="sourceLineNo">247</span><a id="line.247">                /*</a>
+<span class="sourceLineNo">248</span><a id="line.248">                 * (non-Javadoc)</a>
+<span class="sourceLineNo">249</span><a id="line.249">                 * </a>
+<span class="sourceLineNo">250</span><a id="line.250">                 * @see java.lang.Object#equals(java.lang.Object)</a>
+<span class="sourceLineNo">251</span><a id="line.251">                 */</a>
+<span class="sourceLineNo">252</span><a id="line.252">                @Override</a>
+<span class="sourceLineNo">253</span><a id="line.253">                public boolean equals(Object o) {</a>
+<span class="sourceLineNo">254</span><a id="line.254">                        if (o == null || !(o instanceof Constant)) {</a>
+<span class="sourceLineNo">255</span><a id="line.255">                                return false;</a>
+<span class="sourceLineNo">256</span><a id="line.256">                        }</a>
+<span class="sourceLineNo">257</span><a id="line.257"></a>
+<span class="sourceLineNo">258</span><a id="line.258">                        Constant other = (Constant) o;</a>
+<span class="sourceLineNo">259</span><a id="line.259">                        return (value.equals(other.value()) &amp;&amp; namespace.equals(other.namespace()));</a>
+<span class="sourceLineNo">260</span><a id="line.260">                }</a>
+<span class="sourceLineNo">261</span><a id="line.261"></a>
+<span class="sourceLineNo">262</span><a id="line.262">                /*</a>
+<span class="sourceLineNo">263</span><a id="line.263">                 * (non-Javadoc)</a>
+<span class="sourceLineNo">264</span><a id="line.264">                 * </a>
+<span class="sourceLineNo">265</span><a id="line.265">                 * @see java.lang.annotation.Annotation#annotationType()</a>
+<span class="sourceLineNo">266</span><a id="line.266">                 */</a>
+<span class="sourceLineNo">267</span><a id="line.267">                @Override</a>
+<span class="sourceLineNo">268</span><a id="line.268">                public Class&lt;? extends Annotation&gt; annotationType() {</a>
+<span class="sourceLineNo">269</span><a id="line.269">                        return Constant.class;</a>
+<span class="sourceLineNo">270</span><a id="line.270">                }</a>
+<span class="sourceLineNo">271</span><a id="line.271"></a>
+<span class="sourceLineNo">272</span><a id="line.272">                /*</a>
+<span class="sourceLineNo">273</span><a id="line.273">                 * (non-Javadoc)</a>
+<span class="sourceLineNo">274</span><a id="line.274">                 * </a>
+<span class="sourceLineNo">275</span><a id="line.275">                 * @see java.lang.Object#toString()</a>
+<span class="sourceLineNo">276</span><a id="line.276">                 */</a>
+<span class="sourceLineNo">277</span><a id="line.277">                @Override</a>
+<span class="sourceLineNo">278</span><a id="line.278">                public String toString() {</a>
+<span class="sourceLineNo">279</span><a id="line.279">                        return "@" + Constant.class.getName() + "(value=" + value + ", namespace=" + namespace.getName() + ")";</a>
+<span class="sourceLineNo">280</span><a id="line.280">                }</a>
+<span class="sourceLineNo">281</span><a id="line.281"></a>
+<span class="sourceLineNo">282</span><a id="line.282">                private static final long serialVersionUID = 0;</a>
+<span class="sourceLineNo">283</span><a id="line.283">        }</a>
+<span class="sourceLineNo">284</span><a id="line.284"></a>
+<span class="sourceLineNo">285</span><a id="line.285">        /**</a>
+<span class="sourceLineNo">286</span><a id="line.286">         * Bind a {@link Constant}.</a>
+<span class="sourceLineNo">287</span><a id="line.287">         * </a>
+<span class="sourceLineNo">288</span><a id="line.288">         * @param value</a>
+<span class="sourceLineNo">289</span><a id="line.289">         *            the value from the {@link Constant} annotation with an empty</a>
+<span class="sourceLineNo">290</span><a id="line.290">         *            namespace</a>
+<span class="sourceLineNo">291</span><a id="line.291">         * @return the constant binding builder that allows a binding</a>
+<span class="sourceLineNo">292</span><a id="line.292">         */</a>
+<span class="sourceLineNo">293</span><a id="line.293">        protected ConstantBindingBuilder bindConstant(String value) {</a>
+<span class="sourceLineNo">294</span><a id="line.294">                return bindConstant(value, Object.class);</a>
+<span class="sourceLineNo">295</span><a id="line.295">        }</a>
+<span class="sourceLineNo">296</span><a id="line.296"></a>
+<span class="sourceLineNo">297</span><a id="line.297">        /**</a>
+<span class="sourceLineNo">298</span><a id="line.298">         * Bind a constant.</a>
+<span class="sourceLineNo">299</span><a id="line.299">         * </a>
+<span class="sourceLineNo">300</span><a id="line.300">         * @param value</a>
+<span class="sourceLineNo">301</span><a id="line.301">         *            the value from the {@link Constant}</a>
+<span class="sourceLineNo">302</span><a id="line.302">         * @param namespace</a>
+<span class="sourceLineNo">303</span><a id="line.303">         *            the namespace from the {@link Constant}</a>
+<span class="sourceLineNo">304</span><a id="line.304">         * @return the constant binding builder that allows a binding</a>
+<span class="sourceLineNo">305</span><a id="line.305">         */</a>
+<span class="sourceLineNo">306</span><a id="line.306">        public ConstantBindingBuilder bindConstant(String value, Class&lt;?&gt; namespace) {</a>
+<span class="sourceLineNo">307</span><a id="line.307">                assert (namespace != null);</a>
+<span class="sourceLineNo">308</span><a id="line.308">                Constant c = new ConstantImpl(value, namespace);</a>
+<span class="sourceLineNo">309</span><a id="line.309">                return bindConstant(c);</a>
+<span class="sourceLineNo">310</span><a id="line.310">        }</a>
+<span class="sourceLineNo">311</span><a id="line.311"></a>
+<span class="sourceLineNo">312</span><a id="line.312">        /**</a>
+<span class="sourceLineNo">313</span><a id="line.313">         * Adds an {@link OptimizerStateListener}.</a>
+<span class="sourceLineNo">314</span><a id="line.314">         * </a>
+<span class="sourceLineNo">315</span><a id="line.315">         * @param listener</a>
+<span class="sourceLineNo">316</span><a id="line.316">         *            the listener to be added</a>
+<span class="sourceLineNo">317</span><a id="line.317">         */</a>
+<span class="sourceLineNo">318</span><a id="line.318">        public void addOptimizerStateListener(Class&lt;? extends OptimizerStateListener&gt; listener) {</a>
+<span class="sourceLineNo">319</span><a id="line.319">                Multibinder&lt;OptimizerStateListener&gt; multibinder = Multibinder.newSetBinder(binder(), OptimizerStateListener.class);</a>
+<span class="sourceLineNo">320</span><a id="line.320">                multibinder.addBinding().to(listener);</a>
+<span class="sourceLineNo">321</span><a id="line.321">        }</a>
+<span class="sourceLineNo">322</span><a id="line.322"></a>
+<span class="sourceLineNo">323</span><a id="line.323">        /**</a>
+<span class="sourceLineNo">324</span><a id="line.324">         * Adds an {@link OptimizerIterationListener}.</a>
+<span class="sourceLineNo">325</span><a id="line.325">         * </a>
+<span class="sourceLineNo">326</span><a id="line.326">         * @param listener</a>
+<span class="sourceLineNo">327</span><a id="line.327">         *            the listener to be added</a>
+<span class="sourceLineNo">328</span><a id="line.328">         */</a>
+<span class="sourceLineNo">329</span><a id="line.329">        public void addOptimizerIterationListener(Class&lt;? extends OptimizerIterationListener&gt; listener) {</a>
+<span class="sourceLineNo">330</span><a id="line.330">                assert binder() != null;</a>
+<span class="sourceLineNo">331</span><a id="line.331">                Multibinder&lt;OptimizerIterationListener&gt; multibinder = Multibinder.newSetBinder(binder(), OptimizerIterationListener.class);</a>
+<span class="sourceLineNo">332</span><a id="line.332">                multibinder.addBinding().to(listener);</a>
+<span class="sourceLineNo">333</span><a id="line.333">        }</a>
+<span class="sourceLineNo">334</span><a id="line.334"></a>
+<span class="sourceLineNo">335</span><a id="line.335">        /**</a>
+<span class="sourceLineNo">336</span><a id="line.336">         * Adds an {@link IndividualStateListener}.</a>
+<span class="sourceLineNo">337</span><a id="line.337">         * </a>
+<span class="sourceLineNo">338</span><a id="line.338">         * @param listener</a>
+<span class="sourceLineNo">339</span><a id="line.339">         *            the listener to be added</a>
+<span class="sourceLineNo">340</span><a id="line.340">         */</a>
+<span class="sourceLineNo">341</span><a id="line.341">        public void addIndividualStateListener(Class&lt;? extends IndividualStateListener&gt; listener) {</a>
+<span class="sourceLineNo">342</span><a id="line.342">                Multibinder&lt;IndividualStateListener&gt; multibinder = Multibinder.newSetBinder(binder(), IndividualStateListener.class);</a>
+<span class="sourceLineNo">343</span><a id="line.343">                multibinder.addBinding().to(listener);</a>
+<span class="sourceLineNo">344</span><a id="line.344">        }</a>
+<span class="sourceLineNo">345</span><a id="line.345"></a>
+<span class="sourceLineNo">346</span><a id="line.346">        /**</a>
+<span class="sourceLineNo">347</span><a id="line.347">         * Adds an {@link ControlListener}.</a>
+<span class="sourceLineNo">348</span><a id="line.348">         * </a>
+<span class="sourceLineNo">349</span><a id="line.349">         * @param listener</a>
+<span class="sourceLineNo">350</span><a id="line.350">         *            the listener to be added</a>
+<span class="sourceLineNo">351</span><a id="line.351">         */</a>
+<span class="sourceLineNo">352</span><a id="line.352">        public void addControlListener(Class&lt;? extends ControlListener&gt; listener) {</a>
+<span class="sourceLineNo">353</span><a id="line.353">                Multibinder&lt;ControlListener&gt; multibinder = Multibinder.newSetBinder(binder(), ControlListener.class);</a>
+<span class="sourceLineNo">354</span><a id="line.354">                multibinder.addBinding().to(listener);</a>
+<span class="sourceLineNo">355</span><a id="line.355">        }</a>
+<span class="sourceLineNo">356</span><a id="line.356"></a>
+<span class="sourceLineNo">357</span><a id="line.357">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

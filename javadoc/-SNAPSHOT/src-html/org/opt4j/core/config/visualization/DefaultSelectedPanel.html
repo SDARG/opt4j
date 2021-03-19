@@ -1,0 +1,547 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">/*******************************************************************************</a>
+<span class="sourceLineNo">002</span><a id="line.2"> * Copyright (c) 2014 Opt4J</a>
+<span class="sourceLineNo">003</span><a id="line.3"> *</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Permission is hereby granted, free of charge, to any person obtaining a copy</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * of this software and associated documentation files (the "Software"), to deal</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * in the Software without restriction, including without limitation the rights</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * copies of the Software, and to permit persons to whom the Software is</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * furnished to do so, subject to the following conditions:</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * The above copyright notice and this permission notice shall be included in</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * all copies or substantial portions of the Software.</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * SOFTWARE.</a>
+<span class="sourceLineNo">021</span><a id="line.21"> *******************************************************************************/</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">package org.opt4j.core.config.visualization;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">import java.awt.BasicStroke;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.awt.BorderLayout;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.awt.Color;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.awt.Component;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.awt.Dimension;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.awt.FlowLayout;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.awt.Graphics;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.awt.Graphics2D;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.awt.Image;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.awt.RenderingHints;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.awt.datatransfer.DataFlavor;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.awt.datatransfer.Transferable;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import java.awt.datatransfer.UnsupportedFlavorException;</a>
+<span class="sourceLineNo">038</span><a id="line.38">import java.awt.dnd.DnDConstants;</a>
+<span class="sourceLineNo">039</span><a id="line.39">import java.awt.dnd.DropTarget;</a>
+<span class="sourceLineNo">040</span><a id="line.40">import java.awt.dnd.DropTargetAdapter;</a>
+<span class="sourceLineNo">041</span><a id="line.41">import java.awt.dnd.DropTargetDropEvent;</a>
+<span class="sourceLineNo">042</span><a id="line.42">import java.awt.dnd.DropTargetListener;</a>
+<span class="sourceLineNo">043</span><a id="line.43">import java.awt.event.ActionEvent;</a>
+<span class="sourceLineNo">044</span><a id="line.44">import java.awt.event.ActionListener;</a>
+<span class="sourceLineNo">045</span><a id="line.45">import java.awt.event.MouseAdapter;</a>
+<span class="sourceLineNo">046</span><a id="line.46">import java.awt.event.MouseEvent;</a>
+<span class="sourceLineNo">047</span><a id="line.47">import java.awt.event.MouseListener;</a>
+<span class="sourceLineNo">048</span><a id="line.48">import java.io.IOException;</a>
+<span class="sourceLineNo">049</span><a id="line.49">import java.lang.reflect.Constructor;</a>
+<span class="sourceLineNo">050</span><a id="line.50">import java.util.Collection;</a>
+<span class="sourceLineNo">051</span><a id="line.51">import java.util.HashMap;</a>
+<span class="sourceLineNo">052</span><a id="line.52">import java.util.HashSet;</a>
+<span class="sourceLineNo">053</span><a id="line.53">import java.util.Map;</a>
+<span class="sourceLineNo">054</span><a id="line.54">import java.util.Set;</a>
+<span class="sourceLineNo">055</span><a id="line.55"></a>
+<span class="sourceLineNo">056</span><a id="line.56">import javax.swing.AbstractButton;</a>
+<span class="sourceLineNo">057</span><a id="line.57">import javax.swing.BorderFactory;</a>
+<span class="sourceLineNo">058</span><a id="line.58">import javax.swing.ImageIcon;</a>
+<span class="sourceLineNo">059</span><a id="line.59">import javax.swing.JButton;</a>
+<span class="sourceLineNo">060</span><a id="line.60">import javax.swing.JLabel;</a>
+<span class="sourceLineNo">061</span><a id="line.61">import javax.swing.JPanel;</a>
+<span class="sourceLineNo">062</span><a id="line.62">import javax.swing.JScrollPane;</a>
+<span class="sourceLineNo">063</span><a id="line.63">import javax.swing.JTabbedPane;</a>
+<span class="sourceLineNo">064</span><a id="line.64">import javax.swing.ScrollPaneConstants;</a>
+<span class="sourceLineNo">065</span><a id="line.65">import javax.swing.SwingConstants;</a>
+<span class="sourceLineNo">066</span><a id="line.66"></a>
+<span class="sourceLineNo">067</span><a id="line.67">import org.opt4j.core.config.Icons;</a>
+<span class="sourceLineNo">068</span><a id="line.68">import org.opt4j.core.config.ModuleSaver;</a>
+<span class="sourceLineNo">069</span><a id="line.69">import org.opt4j.core.config.PropertyModule;</a>
+<span class="sourceLineNo">070</span><a id="line.70">import org.opt4j.core.config.annotations.Panel;</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">import com.google.inject.Inject;</a>
+<span class="sourceLineNo">073</span><a id="line.73">import com.google.inject.Module;</a>
+<span class="sourceLineNo">074</span><a id="line.74"></a>
+<span class="sourceLineNo">075</span><a id="line.75">/**</a>
+<span class="sourceLineNo">076</span><a id="line.76"> * The {@link DefaultSelectedPanel}. The selected modules are organized as tabs.</a>
+<span class="sourceLineNo">077</span><a id="line.77"> * </a>
+<span class="sourceLineNo">078</span><a id="line.78"> * @author lukasiewycz</a>
+<span class="sourceLineNo">079</span><a id="line.79"> * </a>
+<span class="sourceLineNo">080</span><a id="line.80"> */</a>
+<span class="sourceLineNo">081</span><a id="line.81">@SuppressWarnings("serial")</a>
+<span class="sourceLineNo">082</span><a id="line.82">public class DefaultSelectedPanel extends SelectedPanel implements SetListener {</a>
+<span class="sourceLineNo">083</span><a id="line.83"></a>
+<span class="sourceLineNo">084</span><a id="line.84">        protected final TabbedPane tabs = new TabbedPane();</a>
+<span class="sourceLineNo">085</span><a id="line.85"></a>
+<span class="sourceLineNo">086</span><a id="line.86">        protected final Format format;</a>
+<span class="sourceLineNo">087</span><a id="line.87"></a>
+<span class="sourceLineNo">088</span><a id="line.88">        protected final SelectedModules selectedModules;</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">        protected final FileChooser fileChooser;</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">        protected final Map&lt;PropertyModule, PropertyPanel&gt; map = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">        protected final DropTarget dropTarget;</a>
+<span class="sourceLineNo">095</span><a id="line.95"></a>
+<span class="sourceLineNo">096</span><a id="line.96">        /**</a>
+<span class="sourceLineNo">097</span><a id="line.97">         * The drop listener for the drag-and-drop functionality.</a>
+<span class="sourceLineNo">098</span><a id="line.98">         */</a>
+<span class="sourceLineNo">099</span><a id="line.99">        protected final DropTargetListener dropListener = new DropTargetAdapter() {</a>
+<span class="sourceLineNo">100</span><a id="line.100">                @Override</a>
+<span class="sourceLineNo">101</span><a id="line.101">                public void drop(DropTargetDropEvent dtde) {</a>
+<span class="sourceLineNo">102</span><a id="line.102">                        Transferable transferable = dtde.getTransferable();</a>
+<span class="sourceLineNo">103</span><a id="line.103">                        DataFlavor flaver = ModuleTransferable.localModuleFlavor;</a>
+<span class="sourceLineNo">104</span><a id="line.104">                        try {</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">                                if (transferable.isDataFlavorSupported(flaver)) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">                                        Object o = transferable.getTransferData(flaver);</a>
+<span class="sourceLineNo">108</span><a id="line.108">                                        PropertyModule module = (PropertyModule) o;</a>
+<span class="sourceLineNo">109</span><a id="line.109">                                        selectedModules.add(module);</a>
+<span class="sourceLineNo">110</span><a id="line.110"></a>
+<span class="sourceLineNo">111</span><a id="line.111">                                        dtde.acceptDrop(DnDConstants.ACTION_MOVE);</a>
+<span class="sourceLineNo">112</span><a id="line.112">                                        dtde.getDropTargetContext().dropComplete(true);</a>
+<span class="sourceLineNo">113</span><a id="line.113">                                } else {</a>
+<span class="sourceLineNo">114</span><a id="line.114">                                        dtde.rejectDrop();</a>
+<span class="sourceLineNo">115</span><a id="line.115">                                }</a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">                        } catch (UnsupportedFlavorException e) {</a>
+<span class="sourceLineNo">118</span><a id="line.118">                                e.printStackTrace();</a>
+<span class="sourceLineNo">119</span><a id="line.119">                        } catch (IOException e) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">                                e.printStackTrace();</a>
+<span class="sourceLineNo">121</span><a id="line.121">                        }</a>
+<span class="sourceLineNo">122</span><a id="line.122">                }</a>
+<span class="sourceLineNo">123</span><a id="line.123">        };</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">        protected static class MyScrollPane extends JScrollPane {</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">                protected PropertyPanel panel;</a>
+<span class="sourceLineNo">128</span><a id="line.128"></a>
+<span class="sourceLineNo">129</span><a id="line.129">                public MyScrollPane(PropertyPanel panel) {</a>
+<span class="sourceLineNo">130</span><a id="line.130">                        super(panel);</a>
+<span class="sourceLineNo">131</span><a id="line.131">                        this.panel = panel;</a>
+<span class="sourceLineNo">132</span><a id="line.132">                }</a>
+<span class="sourceLineNo">133</span><a id="line.133"></a>
+<span class="sourceLineNo">134</span><a id="line.134">                public PropertyPanel getPanel() {</a>
+<span class="sourceLineNo">135</span><a id="line.135">                        return panel;</a>
+<span class="sourceLineNo">136</span><a id="line.136">                }</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">        }</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">        /**</a>
+<span class="sourceLineNo">141</span><a id="line.141">         * The {@link TabbedPane} is a custom {@link JTabbedPane}.</a>
+<span class="sourceLineNo">142</span><a id="line.142">         */</a>
+<span class="sourceLineNo">143</span><a id="line.143">        protected class TabbedPane extends JTabbedPane {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                @Override</a>
+<span class="sourceLineNo">145</span><a id="line.145">                public void remove(int index) {</a>
+<span class="sourceLineNo">146</span><a id="line.146">                        Component component = tabs.getComponentAt(index);</a>
+<span class="sourceLineNo">147</span><a id="line.147">                        super.remove(index);</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">                        if (component instanceof MyScrollPane) {</a>
+<span class="sourceLineNo">150</span><a id="line.150">                                MyScrollPane scroll = (MyScrollPane) component;</a>
+<span class="sourceLineNo">151</span><a id="line.151">                                map.remove(scroll.getPanel().getModule());</a>
+<span class="sourceLineNo">152</span><a id="line.152">                        }</a>
+<span class="sourceLineNo">153</span><a id="line.153">                }</a>
+<span class="sourceLineNo">154</span><a id="line.154"></a>
+<span class="sourceLineNo">155</span><a id="line.155">                protected int getIndex(PropertyModule module) {</a>
+<span class="sourceLineNo">156</span><a id="line.156">                        if (map.keySet().contains(module)) {</a>
+<span class="sourceLineNo">157</span><a id="line.157">                                for (int i = 0; i &lt; tabs.getTabCount(); i++) {</a>
+<span class="sourceLineNo">158</span><a id="line.158">                                        Component component = tabs.getComponentAt(i);</a>
+<span class="sourceLineNo">159</span><a id="line.159">                                        if (component instanceof MyScrollPane) {</a>
+<span class="sourceLineNo">160</span><a id="line.160">                                                MyScrollPane scroll = (MyScrollPane) component;</a>
+<span class="sourceLineNo">161</span><a id="line.161">                                                if (scroll.getPanel().getModule().equals(module)) {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                                                        return i;</a>
+<span class="sourceLineNo">163</span><a id="line.163">                                                }</a>
+<span class="sourceLineNo">164</span><a id="line.164">                                        }</a>
+<span class="sourceLineNo">165</span><a id="line.165">                                }</a>
+<span class="sourceLineNo">166</span><a id="line.166">                        }</a>
+<span class="sourceLineNo">167</span><a id="line.167">                        return -1;</a>
+<span class="sourceLineNo">168</span><a id="line.168">                }</a>
+<span class="sourceLineNo">169</span><a id="line.169">        }</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171">        /**</a>
+<span class="sourceLineNo">172</span><a id="line.172">         * The custom tab of the {@link JTabbedPane}.</a>
+<span class="sourceLineNo">173</span><a id="line.173">         */</a>
+<span class="sourceLineNo">174</span><a id="line.174">        protected class TabComponent extends JPanel {</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">                private JLabel label;</a>
+<span class="sourceLineNo">177</span><a id="line.177">                private final JButton xmlButton;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                private final JButton closeButton;</a>
+<span class="sourceLineNo">179</span><a id="line.179"></a>
+<span class="sourceLineNo">180</span><a id="line.180">                private final PropertyModule module;</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">                public TabComponent(PropertyModule module) {</a>
+<span class="sourceLineNo">183</span><a id="line.183">                        super(new FlowLayout(FlowLayout.LEFT, 0, 0));</a>
+<span class="sourceLineNo">184</span><a id="line.184">                        this.module = module;</a>
+<span class="sourceLineNo">185</span><a id="line.185">                        setOpaque(false);</a>
+<span class="sourceLineNo">186</span><a id="line.186"></a>
+<span class="sourceLineNo">187</span><a id="line.187">                        String name = format.getName(module);</a>
+<span class="sourceLineNo">188</span><a id="line.188">                        ImageIcon icon = format.getIcon(module);</a>
+<span class="sourceLineNo">189</span><a id="line.189"></a>
+<span class="sourceLineNo">190</span><a id="line.190">                        label = new JLabel(name, icon, SwingConstants.LEFT);</a>
+<span class="sourceLineNo">191</span><a id="line.191">                        xmlButton = new XMLButton();</a>
+<span class="sourceLineNo">192</span><a id="line.192">                        xmlButton.setToolTipText("Show module xml");</a>
+<span class="sourceLineNo">193</span><a id="line.193">                        closeButton = new CloseButton();</a>
+<span class="sourceLineNo">194</span><a id="line.194">                        closeButton.setToolTipText("Remove module");</a>
+<span class="sourceLineNo">195</span><a id="line.195"></a>
+<span class="sourceLineNo">196</span><a id="line.196">                        setLabelName(name);</a>
+<span class="sourceLineNo">197</span><a id="line.197">                }</a>
+<span class="sourceLineNo">198</span><a id="line.198"></a>
+<span class="sourceLineNo">199</span><a id="line.199">                protected void setLabelName(String name) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">                        if (name.length() &gt; 22) {</a>
+<span class="sourceLineNo">201</span><a id="line.201">                                label.setName(name.substring(0, 18) + "...");</a>
+<span class="sourceLineNo">202</span><a id="line.202">                        } else {</a>
+<span class="sourceLineNo">203</span><a id="line.203">                                label.setName(name);</a>
+<span class="sourceLineNo">204</span><a id="line.204">                        }</a>
+<span class="sourceLineNo">205</span><a id="line.205">                        removeAll();</a>
+<span class="sourceLineNo">206</span><a id="line.206"></a>
+<span class="sourceLineNo">207</span><a id="line.207">                        label = new JLabel(label.getName(), label.getIcon(), SwingConstants.LEFT);</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">                        add(label);</a>
+<span class="sourceLineNo">210</span><a id="line.210">                        add(new JLabel(" "));</a>
+<span class="sourceLineNo">211</span><a id="line.211">                        label.setBorder(BorderFactory.createEmptyBorder(0, label.getIcon() == null ? 5 : 0, 0, 5));</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">                        add(xmlButton);</a>
+<span class="sourceLineNo">214</span><a id="line.214">                        add(closeButton);</a>
+<span class="sourceLineNo">215</span><a id="line.215">                        setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));</a>
+<span class="sourceLineNo">216</span><a id="line.216">                }</a>
+<span class="sourceLineNo">217</span><a id="line.217"></a>
+<span class="sourceLineNo">218</span><a id="line.218">                protected PropertyModule getModule() {</a>
+<span class="sourceLineNo">219</span><a id="line.219">                        return module;</a>
+<span class="sourceLineNo">220</span><a id="line.220">                }</a>
+<span class="sourceLineNo">221</span><a id="line.221"></a>
+<span class="sourceLineNo">222</span><a id="line.222">                private abstract class TabButton extends JButton implements ActionListener {</a>
+<span class="sourceLineNo">223</span><a id="line.223"></a>
+<span class="sourceLineNo">224</span><a id="line.224">                        protected final static int SIZE = 16;</a>
+<span class="sourceLineNo">225</span><a id="line.225"></a>
+<span class="sourceLineNo">226</span><a id="line.226">                        TabButton() {</a>
+<span class="sourceLineNo">227</span><a id="line.227">                                setPreferredSize(new Dimension(SIZE, SIZE));</a>
+<span class="sourceLineNo">228</span><a id="line.228">                                setContentAreaFilled(false);</a>
+<span class="sourceLineNo">229</span><a id="line.229">                                setFocusable(false);</a>
+<span class="sourceLineNo">230</span><a id="line.230">                                setBorder(BorderFactory.createEtchedBorder());</a>
+<span class="sourceLineNo">231</span><a id="line.231">                                setBorderPainted(false);</a>
+<span class="sourceLineNo">232</span><a id="line.232">                                addMouseListener(buttonMouseListener);</a>
+<span class="sourceLineNo">233</span><a id="line.233">                                setRolloverEnabled(true);</a>
+<span class="sourceLineNo">234</span><a id="line.234">                                addActionListener(this);</a>
+<span class="sourceLineNo">235</span><a id="line.235">                        }</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">                        // paint the cross</a>
+<span class="sourceLineNo">238</span><a id="line.238">                        @Override</a>
+<span class="sourceLineNo">239</span><a id="line.239">                        protected void paintComponent(Graphics g) {</a>
+<span class="sourceLineNo">240</span><a id="line.240">                                super.paintComponent(g);</a>
+<span class="sourceLineNo">241</span><a id="line.241">                                Graphics2D g2 = (Graphics2D) g.create();</a>
+<span class="sourceLineNo">242</span><a id="line.242">                                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);</a>
+<span class="sourceLineNo">243</span><a id="line.243">                                // shift the image for pressed buttons</a>
+<span class="sourceLineNo">244</span><a id="line.244">                                if (getModel().isPressed()) {</a>
+<span class="sourceLineNo">245</span><a id="line.245">                                        g2.translate(1, 1);</a>
+<span class="sourceLineNo">246</span><a id="line.246">                                }</a>
+<span class="sourceLineNo">247</span><a id="line.247">                                drawIcon(g2);</a>
+<span class="sourceLineNo">248</span><a id="line.248">                                g2.dispose();</a>
+<span class="sourceLineNo">249</span><a id="line.249">                        }</a>
+<span class="sourceLineNo">250</span><a id="line.250"></a>
+<span class="sourceLineNo">251</span><a id="line.251">                        protected abstract void drawIcon(Graphics2D g);</a>
+<span class="sourceLineNo">252</span><a id="line.252"></a>
+<span class="sourceLineNo">253</span><a id="line.253">                }</a>
+<span class="sourceLineNo">254</span><a id="line.254"></a>
+<span class="sourceLineNo">255</span><a id="line.255">                private class CloseButton extends TabButton {</a>
+<span class="sourceLineNo">256</span><a id="line.256"></a>
+<span class="sourceLineNo">257</span><a id="line.257">                        @Override</a>
+<span class="sourceLineNo">258</span><a id="line.258">                        public void actionPerformed(ActionEvent e) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">                                int i = tabs.indexOfTabComponent(TabComponent.this);</a>
+<span class="sourceLineNo">260</span><a id="line.260">                                if (i != -1) {</a>
+<span class="sourceLineNo">261</span><a id="line.261">                                        selectedModules.remove(module);</a>
+<span class="sourceLineNo">262</span><a id="line.262">                                }</a>
+<span class="sourceLineNo">263</span><a id="line.263">                        }</a>
+<span class="sourceLineNo">264</span><a id="line.264"></a>
+<span class="sourceLineNo">265</span><a id="line.265">                        @Override</a>
+<span class="sourceLineNo">266</span><a id="line.266">                        protected void drawIcon(Graphics2D g) {</a>
+<span class="sourceLineNo">267</span><a id="line.267">                                g.setStroke(new BasicStroke(2));</a>
+<span class="sourceLineNo">268</span><a id="line.268">                                g.setColor(Color.RED);</a>
+<span class="sourceLineNo">269</span><a id="line.269"></a>
+<span class="sourceLineNo">270</span><a id="line.270">                                int delta = 5;</a>
+<span class="sourceLineNo">271</span><a id="line.271">                                g.drawLine(delta, delta, getWidth() - delta - 2, getHeight() - delta - 2);</a>
+<span class="sourceLineNo">272</span><a id="line.272">                                g.drawLine(getWidth() - delta - 2, delta, delta, getHeight() - delta - 2);</a>
+<span class="sourceLineNo">273</span><a id="line.273">                        }</a>
+<span class="sourceLineNo">274</span><a id="line.274">                }</a>
+<span class="sourceLineNo">275</span><a id="line.275"></a>
+<span class="sourceLineNo">276</span><a id="line.276">                private class XMLButton extends TabButton {</a>
+<span class="sourceLineNo">277</span><a id="line.277">                        @Override</a>
+<span class="sourceLineNo">278</span><a id="line.278">                        public void actionPerformed(ActionEvent e) {</a>
+<span class="sourceLineNo">279</span><a id="line.279">                                ModuleSaver saver = new ModuleSaver();</a>
+<span class="sourceLineNo">280</span><a id="line.280">                                final ClipboardFrame frame = new ClipboardFrame(saver.toXMLString(module));</a>
+<span class="sourceLineNo">281</span><a id="line.281">                                frame.pack();</a>
+<span class="sourceLineNo">282</span><a id="line.282">                                frame.setVisible(true);</a>
+<span class="sourceLineNo">283</span><a id="line.283">                        }</a>
+<span class="sourceLineNo">284</span><a id="line.284"></a>
+<span class="sourceLineNo">285</span><a id="line.285">                        @Override</a>
+<span class="sourceLineNo">286</span><a id="line.286">                        protected void drawIcon(Graphics2D g) {</a>
+<span class="sourceLineNo">287</span><a id="line.287">                                g.setStroke(new BasicStroke(1));</a>
+<span class="sourceLineNo">288</span><a id="line.288">                                Image image = Icons.getIcon(Icons.XMLTAG).getImage();</a>
+<span class="sourceLineNo">289</span><a id="line.289">                                g.drawImage(image, 0, -1, 15, 16, this);</a>
+<span class="sourceLineNo">290</span><a id="line.290">                        }</a>
+<span class="sourceLineNo">291</span><a id="line.291">                }</a>
+<span class="sourceLineNo">292</span><a id="line.292"></a>
+<span class="sourceLineNo">293</span><a id="line.293">                private final MouseListener buttonMouseListener = new MouseAdapter() {</a>
+<span class="sourceLineNo">294</span><a id="line.294">                        @Override</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        public void mouseEntered(MouseEvent e) {</a>
+<span class="sourceLineNo">296</span><a id="line.296">                                Component component = e.getComponent();</a>
+<span class="sourceLineNo">297</span><a id="line.297">                                if (component instanceof AbstractButton) {</a>
+<span class="sourceLineNo">298</span><a id="line.298">                                        AbstractButton button = (AbstractButton) component;</a>
+<span class="sourceLineNo">299</span><a id="line.299">                                        button.setBorderPainted(true);</a>
+<span class="sourceLineNo">300</span><a id="line.300">                                }</a>
+<span class="sourceLineNo">301</span><a id="line.301">                        }</a>
+<span class="sourceLineNo">302</span><a id="line.302"></a>
+<span class="sourceLineNo">303</span><a id="line.303">                        @Override</a>
+<span class="sourceLineNo">304</span><a id="line.304">                        public void mouseExited(MouseEvent e) {</a>
+<span class="sourceLineNo">305</span><a id="line.305">                                Component component = e.getComponent();</a>
+<span class="sourceLineNo">306</span><a id="line.306">                                if (component instanceof AbstractButton) {</a>
+<span class="sourceLineNo">307</span><a id="line.307">                                        AbstractButton button = (AbstractButton) component;</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                        button.setBorderPainted(false);</a>
+<span class="sourceLineNo">309</span><a id="line.309">                                }</a>
+<span class="sourceLineNo">310</span><a id="line.310">                        }</a>
+<span class="sourceLineNo">311</span><a id="line.311">                };</a>
+<span class="sourceLineNo">312</span><a id="line.312">        }</a>
+<span class="sourceLineNo">313</span><a id="line.313"></a>
+<span class="sourceLineNo">314</span><a id="line.314">        /**</a>
+<span class="sourceLineNo">315</span><a id="line.315">         * Constructs a {@link DefaultSelectedPanel}.</a>
+<span class="sourceLineNo">316</span><a id="line.316">         * </a>
+<span class="sourceLineNo">317</span><a id="line.317">         * @param format</a>
+<span class="sourceLineNo">318</span><a id="line.318">         *            the format</a>
+<span class="sourceLineNo">319</span><a id="line.319">         * @param selectedModules</a>
+<span class="sourceLineNo">320</span><a id="line.320">         *            the selected modules</a>
+<span class="sourceLineNo">321</span><a id="line.321">         * @param fileChooser</a>
+<span class="sourceLineNo">322</span><a id="line.322">         *            the file chooser</a>
+<span class="sourceLineNo">323</span><a id="line.323">         */</a>
+<span class="sourceLineNo">324</span><a id="line.324">        @Inject</a>
+<span class="sourceLineNo">325</span><a id="line.325">        public DefaultSelectedPanel(Format format, SelectedModules selectedModules, FileChooser fileChooser) {</a>
+<span class="sourceLineNo">326</span><a id="line.326">                this.format = format;</a>
+<span class="sourceLineNo">327</span><a id="line.327">                this.selectedModules = selectedModules;</a>
+<span class="sourceLineNo">328</span><a id="line.328">                this.fileChooser = fileChooser;</a>
+<span class="sourceLineNo">329</span><a id="line.329"></a>
+<span class="sourceLineNo">330</span><a id="line.330">                dropTarget = new DropTarget(this, dropListener);</a>
+<span class="sourceLineNo">331</span><a id="line.331">        }</a>
+<span class="sourceLineNo">332</span><a id="line.332"></a>
+<span class="sourceLineNo">333</span><a id="line.333">        /**</a>
+<span class="sourceLineNo">334</span><a id="line.334">         * Registers the listeners.</a>
+<span class="sourceLineNo">335</span><a id="line.335">         */</a>
+<span class="sourceLineNo">336</span><a id="line.336">        @Inject</a>
+<span class="sourceLineNo">337</span><a id="line.337">        public void init() {</a>
+<span class="sourceLineNo">338</span><a id="line.338">                selectedModules.addListener(this);</a>
+<span class="sourceLineNo">339</span><a id="line.339">        }</a>
+<span class="sourceLineNo">340</span><a id="line.340"></a>
+<span class="sourceLineNo">341</span><a id="line.341">        /*</a>
+<span class="sourceLineNo">342</span><a id="line.342">         * (non-Javadoc)</a>
+<span class="sourceLineNo">343</span><a id="line.343">         * </a>
+<span class="sourceLineNo">344</span><a id="line.344">         * @see org.opt4j.conf.gui.Startupable#startup()</a>
+<span class="sourceLineNo">345</span><a id="line.345">         */</a>
+<span class="sourceLineNo">346</span><a id="line.346">        @Override</a>
+<span class="sourceLineNo">347</span><a id="line.347">        public void startup() {</a>
+<span class="sourceLineNo">348</span><a id="line.348">                setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">349</span><a id="line.349">                add(tabs);</a>
+<span class="sourceLineNo">350</span><a id="line.350">        }</a>
+<span class="sourceLineNo">351</span><a id="line.351"></a>
+<span class="sourceLineNo">352</span><a id="line.352">        /**</a>
+<span class="sourceLineNo">353</span><a id="line.353">         * Adds a module to the panel.</a>
+<span class="sourceLineNo">354</span><a id="line.354">         * </a>
+<span class="sourceLineNo">355</span><a id="line.355">         * @param module</a>
+<span class="sourceLineNo">356</span><a id="line.356">         *            the module to add</a>
+<span class="sourceLineNo">357</span><a id="line.357">         */</a>
+<span class="sourceLineNo">358</span><a id="line.358">        protected void addModule(PropertyModule module) {</a>
+<span class="sourceLineNo">359</span><a id="line.359">                if (!map.keySet().contains(module)) {</a>
+<span class="sourceLineNo">360</span><a id="line.360"></a>
+<span class="sourceLineNo">361</span><a id="line.361">                        PropertyPanel panel = null;</a>
+<span class="sourceLineNo">362</span><a id="line.362">                        Panel p = module.getModule().getClass().getAnnotation(Panel.class);</a>
+<span class="sourceLineNo">363</span><a id="line.363">                        if (p != null) {</a>
+<span class="sourceLineNo">364</span><a id="line.364">                                Class&lt;? extends PropertyPanel&gt; clazz = p.value();</a>
+<span class="sourceLineNo">365</span><a id="line.365"></a>
+<span class="sourceLineNo">366</span><a id="line.366">                                try {</a>
+<span class="sourceLineNo">367</span><a id="line.367">                                        Constructor&lt;? extends PropertyPanel&gt; cstr = clazz.getConstructor(PropertyModule.class,</a>
+<span class="sourceLineNo">368</span><a id="line.368">                                                        FileChooser.class, Format.class);</a>
+<span class="sourceLineNo">369</span><a id="line.369">                                        panel = cstr.newInstance(module, fileChooser, format);</a>
+<span class="sourceLineNo">370</span><a id="line.370"></a>
+<span class="sourceLineNo">371</span><a id="line.371">                                } catch (Exception e) {</a>
+<span class="sourceLineNo">372</span><a id="line.372">                                        throw new RuntimeException(e);</a>
+<span class="sourceLineNo">373</span><a id="line.373">                                }</a>
+<span class="sourceLineNo">374</span><a id="line.374"></a>
+<span class="sourceLineNo">375</span><a id="line.375">                        } else {</a>
+<span class="sourceLineNo">376</span><a id="line.376">                                panel = new PropertyPanel(module, fileChooser, format);</a>
+<span class="sourceLineNo">377</span><a id="line.377">                        }</a>
+<span class="sourceLineNo">378</span><a id="line.378"></a>
+<span class="sourceLineNo">379</span><a id="line.379">                        MyScrollPane scroll = new MyScrollPane(panel);</a>
+<span class="sourceLineNo">380</span><a id="line.380">                        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);</a>
+<span class="sourceLineNo">381</span><a id="line.381">                        scroll.setPreferredSize(new Dimension(300, 300));</a>
+<span class="sourceLineNo">382</span><a id="line.382"></a>
+<span class="sourceLineNo">383</span><a id="line.383">                        String name = format.getName(module);</a>
+<span class="sourceLineNo">384</span><a id="line.384">                        String tooltip = format.getTooltip(module);</a>
+<span class="sourceLineNo">385</span><a id="line.385"></a>
+<span class="sourceLineNo">386</span><a id="line.386">                        int count = selectedModules.subSet(selectedModules.first(), module).size();</a>
+<span class="sourceLineNo">387</span><a id="line.387">                        tabs.insertTab(name, null, scroll, tooltip, count);</a>
+<span class="sourceLineNo">388</span><a id="line.388">                        tabs.setSelectedIndex(count);</a>
+<span class="sourceLineNo">389</span><a id="line.389">                        tabs.setTabComponentAt(count, new TabComponent(module));</a>
+<span class="sourceLineNo">390</span><a id="line.390"></a>
+<span class="sourceLineNo">391</span><a id="line.391">                        map.put(module, panel);</a>
+<span class="sourceLineNo">392</span><a id="line.392"></a>
+<span class="sourceLineNo">393</span><a id="line.393">                } else {</a>
+<span class="sourceLineNo">394</span><a id="line.394">                        int index = tabs.getIndex(module);</a>
+<span class="sourceLineNo">395</span><a id="line.395">                        if (index != -1) {</a>
+<span class="sourceLineNo">396</span><a id="line.396">                                tabs.setSelectedIndex(index);</a>
+<span class="sourceLineNo">397</span><a id="line.397">                        }</a>
+<span class="sourceLineNo">398</span><a id="line.398">                }</a>
+<span class="sourceLineNo">399</span><a id="line.399">                updateTabNames();</a>
+<span class="sourceLineNo">400</span><a id="line.400">        }</a>
+<span class="sourceLineNo">401</span><a id="line.401"></a>
+<span class="sourceLineNo">402</span><a id="line.402">        /**</a>
+<span class="sourceLineNo">403</span><a id="line.403">         * Removes a module from the panel.</a>
+<span class="sourceLineNo">404</span><a id="line.404">         * </a>
+<span class="sourceLineNo">405</span><a id="line.405">         * @param module</a>
+<span class="sourceLineNo">406</span><a id="line.406">         *            the module to remove</a>
+<span class="sourceLineNo">407</span><a id="line.407">         */</a>
+<span class="sourceLineNo">408</span><a id="line.408">        protected void removeModule(PropertyModule module) {</a>
+<span class="sourceLineNo">409</span><a id="line.409">                int index = tabs.getIndex(module);</a>
+<span class="sourceLineNo">410</span><a id="line.410">                if (index != -1) {</a>
+<span class="sourceLineNo">411</span><a id="line.411">                        map.remove(module);</a>
+<span class="sourceLineNo">412</span><a id="line.412">                        tabs.remove(index);</a>
+<span class="sourceLineNo">413</span><a id="line.413">                }</a>
+<span class="sourceLineNo">414</span><a id="line.414">                updateTabNames();</a>
+<span class="sourceLineNo">415</span><a id="line.415">        }</a>
+<span class="sourceLineNo">416</span><a id="line.416"></a>
+<span class="sourceLineNo">417</span><a id="line.417">        /**</a>
+<span class="sourceLineNo">418</span><a id="line.418">         * Update the tab names. Consider multiple tabs of the same module.</a>
+<span class="sourceLineNo">419</span><a id="line.419">         */</a>
+<span class="sourceLineNo">420</span><a id="line.420">        protected void updateTabNames() {</a>
+<span class="sourceLineNo">421</span><a id="line.421">                Set&lt;Class&lt;? extends Module&gt;&gt; exist = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">422</span><a id="line.422">                Set&lt;Class&lt;? extends Module&gt;&gt; multi = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">423</span><a id="line.423">                for (PropertyModule pm : map.keySet()) {</a>
+<span class="sourceLineNo">424</span><a id="line.424">                        Class&lt;? extends Module&gt; module = pm.getModule().getClass();</a>
+<span class="sourceLineNo">425</span><a id="line.425">                        if (exist.contains(module)) {</a>
+<span class="sourceLineNo">426</span><a id="line.426">                                multi.add(module);</a>
+<span class="sourceLineNo">427</span><a id="line.427">                        } else {</a>
+<span class="sourceLineNo">428</span><a id="line.428">                                exist.add(module);</a>
+<span class="sourceLineNo">429</span><a id="line.429">                        }</a>
+<span class="sourceLineNo">430</span><a id="line.430">                }</a>
+<span class="sourceLineNo">431</span><a id="line.431"></a>
+<span class="sourceLineNo">432</span><a id="line.432">                Map&lt;Class&lt;? extends Module&gt;, Integer&gt; counter = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">433</span><a id="line.433">                for (Class&lt;? extends Module&gt; module : multi) {</a>
+<span class="sourceLineNo">434</span><a id="line.434">                        counter.put(module, 1);</a>
+<span class="sourceLineNo">435</span><a id="line.435">                }</a>
+<span class="sourceLineNo">436</span><a id="line.436"></a>
+<span class="sourceLineNo">437</span><a id="line.437">                for (int i = 0; i &lt; tabs.getTabCount(); i++) {</a>
+<span class="sourceLineNo">438</span><a id="line.438">                        TabComponent comp = (TabComponent) tabs.getTabComponentAt(i);</a>
+<span class="sourceLineNo">439</span><a id="line.439"></a>
+<span class="sourceLineNo">440</span><a id="line.440">                        Class&lt;? extends Module&gt; module = comp.getModule().getModule().getClass();</a>
+<span class="sourceLineNo">441</span><a id="line.441">                        if (counter.containsKey(module)) {</a>
+<span class="sourceLineNo">442</span><a id="line.442">                                int c = counter.get(module);</a>
+<span class="sourceLineNo">443</span><a id="line.443">                                String name = "(" + c + ") " + format.getName(comp.getModule());</a>
+<span class="sourceLineNo">444</span><a id="line.444">                                comp.setLabelName(name);</a>
+<span class="sourceLineNo">445</span><a id="line.445">                                counter.put(module, c + 1);</a>
+<span class="sourceLineNo">446</span><a id="line.446">                        }</a>
+<span class="sourceLineNo">447</span><a id="line.447">                }</a>
+<span class="sourceLineNo">448</span><a id="line.448">                tabs.repaint();</a>
+<span class="sourceLineNo">449</span><a id="line.449">        }</a>
+<span class="sourceLineNo">450</span><a id="line.450"></a>
+<span class="sourceLineNo">451</span><a id="line.451">        /*</a>
+<span class="sourceLineNo">452</span><a id="line.452">         * (non-Javadoc)</a>
+<span class="sourceLineNo">453</span><a id="line.453">         * </a>
+<span class="sourceLineNo">454</span><a id="line.454">         * @see org.opt4j.conf.gui.SetListener#moduleAdded(java.util.Collection,</a>
+<span class="sourceLineNo">455</span><a id="line.455">         * org.opt4j.conf.PropertyModule)</a>
+<span class="sourceLineNo">456</span><a id="line.456">         */</a>
+<span class="sourceLineNo">457</span><a id="line.457">        @Override</a>
+<span class="sourceLineNo">458</span><a id="line.458">        public void moduleAdded(Collection&lt;PropertyModule&gt; collection, PropertyModule module) {</a>
+<span class="sourceLineNo">459</span><a id="line.459">                addModule(module);</a>
+<span class="sourceLineNo">460</span><a id="line.460">        }</a>
+<span class="sourceLineNo">461</span><a id="line.461"></a>
+<span class="sourceLineNo">462</span><a id="line.462">        /*</a>
+<span class="sourceLineNo">463</span><a id="line.463">         * (non-Javadoc)</a>
+<span class="sourceLineNo">464</span><a id="line.464">         * </a>
+<span class="sourceLineNo">465</span><a id="line.465">         * @see org.opt4j.conf.gui.SetListener#moduleRemoved(java.util.Collection,</a>
+<span class="sourceLineNo">466</span><a id="line.466">         * org.opt4j.conf.PropertyModule)</a>
+<span class="sourceLineNo">467</span><a id="line.467">         */</a>
+<span class="sourceLineNo">468</span><a id="line.468">        @Override</a>
+<span class="sourceLineNo">469</span><a id="line.469">        public void moduleRemoved(Collection&lt;PropertyModule&gt; collection, PropertyModule module) {</a>
+<span class="sourceLineNo">470</span><a id="line.470">                removeModule(module);</a>
+<span class="sourceLineNo">471</span><a id="line.471">        }</a>
+<span class="sourceLineNo">472</span><a id="line.472"></a>
+<span class="sourceLineNo">473</span><a id="line.473">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
