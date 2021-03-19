@@ -1,7 +1,0 @@
-syntax: glob
-*/build/**
-*/.gradle/**
-*/.settings/**
-syntax: regexp
-(?i)^opt4j/[^/]*/bin/
-(?i)^projects/bin/
