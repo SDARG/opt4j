@@ -3,7 +3,8 @@
 name: Opt4J Website
 
 on:
-  push:
+  release:
+    types: [published]
 
 jobs:
   deploy:
