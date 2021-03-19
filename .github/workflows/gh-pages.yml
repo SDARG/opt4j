@@ -1,6 +1,6 @@
 # This workflow will deploy the Opt4J website to the gh-pages branch for every release
 
-name: Opt4J Website Deployment
+name: Opt4J Website
 
 on:
   release:
