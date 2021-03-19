@@ -1,4 +1,4 @@
-[![SDARG Build & Test](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml/badge.svg)](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml)
+[![Opt4J Build & Test](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml/badge.svg)](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/324a853969fa45d1871d6e764e24fe37)](https://app.codacy.com/app/felixreimann/opt4j?utm_source=github.com&utm_medium=referral&utm_content=felixreimann/opt4j&utm_campaign=badger)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/1079b342eee541c3b843d01c293c880b)](https://www.codacy.com/app/felixreimann/opt4j?utm_source=github.com&utm_medium=referral&utm_content=felixreimann/opt4j&utm_campaign=Badge_Coverage)
 [![Javadocs](https://javadoc.io/badge/org.opt4j/opt4j-core.svg)](https://javadoc.io/doc/org.opt4j/opt4j-core)
@@ -62,6 +62,7 @@ Brought to you by
 * Martin Lukasiewycz
 * Felix Reimann
 * Michael Glaß
+* Fedor Smirnov
 
 This project uses
 * [google/guice](https://github.com/google/guice)
