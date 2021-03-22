@@ -1,6 +1,6 @@
 [![Opt4J Build & Test](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml/badge.svg)](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/324a853969fa45d1871d6e764e24fe37)](https://app.codacy.com/app/felixreimann/opt4j?utm_source=github.com&utm_medium=referral&utm_content=felixreimann/opt4j&utm_campaign=badger)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/1079b342eee541c3b843d01c293c880b)](https://www.codacy.com/app/felixreimann/opt4j?utm_source=github.com&utm_medium=referral&utm_content=felixreimann/opt4j&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/88406105afc64c44bf00f8a89602700f)](https://www.codacy.com/gh/SDARG/opt4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SDARG/opt4j&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/88406105afc64c44bf00f8a89602700f)](https://www.codacy.com/gh/SDARG/opt4j/dashboard?utm_source=github.com&utm_medium=referral&utm_content=SDARG/opt4j&utm_campaign=Badge_Coverage)
 [![JitPack Badge](https://jitpack.io/v/sdarg/opt4j.svg)](https://jitpack.io/#sdarg/opt4j)
 
 #  Opt4J - Modular Java framework for meta-heuristic optimization 
@@ -46,11 +46,11 @@ to execute the application.
 
 ## Contributing
 
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+1.  Fork it!
+2.  Create your feature branch: `git checkout -b my-new-feature`
+3.  Commit your changes: `git commit -am 'Add some feature'`
+4.  Push to the branch: `git push origin my-new-feature`
+5.  Submit a pull request :D
 
 ## History
 
@@ -59,14 +59,14 @@ Opt4J was formerly hosted at https://sourceforge.net/projects/opt4j/
 ## Credits
 
 Brought to you by
-* Martin Lukasiewycz
-* Felix Reimann
-* Michael Glaß
-* Fedor Smirnov
+*  Martin Lukasiewycz
+*  Felix Reimann
+*  Michael Glaß
+*  Fedor Smirnov
 
 This project uses
-* [google/guice](https://github.com/google/guice)
-* [sat4j](https://gitlab.ow2.org/sat4j/sat4j/) (in subproject opt4j-satdecoding)
+*  [google/guice](https://github.com/google/guice)
+*  [sat4j](https://gitlab.ow2.org/sat4j/sat4j/) (in subproject opt4j-satdecoding)
 
 ## License
 
