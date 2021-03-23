@@ -151,7 +151,7 @@ task alldocs(type: Javadoc) {
 	title = "Opt4J version $version Project API Documentation"
 	destinationDir = new File(project.buildDir, 'docs/javadoc')
 	options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PUBLIC
-	options.links 'http://docs.oracle.com/javase/6/docs/api/','http://google.github.io/guice/api-docs/4.1/javadoc/'
+	options.links 'http://google.github.io/guice/api-docs/4.1/javadoc/'
 	options.linkSource = true
 	subprojects.each {subproject ->
 		source subproject.sourceSets.main.java
