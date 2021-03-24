@@ -110,6 +110,11 @@ jar {
 	}
 }
 
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
+
 /* for now ignore all javadoc errors in case of Java 8 */
 if (JavaVersion.current().isJava8Compatible()) {
 	allprojects {
