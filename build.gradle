@@ -176,7 +176,10 @@ task alldocs(type: Javadoc) {
 	}
 }
 
-
+import org.apache.tools.ant.filters.ReplaceTokens
+applicationDistribution.from("src/distribution") {
+    filter(ReplaceTokens, tokens: [version : project.version, date : project.dateISO])
+}
 
 task fatjar(dependsOn: subprojects.jar, type: Jar) {
 	destinationDir = new File(project.buildDir, 'fatjar')
