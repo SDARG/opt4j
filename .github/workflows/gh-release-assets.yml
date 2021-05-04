@@ -4,7 +4,8 @@ name: Opt4J Release Assets
 
 on:
   release:
-    types: [created]
+    types:
+      - created
 
 jobs:
   deploy:

@@ -4,7 +4,8 @@ name: Opt4J Website
 
 on:
   release:
-    types: [published]
+    types:
+      - published
 
 jobs:
   deploy:
