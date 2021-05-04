@@ -14,12 +14,12 @@ def getVersionName = {
 	->
 	def stdout = new ByteArrayOutputStream()
 	exec {
-		commandLine 'git', 'describe', '--tags'
+		commandLine 'git', 'describe', '--tags', '--first-parent'
 		standardOutput = stdout
 		ignoreExitValue true
 	}
 	version=stdout.toString().trim()
-	if (version.indexOf('-') >= 0 || version.isEmpty())
+	if (version.count('-') > 1 || version.isEmpty())
 		version += '-SNAPSHOT'
 	return version
 }
