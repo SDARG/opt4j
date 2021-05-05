@@ -21,6 +21,8 @@ def getVersionName = {
 	version=stdout.toString().trim()
 	if (version.count('-') > 1 || version.isEmpty())
 		version += '-SNAPSHOT'
+	if (version.getAt(0) == 'v')
+		version = version.substring(1)
 	return version
 }
 version=getVersionName()
