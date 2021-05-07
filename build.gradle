@@ -74,15 +74,38 @@ subprojects {
 		classpath = sourceSets.integrationTest.runtimeClasspath
 	}
 
-	task sourcesJar(type: Jar, dependsOn:classes) {
-		from sourceSets.main.allSource
-		classifier = 'sources'
-	}
+	//task sourcesJar(type: Jar, dependsOn:classes) {
+	//	from sourceSets.main.allSource
+	//	classifier = 'sources'
+	//}
 
-	task javadocJar(type: Jar, dependsOn:javadoc) {
-		from javadoc.destinationDir
-		classifier = 'javadoc'
-	}
+	//task javadocJar(type: Jar, dependsOn:javadoc) {
+	//	from javadoc.destinationDir
+	//	classifier = 'javadoc'
+	//}
+	
+	afterEvaluate { 
+    if(tasks.findByName("classes")) {
+      task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+      }
+      artifacts {
+        archives sourcesJar
+      }
+    }
+
+    if(tasks.findByName("javadoc")) {
+      task javadocJar(type: Jar) {
+        dependsOn javadoc
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+      }
+      artifacts {
+        archives javadocJar
+      }
+    }
+  }
 
 	jacocoTestReport {
 		getAdditionalSourceDirs().setFrom(sourceSets.main.allSource.srcDirs)
@@ -110,16 +133,6 @@ jar {
 	manifest {
 		attributes 'Main-Class': mainClassName
 	}
-}
-
-java {
-	withJavadocJar()
-	withSourcesJar()
-}
-
-artifacts {
-	archives sourcesJar
-    archives javadocJar
 }
 
 /* for now ignore all javadoc errors in case of Java 8 */
