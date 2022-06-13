@@ -91,7 +91,7 @@ subprojects {
 		reports {
 			html.enabled = true
 			xml.enabled = true
-			csv.enabled = false
+			csv.enabled = true
 		}
 	}
 }
