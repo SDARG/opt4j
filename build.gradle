@@ -215,7 +215,8 @@ task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
 		html.destination(file("${buildDir}/reports/jacoco"))
 		xml.enabled = true
 		xml.destination(file("${buildDir}/reports/jacoco/rootReport.xml"))
-		csv.enabled = false
+		csv.enabled = true
+		csv.destination(file("${buildDir}/reports/jacoco/rootReport.csv"))
 	}
 	onlyIf = {
 		true
