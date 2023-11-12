@@ -1,5 +1,6 @@
 dependencies {
-	compile project(':opt4j-core')
+	implementation project(':opt4j-core')
+   implementation group: 'com.google.inject', name: 'guice', version: '7.0.0'
 }
 
 javadoc {
