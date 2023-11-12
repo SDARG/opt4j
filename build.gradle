@@ -1,9 +1,18 @@
-apply plugin: 'base'
-apply plugin: 'application'
-apply plugin: 'eclipse'
-apply plugin: 'jacoco'
+
+plugins{
+	id 'java'
+	id 'jacoco'
+	id 'eclipse'
+	id 'application'
+	id 'base'
+}
+
+jacoco{
+	toolVersion = "0.8.11"
+}
 
 import org.apache.tools.ant.filters.ReplaceTokens
+
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
@@ -83,20 +92,18 @@ subprojects {
 		archiveClassifier.set('javadoc')
 	}
 
+	jacoco{
+		toolVersion = "0.8.11"
+	}
+
 	jacocoTestReport {
 		getAdditionalSourceDirs().setFrom(sourceSets.main.allSource.srcDirs)
 		getSourceDirectories().setFrom(sourceSets.main.allSource.srcDirs)
 		getClassDirectories().setFrom(sourceSets.main.output)
 		reports {
-			html{
-				enabled true	
-			}
-			xml{
-				enabled true
-			}
-			csv{
-				enabled true
-			}
+			html.required = true
+			csv.required = true
+			xml.required = true
 		}
 	}
 }
@@ -211,23 +218,14 @@ task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
 	getAdditionalSourceDirs().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
 	getSourceDirectories().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
 	getClassDirectories().setFrom(subprojects.sourceSets.main.output)
-	getExecutionData().setFrom(subprojects.jacocoTestReport.executionData)	
-	getExecutionData().setFrom(executionData.findAll {
-			it.exists()
-		})
+	executionData fileTree("$buildDir/jacoco").include("**/*.exec")
 	reports {
-		html{
-			enabled true
-			destination = file("${buildDir}/reports/jacoco")
-		}
-		xml{
-			enabled true
-			destination file("${buildDir}/reports/jacoco/rootReport.xml")
-		}
-		csv{
-			enabled true
-			file("${buildDir}/reports/jacoco/rootReport.csv")
-		}
+		xml.required = true
+		xml.outputLocation = file("${buildDir}/reports/jacoco/rootReport.xml")
+		html.required = true
+		html.outputLocation = file("${buildDir}/reports/jacoco")
+		csv.required = true
+		csv.outputLocation = file("${buildDir}/reports/jacoco/rootReport.csv")
 	}
 	onlyIf = {
 		true
