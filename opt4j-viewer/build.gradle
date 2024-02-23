@@ -1,7 +1,22 @@
 dependencies {
 	implementation project(':opt4j-core')
-   implementation group: 'com.google.inject', name: 'guice', version: '7.0.0'
+   	implementation group: 'com.google.inject', name: 'guice', version: '7.0.0'
+   
+   	testImplementation(platform('org.junit:junit-bom:5.10.2'))
+	testImplementation('org.junit.jupiter:junit-jupiter')
+	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+	testImplementation('org.mockito:mockito-junit-jupiter:5.10.0')
 }
+
+/*java {
+	withJavadocJar()
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+    	languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}*/
 
 javadoc {
    exclude 'ptolemy/**'

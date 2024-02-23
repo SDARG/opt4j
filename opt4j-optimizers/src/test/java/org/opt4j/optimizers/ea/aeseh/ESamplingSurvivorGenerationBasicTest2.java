@@ -1,8 +1,5 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -14,8 +11,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
@@ -48,7 +46,7 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		return result;
 	}
 
-	@Before
+	@BeforeEach
 	public void init() {
 		nonDominated = new ArrayList<>();
 		firstIndi = getIndividual(1.0, 5.0);
@@ -81,16 +79,16 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
 				adaptation, .2, .0, .0, .0);
 		Set<Individual> survivors = survivorGeneration.getSurvivors(population, 3);
-		assertEquals(3, survivors.size());
-		assertTrue(survivors.contains(firstExtreme));
-		assertTrue(survivors.contains(secondExtreme));
-		assertFalse(survivors.contains(dominated));
+		Assertions.assertEquals(3, survivors.size());
+		Assertions.assertTrue(survivors.contains(firstExtreme));
+		Assertions.assertTrue(survivors.contains(secondExtreme));
+		Assertions.assertFalse(survivors.contains(dominated));
 
 		survivors = survivorGeneration.getSurvivors(population, 7);
-		assertEquals(7, survivors.size());
-		assertTrue(survivors.contains(firstExtreme));
-		assertTrue(survivors.contains(secondExtreme));
-		assertTrue(survivors.contains(dominated));
+		Assertions.assertEquals(7, survivors.size());
+		Assertions.assertTrue(survivors.contains(firstExtreme));
+		Assertions.assertTrue(survivors.contains(secondExtreme));
+		Assertions.assertTrue(survivors.contains(dominated));
 	}
 
 	@Test
@@ -108,9 +106,9 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
 				adaptation, .2, .0, .0, .0);
 		Set<Individual> survivors = survivorGeneration.addNonDominatedSurvivors(extremes, firstFront, 7);
-		assertEquals(7, survivors.size());
-		assertTrue(survivors.contains(firstExtreme));
-		assertTrue(survivors.contains(secondExtreme));
+		Assertions.assertEquals(7, survivors.size());
+		Assertions.assertTrue(survivors.contains(firstExtreme));
+		Assertions.assertTrue(survivors.contains(secondExtreme));
 		verify(adaptation).adaptEpsilon(survivorGeneration.adaptiveEpsilonSampling, true);
 	}
 
@@ -126,9 +124,9 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		ESamplingSurvivorGenerationBasic survivorGeneration = new ESamplingSurvivorGenerationBasic(rand, mapping,
 				adaptation, .2, .0, .0, .0);
 		Set<Individual> survivors = survivorGeneration.addNonDominatedSurvivors(extremes, firstFront, 3);
-		assertEquals(3, survivors.size());
-		assertTrue(survivors.contains(firstExtreme));
-		assertTrue(survivors.contains(secondExtreme));
+		Assertions.assertEquals(3, survivors.size());
+		Assertions.assertTrue(survivors.contains(firstExtreme));
+		Assertions.assertTrue(survivors.contains(secondExtreme));
 		verify(adaptation).adaptEpsilon(survivorGeneration.adaptiveEpsilonSampling, false);
 	}
 
@@ -139,12 +137,12 @@ public class ESamplingSurvivorGenerationBasicTest2 {
 		Set<Individual> dominant = new HashSet<>();
 		Set<Individual> dominated = new HashSet<>();
 		survivorGeneration.applyEpsilonSampling(nonDominated, dominant, dominated, 0.05);
-		assertEquals(2, dominant.size());
-		assertEquals(2, dominated.size());
-		assertTrue(dominant.contains(firstIndi));
-		assertTrue(dominant.contains(fourthIndi));
-		assertTrue(dominated.contains(secondIndi));
-		assertTrue(dominated.contains(thirdIndi));
+		Assertions.assertEquals(2, dominant.size());
+		Assertions.assertEquals(2, dominated.size());
+		Assertions.assertTrue(dominant.contains(firstIndi));
+		Assertions.assertTrue(dominant.contains(fourthIndi));
+		Assertions.assertTrue(dominated.contains(secondIndi));
+		Assertions.assertTrue(dominated.contains(thirdIndi));
 	}
 
 }

@@ -25,8 +25,10 @@ package org.opt4j.core.config;
 import java.io.File;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+
 
 public class ModuleAutoFinderTest {
 	@Test
@@ -34,11 +36,11 @@ public class ModuleAutoFinderTest {
 		ModuleAutoFinder moduleAutoFinder = new ModuleAutoFinder();
 		Set<File> files = moduleAutoFinder.getFilesFromClasspath();
 
-		Assert.assertFalse(files.isEmpty());
+		Assertions.assertFalse(files.isEmpty());
 		for (File file : files) {
-			Assert.assertTrue(file.exists());
-			Assert.assertTrue(file.getName() + " not in classpath: " + System.getProperty("java.class.path"), System
-					.getProperty("java.class.path").contains(file.getName()));
+			Assertions.assertTrue(file.exists());
+			Assertions.assertTrue(System.getProperty("java.class.path").contains(file.getName()),
+					file.getName() + " not in classpath: " + System.getProperty("java.class.path"));
 		}
 	}
 }

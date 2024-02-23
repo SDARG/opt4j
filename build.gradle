@@ -1,8 +1,8 @@
-
 plugins{
 	id 'java'
-	id 'jacoco'
+	id 'jacoco-report-aggregation'
 	id 'eclipse'
+	id 'java-library' //test this for toolchain
 	id 'application'
 	id 'base'
 }
@@ -15,6 +15,33 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
+
+ext{
+	opt4jJavaVersion = "21"
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
+	sourceCompatibility = "${opt4jJavaVersion}"
+	targetCompatibility = "${opt4jJavaVersion}"
+    toolchain {
+    	languageVersion.set(JavaLanguageVersion.of("${opt4jJavaVersion}"))
+    }
+}
+
+
+//*****************************************************
+//for debug print the required targetCompytability, the used java version and the specific jvm version
+println "targetCompatability: "+project.targetCompatibility
+println "java version: "+JavaVersion.current()
+def currentJvm = org.gradle.internal.jvm.Jvm.current()
+println "jvm version: "+currentJvm
+
+if (JavaVersion.current() != project.targetCompatibility) {
+    println "The java version used ${JavaVersion.current()} is not the expected version ${project.targetCompatibility}."
+}
+//****************************************************
 
 /*
  * Gets the version name from the latest Git tag
@@ -35,6 +62,7 @@ def getVersionName = {
 	return version
 }
 version=getVersionName()
+
 
 
 ext {
@@ -58,6 +86,14 @@ def descriptions = [
 	'opt4j-tutorial' : 'The tutorial classes for Opt4J',
 	'opt4j-viewer' : 'The viewer module for Opt4J'
 ]
+
+
+    dependencies {
+		testImplementation(platform('org.junit:junit-bom:5.10.2'))
+		testImplementation('org.junit.jupiter:junit-jupiter')
+		testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+		testImplementation('org.mockito:mockito-junit-jupiter:5.10.0')
+    }
 
 subprojects {
 	apply plugin: 'java'
@@ -91,6 +127,34 @@ subprojects {
 		from javadoc.destinationDir
 		archiveClassifier.set('javadoc')
 	}
+	
+	java {
+		withJavadocJar()
+		withSourcesJar()
+		sourceCompatibility = "${opt4jJavaVersion}"
+		targetCompatibility = "${opt4jJavaVersion}"
+    	toolchain {
+    		languageVersion.set(JavaLanguageVersion.of("${opt4jJavaVersion}"))
+    	}
+    
+    compileJava {
+    doFirst {
+        println("Java Toolchain Version: " + javaCompiler.get().metadata.languageVersion)
+ 	}
+ 	
+ 	test {
+	    // Enable JUnit 5 (Gradle 4.6+).
+	    useJUnitPlatform()
+
+	    // Always run tests, even when nothing changed.
+	    dependsOn 'cleanTest'
+
+	    // Show test results.
+	    testLogging {
+	        events "passed", "skipped", "failed"
+	    }
+	}
+ 	
 
 	jacoco{
 		toolVersion = "0.8.11"
@@ -106,6 +170,8 @@ subprojects {
 			xml.required = true
 		}
 	}
+ }
+}
 }
 
 dependencies {
@@ -124,10 +190,6 @@ jar {
 	}
 }
 
-java {
-	withJavadocJar()
-	withSourcesJar()
-}
 
 artifacts {
 	archives sourcesJar
@@ -214,11 +276,11 @@ applicationDefaultJvmArgs = [
 ]
 
 task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-	dependsOn = subprojects.test
+	dependsOn(subprojects.test)
 	getAdditionalSourceDirs().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
 	getSourceDirectories().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
 	getClassDirectories().setFrom(subprojects.sourceSets.main.output)
-	executionData fileTree("$buildDir/jacoco").include("**/*.exec")
+	executionData.from = files(subprojects.jacocoTestReport.executionData)
 	reports {
 		xml.required = true
 		xml.outputLocation = file("${buildDir}/reports/jacoco/rootReport.xml")

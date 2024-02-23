@@ -1,12 +1,14 @@
 package org.opt4j.core.config;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -17,9 +19,9 @@ public class PropertyTest {
 		String name = "test";
 		Property p = new Property(null, null, null, null, null, Collections.<Annotation> emptySet());
 
-		Assert.assertEquals("", p.getInfo());
+		Assertions.assertEquals("", p.getInfo());
 		p.setInfo(name);
-		Assert.assertEquals(name, p.getInfo());
+		Assertions.assertEquals(name, p.getInfo());
 	}
 
 	@Test
@@ -27,7 +29,7 @@ public class PropertyTest {
 		Property p = new Property(null, null, null, null, null, Collections.<Annotation> emptySet());
 
 		p.setOrder(1);
-		Assert.assertEquals(1, p.getOrder());
+		Assertions.assertEquals(1, p.getOrder());
 	}
 
 	@Test
@@ -35,7 +37,7 @@ public class PropertyTest {
 		String name = "test";
 		Property p = new Property(null, name, null, null, null, Collections.<Annotation> emptySet());
 
-		Assert.assertEquals(name, p.getName());
+		Assertions.assertEquals(name, p.getName());
 	}
 
 	@Test
@@ -43,7 +45,7 @@ public class PropertyTest {
 		Class<Boolean> type = Boolean.class;
 		Property p = new Property(null, null, type, null, null, Collections.<Annotation> emptySet());
 
-		Assert.assertEquals(type, p.getType());
+		Assertions.assertEquals(type, p.getType());
 	}
 
 	@Test
@@ -51,7 +53,7 @@ public class PropertyTest {
 		Method getter = PropertyTest.class.getMethod("getGetter");
 		Property p = new Property(null, null, null, getter, null, Collections.<Annotation> emptySet());
 
-		Assert.assertEquals(getter, p.getGetter());
+		Assertions.assertEquals(getter, p.getGetter());
 	}
 
 	@Test
@@ -59,7 +61,7 @@ public class PropertyTest {
 		Method setter = PropertyTest.class.getMethod("getSetter");
 		Property p = new Property(null, null, null, null, setter, Collections.<Annotation> emptySet());
 
-		Assert.assertEquals(setter, p.getSetter());
+		Assertions.assertEquals(setter, p.getSetter());
 	}
 
 	@Test
@@ -80,8 +82,8 @@ public class PropertyTest {
 		Property p = new Property(null, null, null, null, null, Collections.<Annotation> emptySet());
 
 		p.addRequirement(r);
-		Assert.assertEquals(1, p.getRequirements().size());
-		Assert.assertTrue(p.getRequirements().contains(r));
+		Assertions.assertEquals(1, p.getRequirements().size());
+		Assertions.assertTrue(p.getRequirements().contains(r));
 	}
 
 	@Test
@@ -102,7 +104,7 @@ public class PropertyTest {
 		Property p = new Property(null, null, null, null, null, Collections.<Annotation> emptySet());
 
 		p.addRequirement(r);
-		Assert.assertTrue(p.isActive());
+		Assertions.assertTrue(p.isActive());
 	}
 
 	@Test
@@ -123,7 +125,7 @@ public class PropertyTest {
 		Property p = new Property(null, null, null, null, null, Collections.<Annotation> emptySet());
 
 		p.addRequirement(r);
-		Assert.assertFalse(p.isActive());
+		Assertions.assertFalse(p.isActive());
 	}
 
 	@Test
@@ -131,7 +133,7 @@ public class PropertyTest {
 		Method getter = MyModuleMock.class.getMethod("getMock");
 		Property p = new Property(new MyModuleMock(), null, null, getter, null, Collections.<Annotation> emptySet());
 
-		Assert.assertEquals(1234, p.getValue());
+		Assertions.assertEquals(1234, p.getValue());
 	}
 
 	@Test
@@ -144,22 +146,26 @@ public class PropertyTest {
 		p.setValue("4321");
 	}
 
-	@Test(expected = InvocationTargetException.class)
+	@Test
 	public void setValueException() throws NoSuchMethodException, SecurityException, InvocationTargetException {
-		Method setter = MyModuleMock.class.getMethod("setMockInt", Integer.class);
-		Property p = new Property(new MyModuleMock(), null, Integer.TYPE, null, setter,
-				Collections.<Annotation> emptySet());
+		assertThrows(InvocationTargetException.class, () -> {
+			Method setter = MyModuleMock.class.getMethod("setMockInt", Integer.class);
+			Property p = new Property(new MyModuleMock(), null, Integer.TYPE, null, setter,
+					Collections.<Annotation> emptySet());
 
-		p.setValue(3.0d);
+			p.setValue(3.0d);
+		});
 	}
 
-	@Test(expected = InvocationTargetException.class)
+	@Test
 	public void setValueExceptionString() throws NoSuchMethodException, SecurityException, InvocationTargetException {
-		Method setter = MyModuleMock.class.getMethod("setMockInt", Integer.class);
-		Property p = new Property(new MyModuleMock(), null, Integer.TYPE, null, setter,
-				Collections.<Annotation> emptySet());
+		assertThrows(InvocationTargetException.class, () -> {
+			Method setter = MyModuleMock.class.getMethod("setMockInt", Integer.class);
+			Property p = new Property(new MyModuleMock(), null, Integer.TYPE, null, setter,
+					Collections.<Annotation> emptySet());
 
-		p.setValue("3.0");
+			p.setValue("3.0");
+		});
 	}
 
 	@Test
@@ -271,47 +277,47 @@ public class PropertyTest {
 		}
 
 		public void setMockInt(Integer i) {
-			Assert.assertEquals(4321, i.intValue());
+			Assertions.assertEquals(4321, i.intValue());
 		}
 
 		public void setMockLong(Long i) {
-			Assert.assertEquals(43210000l, i.longValue());
+			Assertions.assertEquals(43210000l, i.longValue());
 		}
 
 		public void setMockFloat(Float i) {
-			Assert.assertEquals(3.0f, i, 0.0000001);
+			Assertions.assertEquals(3.0f, i, 0.0000001);
 		}
 
 		public void setMockDouble(Double i) {
-			Assert.assertEquals(1234.1234f, i, 0.001);
+			Assertions.assertEquals(1234.1234f, i, 0.001);
 		}
 
 		public void setMockBoolean(Boolean i) {
-			Assert.assertTrue(i);
+			Assertions.assertTrue(i);
 		}
 
 		public void setMockByte(Byte i) {
-			Assert.assertTrue(-2 == i);
+			Assertions.assertTrue(-2 == i);
 		}
 
 		public void setMockShort(Short i) {
-			Assert.assertTrue(250 == i);
+			Assertions.assertTrue(250 == i);
 		}
 
 		public void setMockStringNull(String i) {
-			Assert.assertEquals("", i);
+			Assertions.assertEquals("", i);
 		}
 
 		public void setMockString(String i) {
-			Assert.assertEquals("abc", i);
+			Assertions.assertEquals("abc", i);
 		}
 
 		public void setMockChar(char i) {
-			Assert.assertEquals('c', i);
+			Assertions.assertEquals('c', i);
 		}
 
 		public void setMockEnum(MyEnum i) {
-			Assert.assertEquals(MyEnum.X, i);
+			Assertions.assertEquals(MyEnum.X, i);
 		}
 
 		@Override
@@ -325,7 +331,7 @@ public class PropertyTest {
 		Property p = new Property(new MyModuleMock(), null, Character.TYPE, null, null,
 				Collections.<Annotation> emptySet());
 
-		Assert.assertFalse(p.isNumber());
+		Assertions.assertFalse(p.isNumber());
 	}
 
 	@Test
@@ -333,14 +339,14 @@ public class PropertyTest {
 		Property p = new Property(new MyModuleMock(), null, Integer.TYPE, null, null,
 				Collections.<Annotation> emptySet());
 
-		Assert.assertTrue(p.isNumber());
+		Assertions.assertTrue(p.isNumber());
 	}
 
 	@Test
 	public void isNumberLong() {
 		Property p = new Property(new MyModuleMock(), null, Long.TYPE, null, null, Collections.<Annotation> emptySet());
 
-		Assert.assertTrue(p.isNumber());
+		Assertions.assertTrue(p.isNumber());
 	}
 
 	@Test
@@ -348,7 +354,7 @@ public class PropertyTest {
 		Property p = new Property(new MyModuleMock(), null, Double.TYPE, null, null,
 				Collections.<Annotation> emptySet());
 
-		Assert.assertTrue(p.isNumber());
+		Assertions.assertTrue(p.isNumber());
 	}
 
 	@Test
@@ -356,14 +362,14 @@ public class PropertyTest {
 		Property p = new Property(new MyModuleMock(), null, Float.TYPE, null, null,
 				Collections.<Annotation> emptySet());
 
-		Assert.assertTrue(p.isNumber());
+		Assertions.assertTrue(p.isNumber());
 	}
 
 	@Test
 	public void isNumberByte() {
 		Property p = new Property(new MyModuleMock(), null, Byte.TYPE, null, null, Collections.<Annotation> emptySet());
 
-		Assert.assertTrue(p.isNumber());
+		Assertions.assertTrue(p.isNumber());
 	}
 
 	@Test
@@ -371,12 +377,12 @@ public class PropertyTest {
 		Property p = new Property(new MyModuleMock(), null, Short.TYPE, null, null,
 				Collections.<Annotation> emptySet());
 
-		Assert.assertTrue(p.isNumber());
+		Assertions.assertTrue(p.isNumber());
 	}
 
 	@Test
 	public void getAnnotations() {
 		Property p = new Property(new MyModuleMock(), null, null, null, null, Collections.<Annotation> emptySet());
-		Assert.assertTrue(p.getAnnotations().isEmpty());
+		Assertions.assertTrue(p.getAnnotations().isEmpty());
 	}
 }

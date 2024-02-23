@@ -1,26 +1,29 @@
 package org.opt4j.core.common.archive;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 
 public class BoundedArchiveTest {
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void boundedArchiveIllegalCapacity() {
-		BoundedArchive archive = new BoundedArchive(-1) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			BoundedArchive archive = new BoundedArchive(-1) {
 
-			@Override
-			protected boolean updateWithNondominated(Collection<Individual> candidates) {
-				Assert.fail();
-				return false;
-			}
-		};
-		Assert.fail("should not be creatable: " + archive);
+				@Override
+				protected boolean updateWithNondominated(Collection<Individual> candidates) {
+					Assertions.fail();
+					return false;
+				}
+			};
+			Assertions.fail("should not be creatable: " + archive);
+		});
 	}
 
 	@Test
@@ -28,25 +31,27 @@ public class BoundedArchiveTest {
 		BoundedArchive archive = new BoundedArchive(10) {
 			@Override
 			protected boolean updateWithNondominated(Collection<Individual> candidates) {
-				Assert.fail();
+				Assertions.fail();
 				return false;
 			}
 		};
-		Assert.assertEquals(10, archive.getCapacity());
+		Assertions.assertEquals(10, archive.getCapacity());
 		archive.setCapacity(20);
-		Assert.assertEquals(20, archive.getCapacity());
+		Assertions.assertEquals(20, archive.getCapacity());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void setCapacityIllegalCapacity() {
-		BoundedArchive archive = new BoundedArchive(10) {
-			@Override
-			protected boolean updateWithNondominated(Collection<Individual> candidates) {
-				Assert.fail();
-				return false;
-			}
-		};
-		archive.setCapacity(-1);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			BoundedArchive archive = new BoundedArchive(10) {
+				@Override
+				protected boolean updateWithNondominated(Collection<Individual> candidates) {
+					Assertions.fail();
+					return false;
+				}
+			};
+			archive.setCapacity(-1);
+		});
 	}
 
 	@Test
@@ -61,8 +66,8 @@ public class BoundedArchiveTest {
 			}
 		};
 		archive.addCheckedIndividual(individual1);
-		Assert.assertTrue(archive.contains(individual1));
-		Assert.assertEquals(1, archive.size());
+		Assertions.assertTrue(archive.contains(individual1));
+		Assertions.assertEquals(1, archive.size());
 	}
 
 	@Test
@@ -78,27 +83,29 @@ public class BoundedArchiveTest {
 		};
 		archive.addCheckedIndividual(individual1);
 		archive.addCheckedIndividual(individual1);
-		Assert.assertTrue(archive.contains(individual1));
-		Assert.assertEquals(1, archive.size());
+		Assertions.assertTrue(archive.contains(individual1));
+		Assertions.assertEquals(1, archive.size());
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void addCheckedIndividualDespiteArchiveFull() {
-		Individual individual1 = mock(Individual.class);
-		Individual individual2 = mock(Individual.class);
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			Individual individual1 = mock(Individual.class);
+			Individual individual2 = mock(Individual.class);
 
-		BoundedArchive archive = new BoundedArchive(1) {
-			@Override
-			protected boolean updateWithNondominated(Collection<Individual> candidates) {
-				individuals.addAll(candidates);
-				return true;
-			}
-		};
-		archive.addCheckedIndividual(individual1);
-		Assert.assertTrue(archive.contains(individual1));
-		Assert.assertEquals(1, archive.size());
+			BoundedArchive archive = new BoundedArchive(1) {
+				@Override
+				protected boolean updateWithNondominated(Collection<Individual> candidates) {
+					individuals.addAll(candidates);
+					return true;
+				}
+			};
+			archive.addCheckedIndividual(individual1);
+			Assertions.assertTrue(archive.contains(individual1));
+			Assertions.assertEquals(1, archive.size());
 
-		archive.addCheckedIndividual(individual2);
+			archive.addCheckedIndividual(individual2);
+		});
 	}
 
 	@Test
@@ -113,26 +120,28 @@ public class BoundedArchiveTest {
 			}
 		};
 		archive.addCheckedIndividuals(Collections.singleton(individual1));
-		Assert.assertTrue(archive.contains(individual1));
-		Assert.assertEquals(1, archive.size());
+		Assertions.assertTrue(archive.contains(individual1));
+		Assertions.assertEquals(1, archive.size());
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void addCheckedIndividualsDespiteArchiveFull() {
-		Individual individual1 = mock(Individual.class);
-		Individual individual2 = mock(Individual.class);
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			Individual individual1 = mock(Individual.class);
+			Individual individual2 = mock(Individual.class);
 
-		BoundedArchive archive = new BoundedArchive(1) {
-			@Override
-			protected boolean updateWithNondominated(Collection<Individual> candidates) {
-				individuals.addAll(candidates);
-				return true;
-			}
-		};
-		archive.addCheckedIndividuals(Collections.singleton(individual1));
-		Assert.assertTrue(archive.contains(individual1));
-		Assert.assertEquals(1, archive.size());
+			BoundedArchive archive = new BoundedArchive(1) {
+				@Override
+				protected boolean updateWithNondominated(Collection<Individual> candidates) {
+					individuals.addAll(candidates);
+					return true;
+				}
+			};
+			archive.addCheckedIndividuals(Collections.singleton(individual1));
+			Assertions.assertTrue(archive.contains(individual1));
+			Assertions.assertEquals(1, archive.size());
 
-		archive.addCheckedIndividuals(Collections.singleton(individual2));
+			archive.addCheckedIndividuals(Collections.singleton(individual2));
+		});
 	}
 }

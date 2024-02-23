@@ -23,8 +23,8 @@
 
 package org.opt4j.sat;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.satdecoding.Constraint;
 import org.opt4j.satdecoding.Literal;
 import org.opt4j.satdecoding.Constraint.Operator;
@@ -48,9 +48,9 @@ public class ConstraintTest {
 		c3.add(2, new Literal(object1, true));
 		c3.add(2, new Literal(object2, true));
 
-		Assert.assertFalse(c1.equals(c2));
-		Assert.assertFalse(c1.equals(c3));
-		Assert.assertFalse(c2.equals(c3));
+		Assertions.assertFalse(c1.equals(c2));
+		Assertions.assertFalse(c1.equals(c3));
+		Assertions.assertFalse(c2.equals(c3));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class ConstraintTest {
 		c2.add(2, new Literal(object1, true));
 		c2.add(2, new Literal(object2, true));
 
-		Assert.assertFalse(c1.equals(c2));
+		Assertions.assertFalse(c1.equals(c2));
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class ConstraintTest {
 		c2.add(2, new Literal(object1, true));
 		c2.add(2, new Literal(object2, true));
 
-		Assert.assertFalse(c1.equals(c2));
+		Assertions.assertFalse(c1.equals(c2));
 	}
 
 	@Test
@@ -92,6 +92,6 @@ public class ConstraintTest {
 		Constraint c2 = new Constraint("<=", 1);
 		c2.add(2, new Literal("lala", true));
 
-		Assert.assertFalse(c1.equals(c2)); // returns true, should be false
+		Assertions.assertFalse(c1.equals(c2)); // returns true, should be false
 	}
 }

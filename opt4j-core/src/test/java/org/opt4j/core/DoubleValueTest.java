@@ -1,7 +1,7 @@
 package org.opt4j.core;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DoubleValueTest {
 
@@ -10,7 +10,7 @@ public class DoubleValueTest {
 		Double d = 1.0;
 		DoubleValue v = new DoubleValue(d);
 
-		Assert.assertTrue(d == v.getDouble());
+		Assertions.assertTrue(d == v.getDouble());
 	}
 
 	@Test
@@ -18,7 +18,7 @@ public class DoubleValueTest {
 		Double d = 1.0;
 		DoubleValue v = new DoubleValue(d);
 
-		Assert.assertEquals(d, v.getValue());
+		Assertions.assertEquals(d, v.getValue());
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class DoubleValueTest {
 		Double d2 = 2.0;
 		v.setValue(d2);
 
-		Assert.assertEquals(d2, v.getValue());
+		Assertions.assertEquals(d2, v.getValue());
 	}
 
 	@Test
@@ -40,14 +40,14 @@ public class DoubleValueTest {
 		DoubleValue d11 = new DoubleValue(1.0);
 		DoubleValue d2 = new DoubleValue(2.0);
 
-		Assert.assertEquals(0, dnull.compareTo(dnull1));
-		Assert.assertEquals(0, d1.compareTo(d11));
-		Assert.assertEquals(dnull, dnull1);
-		Assert.assertEquals(d1, d11);
-		Assert.assertTrue(dnull.compareTo(d1) > 0);
-		Assert.assertTrue(d1.compareTo(dnull) < 0);
-		Assert.assertTrue(d1.compareTo(d2) < 0);
-		Assert.assertTrue(d2.compareTo(d1) > 0);
+		Assertions.assertEquals(0, dnull.compareTo(dnull1));
+		Assertions.assertEquals(0, d1.compareTo(d11));
+		Assertions.assertEquals(dnull, dnull1);
+		Assertions.assertEquals(d1, d11);
+		Assertions.assertTrue(dnull.compareTo(d1) > 0);
+		Assertions.assertTrue(d1.compareTo(dnull) < 0);
+		Assertions.assertTrue(d1.compareTo(d2) < 0);
+		Assertions.assertTrue(d2.compareTo(d1) > 0);
 	}
 
 	@Test
@@ -56,8 +56,8 @@ public class DoubleValueTest {
 		Double d = 1.0;
 		DoubleValue d1 = new DoubleValue(d);
 
-		Assert.assertEquals(31, dnull.hashCode());
-		Assert.assertEquals(31 + d.hashCode(), d1.hashCode());
+		Assertions.assertEquals(31, dnull.hashCode());
+		Assertions.assertEquals(31 + d.hashCode(), d1.hashCode());
 	}
 
 	@Test
@@ -68,21 +68,21 @@ public class DoubleValueTest {
 		DoubleValue d11 = new DoubleValue(1.0);
 		DoubleValue d2 = new DoubleValue(2.0);
 
-		Assert.assertEquals(d1, d1);
-		Assert.assertEquals(d1, d11);
-		Assert.assertEquals(dnull, dnull1);
-		Assert.assertNotEquals(dnull, d1);
-		Assert.assertNotEquals(d1, null);
-		Assert.assertNotEquals(d1, "a string");
-		Assert.assertNotEquals(d1, dnull);
-		Assert.assertNotEquals(d1, d2);
+		Assertions.assertEquals(d1, d1);
+		Assertions.assertEquals(d1, d11);
+		Assertions.assertEquals(dnull, dnull1);
+		Assertions.assertNotEquals(dnull, d1);
+		Assertions.assertNotEquals(d1, null);
+		Assertions.assertNotEquals(d1, "a string");
+		Assertions.assertNotEquals(d1, dnull);
+		Assertions.assertNotEquals(d1, d2);
 	}
 
 	@Test
 	public void toStringTest() {
 		DoubleValue dnull = new DoubleValue(null);
 		DoubleValue d1 = new DoubleValue(1.0);
-		Assert.assertEquals("null", dnull.toString());
-		Assert.assertEquals("1.0", d1.toString());
+		Assertions.assertEquals("null", dnull.toString());
+		Assertions.assertEquals("1.0", d1.toString());
 	}
 }

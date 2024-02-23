@@ -1,7 +1,8 @@
 package org.opt4j.core.common.completer;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.common.completer.IndividualCompleterModule.Type;
 import org.opt4j.core.common.completer.SequentialIndividualCompleterTest.MockProblemModule;
 import org.opt4j.core.optimizer.IndividualCompleter;
@@ -14,7 +15,7 @@ public class IndividualCompleterModuleTest {
 	public void getType() {
 		IndividualCompleterModule module = new IndividualCompleterModule();
 		module.setType(Type.PARALLEL);
-		Assert.assertEquals(Type.PARALLEL, module.getType());
+		Assertions.assertEquals(Type.PARALLEL, module.getType());
 	}
 
 	@Test
@@ -25,7 +26,7 @@ public class IndividualCompleterModuleTest {
 		Injector injector = Guice.createInjector(new MockProblemModule(), module);
 		IndividualCompleter completer = injector.getInstance(IndividualCompleter.class);
 
-		Assert.assertEquals(SequentialIndividualCompleter.class, completer.getClass());
+		Assertions.assertEquals(SequentialIndividualCompleter.class, completer.getClass());
 	}
 
 	@Test
@@ -36,6 +37,6 @@ public class IndividualCompleterModuleTest {
 		Injector injector = Guice.createInjector(new MockProblemModule(), module);
 		IndividualCompleter completer = injector.getInstance(IndividualCompleter.class);
 
-		Assert.assertEquals(ParallelIndividualCompleter.class, completer.getClass());
+		Assertions.assertEquals(ParallelIndividualCompleter.class, completer.getClass());
 	}
 }

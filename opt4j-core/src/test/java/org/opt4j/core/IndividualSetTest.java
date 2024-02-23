@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.optimizer.Population;
 
 public class IndividualSetTest {
@@ -36,7 +36,7 @@ public class IndividualSetTest {
 
 	protected List<Individual> list = new ArrayList<>();
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		for (int i = 0; i < SIZE; i++) {
 			Individual individual = new Individual();
@@ -57,7 +57,7 @@ public class IndividualSetTest {
 		while (it0.hasNext()) {
 			Individual i0 = it0.next();
 			Individual i1 = it1.next();
-			Assert.assertEquals(i0, i1);
+			Assertions.assertEquals(i0, i1);
 		}
 	}
 

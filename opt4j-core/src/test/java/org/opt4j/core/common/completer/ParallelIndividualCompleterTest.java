@@ -1,7 +1,10 @@
 package org.opt4j.core.common.completer;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualFactory;
 import org.opt4j.core.common.completer.IndividualCompleterModule.Type;
@@ -13,14 +16,16 @@ import com.google.inject.Injector;
 
 public class ParallelIndividualCompleterTest {
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void invalidThreadCount() {
-		IndividualCompleterModule module = new IndividualCompleterModule();
-		module.setThreads(0);
-		module.setType(Type.PARALLEL);
-		Injector injector = Guice.createInjector(new MockProblemModule(), module);
+		assertThrows(IllegalArgumentException.class, () -> {
+			IndividualCompleterModule module = new IndividualCompleterModule();
+			module.setThreads(0);
+			module.setType(Type.PARALLEL);
+			Injector injector = Guice.createInjector(new MockProblemModule(), module);
 
-		injector.getInstance(ParallelIndividualCompleter.class);
+			injector.getInstance(ParallelIndividualCompleter.class);
+		});
 	}
 
 	@Test
@@ -33,8 +38,8 @@ public class ParallelIndividualCompleterTest {
 		ParallelIndividualCompleter completer = injector.getInstance(ParallelIndividualCompleter.class);
 
 		completer.optimizationStopped(null);
-		Assert.assertTrue(completer.executor.isShutdown());
-		Assert.assertTrue(completer.executor.isShutdown());
+		Assertions.assertTrue(completer.executor.isShutdown());
+		Assertions.assertTrue(completer.executor.isShutdown());
 	}
 
 	@Test
@@ -51,8 +56,8 @@ public class ParallelIndividualCompleterTest {
 		ParallelIndividualCompleter completer = injector.getInstance(ParallelIndividualCompleter.class);
 
 		completer.complete(i1, i2);
-		Assert.assertTrue(i1.isEvaluated());
-		Assert.assertTrue(i2.isEvaluated());
+		Assertions.assertTrue(i1.isEvaluated());
+		Assertions.assertTrue(i2.isEvaluated());
 
 		completer.complete(i1);
 	}

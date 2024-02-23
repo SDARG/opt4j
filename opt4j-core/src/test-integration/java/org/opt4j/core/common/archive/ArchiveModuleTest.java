@@ -1,6 +1,6 @@
 package org.opt4j.core.common.archive;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.common.archive.ArchiveModule.Type;
 
 /**

@@ -1,9 +1,8 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +10,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class BooleanMapGenotypeTest {
 
@@ -31,60 +32,70 @@ public class BooleanMapGenotypeTest {
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidKeyGetIndex() {
-		BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
-		geno.getIndexOf(3);
+		assertThrows(IllegalArgumentException.class, () -> {
+			BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
+			geno.getIndexOf(3);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidKeySetValue() {
-		BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
-		geno.setValue(3, true);
+		assertThrows(IllegalArgumentException.class, () -> {
+			BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
+			geno.setValue(3, true);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidKeyGetValue() {
-		BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
-		geno.getValue(3);
+		assertThrows(IllegalArgumentException.class, () -> {
+			BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
+			geno.getValue(3);
+		});
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testWrongInit() {
-		BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
-		geno.init(new MockRandom(), 2);
+		assertThrows(UnsupportedOperationException.class, () -> {
+			BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
+			geno.init(new MockRandom(), 2);
+		});
 	}
 
 	@Test
 	public void testConstructor() {
 		BooleanMapGenotype<Integer> geno = new BooleanMapGenotype<>(new MockList());
-		assertTrue(geno.isEmpty());
+		Assertions.assertTrue(geno.isEmpty());
 		geno.setValue(1, true);
-		assertEquals(1, geno.size());
+		Assertions.assertEquals(1, geno.size());
 		geno.init(new MockRandom());
-		assertEquals(2, geno.size());
-		assertFalse(geno.getValue(1));
+		Assertions.assertEquals(2, geno.size());
+		Assertions.assertFalse(geno.getValue(1));
 		geno.setValue(1, true);
-		assertTrue(geno.getValue(1));
-		assertTrue(geno.containsKey(1));
-		assertFalse(geno.containsKey(3));
-		assertEquals(0, geno.getIndexOf(1));
+		Assertions.assertTrue(geno.getValue(1));
+		Assertions.assertTrue(geno.containsKey(1));
+		Assertions.assertFalse(geno.containsKey(3));
+		Assertions.assertEquals(0, geno.getIndexOf(1));
 		Set<Integer> keys = new HashSet<>(geno.getKeys());
-		assertEquals(2, keys.size());
-		assertTrue(keys.contains(1));
-		assertTrue(keys.contains(2));
+		Assertions.assertEquals(2, keys.size());
+		Assertions.assertTrue(keys.contains(1));
+		Assertions.assertTrue(keys.contains(2));
 		BooleanMapGenotype<Integer> other = geno.newInstance();
-		assertNotEquals(geno, other);
-		assertTrue(other.isEmpty());
-		assertEquals("[1=true;2=false;]", geno.toString());
+		Assertions.assertNotEquals(geno, other);
+		Assertions.assertTrue(other.isEmpty());
+		Assertions.assertEquals("[1=true;2=false;]", geno.toString());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testNonUniqueKeys() {
-		List<Integer> keyList = new ArrayList<>();
-		keyList.add(1);
-		keyList.add(1);
-		new BooleanMapGenotype<>(keyList);
+		assertThrows(IllegalArgumentException.class, () -> {
+			List<Integer> keyList = new ArrayList<>();
+			keyList.add(1);
+			keyList.add(1);
+			new BooleanMapGenotype<>(keyList);
+		});
 	}
 
 }

@@ -1,7 +1,5 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
@@ -66,8 +65,8 @@ public class EpsilonMappingAdditiveTest {
 		double epsilon = 0.5;
 
 		Objectives epsilonEnhanced = epsilonMapping.mapObjectives(objectives, epsilon, amplitudeMap);
-		assertEquals(1.5, epsilonEnhanced.get(first).getDouble(), 0.0);
-		assertEquals(-1.0, epsilonEnhanced.get(second).getDouble(), 0.0);
+		Assertions.assertEquals(1.5, epsilonEnhanced.get(first).getDouble(), 0.0);
+		Assertions.assertEquals(-1.0, epsilonEnhanced.get(second).getDouble(), 0.0);
 	}
 
 	@Test
@@ -75,10 +74,10 @@ public class EpsilonMappingAdditiveTest {
 		Set<Individual> indis = getIndividualSet();
 		EpsilonMappingAdditive epsilonMapping = new EpsilonMappingAdditive();
 		Map<Objective, Double> amplitudeMap = epsilonMapping.findObjectiveAmplitudes(indis);
-		assertTrue(amplitudeMap.containsKey(first));
-		assertTrue(amplitudeMap.containsKey(second));
-		assertEquals(3.0, amplitudeMap.get(first), 0.0);
-		assertEquals(2.0, amplitudeMap.get(second), 0.0);
+		Assertions.assertTrue(amplitudeMap.containsKey(first));
+		Assertions.assertTrue(amplitudeMap.containsKey(second));
+		Assertions.assertEquals(3.0, amplitudeMap.get(first), 0.0);
+		Assertions.assertEquals(2.0, amplitudeMap.get(second), 0.0);
 	}
 
 }

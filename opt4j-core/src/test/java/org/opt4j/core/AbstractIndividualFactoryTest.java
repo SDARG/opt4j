@@ -1,9 +1,10 @@
 package org.opt4j.core;
 
+import org.junit.jupiter.api.Assertions;
+
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.genotype.PermutationGenotype;
 
 public abstract class AbstractIndividualFactoryTest {
@@ -25,7 +26,7 @@ public abstract class AbstractIndividualFactoryTest {
 	public void injectListenersTest() {
 		AbstractIndividualFactory<Individual> factory = getFactory();
 		init(factory);
-		Assert.assertTrue(factory.individualStateListeners.contains(listener));
+		Assertions.assertTrue(factory.individualStateListeners.contains(listener));
 	}
 
 	@Test
@@ -40,7 +41,7 @@ public abstract class AbstractIndividualFactoryTest {
 		};
 
 		factory.addIndividualStateListener(listener2);
-		Assert.assertTrue(factory.individualStateListeners.contains(listener2));
+		Assertions.assertTrue(factory.individualStateListeners.contains(listener2));
 	}
 
 	@Test
@@ -49,8 +50,8 @@ public abstract class AbstractIndividualFactoryTest {
 		init(factory);
 
 		Individual individual = factory.create();
-		Assert.assertTrue(individual.individualStateListeners.contains(listener));
-		Assert.assertNotNull(individual.genotype);
+		Assertions.assertTrue(individual.individualStateListeners.contains(listener));
+		Assertions.assertNotNull(individual.genotype);
 	}
 
 	@Test
@@ -60,8 +61,8 @@ public abstract class AbstractIndividualFactoryTest {
 
 		Genotype genotype = new PermutationGenotype<Object>();
 		Individual individual = factory.create(genotype);
-		Assert.assertTrue(individual.individualStateListeners.contains(listener));
-		Assert.assertTrue(individual.genotype == genotype);
+		Assertions.assertTrue(individual.individualStateListeners.contains(listener));
+		Assertions.assertTrue(individual.genotype == genotype);
 	}
 
 	@Test
@@ -76,8 +77,8 @@ public abstract class AbstractIndividualFactoryTest {
 		};
 
 		factory.addIndividualStateListener(listener2);
-		Assert.assertTrue(factory.individualStateListeners.contains(listener2));
+		Assertions.assertTrue(factory.individualStateListeners.contains(listener2));
 		factory.removeIndividualStateListener(listener2);
-		Assert.assertFalse(factory.individualStateListeners.contains(listener2));
+		Assertions.assertFalse(factory.individualStateListeners.contains(listener2));
 	}
 }
