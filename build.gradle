@@ -2,13 +2,8 @@ plugins{
 	id 'java'
 	id 'jacoco-report-aggregation'
 	id 'eclipse'
-	id 'java-library' //test this for toolchain
 	id 'application'
 	id 'base'
-}
-
-jacoco{
-	toolVersion = "0.8.11"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -16,32 +11,33 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 mainClassName = 'org.opt4j.core.start.Opt4J'
 
+/*
+ * define global parameters here, e.g. versions numbers of tools which need to be consistent for all subprojects
+ * they are all accesible via project.parametername e.g. project.opt4jJavaVersion to get the used java version for Opt4J
+ */
 ext{
 	opt4jJavaVersion = "21"
+	guiceVersion = "7.0.0"
+	sat4jVersion = "2.3.6"
+	junitVersion = "5.10.2"
+	mockitoVersion = "5.10.0"
+	jacocoVersion = "0.8.11"
 }
+
+jacoco{
+	toolVersion = project.jacocoVersion
+}
+
 
 java {
 	withJavadocJar()
 	withSourcesJar()
-	sourceCompatibility = "${opt4jJavaVersion}"
-	targetCompatibility = "${opt4jJavaVersion}"
+	sourceCompatibility = project.opt4jJavaVersion
+	targetCompatibility = project.opt4jJavaVersion
     toolchain {
-    	languageVersion.set(JavaLanguageVersion.of("${opt4jJavaVersion}"))
+    	languageVersion.set(JavaLanguageVersion.of(project.opt4jJavaVersion))
     }
 }
-
-
-//*****************************************************
-//for debug print the required targetCompytability, the used java version and the specific jvm version
-println "targetCompatability: "+project.targetCompatibility
-println "java version: "+JavaVersion.current()
-def currentJvm = org.gradle.internal.jvm.Jvm.current()
-println "jvm version: "+currentJvm
-
-if (JavaVersion.current() != project.targetCompatibility) {
-    println "The java version used ${JavaVersion.current()} is not the expected version ${project.targetCompatibility}."
-}
-//****************************************************
 
 /*
  * Gets the version name from the latest Git tag
@@ -131,15 +127,17 @@ subprojects {
 	java {
 		withJavadocJar()
 		withSourcesJar()
-		sourceCompatibility = "${opt4jJavaVersion}"
-		targetCompatibility = "${opt4jJavaVersion}"
+		sourceCompatibility = project.opt4jJavaVersion
+		targetCompatibility = project.opt4jJavaVersion
     	toolchain {
-    		languageVersion.set(JavaLanguageVersion.of("${opt4jJavaVersion}"))
+    		languageVersion.set(JavaLanguageVersion.of(project.opt4jJavaVersion))
     	}
+    }
     
     compileJava {
-    doFirst {
-        println("Java Toolchain Version: " + javaCompiler.get().metadata.languageVersion)
+	    doFirst {
+	        println("Java Toolchain Version: " + javaCompiler.get().metadata.languageVersion)
+	    }
  	}
  	
  	test {
@@ -152,12 +150,12 @@ subprojects {
 	    // Show test results.
 	    testLogging {
 	        events "passed", "skipped", "failed"
-	    }
+		}
 	}
  	
 
 	jacoco{
-		toolVersion = "0.8.11"
+		toolVersion = project.jacocoVersion
 	}
 
 	jacocoTestReport {
@@ -170,9 +168,9 @@ subprojects {
 			xml.required = true
 		}
 	}
- }
+ //}
 }
-}
+
 
 dependencies {
 	implementation project(':opt4j-core')
