@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -517,13 +518,21 @@ public class DefaultModulesPanel extends ModulesPanel {
 		Module module = pm.getModule();
 		if (module.getClass().getAnnotation(Multi.class) != null) {
 			try {
-				Module m2 = module.getClass().newInstance();
+				Module m2 = module.getClass().getDeclaredConstructor().newInstance();
 				PropertyModule pm2 = new PropertyModule(m2);
 				selectedModules.add(pm2);
 			} catch (InstantiationException e1) {
 				e1.printStackTrace();
 			} catch (IllegalAccessException e1) {
 				e1.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
 			}
 		} else {
 			selectedModules.add(pm);

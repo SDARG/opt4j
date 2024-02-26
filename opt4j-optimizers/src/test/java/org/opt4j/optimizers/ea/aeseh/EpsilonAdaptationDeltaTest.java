@@ -3,7 +3,6 @@ package org.opt4j.optimizers.ea.aeseh;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.opt4j.optimizers.ea.aeseh.EpsilonAdaptationDelta;
 
 public class EpsilonAdaptationDeltaTest {
 

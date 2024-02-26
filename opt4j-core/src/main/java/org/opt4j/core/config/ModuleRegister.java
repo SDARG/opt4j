@@ -22,6 +22,7 @@
 
 package org.opt4j.core.config;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -106,12 +107,20 @@ public class ModuleRegister implements Iterable<Class<? extends Module>> {
 		} else {
 
 			try {
-				Module module = clazz.newInstance();
+				Module module = clazz.getDeclaredConstructor().newInstance();
 				propertyModule = new PropertyModule(module);
 				map.put(clazz, propertyModule);
 			} catch (InstantiationException e) {
 				System.err.println("Failed to create an instance of module " + clazz + ".");
 			} catch (IllegalAccessException e) {
+				System.err.println("Failed to create an instance of module " + clazz + ".");
+			} catch (IllegalArgumentException e) {
+				System.err.println("Failed to create an instance of module " + clazz + ".");
+			} catch (InvocationTargetException e) {
+				System.err.println("Failed to create an instance of module " + clazz + ".");
+			} catch (NoSuchMethodException e) {
+				System.err.println("Failed to create an instance of module " + clazz + ".");
+			} catch (SecurityException e) {
 				System.err.println("Failed to create an instance of module " + clazz + ".");
 			}
 		}
@@ -130,9 +139,13 @@ public class ModuleRegister implements Iterable<Class<? extends Module>> {
 				try {
 					// try to initialize static code of the module classes while
 					// searching modules and not later
-					clazz.newInstance();
+					clazz.getDeclaredConstructor().newInstance();
 				} catch (InstantiationException e) {
 				} catch (IllegalAccessException e) {
+				} catch (IllegalArgumentException e) {
+				} catch (InvocationTargetException e) {
+				} catch (NoSuchMethodException e) {
+				} catch (SecurityException e) {
 				}
 			}
 			System.out.println("Done");

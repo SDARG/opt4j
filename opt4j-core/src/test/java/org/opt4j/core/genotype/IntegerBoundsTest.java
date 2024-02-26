@@ -41,12 +41,12 @@ public class IntegerBoundsTest {
 		int[] lowerBounds = { -1, 0, 1 };
 		int[] upperBounds = { 0, 1, 2 };
 		IntegerBounds bounds = new IntegerBounds(lowerBounds, upperBounds);
-		Assertions.assertEquals(new Long(-1), new Long(bounds.getLowerBound(0)));
-		Assertions.assertEquals(new Long(0), new Long(bounds.getLowerBound(1)));
-		Assertions.assertEquals(new Long(1), new Long(bounds.getLowerBound(2)));
-		Assertions.assertEquals(new Long(0), new Long(bounds.getUpperBound(0)));
-		Assertions.assertEquals(new Long(1), new Long(bounds.getUpperBound(1)));
-		Assertions.assertEquals(new Long(2), new Long(bounds.getUpperBound(2)));
+		Assertions.assertEquals(Long.valueOf(-1), Long.valueOf(bounds.getLowerBound(0)));
+		Assertions.assertEquals(Long.valueOf(0), Long.valueOf(bounds.getLowerBound(1)));
+		Assertions.assertEquals(Long.valueOf(1), Long.valueOf(bounds.getLowerBound(2)));
+		Assertions.assertEquals(Long.valueOf(0), Long.valueOf(bounds.getUpperBound(0)));
+		Assertions.assertEquals(Long.valueOf(1), Long.valueOf(bounds.getUpperBound(1)));
+		Assertions.assertEquals(Long.valueOf(2), Long.valueOf(bounds.getUpperBound(2)));
 	}
 
 	@Test
@@ -60,11 +60,11 @@ public class IntegerBoundsTest {
 		upperBounds.add(1);
 		upperBounds.add(2);
 		IntegerBounds bounds = new IntegerBounds(lowerBounds, upperBounds);
-		Assertions.assertEquals(new Long(-1), new Long(bounds.getLowerBound(0)));
-		Assertions.assertEquals(new Long(0), new Long(bounds.getLowerBound(1)));
-		Assertions.assertEquals(new Long(1), new Long(bounds.getLowerBound(2)));
-		Assertions.assertEquals(new Long(0), new Long(bounds.getUpperBound(0)));
-		Assertions.assertEquals(new Long(1), new Long(bounds.getUpperBound(1)));
-		Assertions.assertEquals(new Long(2), new Long(bounds.getUpperBound(2)));
+		Assertions.assertEquals(Long.valueOf(-1), Long.valueOf(bounds.getLowerBound(0)));
+		Assertions.assertEquals(Long.valueOf(0), Long.valueOf(bounds.getLowerBound(1)));
+		Assertions.assertEquals(Long.valueOf(1), Long.valueOf(bounds.getLowerBound(2)));
+		Assertions.assertEquals(Long.valueOf(0), Long.valueOf(bounds.getUpperBound(0)));
+		Assertions.assertEquals(Long.valueOf(1), Long.valueOf(bounds.getUpperBound(1)));
+		Assertions.assertEquals(Long.valueOf(2), Long.valueOf(bounds.getUpperBound(2)));
 	}
 }

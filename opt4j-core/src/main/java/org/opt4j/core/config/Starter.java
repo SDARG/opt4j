@@ -91,7 +91,7 @@ public class Starter {
 		for (String filename : filenames) {
 			Set<Module> modules = new HashSet<>();
 			modules.addAll(loader.load(filename));
-			Task task = taskClass.newInstance();
+			Task task = taskClass.getDeclaredConstructor().newInstance();
 			task.init(modules);
 			task.call();
 		}

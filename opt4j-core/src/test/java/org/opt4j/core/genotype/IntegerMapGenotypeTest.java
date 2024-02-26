@@ -288,13 +288,13 @@ public class IntegerMapGenotypeTest {
 		Assertions.assertTrue(integerMapGenotype.getValue(mockup3) >= 3);
 		Assertions.assertTrue(integerMapGenotype.getValue(mockup3) <= 4);
 		integerMapGenotype.setValue(mockup3, 4);
-		Assertions.assertEquals(new Long(4), new Long(integerMapGenotype.getValue(mockup3)));
+		Assertions.assertEquals(Long.valueOf(4), Long.valueOf(integerMapGenotype.getValue(mockup3)));
 		IntegerMapGenotype<MockObject> other = integerMapGenotype.newInstance();
 		Assertions.assertNotEquals(integerMapGenotype, other);
 		Assertions.assertTrue(other.isEmpty());
 		other.setValue(mockup2, 2);
-		Assertions.assertEquals(new Long(2), new Long(other.getValue(mockup2)));
-		Assertions.assertEquals(new Long(1), new Long(other.getValue(mockup1)));
+		Assertions.assertEquals(Long.valueOf(2), Long.valueOf(other.getValue(mockup2)));
+		Assertions.assertEquals(Long.valueOf(1), Long.valueOf(other.getValue(mockup1)));
 	}
 
 }

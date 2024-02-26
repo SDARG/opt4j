@@ -133,12 +133,6 @@ subprojects {
     		languageVersion.set(JavaLanguageVersion.of(project.opt4jJavaVersion))
     	}
     }
-    
-    compileJava {
-	    doFirst {
-	        println("Java Toolchain Version: " + javaCompiler.get().metadata.languageVersion)
-	    }
- 	}
  	
  	test {
 	    // Enable JUnit 5 (Gradle 4.6+).

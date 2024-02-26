@@ -15,8 +15,8 @@ public class FixedBoundsTest {
 		FixedBounds<Integer> fixedInt = new FixedBounds<>(2, 10);
 		for (int i = 0; i < 10; i++) {
 			int index = rand.nextInt();
-			Assertions.assertEquals(new Long(2), new Long(fixedInt.getLowerBound(index)));
-			Assertions.assertEquals(new Long(10), new Long(fixedInt.getUpperBound(index)));
+			Assertions.assertEquals(Long.valueOf(2), Long.valueOf(fixedInt.getLowerBound(index)));
+			Assertions.assertEquals(Long.valueOf(10), Long.valueOf(fixedInt.getUpperBound(index)));
 		}
 		FixedBounds<Double> fixedDouble = new FixedBounds<>(.5, 11.7);
 		for (int i = 0; i < 10; i++) {

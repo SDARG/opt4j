@@ -90,10 +90,10 @@ public class IntegerGenotypeTest {
 		Assertions.assertEquals(10, fixedBoundGeno.size());
 		for (int i = 0; i < 10; i++) {
 			int index = rand.nextInt();
-			Assertions.assertEquals(new Long(lowerBound), new Long(fixedBoundGeno.getLowerBound(index)));
-			Assertions.assertEquals(new Long(lowerBound), new Long(other.getLowerBound(index)));
-			Assertions.assertEquals(new Long(upperBound), new Long(fixedBoundGeno.getUpperBound(index)));
-			Assertions.assertEquals(new Long(upperBound), new Long(other.getUpperBound(index)));
+			Assertions.assertEquals(Long.valueOf(lowerBound), Long.valueOf(fixedBoundGeno.getLowerBound(index)));
+			Assertions.assertEquals(Long.valueOf(lowerBound), Long.valueOf(other.getLowerBound(index)));
+			Assertions.assertEquals(Long.valueOf(upperBound), Long.valueOf(fixedBoundGeno.getUpperBound(index)));
+			Assertions.assertEquals(Long.valueOf(upperBound), Long.valueOf(other.getUpperBound(index)));
 		}
 	}
 }

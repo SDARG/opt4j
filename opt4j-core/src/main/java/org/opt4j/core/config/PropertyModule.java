@@ -447,7 +447,7 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 	@Override
 	public PropertyModule clone() {
 		try {
-			Module module = this.module.getClass().newInstance();
+			Module module = this.module.getClass().getDeclaredConstructor().newInstance();
 			PropertyModule propertyModule = new PropertyModule(module);
 			for (Property p : getProperties()) {
 				Property property = propertyModule.getProperty(p.getName());
@@ -460,6 +460,12 @@ public final class PropertyModule implements Module, Serializable, Comparable<Pr
 			throw new IllegalArgumentException(e);
 		} catch (InvocationTargetException e) {
 			throw new IllegalArgumentException(e);
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		} catch (SecurityException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
