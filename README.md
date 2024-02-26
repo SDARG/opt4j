@@ -1,6 +1,6 @@
 [![Opt4J Build & Test](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml/badge.svg)](https://github.com/SDARG/opt4j/actions/workflows/gradle.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/88406105afc64c44bf00f8a89602700f)](https://www.codacy.com/gh/SDARG/opt4j/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SDARG/opt4j&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/88406105afc64c44bf00f8a89602700f)](https://www.codacy.com/gh/SDARG/opt4j/dashboard?utm_source=github.com&utm_medium=referral&utm_content=SDARG/opt4j&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/88406105afc64c44bf00f8a89602700f)](https://app.codacy.com/gh/SDARG/opt4j/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/88406105afc64c44bf00f8a89602700f)](https://app.codacy.com/gh/SDARG/opt4j/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![JitPack Badge](https://jitpack.io/v/sdarg/opt4j.svg)](https://jitpack.io/#sdarg/opt4j)
 
 #  Opt4J - Modular Java framework for meta-heuristic optimization 
