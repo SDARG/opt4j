@@ -83,14 +83,6 @@ def descriptions = [
 	'opt4j-viewer' : 'The viewer module for Opt4J'
 ]
 
-
-    dependencies {
-		testImplementation(platform('org.junit:junit-bom:5.10.2'))
-		testImplementation('org.junit.jupiter:junit-jupiter')
-		testRuntimeOnly('org.junit.platform:junit-platform-launcher')
-		testImplementation('org.mockito:mockito-junit-jupiter:5.10.0')
-    }
-
 subprojects {
 	apply plugin: 'java'
 	apply plugin: 'signing'
