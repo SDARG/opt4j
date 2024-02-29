@@ -1,6 +1,6 @@
 dependencies {
-	implementation project(':opt4j-core')
-   	implementation group: 'com.google.inject', name: 'guice', version: project.guiceVersion
+	api project(':opt4j-core')
+   //	api group: 'com.google.inject', name: 'guice', version: project.guiceVersion
    
    	testImplementation platform(group: 'org.junit', name: 'junit-bom', version: project.junitVersion)
 	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'

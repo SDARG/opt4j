@@ -1,8 +1,8 @@
 dependencies {
-	implementation group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: project.sat4jVersion
-	implementation group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: project.sat4jVersion
-	implementation group: 'com.google.inject', name: 'guice', version: project.guiceVersion
-	implementation project(':opt4j-core')
+	api group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: project.sat4jVersion
+	api group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: project.sat4jVersion
+	//api group: 'com.google.inject', name: 'guice', version: project.guiceVersion
+	api project(':opt4j-core')
 	
 	testImplementation platform(group: 'org.junit', name: 'junit-bom', version: project.junitVersion)
 	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'

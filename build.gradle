@@ -1,5 +1,6 @@
 plugins{
 	id 'java'
+	id 'java-library'
 	id 'jacoco-report-aggregation'
 	id 'eclipse'
 	id 'application'
@@ -85,6 +86,7 @@ def descriptions = [
 
 subprojects {
 	apply plugin: 'java'
+	apply plugin: 'java-library'
 	apply plugin: 'signing'
 	apply plugin: 'eclipse'
 	apply plugin: 'jacoco'
