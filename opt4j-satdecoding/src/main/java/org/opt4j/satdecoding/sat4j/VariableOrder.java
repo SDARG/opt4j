@@ -70,7 +70,7 @@ public class VariableOrder extends VarOrderHeap {
 		activity = new double[nlength];
 		phase = new boolean[nlength];
 		activity[0] = -1;
-		heap = new Heap(activity);
+		heap = createHeap(activity);
 		heap.setBounds(nlength);
 		for (int i = 1; i < nlength; i++) {
 			assert i > 0;
@@ -96,17 +96,6 @@ public class VariableOrder extends VarOrderHeap {
 		// nothing to be done
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sat4j.minisat.orders.VarOrderHeap#updateActivity(int)
-	 */
-	@Override
-	protected void updateActivity(final int var) {
-		if ((activity[var] += varInc) > VAR_RESCALE_BOUND) {
-			varRescaleActivity();
-		}
-	}
 
 	/**
 	 * Increments the activity of a variable {@code var} by the specified
@@ -115,6 +104,7 @@ public class VariableOrder extends VarOrderHeap {
 	 * @param var the variable
 	 * @param inc the value to increment the variable
 	 */
+	@Override
 	protected void updateActivity(final int var, final double inc) {
 		if ((activity[var] += inc) > VAR_RESCALE_BOUND) {
 			varRescaleActivity();

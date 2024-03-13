@@ -19,7 +19,7 @@ mainClassName = 'org.opt4j.core.start.Opt4J'
 ext{
 	opt4jJavaVersion = "21"
 	guiceVersion = "7.0.0"
-	sat4jVersion = "2.3.5"
+	sat4jVersion = "2.3.6"
 	junitVersion = "5.10.2"
 	mockitoVersion = "5.10.0"
 	jacocoVersion = "0.8.11"
