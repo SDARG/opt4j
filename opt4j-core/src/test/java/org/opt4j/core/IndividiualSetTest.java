@@ -4,8 +4,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class IndividiualSetTest {
 
@@ -14,9 +15,9 @@ public class IndividiualSetTest {
 		IndividualSet set = new IndividualSet();
 		Individual individual = new Individual();
 
-		Assert.assertTrue(set.add(individual));
+		Assertions.assertTrue(set.add(individual));
 
-		Assert.assertTrue(set.contains(individual));
+		Assertions.assertTrue(set.contains(individual));
 	}
 
 	private class AddIndividualSetListener implements IndividualSetListener {
@@ -25,13 +26,13 @@ public class IndividiualSetTest {
 
 		@Override
 		public void individualRemoved(IndividualSet collection, Individual i) {
-			Assert.assertTrue(false); // shall not happen in this testcase
+			Assertions.assertTrue(false); // shall not happen in this testcase
 		}
 
 		@Override
 		public void individualAdded(IndividualSet collection, Individual i) {
-			Assert.assertNull(this.collection);
-			Assert.assertNull(this.i);
+			Assertions.assertNull(this.collection);
+			Assertions.assertNull(this.i);
 			this.collection = collection;
 			this.i = i;
 		}
@@ -45,10 +46,10 @@ public class IndividiualSetTest {
 		AddIndividualSetListener l = new AddIndividualSetListener();
 		set.addListener(l);
 
-		Assert.assertTrue(set.add(individual));
+		Assertions.assertTrue(set.add(individual));
 
-		Assert.assertEquals(set, l.collection);
-		Assert.assertEquals(individual, l.i);
+		Assertions.assertEquals(set, l.collection);
+		Assertions.assertEquals(individual, l.i);
 	}
 
 	public void iteratorTest() {
@@ -57,8 +58,8 @@ public class IndividiualSetTest {
 		set.add(individual);
 
 		Iterator<Individual> iterator = set.iterator();
-		Assert.assertTrue(iterator.hasNext());
-		Assert.assertEquals(individual, iterator.next());
+		Assertions.assertTrue(iterator.hasNext());
+		Assertions.assertEquals(individual, iterator.next());
 	}
 
 	public void iteratorRemoveTest() {
@@ -69,9 +70,9 @@ public class IndividiualSetTest {
 		IndividualSetListener l = new IndividualSetListener() {
 			@Override
 			public void individualRemoved(IndividualSet collection, Individual i) {
-				Assert.assertEquals(set, collection);
-				Assert.assertEquals(individual, i);
-				Assert.assertTrue(collection.isEmpty());
+				Assertions.assertEquals(set, collection);
+				Assertions.assertEquals(individual, i);
+				Assertions.assertTrue(collection.isEmpty());
 			}
 
 			@Override
@@ -82,8 +83,8 @@ public class IndividiualSetTest {
 		set.addListener(l);
 
 		Iterator<Individual> iterator = set.iterator();
-		Assert.assertTrue(iterator.hasNext());
-		Assert.assertEquals(individual, iterator.next());
+		Assertions.assertTrue(iterator.hasNext());
+		Assertions.assertEquals(individual, iterator.next());
 		iterator.remove();
 	}
 
@@ -92,9 +93,9 @@ public class IndividiualSetTest {
 		IndividualSet set = new IndividualSet();
 		Individual individual = new Individual();
 
-		Assert.assertEquals(0, set.size());
+		Assertions.assertEquals(0, set.size());
 		set.add(individual);
-		Assert.assertEquals(1, set.size());
+		Assertions.assertEquals(1, set.size());
 	}
 
 	@Test
@@ -113,7 +114,7 @@ public class IndividiualSetTest {
 		};
 		set.addListener(l);
 
-		Assert.assertTrue(set.listeners.contains(l));
+		Assertions.assertTrue(set.listeners.contains(l));
 	}
 
 	@Test
@@ -130,11 +131,11 @@ public class IndividiualSetTest {
 		};
 
 		set.addListener(l);
-		Assert.assertTrue(set.listeners.contains(l));
+		Assertions.assertTrue(set.listeners.contains(l));
 
 		set.removeListener(l);
-		Assert.assertFalse(set.listeners.contains(l));
-		Assert.assertTrue(set.listeners.isEmpty());
+		Assertions.assertFalse(set.listeners.contains(l));
+		Assertions.assertTrue(set.listeners.isEmpty());
 	}
 
 	@Test
@@ -144,10 +145,10 @@ public class IndividiualSetTest {
 		Individual i2 = new Individual();
 		Individual i3 = new Individual();
 
-		Assert.assertTrue(set.addAll(i1, i2));
-		Assert.assertTrue(set.addAll(i3));
-		Assert.assertFalse(set.addAll());
-		Assert.assertFalse(set.addAll(i1, i2, i3));
+		Assertions.assertTrue(set.addAll(i1, i2));
+		Assertions.assertTrue(set.addAll(i3));
+		Assertions.assertFalse(set.addAll());
+		Assertions.assertFalse(set.addAll(i1, i2, i3));
 	}
 
 	@Test
@@ -161,11 +162,11 @@ public class IndividiualSetTest {
 		is.add(i1);
 		is.add(i2);
 
-		Assert.assertTrue(set.addAll(is));
-		Assert.assertTrue(set.containsAll(is));
+		Assertions.assertTrue(set.addAll(is));
+		Assertions.assertTrue(set.containsAll(is));
 
 		is.add(i3);
-		Assert.assertFalse(set.containsAll(is));
+		Assertions.assertFalse(set.containsAll(is));
 	}
 
 	@Test
@@ -173,9 +174,9 @@ public class IndividiualSetTest {
 		IndividualSet set = new IndividualSet();
 		Individual i1 = new Individual();
 
-		Assert.assertTrue(set.isEmpty());
+		Assertions.assertTrue(set.isEmpty());
 		set.add(i1);
-		Assert.assertFalse(set.isEmpty());
+		Assertions.assertFalse(set.isEmpty());
 	}
 
 	private class RemoveIndividualSetListener implements IndividualSetListener {
@@ -202,12 +203,12 @@ public class IndividiualSetTest {
 		RemoveIndividualSetListener l = new RemoveIndividualSetListener();
 		set.addListener(l);
 
-		Assert.assertTrue(set.remove(i));
-		Assert.assertEquals(set, l.collection);
-		Assert.assertEquals(i, l.individual);
-		Assert.assertTrue(set.isEmpty());
+		Assertions.assertTrue(set.remove(i));
+		Assertions.assertEquals(set, l.collection);
+		Assertions.assertEquals(i, l.individual);
+		Assertions.assertTrue(set.isEmpty());
 
-		Assert.assertFalse(set.remove(i));
+		Assertions.assertFalse(set.remove(i));
 	}
 
 	@Test
@@ -222,10 +223,10 @@ public class IndividiualSetTest {
 		rem.add(i1);
 		rem.add(i2);
 
-		Assert.assertTrue(set.removeAll(rem));
-		Assert.assertTrue(set.isEmpty());
+		Assertions.assertTrue(set.removeAll(rem));
+		Assertions.assertTrue(set.isEmpty());
 
-		Assert.assertFalse(set.removeAll(rem));
+		Assertions.assertFalse(set.removeAll(rem));
 	}
 
 	@Test
@@ -239,22 +240,22 @@ public class IndividiualSetTest {
 		Set<Individual> rem = new HashSet<>();
 		rem.add(i2);
 
-		Assert.assertTrue(set.retainAll(rem));
-		Assert.assertTrue(set.contains(i2));
-		Assert.assertEquals(1, set.size());
+		Assertions.assertTrue(set.retainAll(rem));
+		Assertions.assertTrue(set.contains(i2));
+		Assertions.assertEquals(1, set.size());
 
-		Assert.assertFalse(set.retainAll(rem));
+		Assertions.assertFalse(set.retainAll(rem));
 	}
 
 	@Test
 	public void toArrayTest() {
 		IndividualSet set = new IndividualSet();
 		Individual individual = new Individual();
-		Assert.assertTrue(set.add(individual));
+		Assertions.assertTrue(set.add(individual));
 
 		Individual[] array = { individual };
 		set.toArray(array);
-		Assert.assertEquals(1, array.length);
-		Assert.assertEquals(individual, array[0]);
+		Assertions.assertEquals(1, array.length);
+		Assertions.assertEquals(individual, array[0]);
 	}
 }

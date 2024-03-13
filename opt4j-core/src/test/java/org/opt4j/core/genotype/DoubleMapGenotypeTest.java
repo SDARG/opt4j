@@ -1,16 +1,16 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class DoubleMapGenotypeTest {
 
@@ -70,16 +70,18 @@ public class DoubleMapGenotypeTest {
 		}
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testWrongInitCall() {
-		List<MockObject> keys = new ArrayList<>();
-		MockObject m1 = new MockObject(1);
-		MockObject m2 = new MockObject(2);
-		keys.add(m1);
-		keys.add(m2);
-		DoubleBounds bounds = new DoubleBounds(lower2, upper);
-		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, bounds);
-		doubleMapGeno.init(new Random(), 10);
+		assertThrows(UnsupportedOperationException.class, () -> {
+			List<MockObject> keys = new ArrayList<>();
+			MockObject m1 = new MockObject(1);
+			MockObject m2 = new MockObject(2);
+			keys.add(m1);
+			keys.add(m2);
+			DoubleBounds bounds = new DoubleBounds(lower2, upper);
+			DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, bounds);
+			doubleMapGeno.init(new Random(), 10);
+		});
 	}
 
 	@Test
@@ -92,44 +94,51 @@ public class DoubleMapGenotypeTest {
 		DoubleBounds bounds = new DoubleBounds(lower2, upper);
 		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, bounds);
 		doubleMapGeno.setValue(m2, 0.4);
-		assertEquals(0.4, doubleMapGeno.getValue(m2), 0.0);
+		Assertions.assertEquals(0.4, doubleMapGeno.getValue(m2), 0.0);
 		doubleMapGeno.init(new Random());
 		doubleMapGeno.setValue(m1, 0.5);
-		assertEquals(0.5, doubleMapGeno.getValue(m1), 0.0);
+		Assertions.assertEquals(0.5, doubleMapGeno.getValue(m1), 0.0);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSetValueOutOfBounds2() {
-		List<MockObject> keys = new ArrayList<>();
-		MockObject m1 = new MockObject(1);
-		MockObject m2 = new MockObject(2);
-		keys.add(m1);
-		keys.add(m2);
-		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
-		doubleMapGeno.setValue(m1, -2.0);
+		assertThrows(IllegalArgumentException.class, () -> {
+			List<MockObject> keys = new ArrayList<>();
+			MockObject m1 = new MockObject(1);
+			MockObject m2 = new MockObject(2);
+			keys.add(m1);
+			keys.add(m2);
+			DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
+			doubleMapGeno.setValue(m1, -2.0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSetValueOutOfBounds1() {
-		List<MockObject> keys = new ArrayList<>();
-		MockObject m1 = new MockObject(1);
-		MockObject m2 = new MockObject(2);
-		keys.add(m1);
-		keys.add(m2);
-		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
-		doubleMapGeno.setValue(m1, 2.0);
+		assertThrows(IllegalArgumentException.class, () -> {
+			List<MockObject> keys = new ArrayList<>();
+			MockObject m1 = new MockObject(1);
+			MockObject m2 = new MockObject(2);
+			keys.add(m1);
+			keys.add(m2);
+			DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
+			doubleMapGeno.setValue(m1, 2.0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSetValueInvalidKey() {
-		List<MockObject> keys = new ArrayList<>();
-		MockObject m1 = new MockObject(1);
-		MockObject m2 = new MockObject(2);
-		MockObject m3 = new MockObject(3);
-		keys.add(m1);
-		keys.add(m2);
-		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
-		doubleMapGeno.setValue(m3, 1.0);
+		assertThrows(IllegalArgumentException.class, () -> {
+			List<MockObject> keys = new ArrayList<>();
+			MockObject m1 = new MockObject(1);
+			MockObject m2 = new MockObject(2);
+			MockObject m3 = new MockObject(3);
+			keys.add(m1);
+			keys.add(m2);
+			DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
+			doubleMapGeno.setValue(m3, 1.0);
+		});
+		
 	}
 
 	@Test
@@ -142,8 +151,8 @@ public class DoubleMapGenotypeTest {
 		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
 		doubleMapGeno.init(new Random());
 		DoubleMapGenotype<MockObject> other = doubleMapGeno.newInstance();
-		assertNotEquals(doubleMapGeno, other);
-		assertTrue(other.isEmpty());
+		Assertions.assertNotEquals(doubleMapGeno, other);
+		Assertions.assertTrue(other.isEmpty());
 	}
 
 	@Test
@@ -155,7 +164,7 @@ public class DoubleMapGenotypeTest {
 		keys.add(m2);
 		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
 		doubleMapGeno.init(new Random());
-		assertEquals("[m1=1.0;m2=1.0;]", doubleMapGeno.toString());
+		Assertions.assertEquals("[m1=1.0;m2=1.0;]", doubleMapGeno.toString());
 	}
 
 	@Test
@@ -166,19 +175,22 @@ public class DoubleMapGenotypeTest {
 		keys.add(m1);
 		keys.add(m2);
 		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
-		assertEquals(0, doubleMapGeno.getIndexOf(m1));
+		Assertions.assertEquals(0, doubleMapGeno.getIndexOf(m1));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testGetIndexOfInvalidKey() {
-		List<MockObject> keys = new ArrayList<>();
-		MockObject m1 = new MockObject(1);
-		MockObject m2 = new MockObject(2);
-		MockObject m3 = new MockObject(3);
-		keys.add(m1);
-		keys.add(m2);
-		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
-		doubleMapGeno.getIndexOf(m3);
+		assertThrows(IllegalArgumentException.class, () -> {
+			List<MockObject> keys = new ArrayList<>();
+			MockObject m1 = new MockObject(1);
+			MockObject m2 = new MockObject(2);
+			MockObject m3 = new MockObject(3);
+			keys.add(m1);
+			keys.add(m2);
+			DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
+			doubleMapGeno.getIndexOf(m3);
+		});
+		
 	}
 
 	@Test
@@ -190,9 +202,9 @@ public class DoubleMapGenotypeTest {
 		keys.add(m2);
 		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
 		Collection<MockObject> ks = doubleMapGeno.getKeys();
-		assertEquals(2, ks.size());
-		assertTrue(ks.contains(m1));
-		assertTrue(ks.contains(m2));
+		Assertions.assertEquals(2, ks.size());
+		Assertions.assertTrue(ks.contains(m1));
+		Assertions.assertTrue(ks.contains(m2));
 	}
 
 	@Test()
@@ -204,17 +216,20 @@ public class DoubleMapGenotypeTest {
 		keys.add(m1);
 		keys.add(m2);
 		DoubleMapGenotype<MockObject> doubleMapGeno = new DoubleMapGenotype<>(keys, new MockBounds());
-		assertTrue(doubleMapGeno.containsKey(m1));
-		assertFalse(doubleMapGeno.containsKey(m3));
+		Assertions.assertTrue(doubleMapGeno.containsKey(m1));
+		Assertions.assertFalse(doubleMapGeno.containsKey(m3));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testNonUniqueKeys() {
-		List<MockObject> keys = new ArrayList<>();
-		MockObject m1 = new MockObject(1);
-		keys.add(m1);
-		keys.add(m1);
-		new DoubleMapGenotype<>(keys, new MockBounds());
+		assertThrows(IllegalArgumentException.class, () -> {
+			List<MockObject> keys = new ArrayList<>();
+			MockObject m1 = new MockObject(1);
+			keys.add(m1);
+			keys.add(m1);
+			new DoubleMapGenotype<>(keys, new MockBounds());
+		});
+		
 	}
 
 }

@@ -1,4 +1,10 @@
 dependencies {
-	compile project(':opt4j-core')
-	compile project(':opt4j-satdecoding')
+	//api group: 'com.google.inject', name: 'guice', version: project.guiceVersion
+	api project(':opt4j-core')
+	api project(':opt4j-satdecoding')
+	
+	testImplementation platform(group: 'org.junit', name: 'junit-bom', version: project.junitVersion)
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+	testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher'
+	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: project.mockitoVersion
 }

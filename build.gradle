@@ -1,11 +1,44 @@
-apply plugin: 'base'
-apply plugin: 'application'
-apply plugin: 'eclipse'
-apply plugin: 'jacoco'
+plugins{
+	id 'java'
+	id 'java-library'
+	id 'jacoco-report-aggregation'
+	id 'eclipse'
+	id 'application'
+	id 'base'
+}
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
+
 mainClassName = 'org.opt4j.core.start.Opt4J'
+
+/*
+ * define global parameters here, e.g. versions numbers of tools which need to be consistent for all subprojects
+ * they are all accesible via project.parametername e.g. project.opt4jJavaVersion to get the used java version for Opt4J
+ */
+ext{
+	opt4jJavaVersion = "21"
+	guiceVersion = "7.0.0"
+	sat4jVersion = "2.3.6"
+	junitVersion = "5.10.2"
+	mockitoVersion = "5.10.0"
+	jacocoVersion = "0.8.11"
+}
+
+jacoco{
+	toolVersion = project.jacocoVersion
+}
+
+
+java {
+	withJavadocJar()
+	withSourcesJar()
+	sourceCompatibility = project.opt4jJavaVersion
+	targetCompatibility = project.opt4jJavaVersion
+    toolchain {
+    	languageVersion.set(JavaLanguageVersion.of(project.opt4jJavaVersion))
+    }
+}
 
 /*
  * Gets the version name from the latest Git tag
@@ -26,6 +59,7 @@ def getVersionName = {
 	return version
 }
 version=getVersionName()
+
 
 
 ext {
@@ -52,7 +86,7 @@ def descriptions = [
 
 subprojects {
 	apply plugin: 'java'
-	apply plugin: 'maven'
+	apply plugin: 'java-library'
 	apply plugin: 'signing'
 	apply plugin: 'eclipse'
 	apply plugin: 'jacoco'
@@ -76,12 +110,40 @@ subprojects {
 
 	task sourcesJar(type: Jar, dependsOn:classes) {
 		from sourceSets.main.allSource
-		classifier = 'sources'
+		archiveClassifier.set('sources')
 	}
 
 	task javadocJar(type: Jar, dependsOn:javadoc) {
 		from javadoc.destinationDir
-		classifier = 'javadoc'
+		archiveClassifier.set('javadoc')
+	}
+	
+	java {
+		withJavadocJar()
+		withSourcesJar()
+		sourceCompatibility = project.opt4jJavaVersion
+		targetCompatibility = project.opt4jJavaVersion
+    	toolchain {
+    		languageVersion.set(JavaLanguageVersion.of(project.opt4jJavaVersion))
+    	}
+    }
+ 	
+ 	test {
+	    // Enable JUnit 5 (Gradle 4.6+).
+	    useJUnitPlatform()
+
+	    // Always run tests, even when nothing changed.
+	    dependsOn 'cleanTest'
+
+	    // Show test results.
+	    testLogging {
+	        events "passed", "skipped", "failed"
+		}
+	}
+ 	
+
+	jacoco{
+		toolVersion = project.jacocoVersion
 	}
 
 	jacocoTestReport {
@@ -89,21 +151,23 @@ subprojects {
 		getSourceDirectories().setFrom(sourceSets.main.allSource.srcDirs)
 		getClassDirectories().setFrom(sourceSets.main.output)
 		reports {
-			html.enabled = true
-			xml.enabled = true
-			csv.enabled = true
+			html.required = true
+			csv.required = true
+			xml.required = true
 		}
 	}
+ //}
 }
 
+
 dependencies {
-	runtime project(':opt4j-core')
-	runtime project(':opt4j-satdecoding')
-	runtime project(':opt4j-operators')
-	runtime project(':opt4j-optimizers')
-	runtime project(':opt4j-benchmarks')
-	runtime project(':opt4j-viewer')
-	runtime project(':opt4j-tutorial')
+	implementation project(':opt4j-core')
+	implementation project(':opt4j-satdecoding')
+	implementation project(':opt4j-operators')
+	implementation project(':opt4j-optimizers')
+	implementation project(':opt4j-benchmarks')
+	implementation project(':opt4j-viewer')
+	implementation project(':opt4j-tutorial')
 }
 
 jar {
@@ -112,10 +176,6 @@ jar {
 	}
 }
 
-java {
-	withJavadocJar()
-	withSourcesJar()
-}
 
 artifacts {
 	archives sourcesJar
@@ -163,7 +223,7 @@ task alldocs(type: Javadoc) {
 	title = "Opt4J version $version Project API Documentation"
 	destinationDir = new File(project.buildDir, 'docs/javadoc')
 	options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PUBLIC
-	options.links 'https://docs.oracle.com/en/java/javase/12/docs/api/','http://google.github.io/guice/api-docs/4.1/javadoc/'
+	options.links "https://docs.oracle.com/en/java/javase/${project.opt4jJavaVersion}/docs/api/","http://google.github.io/guice/api-docs/${guiceVersion}/javadoc/"
 	options.linkSource = true
 	subprojects.each {subproject ->
 		source subproject.sourceSets.main.java
@@ -184,7 +244,7 @@ applicationDistribution.from("src/distribution") {
 }
 
 task fatjar(dependsOn: subprojects.jar, type: Jar) {
-	destinationDir = new File(project.buildDir, 'fatjar')
+	destinationDirectory = new File(project.buildDir, 'fatjar')
 	from {
 		configurations.runtime.collect {
 			it.isDirectory() ? it : zipTree(it)
@@ -202,21 +262,18 @@ applicationDefaultJvmArgs = [
 ]
 
 task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
-	dependsOn = subprojects.test
+	dependsOn(subprojects.test)
 	getAdditionalSourceDirs().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
 	getSourceDirectories().setFrom(subprojects.sourceSets.main.allSource.srcDirs)
 	getClassDirectories().setFrom(subprojects.sourceSets.main.output)
-	getExecutionData().setFrom(subprojects.jacocoTestReport.executionData)	
-	getExecutionData().setFrom(executionData.findAll {
-			it.exists()
-		})
+	executionData.from = files(subprojects.jacocoTestReport.executionData)
 	reports {
-		html.enabled true
-		html.destination(file("${buildDir}/reports/jacoco"))
-		xml.enabled = true
-		xml.destination(file("${buildDir}/reports/jacoco/rootReport.xml"))
-		csv.enabled = true
-		csv.destination(file("${buildDir}/reports/jacoco/rootReport.csv"))
+		xml.required = true
+		xml.outputLocation = file("${buildDir}/reports/jacoco/rootReport.xml")
+		html.required = true
+		html.outputLocation = file("${buildDir}/reports/jacoco")
+		csv.required = true
+		csv.outputLocation = file("${buildDir}/reports/jacoco/rootReport.csv")
 	}
 	onlyIf = {
 		true

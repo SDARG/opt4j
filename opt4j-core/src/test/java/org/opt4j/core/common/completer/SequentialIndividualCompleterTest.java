@@ -1,7 +1,10 @@
 package org.opt4j.core.common.completer;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Individual.State;
@@ -58,22 +61,24 @@ public class SequentialIndividualCompleterTest {
 
 		SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
 
-		Assert.assertTrue(i1.getState().equals(State.GENOTYPED));
+		Assertions.assertTrue(i1.getState().equals(State.GENOTYPED));
 		completer.decode(i1);
-		Assert.assertTrue(i1.getState().equals(State.PHENOTYPED));
-		Assert.assertTrue(i1.getPhenotype() == object);
+		Assertions.assertTrue(i1.getState().equals(State.PHENOTYPED));
+		Assertions.assertTrue(i1.getPhenotype() == object);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void decodePhenotyped() throws TerminationException {
-		Injector injector = Guice.createInjector(new MockProblemModule());
-		IndividualFactory factory = injector.getInstance(IndividualFactory.class);
-		Individual i1 = factory.create();
+		assertThrows(IllegalStateException.class, () -> {
+			Injector injector = Guice.createInjector(new MockProblemModule());
+			IndividualFactory factory = injector.getInstance(IndividualFactory.class);
+			Individual i1 = factory.create();
 
-		SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
+			SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
 
-		completer.decode(i1);
-		completer.decode(i1);
+			completer.decode(i1);
+			completer.decode(i1);
+		});
 	}
 
 	@Test
@@ -85,39 +90,43 @@ public class SequentialIndividualCompleterTest {
 		SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
 
 		i1.setPhenotype("my phenotype");
-		Assert.assertTrue(i1.getState().equals(State.PHENOTYPED));
+		Assertions.assertTrue(i1.getState().equals(State.PHENOTYPED));
 		completer.evaluate(i1);
-		Assert.assertTrue(i1.getState().equals(State.EVALUATED));
+		Assertions.assertTrue(i1.getState().equals(State.EVALUATED));
 		// Assert.assertTrue(i1.getObjectives() == objectives);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void evaluateEvaluated() throws TerminationException {
-		Injector injector = Guice.createInjector(new MockProblemModule());
-		IndividualFactory factory = injector.getInstance(IndividualFactory.class);
-		Individual i1 = factory.create();
+		assertThrows(IllegalStateException.class, () -> {
+			Injector injector = Guice.createInjector(new MockProblemModule());
+			IndividualFactory factory = injector.getInstance(IndividualFactory.class);
+			Individual i1 = factory.create();
 
-		SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
+			SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
 
-		i1.setPhenotype("my phenotype");
-		completer.evaluate(i1);
-		completer.evaluate(i1);
+			i1.setPhenotype("my phenotype");
+			completer.evaluate(i1);
+			completer.evaluate(i1);
+		});
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void evaluateDifferentObjectivesSize() throws TerminationException {
-		Injector injector = Guice.createInjector(new MockProblemModule());
-		IndividualFactory factory = injector.getInstance(IndividualFactory.class);
-		Individual i1 = factory.create();
-		Individual i2 = factory.create();
+		assertThrows(AssertionError.class, () -> {
+			Injector injector = Guice.createInjector(new MockProblemModule());
+			IndividualFactory factory = injector.getInstance(IndividualFactory.class);
+			Individual i1 = factory.create();
+			Individual i2 = factory.create();
 
-		SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
+			SequentialIndividualCompleter completer = injector.getInstance(SequentialIndividualCompleter.class);
 
-		i1.setPhenotype("my phenotype");
-		i2.setPhenotype("my other phenotype");
-		completer.evaluate(i1);
-		objectives.add(new Objective("y"), 4);
-		completer.evaluate(i2);
+			i1.setPhenotype("my phenotype");
+			i2.setPhenotype("my other phenotype");
+			completer.evaluate(i1);
+			objectives.add(new Objective("y"), 4);
+			completer.evaluate(i2);
+		});
 	}
 
 	@Test
@@ -130,8 +139,8 @@ public class SequentialIndividualCompleterTest {
 
 		completer.complete(i1);
 
-		Assert.assertTrue(i1.isEvaluated());
-		Assert.assertTrue(i1.isEvaluated());
+		Assertions.assertTrue(i1.isEvaluated());
+		Assertions.assertTrue(i1.isEvaluated());
 	}
 
 }

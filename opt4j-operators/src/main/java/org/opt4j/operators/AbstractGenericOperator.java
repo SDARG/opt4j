@@ -100,6 +100,7 @@ public abstract class AbstractGenericOperator<O extends Operator<?>, Q extends O
 	 * @param clazzes
 	 *            the default operators
 	 */
+	@SafeVarargs
 	public AbstractGenericOperator(Class<? extends Q>... clazzes) {
 		for (Class<? extends Q> cl : clazzes) {
 			cldef.add(cl);

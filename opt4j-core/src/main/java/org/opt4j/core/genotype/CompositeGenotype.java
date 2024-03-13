@@ -22,6 +22,7 @@
 
 package org.opt4j.core.genotype;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -179,10 +180,18 @@ public class CompositeGenotype<K, V extends Genotype> implements Genotype, Itera
 	@SuppressWarnings("unchecked")
 	public <G extends Genotype> G newInstance() {
 		try {
-			return (G) this.getClass().newInstance();
+			return (G) this.getClass().getDeclaredConstructor().newInstance();
 		} catch (InstantiationException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		} catch (SecurityException e) {
 			throw new RuntimeException(e);
 		}
 	}

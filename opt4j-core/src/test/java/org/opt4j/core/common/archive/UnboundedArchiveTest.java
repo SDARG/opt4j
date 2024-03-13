@@ -4,8 +4,8 @@ import static org.mockito.Mockito.mock;
 
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 
 public class UnboundedArchiveTest {
@@ -15,10 +15,10 @@ public class UnboundedArchiveTest {
 		Individual individual = mock(Individual.class);
 
 		UnboundedArchive archive = new UnboundedArchive();
-		Assert.assertFalse(archive.iterator().hasNext());
-		Assert.assertTrue(archive.updateWithNondominated(Collections.singleton(individual)));
-		Assert.assertTrue(archive.iterator().hasNext());
-		Assert.assertEquals(archive.iterator().next(), individual);
+		Assertions.assertFalse(archive.iterator().hasNext());
+		Assertions.assertTrue(archive.updateWithNondominated(Collections.singleton(individual)));
+		Assertions.assertTrue(archive.iterator().hasNext());
+		Assertions.assertEquals(archive.iterator().next(), individual);
 	}
 
 	@Test
@@ -27,12 +27,12 @@ public class UnboundedArchiveTest {
 
 		UnboundedArchive archive = new UnboundedArchive();
 		archive.updateWithNondominated(Collections.singleton(individual));
-		Assert.assertFalse(archive.updateWithNondominated(Collections.singleton(individual)));
+		Assertions.assertFalse(archive.updateWithNondominated(Collections.singleton(individual)));
 	}
 
 	@Test
 	public void updateWithNone() {
 		UnboundedArchive archive = new UnboundedArchive();
-		Assert.assertFalse(archive.updateWithNondominated(Collections.<Individual> emptySet()));
+		Assertions.assertFalse(archive.updateWithNondominated(Collections.<Individual> emptySet()));
 	}
 }

@@ -3860,7 +3860,7 @@ public class PlotBox extends JPanel implements Printable {
 			// buttons.
 			// This problem affects Netscape 4.61 under Digital Unix and
 			// 4.51 under Solaris
-			if (((event.getModifiers() & InputEvent.BUTTON1_MASK) != 0) || (event.getModifiers() == 0)) {
+			if (((event.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) || (event.getModifiersEx() == 0)) {
 				PlotBox.this._zoomStart(event.getX(), event.getY());
 			}
 		}
@@ -3873,7 +3873,7 @@ public class PlotBox extends JPanel implements Printable {
 		 */
 		@Override
 		public void mouseReleased(final MouseEvent event) {
-			if (((event.getModifiers() & InputEvent.BUTTON1_MASK) != 0) || (event.getModifiers() == 0)) {
+			if (((event.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) || (event.getModifiersEx() == 0)) {
 				PlotBox.this._zoomEnd(event.getX(), event.getY());
 			}
 		}
@@ -3896,7 +3896,7 @@ public class PlotBox extends JPanel implements Printable {
 		 */
 		@Override
 		public void mouseDragged(final MouseEvent event) {
-			if (((event.getModifiers() & InputEvent.BUTTON1_MASK) != 0) || (event.getModifiers() == 0)) {
+			if (((event.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) != 0) || (event.getModifiersEx() == 0)) {
 				PlotBox.this._zoomBox(event.getX(), event.getY());
 			}
 		}

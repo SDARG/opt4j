@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualFactory;
 import org.opt4j.core.Objective;
@@ -45,8 +45,8 @@ public class AbstractArchiveTest {
 		objectives0.add(o1, 0);
 		i0.setObjectives(objectives0);
 
-		Assert.assertTrue(archive.update(i0));
-		Assert.assertTrue(archive.contains(i0));
+		Assertions.assertTrue(archive.update(i0));
+		Assertions.assertTrue(archive.contains(i0));
 	}
 
 	/**
@@ -80,9 +80,9 @@ public class AbstractArchiveTest {
 		list.add(i1);
 		archive.removeDominatedCandidates(list);
 
-		Assert.assertEquals(2, list.size());
-		Assert.assertTrue(list.contains(i0));
-		Assert.assertTrue(list.contains(i1));
+		Assertions.assertEquals(2, list.size());
+		Assertions.assertTrue(list.contains(i0));
+		Assertions.assertTrue(list.contains(i1));
 	}
 
 	/**
@@ -116,16 +116,16 @@ public class AbstractArchiveTest {
 		list.add(i1);
 		archive.removeDominatedCandidates(list);
 
-		Assert.assertEquals(1, list.size());
-		Assert.assertTrue(list.contains(i0));
+		Assertions.assertEquals(1, list.size());
+		Assertions.assertTrue(list.contains(i0));
 
 		list.clear();
 		list.add(i1);
 		list.add(i0);
 		archive.removeDominatedCandidates(list);
 
-		Assert.assertEquals(1, list.size());
-		Assert.assertTrue(list.contains(i0));
+		Assertions.assertEquals(1, list.size());
+		Assertions.assertTrue(list.contains(i0));
 	}
 
 	/**
@@ -172,10 +172,10 @@ public class AbstractArchiveTest {
 		list.add(i1);
 		archive.removeArchiveDominated(list);
 
-		Assert.assertEquals(2, list.size());
-		Assert.assertTrue(list.contains(i0));
-		Assert.assertTrue(list.contains(i1));
-		Assert.assertTrue(archive.isEmpty());
+		Assertions.assertEquals(2, list.size());
+		Assertions.assertTrue(list.contains(i0));
+		Assertions.assertTrue(list.contains(i1));
+		Assertions.assertTrue(archive.isEmpty());
 	}
 
 	/**
@@ -215,8 +215,8 @@ public class AbstractArchiveTest {
 		list.add(i0);
 		archive.removeArchiveDominated(list);
 
-		Assert.assertTrue(list.isEmpty());
-		Assert.assertEquals(2, archive.size());
+		Assertions.assertTrue(list.isEmpty());
+		Assertions.assertEquals(2, archive.size());
 	}
 
 	/**
@@ -252,10 +252,10 @@ public class AbstractArchiveTest {
 		list.add(i0);
 		archive.removeArchiveDominated(list);
 
-		Assert.assertEquals(0, list.size());
-		Assert.assertFalse(list.contains(i0));
-		Assert.assertEquals(1, archive.size());
-		Assert.assertTrue(archive.contains(iArchived0));
+		Assertions.assertEquals(0, list.size());
+		Assertions.assertFalse(list.contains(i0));
+		Assertions.assertEquals(1, archive.size());
+		Assertions.assertTrue(archive.contains(iArchived0));
 	}
 
 }

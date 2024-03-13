@@ -24,10 +24,10 @@ package org.opt4j.core.common.archive;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Genotype;
 import org.opt4j.core.Individual;
 import org.opt4j.core.IndividualFactory;
@@ -66,7 +66,7 @@ public class CrowdingArchiveTest {
 		}
 	}
 
-	@Ignore
+	@Disabled
 	protected static class MockProblemModule extends ProblemModule {
 		@Override
 		protected void config() {
@@ -74,7 +74,7 @@ public class CrowdingArchiveTest {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 
 		Objective o0 = new Objective("o0");
@@ -94,7 +94,7 @@ public class CrowdingArchiveTest {
 	}
 
 	@Test
-	@Ignore
+	@Disabled
 	public void testCrowdingArchiveConsistency() {
 		CrowdingArchive c0 = new CrowdingArchive(100);
 		c0.update(set);
@@ -106,7 +106,7 @@ public class CrowdingArchiveTest {
 
 		Set<Individual> i1 = new HashSet<>(c0);
 
-		Assert.assertArrayEquals(i0.toArray(), i1.toArray());
+		Assertions.assertArrayEquals(i0.toArray(), i1.toArray());
 
 	}
 
