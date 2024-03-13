@@ -261,6 +261,7 @@ public class SAT4JSolver implements Solver {
 			solverValid = false;
 			System.out.println("#############################################");
 			System.out.println("constraint which causes the bug: "+constraint);
+			System.out.println("lits: "+lits.toString()+" coeffs: "+coeffs.toString()+" d: "+d+" operator: "+operator.toString());
 			throw new ContradictionException(e);
 		}
 	}
