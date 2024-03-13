@@ -25,6 +25,7 @@ package org.opt4j.satdecoding.sat4j;
 import static org.sat4j.core.LiteralsUtils.negLit;
 import static org.sat4j.core.LiteralsUtils.posLit;
 
+import org.sat4j.minisat.core.Heap;
 import org.sat4j.minisat.core.ILits;
 import org.sat4j.minisat.orders.UserFixedPhaseSelectionStrategy;
 import org.sat4j.minisat.orders.VarOrderHeap;
@@ -69,7 +70,7 @@ public class VariableOrder extends VarOrderHeap {
 		activity = new double[nlength];
 		phase = new boolean[nlength];
 		activity[0] = -1;
-		heap = createHeap(activity);
+		heap = new Heap(activity);
 		heap.setBounds(nlength);
 		for (int i = 1; i < nlength; i++) {
 			assert i > 0;
@@ -94,6 +95,18 @@ public class VariableOrder extends VarOrderHeap {
 	public void init() {
 		// nothing to be done
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sat4j.minisat.orders.VarOrderHeap#updateActivity(int)
+	 */
+	@Override
+	protected void updateActivity(final int var) {
+		if ((activity[var] += varInc) > VAR_RESCALE_BOUND) {
+			varRescaleActivity();
+		}
+	}
 
 	/**
 	 * Increments the activity of a variable {@code var} by the specified
@@ -102,7 +115,6 @@ public class VariableOrder extends VarOrderHeap {
 	 * @param var the variable
 	 * @param inc the value to increment the variable
 	 */
-	@Override
 	protected void updateActivity(final int var, final double inc) {
 		if ((activity[var] += inc) > VAR_RESCALE_BOUND) {
 			varRescaleActivity();
