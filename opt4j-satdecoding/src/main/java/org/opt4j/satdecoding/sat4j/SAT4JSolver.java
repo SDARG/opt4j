@@ -259,6 +259,8 @@ public class SAT4JSolver implements Solver {
 			}
 		} catch (org.sat4j.specs.ContradictionException e) {
 			solverValid = false;
+			System.out.println("#############################################");
+			System.out.println("constraint which causes the bug: "+constraint);
 			throw new ContradictionException(e);
 		}
 	}
