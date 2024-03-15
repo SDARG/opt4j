@@ -2,7 +2,7 @@ package org.opt4j.core.common.archive;
 
 import java.util.Random;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objectives;
@@ -45,9 +45,9 @@ public class AbstractArchiveOptimalityTester {
 
 		fillArchive(injector, archive);
 
-		Assert.assertTrue(archive.contains(first));
-		Assert.assertTrue(archive.contains(last));
-		Assert.assertTrue(archive.contains(randMin));
+		Assertions.assertTrue(archive.contains(first));
+		Assertions.assertTrue(archive.contains(last));
+		Assertions.assertTrue(archive.contains(randMin));
 
 		testOptimalityOfAllIndividuals(archive);
 	}
@@ -67,11 +67,11 @@ public class AbstractArchiveOptimalityTester {
 			for (Individual j : archive) {
 				Objectives oi = i.getObjectives();
 				Objectives oj = j.getObjectives();
-				Assert.assertFalse(oi.get(o1).getDouble() <= oj.get(o1).getDouble()
+				Assertions.assertFalse(oi.get(o1).getDouble() <= oj.get(o1).getDouble()
 						&& oi.get(o2).getDouble() <= oj.get(o2).getDouble()
 						&& oi.get(o3).getDouble() <= oj.get(o3).getDouble());
 
-				Assert.assertFalse(oi.get(o1).getDouble() >= oj.get(o1).getDouble()
+				Assertions.assertFalse(oi.get(o1).getDouble() >= oj.get(o1).getDouble()
 						&& oi.get(o2).getDouble() >= oj.get(o2).getDouble()
 						&& oi.get(o3).getDouble() >= oj.get(o3).getDouble());
 			}

@@ -2,12 +2,19 @@ import org.apache.tools.ant.filters.*
 import java.util.regex.*
 
 dependencies {
-	compile project(':opt4j-core')
-	compile project(':opt4j-satdecoding')
-	compile project(':opt4j-optimizers')
-	compile project(':opt4j-operators')
-	compile project(':opt4j-viewer')
+	api project(':opt4j-core')
+	api project(':opt4j-satdecoding')
+	api project(':opt4j-optimizers')
+	api project(':opt4j-operators')
+	api project(':opt4j-viewer')
+	//api group: 'com.google.inject', name: 'guice', version: project.guiceVersion
+	
+	testImplementation platform(group: 'org.junit', name: 'junit-bom', version: project.junitVersion)
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+	testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher'
+	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: project.mockitoVersion
 }
+
 
 task filterSources(type: Copy) {
 	from('src/main/java') {

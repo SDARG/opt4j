@@ -1,9 +1,5 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class SelectGenotypeTest {
 
@@ -72,18 +70,18 @@ public class SelectGenotypeTest {
 
 	public void testGenotype(SelectGenotype<MockObject> selectGenotype, Set<MockObject> mockObjects) {
 		Random rand = new Random();
-		assertTrue(selectGenotype.isEmpty());
+		Assertions.assertTrue(selectGenotype.isEmpty());
 		selectGenotype.init(rand, 5);
-		assertEquals(5, selectGenotype.size());
+		Assertions.assertEquals(5, selectGenotype.size());
 		for (int i = 0; i < 5; i++) {
-			assertEquals(0, selectGenotype.getLowerBound(i));
-			assertEquals(3, selectGenotype.getUpperBound(i));
-			assertTrue(mockObjects.contains(selectGenotype.getValue(i)));
+			Assertions.assertEquals(0, selectGenotype.getLowerBound(i));
+			Assertions.assertEquals(3, selectGenotype.getUpperBound(i));
+			Assertions.assertTrue(mockObjects.contains(selectGenotype.getValue(i)));
 		}
 
 		SelectGenotype<MockObject> other = selectGenotype.newInstance();
-		assertNotEquals(selectGenotype, other);
-		assertTrue(other.isEmpty());
+		Assertions.assertNotEquals(selectGenotype, other);
+		Assertions.assertTrue(other.isEmpty());
 	}
 
 	@Test
@@ -98,7 +96,7 @@ public class SelectGenotypeTest {
 		mockObjects.add(obj3);
 		SelectGenotype<MockObject> selectGenotype = new SelectGenotype<>(inputArray);
 		testGenotype(selectGenotype, mockObjects);
-		assertFalse(selectGenotype.isEmpty());
+		Assertions.assertFalse(selectGenotype.isEmpty());
 	}
 
 	@Test
@@ -117,7 +115,7 @@ public class SelectGenotypeTest {
 		mockObjects.add(obj3);
 		SelectGenotype<MockObject> selectGenotype = new SelectGenotype<>(inputList);
 		testGenotype(selectGenotype, mockObjects);
-		assertFalse(selectGenotype.isEmpty());
+		Assertions.assertFalse(selectGenotype.isEmpty());
 	}
 
 }

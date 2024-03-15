@@ -90,6 +90,7 @@ public class Parameters {
 
 		while (type instanceof TypeVariable<?>) {
 			TypeVariable<?> var = (TypeVariable<?>) type;
+			@SuppressWarnings("unlikely-arg-type")
 			ParameterizedType paramType = map.get(var.getGenericDeclaration());
 			Class<?> freeType = (Class<?>) paramType.getRawType();
 

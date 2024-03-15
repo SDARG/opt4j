@@ -1,9 +1,7 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.genotype.SelectMapGenotype.SelectBounds;
 
 public class SelectMapGenotypeTest {
@@ -38,12 +37,14 @@ public class SelectMapGenotypeTest {
 		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSetWrongValue() {
-		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
-		genotype.init(new Random());
-		genotype.setValue(2, 5);
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
+			genotype.init(new Random());
+			genotype.setValue(2, 5);
+		});
 	}
 
 	@Test
@@ -52,9 +53,9 @@ public class SelectMapGenotypeTest {
 		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
 		genotype.init(new Random());
 		genotype.setValue(2, 3);
-		assertEquals(3, (long) genotype.getValue(2));
+		Assertions.assertEquals(3, (long) genotype.getValue(2));
 		genotype.setValue(2, 4);
-		assertEquals(4, (long) genotype.getValue(2));
+		Assertions.assertEquals(4, (long) genotype.getValue(2));
 	}
 
 	@Test
@@ -63,77 +64,91 @@ public class SelectMapGenotypeTest {
 		inputs.map.get(2).remove(1);
 		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map);
 		Collection<Integer> keys = genotype.getKeys();
-		assertTrue(keys.contains(1));
-		assertTrue(keys.contains(2));
+		Assertions.assertTrue(keys.contains(1));
+		Assertions.assertTrue(keys.contains(2));
 		Random rand = new Random();
 		genotype.init(rand);
-		assertEquals("[1=3;2=3;]", genotype.toString());
-		assertTrue(genotype.containsKey(2));
-		assertFalse(genotype.containsKey(3));
-		assertNotEquals(genotype, genotype.newInstance());
-		assertEquals(0, genotype.getIndexOf(1));
-		assertEquals(3, (long) genotype.getValue(1));
+		Assertions.assertEquals("[1=3;2=3;]", genotype.toString());
+		Assertions.assertTrue(genotype.containsKey(2));
+		Assertions.assertFalse(genotype.containsKey(3));
+		Assertions.assertNotEquals(genotype, genotype.newInstance());
+		Assertions.assertEquals(0, genotype.getIndexOf(1));
+		Assertions.assertEquals(3, (long) genotype.getValue(1));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testInvalidKey() {
-		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> geno = new SelectMapGenotype<>(inputs.list, inputs.map);
-		geno.getIndexOf(4);
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			SelectMapGenotype<Integer, Integer> geno = new SelectMapGenotype<>(inputs.list, inputs.map);
+			geno.getIndexOf(4);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testListMapMismatch2() {
-		Inputs inputs = new Inputs();
-		inputs.map.put(3, new ArrayList<>());
-		new SelectMapGenotype<>(inputs.list, inputs.map);
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			inputs.map.put(3, new ArrayList<>());
+			new SelectMapGenotype<>(inputs.list, inputs.map);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testListMapMismatch1() {
-		Inputs inputs = new Inputs();
-		inputs.list.add(3);
-		new SelectMapGenotype<>(inputs.list, inputs.map);
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			inputs.list.add(3);
+			new SelectMapGenotype<>(inputs.list, inputs.map);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testNonUniqueKeys2() {
-		Inputs inputs = new Inputs();
-		inputs.list.add(1);
-		new SelectMapGenotype<>(inputs.list, inputs.map.get(1));
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			inputs.list.add(1);
+			new SelectMapGenotype<>(inputs.list, inputs.map.get(1));
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testNonUniqueKeys1() {
-		Inputs inputs = new Inputs();
-		inputs.list.add(1);
-		new SelectMapGenotype<>(inputs.list, inputs.map);
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			inputs.list.add(1);
+			new SelectMapGenotype<>(inputs.list, inputs.map);
+		});
 	}
 
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testListConstructor() {
-		Inputs inputs = new Inputs();
-		SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map.get(1));
-		Random rand = new Random();
-		genotype.init(rand, 2);
+		assertThrows(UnsupportedOperationException.class, () -> {
+			Inputs inputs = new Inputs();
+			SelectMapGenotype<Integer, Integer> genotype = new SelectMapGenotype<>(inputs.list, inputs.map.get(1));
+			Random rand = new Random();
+			genotype.init(rand, 2);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testEmptyMap() {
-		Inputs inputs = new Inputs();
-		inputs.list.add(3);
-		inputs.map.put(3, new ArrayList<>());
-		new SelectBounds<>(inputs.list, inputs.map);
+		assertThrows(IllegalArgumentException.class, () -> {
+			Inputs inputs = new Inputs();
+			inputs.list.add(3);
+			inputs.map.put(3, new ArrayList<>());
+			new SelectBounds<>(inputs.list, inputs.map);
+		});
 	}
 
 	@Test
 	public void testSelectBounds() {
 		Inputs inputs = new Inputs();
 		SelectBounds<Integer, Integer> bounds = new SelectBounds<>(inputs.list, inputs.map);
-		assertEquals(0, (long) bounds.getLowerBound(0));
-		assertEquals(0, (long) bounds.getUpperBound(0));
-		assertEquals(0, (long) bounds.getLowerBound(1));
-		assertEquals(1, (long) bounds.getUpperBound(1));
+		Assertions.assertEquals(0, (long) bounds.getLowerBound(0));
+		Assertions.assertEquals(0, (long) bounds.getUpperBound(0));
+		Assertions.assertEquals(0, (long) bounds.getLowerBound(1));
+		Assertions.assertEquals(1, (long) bounds.getUpperBound(1));
 	}
 
 }

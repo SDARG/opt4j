@@ -124,18 +124,20 @@ public class FileUtilities {
 	 *                extracting the contents of the jar file
 	 */
 	public static void extractJarFile(String jarFileName, String directoryName) throws IOException {
-		JarFile jarFile = new JarFile(jarFileName);
-		Enumeration<JarEntry> entries = jarFile.entries();
-		while (entries.hasMoreElements()) {
-			JarEntry jarEntry = entries.nextElement();
-			File destinationFile = new File(directoryName, jarEntry.getName());
-			if (jarEntry.isDirectory()) {
-				if (!destinationFile.isDirectory() && !destinationFile.mkdirs()) {
-					throw new IOException("Warning, failed to create " + "directory for \"" + destinationFile + "\".");
+		try (JarFile jarFile = new JarFile(jarFileName)) {
+			Enumeration<JarEntry> entries = jarFile.entries();
+			while (entries.hasMoreElements()) {
+				JarEntry jarEntry = entries.nextElement();
+				File destinationFile = new File(directoryName, jarEntry.getName());
+				if (jarEntry.isDirectory()) {
+					if (!destinationFile.isDirectory() && !destinationFile.mkdirs()) {
+						throw new IOException("Warning, failed to create " + "directory for \"" + destinationFile + "\".");
+					}
+				} else {
+					_binaryCopyStream(jarFile.getInputStream(jarEntry), destinationFile);
 				}
-			} else {
-				_binaryCopyStream(jarFile.getInputStream(jarEntry), destinationFile);
 			}
+			jarFile.close();
 		}
 	}
 
@@ -371,7 +373,7 @@ public class FileUtilities {
 						// urlString = urlString.substring(0, 6) + "/"
 						// + urlString.substring(6);
 					}
-					return new URL(urlString);
+					return URI.create(urlString).toURL();
 				} catch (Exception ex3) {
 					try {
 						// Under Webstart, opening
@@ -400,7 +402,7 @@ public class FileUtilities {
 
 			// As a last resort, try an absolute URL.
 
-			URL url = new URL(name);
+			URL url = URI.create(name).toURL();
 
 			// If we call new URL("http", null, /foo);
 			// then we get "http:/foo", which should be "http://foo"
@@ -408,7 +410,7 @@ public class FileUtilities {
 			// See kepler/src/util/URLToLocalFile.java
 			try {
 				String fixedURLAsString = url.toString().replaceFirst("(https?:)//?", "$1//");
-				url = new URL(fixedURLAsString);
+				url = URI.create(fixedURLAsString).toURL();
 			} catch (Exception e) {
 				// Ignore
 			}

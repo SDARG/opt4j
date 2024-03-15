@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Genotype;
 
 public class CompositeGenotypeTest {
@@ -41,8 +41,8 @@ public class CompositeGenotypeTest {
 
 		CompositeGenotype<String, Genotype> composite = new CompositeGenotype<String, Genotype>(map);
 
-		Assert.assertEquals(2, composite.keySet().size());
-		Assert.assertTrue(composite.values().contains(one));
+		Assertions.assertEquals(2, composite.keySet().size());
+		Assertions.assertTrue(composite.values().contains(one));
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class CompositeGenotypeTest {
 		two.add(2);
 		composite.put("one", one);
 		composite.put("two", two);
-		Assert.assertEquals(3, composite.size());
+		Assertions.assertEquals(3, composite.size());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class CompositeGenotypeTest {
 		Genotype one = new IntegerGenotype(0, 2);
 		composite.put("one", one);
 		composite.put("two", new IntegerGenotype(0, 2));
-		Assert.assertEquals(one, composite.get("one"));
+		Assertions.assertEquals(one, composite.get("one"));
 	}
 
 	@Test
@@ -74,9 +74,9 @@ public class CompositeGenotypeTest {
 		one.add(1);
 		composite.put("one", one);
 		composite.put("two", new IntegerGenotype(0, 2));
-		Assert.assertEquals(1, composite.size());
+		Assertions.assertEquals(1, composite.size());
 		composite.clear();
-		Assert.assertEquals(0, composite.size());
+		Assertions.assertEquals(0, composite.size());
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class CompositeGenotypeTest {
 		keys.add("one");
 		keys.add("two");
 
-		Assert.assertEquals(keys, composite.keySet());
+		Assertions.assertEquals(keys, composite.keySet());
 	}
 
 	@Test
@@ -100,9 +100,9 @@ public class CompositeGenotypeTest {
 		composite.put("one", one);
 		composite.put("two", two);
 
-		Assert.assertEquals(2, composite.values().size());
-		Assert.assertTrue(composite.values().contains(one));
-		Assert.assertTrue(composite.values().contains(two));
+		Assertions.assertEquals(2, composite.values().size());
+		Assertions.assertTrue(composite.values().contains(one));
+		Assertions.assertTrue(composite.values().contains(two));
 	}
 
 	@Test
@@ -112,8 +112,8 @@ public class CompositeGenotypeTest {
 		composite.put("two", new IntegerGenotype(0, 2));
 
 		CompositeGenotype<String, Genotype> composite2 = composite.newInstance();
-		Assert.assertEquals(0, composite2.size());
-		Assert.assertFalse(composite.equals(composite2));
+		Assertions.assertEquals(0, composite2.size());
+		Assertions.assertFalse(composite.equals(composite2));
 	}
 
 	@Test
@@ -122,6 +122,6 @@ public class CompositeGenotypeTest {
 		composite.put("one", new IntegerGenotype(0, 2));
 		composite.put("two", new IntegerGenotype(0, 2));
 
-		Assert.assertEquals("[one=[];two=[];]", composite.toString());
+		Assertions.assertEquals("[one=[];two=[];]", composite.toString());
 	}
 }

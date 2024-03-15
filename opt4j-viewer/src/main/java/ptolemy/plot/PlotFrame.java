@@ -26,10 +26,10 @@ package ptolemy.plot;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterJob;
 import java.io.File;
@@ -157,16 +157,16 @@ public class PlotFrame extends JFrame {
 				new JMenuItem("Print", KeyEvent.VK_P), new JMenuItem("Close", KeyEvent.VK_C), };
 
 		// Open button = ctrl-o.
-		fileMenuItems[0].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+		fileMenuItems[0].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
 
 		// Save button = ctrl-s.
-		fileMenuItems[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+		fileMenuItems[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
 
 		// Print button = ctrl-p.
-		fileMenuItems[4].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
+		fileMenuItems[4].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK));
 
 		// Close button = ctrl-w.
-		fileMenuItems[5].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, Event.CTRL_MASK));
+		fileMenuItems[5].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK));
 
 		FileMenuListener fml = new FileMenuListener();
 

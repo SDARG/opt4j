@@ -20,7 +20,6 @@
  * SOFTWARE.
  *******************************************************************************/
 
-
 package org.opt4j.satdecoding.sat4j;
 
 import static org.sat4j.core.LiteralsUtils.negLit;
@@ -60,8 +59,7 @@ public class VariableOrder extends VarOrderHeap {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.sat4j.minisat.orders.VarOrderHeap#setLits(org.sat4j.minisat.core.
+	 * @see org.sat4j.minisat.orders.VarOrderHeap#setLits(org.sat4j.minisat.core.
 	 * ILits)
 	 */
 	@Override
@@ -97,7 +95,7 @@ public class VariableOrder extends VarOrderHeap {
 	public void init() {
 		// nothing to be done
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -114,13 +112,11 @@ public class VariableOrder extends VarOrderHeap {
 	 * Increments the activity of a variable {@code var} by the specified
 	 * {@code value}.
 	 * 
-	 * @param var
-	 *            the variable
-	 * @param value
-	 *            the value to increment the variable
+	 * @param var the variable
+	 * @param inc the value to increment the variable
 	 */
-	protected void updateActivity(final int var, final double value) {
-		if ((activity[var] += value) > VAR_RESCALE_BOUND) {
+	protected void updateActivity(final int var, final double inc) {
+		if ((activity[var] += inc) > VAR_RESCALE_BOUND) {
 			varRescaleActivity();
 		}
 	}
@@ -133,7 +129,7 @@ public class VariableOrder extends VarOrderHeap {
 	@Override
 	public void updateVar(int p) {
 		int var = p >> 1;
-		updateActivity(var);
+		updateActivity(var, varInc);
 		if (heap.inHeap(var)) {
 			heap.increase(var);
 		}
@@ -142,8 +138,7 @@ public class VariableOrder extends VarOrderHeap {
 	/**
 	 * Sets the value {@code varInc} to increase the activity of the variables.
 	 * 
-	 * @param value
-	 *            the value to increase the activity of the variables
+	 * @param value the value to increase the activity of the variables
 	 */
 	public void setVarInc(double value) {
 		varInc = value;
@@ -160,13 +155,10 @@ public class VariableOrder extends VarOrderHeap {
 	}
 
 	/**
-	 * Sets the activity of a variable {@code var} to the specified
-	 * {@code value}.
+	 * Sets the activity of a variable {@code var} to the specified {@code value}.
 	 * 
-	 * @param var
-	 *            the variable
-	 * @param value
-	 *            the activity to set
+	 * @param var   the variable
+	 * @param value the activity to set
 	 */
 	public void setVarActivity(int var, double value) {
 		updateActivity(var, value);
@@ -178,10 +170,8 @@ public class VariableOrder extends VarOrderHeap {
 	/**
 	 * Sets the {@code phase} of a variable {@code var}.
 	 * 
-	 * @param var
-	 *            the variable
-	 * @param phase
-	 *            the phase
+	 * @param var   the variable
+	 * @param phase the phase
 	 */
 	public void setVarPhase(int var, boolean phase) {
 		this.phase[var] = phase;

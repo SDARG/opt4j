@@ -1,14 +1,13 @@
 package org.opt4j.core.genotype;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class PermutationGenotypeTest {
 
@@ -20,16 +19,16 @@ public class PermutationGenotypeTest {
 		permutationGenotype.add(2);
 		permutationGenotype.add(3);
 
-		assertEquals(3, permutationGenotype.size());
+		Assertions.assertEquals(3, permutationGenotype.size());
 		permutationGenotype.init(rand);
-		assertEquals(3, permutationGenotype.size());
-		assertTrue(permutationGenotype.contains(1));
-		assertTrue(permutationGenotype.contains(2));
-		assertTrue(permutationGenotype.contains(3));
+		Assertions.assertEquals(3, permutationGenotype.size());
+		Assertions.assertTrue(permutationGenotype.contains(1));
+		Assertions.assertTrue(permutationGenotype.contains(2));
+		Assertions.assertTrue(permutationGenotype.contains(3));
 
 		PermutationGenotype<Integer> other = permutationGenotype.newInstance();
-		assertNotEquals(permutationGenotype, other);
-		assertTrue(other.isEmpty());
+		Assertions.assertNotEquals(permutationGenotype, other);
+		Assertions.assertTrue(other.isEmpty());
 	}
 
 	@Test
@@ -41,16 +40,16 @@ public class PermutationGenotypeTest {
 		inputCollection.add(3);
 		PermutationGenotype<Integer> permutationGenotype = new PermutationGenotype<>(inputCollection);
 
-		assertEquals(3, permutationGenotype.size());
+		Assertions.assertEquals(3, permutationGenotype.size());
 		permutationGenotype.init(rand);
-		assertEquals(3, permutationGenotype.size());
-		assertTrue(permutationGenotype.contains(1));
-		assertTrue(permutationGenotype.contains(2));
-		assertTrue(permutationGenotype.contains(3));
+		Assertions.assertEquals(3, permutationGenotype.size());
+		Assertions.assertTrue(permutationGenotype.contains(1));
+		Assertions.assertTrue(permutationGenotype.contains(2));
+		Assertions.assertTrue(permutationGenotype.contains(3));
 
 		PermutationGenotype<Integer> other = permutationGenotype.newInstance();
-		assertNotEquals(permutationGenotype, other);
-		assertTrue(other.isEmpty());
+		Assertions.assertNotEquals(permutationGenotype, other);
+		Assertions.assertTrue(other.isEmpty());
 	}
 
 }

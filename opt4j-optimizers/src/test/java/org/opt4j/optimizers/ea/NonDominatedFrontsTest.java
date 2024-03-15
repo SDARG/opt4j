@@ -1,14 +1,13 @@
 package org.opt4j.optimizers.ea;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
@@ -67,17 +66,17 @@ public class NonDominatedFrontsTest {
 	@Test
 	public void testGenerateFronts() {
 		NonDominatedFronts fronts = new NonDominatedFronts(getIndividualSet());
-		assertEquals(4, fronts.getFrontNumber());
+		Assertions.assertEquals(4, fronts.getFrontNumber());
 
-		assertEquals(3, fronts.getFrontAtIndex(0).size());
-		assertTrue(fronts.getFrontAtIndex(0).contains(first));
-		assertTrue(fronts.getFrontAtIndex(0).contains(second));
-		assertTrue(fronts.getFrontAtIndex(0).contains(third));
+		Assertions.assertEquals(3, fronts.getFrontAtIndex(0).size());
+		Assertions.assertTrue(fronts.getFrontAtIndex(0).contains(first));
+		Assertions.assertTrue(fronts.getFrontAtIndex(0).contains(second));
+		Assertions.assertTrue(fronts.getFrontAtIndex(0).contains(third));
 
-		assertEquals(1, fronts.getFrontAtIndex(1).size());
-		assertTrue(fronts.getFrontAtIndex(1).contains(fourth));
+		Assertions.assertEquals(1, fronts.getFrontAtIndex(1).size());
+		Assertions.assertTrue(fronts.getFrontAtIndex(1).contains(fourth));
 
-		assertEquals(1, fronts.getFrontAtIndex(2).size());
-		assertTrue(fronts.getFrontAtIndex(2).contains(fifth));
+		Assertions.assertEquals(1, fronts.getFrontAtIndex(2).size());
+		Assertions.assertTrue(fronts.getFrontAtIndex(2).contains(fifth));
 	}
 }

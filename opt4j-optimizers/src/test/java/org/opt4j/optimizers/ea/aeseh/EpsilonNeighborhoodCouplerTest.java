@@ -1,7 +1,6 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,7 +14,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
@@ -63,7 +63,7 @@ public class EpsilonNeighborhoodCouplerTest {
 	public void testGetCouples() {
 		EpsilonNeighborhoodCoupler coupler = makeDefaultCoupler();
 		Collection<Pair<Individual>> couples = coupler.getCouples(2, getSurvivors());
-		assertEquals(2, couples.size());
+		Assertions.assertEquals(2, couples.size());
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class EpsilonNeighborhoodCouplerTest {
 		amplitudeMap.put(secondObj, 0.001);
 		List<Individual> survivors = getSurvivors();
 		List<Set<Individual>> neighborhoods = coupler.createNeighborhoods(survivors);
-		assertEquals(3, neighborhoods.size());
+		Assertions.assertEquals(3, neighborhoods.size());
 		verify(mockAdaption).adaptEpsilon(coupler.adaptiveEpsilonNeighborhood, true);
 		coupler = new EpsilonNeighborhoodCoupler(new EpsilonMappingAdditive(), mockAdaption, new Random(), 2, 0.0001, 0,
 				0, 0);
@@ -91,12 +91,12 @@ public class EpsilonNeighborhoodCouplerTest {
 		indiSet.add(first);
 		indiSet.add(second);
 		Pair<Individual> couple = coupler.pickCouple(indiSet);
-		assertTrue(couple.getFirst().equals(first) || couple.getSecond().equals(first));
-		assertTrue(couple.getFirst().equals(second) || couple.getSecond().equals(second));
+		Assertions.assertTrue(couple.getFirst().equals(first) || couple.getSecond().equals(first));
+		Assertions.assertTrue(couple.getFirst().equals(second) || couple.getSecond().equals(second));
 		indiSet.remove(first);
 		couple = coupler.pickCouple(indiSet);
-		assertTrue(couple.getFirst().equals(second));
-		assertTrue(couple.getSecond().equals(second));
+		Assertions.assertTrue(couple.getFirst().equals(second));
+		Assertions.assertTrue(couple.getSecond().equals(second));
 	}
 
 }

@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.opt4j.core.Individual;
 
 public class AbstractOptimizerTest {
@@ -43,44 +43,44 @@ public class AbstractOptimizerTest {
 	@Test
 	public void getIteration() {
 		MockOptimizer optimizer = new MockOptimizer(null, null, null, null, new Iteration(2));
-		Assert.assertEquals(0, optimizer.getIteration());
+		Assertions.assertEquals(0, optimizer.getIteration());
 	}
 
 	@Test
 	public void isRunning() {
 		MockOptimizer optimizer = new MockOptimizer(null, null, null, null, null);
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 	}
 
 	@Test
 	public void startOptimization() throws TerminationException {
 		final MockOptimizer optimizer = new MockOptimizer(null, null, null, null, null);
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 		optimizer.setOptimizeTest(new TestMethod() {
 			@Override
 			public void test() throws TerminationException, StopException {
-				Assert.assertTrue(optimizer.isRunning());
+				Assertions.assertTrue(optimizer.isRunning());
 			}
 		});
 		optimizer.startOptimization();
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 	}
 
 	@Test
 	public void startOptimizationTerminating() throws TerminationException {
 		final Control c = new Control();
 		MockOptimizer optimizer = new MockOptimizer(null, null, null, c, null);
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 		optimizer.setOptimizeTest(new TestMethod() {
 			@Override
 			public void test() throws TerminationException, StopException {
 				c.doTerminate();
 				c.checkpoint();
-				Assert.fail();
+				Assertions.fail();
 			}
 		});
 		optimizer.startOptimization();
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class AbstractOptimizerTest {
 
 			@Override
 			public void optimizationStarted(Optimizer optimizer) {
-				Assert.assertFalse(started);
+				Assertions.assertFalse(started);
 				started = true;
 			}
 
@@ -110,7 +110,7 @@ public class AbstractOptimizerTest {
 			}
 		});
 		optimizer.startOptimization();
-		Assert.assertTrue(started);
+		Assertions.assertTrue(started);
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class AbstractOptimizerTest {
 			@Override
 			public boolean update(Set<? extends Individual> individuals) {
 				archiveHasRun = true;
-				Assert.assertTrue(individuals.contains(i1));
+				Assertions.assertTrue(individuals.contains(i1));
 				return true;
 			}
 		};
@@ -138,12 +138,12 @@ public class AbstractOptimizerTest {
 			@Override
 			public void complete(Iterable<? extends Individual> iterable) throws TerminationException {
 				completerHasRun = true;
-				Assert.assertTrue(iterable.iterator().hasNext());
-				Assert.assertSame(i1, iterable.iterator().next());
+				Assertions.assertTrue(iterable.iterator().hasNext());
+				Assertions.assertSame(i1, iterable.iterator().next());
 			}
 		};
 		final MockOptimizer optimizer = new MockOptimizer(p, a, completer, c, new Iteration(10));
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 		optimizer.setOptimizeTest(new TestMethod() {
 			@Override
 			public void test() throws TerminationException, StopException {
@@ -153,9 +153,9 @@ public class AbstractOptimizerTest {
 			}
 		});
 		optimizer.startOptimization();
-		Assert.assertFalse(optimizer.isRunning());
-		Assert.assertTrue(archiveHasRun);
-		Assert.assertTrue(completerHasRun);
+		Assertions.assertFalse(optimizer.isRunning());
+		Assertions.assertTrue(archiveHasRun);
+		Assertions.assertTrue(completerHasRun);
 	}
 
 	@Test
@@ -186,13 +186,13 @@ public class AbstractOptimizerTest {
 
 		started = false;
 		OptimizerIterationListener l1 = (int iteration) -> {
-			Assert.assertFalse(started);
-			Assert.assertEquals(1, iteration);
+			Assertions.assertFalse(started);
+			Assertions.assertEquals(1, iteration);
 			started = true;
 		};
 		optimizer.addOptimizerIterationListener(l1);
 
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 		optimizer.setOptimizeTest(new TestMethod() {
 			@Override
 			public void test() throws TerminationException, StopException {
@@ -202,7 +202,7 @@ public class AbstractOptimizerTest {
 			}
 		});
 		optimizer.startOptimization();
-		Assert.assertTrue(started);
+		Assertions.assertTrue(started);
 	}
 
 	@Test
@@ -224,18 +224,18 @@ public class AbstractOptimizerTest {
 				// nothing to be done
 			}
 		}, c, new Iteration(4));
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 		optimizer.setOptimizeTest(new TestMethod() {
 			@Override
 			public void test() throws TerminationException, StopException {
 				c.doStop();
 				c.checkpoint();
 				optimizer.nextIteration();
-				Assert.fail();
+				Assertions.fail();
 			}
 		});
 		optimizer.startOptimization();
-		Assert.assertFalse(optimizer.isRunning());
+		Assertions.assertFalse(optimizer.isRunning());
 	}
 
 	@Test
@@ -246,8 +246,8 @@ public class AbstractOptimizerTest {
 		};
 		optimizer.addOptimizerIterationListener(l);
 
-		Assert.assertEquals(1, optimizer.iterationListeners.size());
-		Assert.assertSame(l, optimizer.iterationListeners.iterator().next());
+		Assertions.assertEquals(1, optimizer.iterationListeners.size());
+		Assertions.assertSame(l, optimizer.iterationListeners.iterator().next());
 	}
 
 	@Test
@@ -267,8 +267,8 @@ public class AbstractOptimizerTest {
 		};
 		optimizer.addOptimizerStateListener(l);
 
-		Assert.assertEquals(1, optimizer.stateListeners.size());
-		Assert.assertSame(l, optimizer.stateListeners.iterator().next());
+		Assertions.assertEquals(1, optimizer.stateListeners.size());
+		Assertions.assertSame(l, optimizer.stateListeners.iterator().next());
 	}
 
 	@Test
@@ -279,7 +279,7 @@ public class AbstractOptimizerTest {
 		};
 		optimizer.addOptimizerIterationListener(l);
 		optimizer.removeOptimizerIterationListener(l);
-		Assert.assertTrue(optimizer.iterationListeners.isEmpty());
+		Assertions.assertTrue(optimizer.iterationListeners.isEmpty());
 	}
 
 	@Test
@@ -300,7 +300,7 @@ public class AbstractOptimizerTest {
 		optimizer.addOptimizerStateListener(l);
 
 		optimizer.removeOptimizerStateListener(l);
-		Assert.assertTrue(optimizer.stateListeners.isEmpty());
+		Assertions.assertTrue(optimizer.stateListeners.isEmpty());
 	}
 
 	@Test
@@ -323,7 +323,7 @@ public class AbstractOptimizerTest {
 		};
 		optimizer.injectListeners(Collections.singleton(l2), Collections.singleton(l1));
 
-		Assert.assertSame(l1, optimizer.iterationListeners.iterator().next());
-		Assert.assertSame(l2, optimizer.stateListeners.iterator().next());
+		Assertions.assertSame(l1, optimizer.iterationListeners.iterator().next());
+		Assertions.assertSame(l2, optimizer.stateListeners.iterator().next());
 	}
 }

@@ -1,36 +1,40 @@
 package org.opt4j.core.config.annotations;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.time.DateTimeException;
 import java.time.Month;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.config.annotations.Citation.PublicationMonth;
 
 public class CitationTest {
 	@Test
 	public void toMonth() {
-		Assert.assertEquals(Month.JANUARY, PublicationMonth.JANUARY.toMonth());
-		Assert.assertEquals(Month.FEBRUARY, PublicationMonth.FEBRUARY.toMonth());
-		Assert.assertEquals(Month.MARCH, PublicationMonth.MARCH.toMonth());
-		Assert.assertEquals(Month.APRIL, PublicationMonth.APRIL.toMonth());
-		Assert.assertEquals(Month.MAY, PublicationMonth.MAY.toMonth());
-		Assert.assertEquals(Month.JUNE, PublicationMonth.JUNE.toMonth());
-		Assert.assertEquals(Month.JULY, PublicationMonth.JULY.toMonth());
-		Assert.assertEquals(Month.AUGUST, PublicationMonth.AUGUST.toMonth());
-		Assert.assertEquals(Month.SEPTEMBER, PublicationMonth.SEPTEMBER.toMonth());
-		Assert.assertEquals(Month.OCTOBER, PublicationMonth.OCTOBER.toMonth());
-		Assert.assertEquals(Month.NOVEMBER, PublicationMonth.NOVEMBER.toMonth());
-		Assert.assertEquals(Month.DECEMBER, PublicationMonth.DECEMBER.toMonth());
+		Assertions.assertEquals(Month.JANUARY, PublicationMonth.JANUARY.toMonth());
+		Assertions.assertEquals(Month.FEBRUARY, PublicationMonth.FEBRUARY.toMonth());
+		Assertions.assertEquals(Month.MARCH, PublicationMonth.MARCH.toMonth());
+		Assertions.assertEquals(Month.APRIL, PublicationMonth.APRIL.toMonth());
+		Assertions.assertEquals(Month.MAY, PublicationMonth.MAY.toMonth());
+		Assertions.assertEquals(Month.JUNE, PublicationMonth.JUNE.toMonth());
+		Assertions.assertEquals(Month.JULY, PublicationMonth.JULY.toMonth());
+		Assertions.assertEquals(Month.AUGUST, PublicationMonth.AUGUST.toMonth());
+		Assertions.assertEquals(Month.SEPTEMBER, PublicationMonth.SEPTEMBER.toMonth());
+		Assertions.assertEquals(Month.OCTOBER, PublicationMonth.OCTOBER.toMonth());
+		Assertions.assertEquals(Month.NOVEMBER, PublicationMonth.NOVEMBER.toMonth());
+		Assertions.assertEquals(Month.DECEMBER, PublicationMonth.DECEMBER.toMonth());
 	}
 
-	@Test(expected = DateTimeException.class)
+	@Test
 	public void toMonthUnkown() {
-		PublicationMonth.UNKNOWN.toMonth();
+		assertThrows(DateTimeException.class, () -> {
+			PublicationMonth.UNKNOWN.toMonth();
+		});
 	}
 
 	@Test
 	public void valueOf() {
-		Assert.assertEquals(PublicationMonth.JANUARY, PublicationMonth.valueOf("JANUARY"));
+		Assertions.assertEquals(PublicationMonth.JANUARY, PublicationMonth.valueOf("JANUARY"));
 	}
 }

@@ -2,8 +2,8 @@ package org.opt4j.core;
 
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual.State;
 import org.opt4j.core.genotype.PermutationGenotype;
 
@@ -16,9 +16,9 @@ public class IndividualTest {
 		Individual individual = new Individual();
 		String p = "phenotype";
 		individual.setPhenotype(p);
-		Assert.assertTrue(p == individual.getPhenotype());
-		Assert.assertEquals(State.PHENOTYPED, individual.getState());
-		Assert.assertTrue(individual.isDecoded());
+		Assertions.assertTrue(p == individual.getPhenotype());
+		Assertions.assertEquals(State.PHENOTYPED, individual.getState());
+		Assertions.assertTrue(individual.isDecoded());
 	}
 
 	@Test
@@ -26,8 +26,8 @@ public class IndividualTest {
 		Individual individual = new Individual();
 		Genotype g = new PermutationGenotype<Object>();
 		individual.setGenotype(g);
-		Assert.assertTrue(g == individual.getGenotype());
-		Assert.assertEquals(State.GENOTYPED, individual.getState());
+		Assertions.assertTrue(g == individual.getGenotype());
+		Assertions.assertEquals(State.GENOTYPED, individual.getState());
 	}
 
 	@Test
@@ -35,9 +35,9 @@ public class IndividualTest {
 		Individual individual = new Individual();
 		Objectives o = new Objectives();
 		individual.setObjectives(o);
-		Assert.assertTrue(o == individual.getObjectives());
-		Assert.assertEquals(State.EVALUATED, individual.getState());
-		Assert.assertTrue(individual.isEvaluated());
+		Assertions.assertTrue(o == individual.getObjectives());
+		Assertions.assertEquals(State.EVALUATED, individual.getState());
+		Assertions.assertTrue(individual.isEvaluated());
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class IndividualTest {
 
 		individual.setState(State.DECODING);
 
-		Assert.assertEquals(State.DECODING, individual.getState());
-		Assert.assertTrue(stateChanged);
+		Assertions.assertEquals(State.DECODING, individual.getState());
+		Assertions.assertTrue(stateChanged);
 	}
 }

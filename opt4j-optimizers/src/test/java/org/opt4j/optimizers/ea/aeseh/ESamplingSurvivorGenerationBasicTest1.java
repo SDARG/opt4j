@@ -1,7 +1,5 @@
 package org.opt4j.optimizers.ea.aeseh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,7 +11,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opt4j.core.Individual;
 import org.opt4j.core.Objective;
 import org.opt4j.core.Objective.Sign;
@@ -104,9 +103,9 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 		when(mockFronts.getFrontAtIndex(1)).thenReturn(frontsMock.get(1));
 		when(mockFronts.getFrontAtIndex(2)).thenReturn(frontsMock.get(2));
 		Set<Individual> survivors = survivorGeneration.addDominatedSurvivors(5, mockFronts);
-		assertEquals(5, survivors.size());
-		assertTrue(survivors.containsAll(frontsMock.get(0)));
-		assertTrue(survivors.containsAll(frontsMock.get(1)));
+		Assertions.assertEquals(5, survivors.size());
+		Assertions.assertTrue(survivors.containsAll(frontsMock.get(0)));
+		Assertions.assertTrue(survivors.containsAll(frontsMock.get(1)));
 		verify(mockRandom).nextInt(2);
 
 	}
@@ -144,9 +143,9 @@ public class ESamplingSurvivorGenerationBasicTest1 {
 				new EpsilonMappingAdditive(), mockAdaption, 0.0, .0, .0, .0);
 
 		Collection<Individual> extremes = survivorGeneration.getExtremeIndividuals(indis);
-		assertEquals(2, extremes.size());
-		assertTrue(extremes.contains(first));
-		assertTrue(extremes.contains(third));
+		Assertions.assertEquals(2, extremes.size());
+		Assertions.assertTrue(extremes.contains(first));
+		Assertions.assertTrue(extremes.contains(third));
 	}
 
 }
