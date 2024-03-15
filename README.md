@@ -12,6 +12,9 @@ The benchmarks that are included comprise ZDT, DTLZ, WFG, and the knapsack probl
 The goal of Opt4J is to simplify the evolutionary optimization of user-defined problems as well as the implementation of arbitrary meta-heuristic optimization algorithms.
 For this purpose, Opt4J relies on a module-based implementation and offers a graphical user interface for the configuration as well as a visualization of the optimization process.
 
+## Java Versions
+Starting with Release 3.4, Opt4J requires Java 21 (LTS) or higher. Opt4J version 3.3 and lower is Java 11 compatible.
+
 ## Usage
 Opt4J can be used as standalone Swing-based application or as a library.
 
