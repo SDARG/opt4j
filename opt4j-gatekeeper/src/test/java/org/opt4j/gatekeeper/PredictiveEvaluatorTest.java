@@ -42,48 +42,45 @@ class PredictiveEvaluatorTest {
         lenient().when(mainRandom.nextLong()).thenReturn(12345L);
     }
 
-    @Test
-    void evaluate_shouldCallDelegate_whenPredictionIsFalse() {
-        // Enable skipping, exploration = 20%
+    /**
+     * Evaluates twice with skipping enabled: the first call populates the cached objective keys, for the second call
+     * the model returns the given prediction.
+     */
+    private Objectives evaluateTwice(double explorationProbability, boolean predictedDominated) {
         PredictiveEvaluator evaluator = new PredictiveEvaluator(
-                delegate, dominanceManager, archive, mainRandom, true, 0.2);
+                delegate, dominanceManager, archive, mainRandom, true, explorationProbability);
 
         when(delegate.evaluate(any())).thenReturn(normalObjectives);
 
         // Populate `cachedObjectiveKeys`
         evaluator.evaluate(dummyPhenotype);
 
-        // Setup for second call: Model says "Do not skip"
-        when(dominanceManager.shouldSkipEvaluation(any(), any())).thenReturn(false);
+        // Setup for second call
+        when(dominanceManager.shouldSkipEvaluation(any(), any())).thenReturn(predictedDominated);
 
-        // Second call
-        Objectives result = evaluator.evaluate(dummyPhenotype);
+        return evaluator.evaluate(dummyPhenotype);
+    }
 
-        // It should return the normal objective
-        assertEquals(10.0, result.getValues().iterator().next().getDouble());
-
-        // Delegate evaluated twice, skipped zero times
+    private void verifyEvaluatedTwiceAndNeverSkipped() {
         verify(delegate, times(2)).evaluate(any());
         verify(dominanceManager, times(2)).incrementEvaluated();
         verify(dominanceManager, never()).incrementSkipped();
     }
 
     @Test
+    void evaluate_shouldCallDelegate_whenPredictionIsFalse() {
+        // Exploration = 20%, model says "Do not skip"
+        Objectives result = evaluateTwice(0.2, false);
+
+        // It should return the normal objective
+        assertEquals(10.0, result.getValues().iterator().next().getDouble());
+        verifyEvaluatedTwiceAndNeverSkipped();
+    }
+
+    @Test
     void evaluate_shouldReturnInfeasible_whenModelPredictsDominated_andNoExploration() {
         // Exploration = 0.0 (Meaning random.nextDouble() > 0.0 is always TRUE -> Guaranteed Skip)
-        PredictiveEvaluator evaluator = new PredictiveEvaluator(
-                delegate, dominanceManager, archive, mainRandom, true, 0.0);
-
-        when(delegate.evaluate(any())).thenReturn(normalObjectives);
-
-        // Cache initialization
-        evaluator.evaluate(dummyPhenotype);
-
-        // Setup for second call: Model predicts this is dominated
-        when(dominanceManager.shouldSkipEvaluation(any(), any())).thenReturn(true);
-
-        // Second call
-        Objectives result = evaluator.evaluate(dummyPhenotype);
+        Objectives result = evaluateTwice(0.0, true);
 
         // Objectives returned must be INFEASIBLE so downstream systems don't break
         assertNull(result.getValues().iterator().next().getValue());
@@ -97,27 +94,11 @@ class PredictiveEvaluatorTest {
     @Test
     void evaluate_shouldForceExploration_whenModelPredictsDominated_butRandomTriggersExploration() {
         // Exploration = 1.0 (Meaning random.nextDouble() > 1.0 is always FALSE -> Guaranteed Explore)
-        PredictiveEvaluator evaluator = new PredictiveEvaluator(
-                delegate, dominanceManager, archive, mainRandom, true, 1.0);
-
-        when(delegate.evaluate(any())).thenReturn(normalObjectives);
-
-        // Cache initialization
-        evaluator.evaluate(dummyPhenotype);
-
-        // Setup for second call: Model predicts this is dominated, but Random forces us to explore
-        when(dominanceManager.shouldSkipEvaluation(any(), any())).thenReturn(true);
-
-        // Second call
-        Objectives result = evaluator.evaluate(dummyPhenotype);
+        Objectives result = evaluateTwice(1.0, true);
 
         // Returned the real evaluation results
         assertEquals(10.0, result.getValues().iterator().next().getDouble());
-
-        // Delegate evaluated twice, skipped zero times
-        verify(delegate, times(2)).evaluate(any());
-        verify(dominanceManager, times(2)).incrementEvaluated();
-        verify(dominanceManager, never()).incrementSkipped();
+        verifyEvaluatedTwiceAndNeverSkipped();
     }
 
     @Test

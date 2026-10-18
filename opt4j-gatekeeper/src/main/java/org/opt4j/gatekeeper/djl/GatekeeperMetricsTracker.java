@@ -46,9 +46,19 @@ public class GatekeeperMetricsTracker implements AutoCloseable {
 
     private final int averageWindow = 50;
 
-    @Inject(optional = true)
-    @Constant(value = "accuracyFilename", namespace = org.opt4j.gatekeeper.NeuralGatekeeperModule.class)
     private String accuracyFilename = "accuracy.tsv";
+
+    /**
+     * Sets the file the metrics are written to on {@link #close()}.
+     *
+     * @param accuracyFilename
+     *            the output file
+     */
+    @Inject(optional = true)
+    void setAccuracyFilename(
+            @Constant(value = "accuracyFilename", namespace = org.opt4j.gatekeeper.NeuralGatekeeperModule.class) String accuracyFilename) {
+        this.accuracyFilename = accuracyFilename;
+    }
 
     public synchronized void recordBatchMetrics(long tp, long tn, long fp, long fn, int currentIteration, int evaluatedCount) {
         long totalSamples = tp + tn + fp + fn;

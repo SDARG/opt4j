@@ -23,31 +23,17 @@
 package org.opt4j.gatekeeper.extractors;
 
 import com.google.inject.Singleton;
-import org.opt4j.core.Individual;
 import org.opt4j.core.genotype.BooleanGenotype;
-import org.opt4j.gatekeeper.FeatureExtractor;
 
 @Singleton
-public class BooleanFeatureExtractor implements FeatureExtractor {
-    private int featureSize = -1;
+public class BooleanFeatureExtractor extends AbstractGenotypeFeatureExtractor<BooleanGenotype> {
 
-    @Override
-    public synchronized float[] extractFeatures(Individual individual) {
-        if (!(individual.getGenotype() instanceof BooleanGenotype genotype)) {
-            throw new IllegalArgumentException("Expected BooleanGenotype but got " + individual.getGenotype().getClass().getSimpleName());
-        }
-
-        if (featureSize == -1) {
-            featureSize = genotype.size();
-        }
-
-        float[] features = new float[featureSize];
-        for (int i = 0; i < featureSize; i++) {
-            features[i] = genotype.get(i) ? 1.0f : 0.0f;
-        }
-        return features;
+    public BooleanFeatureExtractor() {
+        super(BooleanGenotype.class);
     }
 
     @Override
-    public int getFeatureVectorSize() { return featureSize; }
+    protected float extractFeature(BooleanGenotype genotype, int index) {
+        return genotype.get(index) ? 1.0f : 0.0f;
+    }
 }

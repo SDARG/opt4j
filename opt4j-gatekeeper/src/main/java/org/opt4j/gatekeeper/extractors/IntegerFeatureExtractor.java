@@ -23,41 +23,18 @@
 package org.opt4j.gatekeeper.extractors;
 
 import com.google.inject.Singleton;
-import org.opt4j.core.Individual;
 import org.opt4j.core.genotype.IntegerGenotype;
-import org.opt4j.gatekeeper.FeatureExtractor;
 
 @Singleton
-public class IntegerFeatureExtractor implements FeatureExtractor {
-    private int featureSize = -1;
+public class IntegerFeatureExtractor extends AbstractGenotypeFeatureExtractor<IntegerGenotype> {
 
-    @Override
-    public synchronized float[] extractFeatures(Individual individual) {
-        if (!(individual.getGenotype() instanceof IntegerGenotype genotype)) {
-            throw new IllegalArgumentException("Expected IntegerGenotype but got " + individual.getGenotype().getClass().getSimpleName());
-        }
-
-        if (featureSize == -1) {
-            featureSize = genotype.size();
-        }
-
-        float[] features = new float[featureSize];
-        for (int i = 0; i < featureSize; i++) {
-            double val = genotype.get(i);
-            double min = genotype.getLowerBound(i);
-            double max = genotype.getUpperBound(i);
-
-            // Normalize to [0.0, 1.0] for the neural network
-            if (max > min) {
-                features[i] = (float) ((val - min) / (max - min));
-            } else {
-                features[i] = 0.0f;
-            }
-        }
-        return features;
+    public IntegerFeatureExtractor() {
+        super(IntegerGenotype.class);
     }
 
-
     @Override
-    public int getFeatureVectorSize() { return featureSize; }
+    protected float extractFeature(IntegerGenotype genotype, int index) {
+        // Normalize to [0.0, 1.0] for the neural network
+        return normalize(genotype.get(index), genotype.getLowerBound(index), genotype.getUpperBound(index));
+    }
 }

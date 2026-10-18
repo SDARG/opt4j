@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -19,9 +18,7 @@ class GatekeeperMetricsTrackerTest {
         File tempFile = tempDir.resolve("accuracy.tsv").toFile();
 
         // Inject temp filename
-        Field filenameField = GatekeeperMetricsTracker.class.getDeclaredField("accuracyFilename");
-        filenameField.setAccessible(true);
-        filenameField.set(tracker, tempFile.getAbsolutePath());
+        tracker.setAccuracyFilename(tempFile.getAbsolutePath());
 
         // Record metrics: TP=10, TN=10, FP=5, FN=5 (Total=30, Accuracy=20/30=0.66...)
         tracker.recordBatchMetrics(10, 10, 5, 5, 100, 500);

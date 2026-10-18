@@ -23,40 +23,18 @@
 package org.opt4j.gatekeeper.extractors;
 
 import com.google.inject.Singleton;
-import org.opt4j.core.Individual;
 import org.opt4j.core.genotype.DoubleGenotype;
-import org.opt4j.gatekeeper.FeatureExtractor;
 
 @Singleton
-public class DoubleFeatureExtractor implements FeatureExtractor {
-    private int featureSize = -1;
+public class DoubleFeatureExtractor extends AbstractGenotypeFeatureExtractor<DoubleGenotype> {
 
-    @Override
-    public synchronized float[] extractFeatures(Individual individual) {
-        if (!(individual.getGenotype() instanceof DoubleGenotype genotype)) {
-            throw new IllegalArgumentException("Expected DoubleGenotype but got " + individual.getGenotype().getClass().getSimpleName());
-        }
-
-        if (featureSize == -1) {
-            featureSize = genotype.size();
-        }
-
-        float[] features = new float[featureSize];
-        for (int i = 0; i < featureSize; i++) {
-            double val = genotype.get(i);
-            double min = genotype.getLowerBound(i);
-            double max = genotype.getUpperBound(i);
-
-            // Normalize to [0.0, 1.0] to prevent Exploding Gradients in the NN
-            if (max > min) {
-                features[i] = (float) ((val - min) / (max - min));
-            } else {
-                features[i] = 0.0f; // Fallback if bounds are zero-width
-            }
-        }
-        return features;
+    public DoubleFeatureExtractor() {
+        super(DoubleGenotype.class);
     }
 
     @Override
-    public int getFeatureVectorSize() { return featureSize; }
+    protected float extractFeature(DoubleGenotype genotype, int index) {
+        // Normalize to [0.0, 1.0] to prevent Exploding Gradients in the NN
+        return normalize(genotype.get(index), genotype.getLowerBound(index), genotype.getUpperBound(index));
+    }
 }
