@@ -23,6 +23,8 @@ ext{
 	junitVersion = "5.10.2"
 	mockitoVersion = "5.10.0"
 	jacocoVersion = "0.8.11"
+	djlVersion = "0.26.0"
+	slf4jVersion = "1.7.36"
 }
 
 jacoco{
@@ -77,6 +79,7 @@ allprojects {
 def descriptions = [
 	'opt4j-core' : 'The core module of Opt4J',
 	'opt4j-benchmarks' : 'A set of benchmarks for Opt4J',
+	'opt4j-gatekeeper' : 'The neural gatekeeper module for predictive skipping of evaluations in Opt4J',
 	'opt4j-operators' : 'A set of operators for Opt4J',
 	'opt4j-optimizers' : 'A set of optimizers for Opt4J',
 	'opt4j-satdecoding' : 'The SAT decoding module for Opt4J',
@@ -168,6 +171,10 @@ dependencies {
 	implementation project(':opt4j-benchmarks')
 	implementation project(':opt4j-viewer')
 	implementation project(':opt4j-tutorial')
+	implementation project(':opt4j-gatekeeper')
+
+	// Routes the SLF4J log output of DJL (e.g. native library download progress) to java.util.logging
+	runtimeOnly group: 'org.slf4j', name: 'slf4j-jdk14', version: project.slf4jVersion
 }
 
 jar {

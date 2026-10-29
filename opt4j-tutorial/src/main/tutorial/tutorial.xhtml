@@ -17,6 +17,7 @@
 		<li><a href="#installation">Installation</a></li>
 		<li><a href="#problems">Defining Optimization Problems</a></li>
 		<li><a href="#algorithms">Defining Optimization Algorithms</a></li>
+		<li><a href="#gatekeeper">Predictive Evaluation with the Neural Gatekeeper</a></li>
 		<li><a href="#integration">Integration</a></li>
 	</ol>
 
@@ -79,7 +80,7 @@
 		(2) the @Decoder@, and
 		(3) the @Evaluator@.
 		The functionality of these classes is illustrated in the following figure:
-		<img src="img/problem.png" alt="Creator &rarr; Genotype &rarr; Decoder &rarr; Phenotype &rarr; Evaluator &rarr; Objectives"/></p>
+		<img src="img/problem.png" alt="Creator &rarr; Genotype &rarr; Decoder &rarr; Phenotype &rarr; Evaluator &rarr; Objectives" style="width: 100%; height: auto; display: block;"/></p>
 	<p>The creator provides random genotypes. A genotype is the genetic
 		representation of an individual. The decoder transforms the genotype
 		into the phenotype which represents all observable characteristics and
@@ -263,6 +264,102 @@
 	<p>The module requires to set the maximal number of iterations for
 		the iterative optimizer by adding a property with the annotation
 		@MaxIterations.</p>
+
+	<h2>
+		<a id="gatekeeper"></a>Predictive Evaluation with the Neural Gatekeeper
+	</h2>
+
+	<p>
+		In many real-world applications, evaluating the fitness of an individual (e.g., via numerical simulations or hardware synthesis) is computationally expensive and therefore slow.
+		Opt4J includes the Neural Gatekeeper, an extension that uses machine learning (via the Deep Java Library, DJL) to train a neural network on-the-fly during the optimization process.
+	</p>
+	<p>
+		The Gatekeeper acts as a filter: before an individual is evaluated, its features are passed to a neural network. If the network predicts that the individual will be dominated by the current
+		archive, the true evaluation is skipped (returning <code>INFEASIBLE</code> objectives), saving significant computation time. The modified evaluation flow is illustrated below:
+	</p>
+	<p>
+		<img src="img/gatekeeper.png"
+			 alt="Individual &rarr; Feature Extractor &rarr; Neural Network &rarr; Decision: Infeasible OR Expensive Evaluator"
+			 style="width: 100%;"/>
+	</p>
+	<p class="tip">
+		The native PyTorch libraries required by DJL are not shipped with Opt4J. They are downloaded automatically into <code>~/.djl.ai</code>
+		the first time the Gatekeeper is used, so the first run takes a bit longer and requires an internet connection.
+	</p>
+
+	<h3>Feature Extraction</h3>
+	<p>
+		To use the Neural Gatekeeper, the representation (Phenotype) of an individual must be translated into a numerical feature vector. Opt4J provides the
+		<code>FeatureExtractorModule</code> with built-in extractors for common genotypes.
+	</p>
+	<p class="tip">
+		If you are using a <code>BooleanGenotype</code>, <code>DoubleGenotype</code>, <code>IntegerGenotype</code>, or a <code>CompositeGenotype</code>, you can simply select the respective <code>ExtractorType</code>.
+		For custom genotypes, you can implement the <code>FeatureExtractor</code> interface and bind it manually.
+	</p>
+
+	<h3>Example: Skipping Expensive Evaluations</h3>
+	<p>
+		To demonstrate the Gatekeeper, let us take the <i>MinOnes</i> problem and simulate an expensive evaluation by adding a thread delay. First, we implement the expensive evaluator:
+	</p>
+	<pre class="prettyprint">@file(org/opt4j/tutorial/gatekeeper/ExpensiveEvaluator.java)</pre>
+
+	<p>
+		Because the <i>MinOnes</i> problem uses SAT decoding, its Genotype is a complex representation that is not natively supported by the standard extractors.
+		This is the perfect opportunity to write a custom <code>FeatureExtractor</code>. We will extract the features directly from the Phenotype (the <code>MinOnesResult</code>) instead:
+	</p>
+	<pre class="prettyprint">@file(org/opt4j/tutorial/gatekeeper/MinOnesFeatureExtractor.java)</pre>
+
+	<p>
+		Then, we create a custom problem module to bind our new evaluator and our custom extractor:
+	</p>
+	<pre class="prettyprint">@file(org/opt4j/tutorial/gatekeeper/ExpensiveMinOnesModule.java)</pre>
+
+	<p>
+		Finally, we configure our modules programmatically. We simply add the <code>NeuralGatekeeperModule</code> to our optimization task.
+		By default, the Gatekeeper uses its aggressive profile, so we do not need to set any parameters manually.
+	</p>
+	<pre class="prettyprint">@file(org/opt4j/tutorial/gatekeeper/GatekeeperExample.java)</pre>
+
+	<h3>Parameter Configuration &amp; Profiles</h3>
+	<p>
+		While the default parameters work well for many problems, the <code>NeuralGatekeeperModule</code> exposes several parameters so you can tailor the surrogate model to your problem. Two standard profiles are recommended:
+	</p>
+	<ul>
+		<li>Aggressive Profile (Default): Start Iteration = 25 | Exploration = 0.2 | Learning Rate = 0.001 | Threshold = 0.8 | Penalty = 1.0</li>
+		<li>Conservative Profile: Start Iteration = 50 | Exploration = 0.2 | Learning Rate = 0.0005 | Threshold = 0.95 | Penalty = 10.0</li>
+	</ul>
+
+	<p>The individual parameters are categorized as follows:</p>
+
+	<h4>Core Behavior</h4>
+	<ul>
+		<li>enablePredictiveSkipping: Toggles the prediction on or off.</li>
+		<li>predictionStartIteration: The generation at which skipping begins. Earlier iterations are used purely as a warm-up phase to gather training data.</li>
+		<li>explorationProbability: The chance (e.g., 0.2 for 20%) that an individual will be evaluated anyway, even if the model predicted it to be dominated. This ensures the optimizer does not get stuck in local optima.</li>
+	</ul>
+
+	<h4>Neural Network Architecture</h4>
+	<ul>
+		<li>hiddenLayerCount / hiddenLayerSize: Defines the depth and width of the multi-layer perceptron.</li>
+		<li>useGpu: Enables hardware acceleration if CUDA/DJL native libraries are available. (not recommended for anything but the biggest neural networks)</li>
+	</ul>
+
+	<h4>Training &amp; Classification Logic</h4>
+	<ul>
+		<li>learningRate: The step size used by the Adam optimizer during backpropagation.</li>
+		<li>batchSize: The number of samples processed simultaneously during training.</li>
+		<li>maxArchiveSamplesForTraining: Caps the number of archive individuals compared against new individuals to keep training times fast (-1 uses the entire archive (recommended)).</li>
+		<li>predictionThreshold: The confidence threshold (0.0 to 1.0) required to classify an individual as dominated. Higher values are safer (conservative).</li>
+		<li>falsePositivePenalty: A loss multiplier applied during training when the model incorrectly predicts that a good individual is dominated. Setting this high prevents the model from being too eager to skip.</li>
+	</ul>
+
+	<h4>Logging</h4>
+	<ul>
+		<li>tsvFilename / accuracyFilename: Files generated during the run to track the true evaluation count, skipped evaluations, and the precision/recall of the neural network.</li>
+	</ul>
+	<p class="tip">
+		Note on Logging: Because the Gatekeeper intercepts the evaluation process and returns <code>INFEASIBLE</code> objectives for skipped individuals, the evaluation counts reported by other separate loggers or default Opt4J metrics will be inaccurate. Always rely on the Gatekeeper's own log files for the true evaluation count. Furthermore, if you enable additional loggers, ensure they are configured to use a different output file to avoid overwriting or corrupting the Gatekeeper's data.
+	</p>
 
 	<h2>
 		<a id="integration"></a>Integration

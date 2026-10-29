@@ -7,6 +7,7 @@ dependencies {
 	api project(':opt4j-optimizers')
 	api project(':opt4j-operators')
 	api project(':opt4j-viewer')
+	api project(':opt4j-gatekeeper')
 	//api group: 'com.google.inject', name: 'guice', version: project.guiceVersion
 	
 	testImplementation platform(group: 'org.junit', name: 'junit-bom', version: project.junitVersion)
