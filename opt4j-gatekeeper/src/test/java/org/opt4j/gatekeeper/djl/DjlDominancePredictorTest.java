@@ -57,7 +57,7 @@ class DjlDominancePredictorTest {
     }
 
     @Test
-    void testPredictIsDominated_SmokeTest_ShapeCompatibility() {
+    void testPredictIsDominatedSmokeTestShapeCompatibility() {
         float[] newFeatures = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f };
         List<float[]> archiveFeaturesList = List.of(
                 new float[]{ 0.9f, 0.8f, 0.7f, 0.6f, 0.5f },
@@ -67,12 +67,12 @@ class DjlDominancePredictorTest {
         // If shapes mismatch, DJL throws an exception
         // assertDoesNotThrow proves the dynamic lazy-initialization and tensor manipulation works
         assertDoesNotThrow(() -> {
-            boolean isDominated = predictor.predictIsDominated(newFeatures, archiveFeaturesList);
+            predictor.predictIsDominated(newFeatures, archiveFeaturesList);
         });
     }
 
     @Test
-    void testTrain_SmokeTest_BackpropagationCompletesSuccessfully() {
+    void testTrainSmokeTestBackpropagationCompletesSuccessfully() {
         // Batch of 2 training samples. Length = 10 features
         // [ArchiveFeatures (5), NewFeatures (5)]
         float[] pair1 = { 1f, 1f, 1f, 1f, 1f,  0f, 0f, 0f, 0f, 0f };
@@ -92,7 +92,7 @@ class DjlDominancePredictorTest {
     }
 
     @Test
-    void testPredictIsDominated_ReturnsFalseWhenArchiveIsEmpty() {
+    void testPredictIsDominatedReturnsFalseWhenArchiveIsEmpty() {
         // Edge Case: If the archive is empty, a new individual cannot possibly be dominated.
         // Needs to return false without attempting tensor math on empty arrays.
         float[] newFeatures = { 1.0f, 2.0f };

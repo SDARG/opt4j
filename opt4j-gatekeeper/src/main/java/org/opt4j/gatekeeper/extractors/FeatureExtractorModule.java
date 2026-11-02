@@ -71,6 +71,10 @@ public class FeatureExtractorModule extends Opt4JModule {
             case COMPOSITE:
                 bind(FeatureExtractor.class).to(CompositeFeatureExtractor.class).in(Singleton.class);
                 break;
+            //use double extractor as default since it could be used for others types as well
+            default:
+            	bind(FeatureExtractor.class).to(DoubleFeatureExtractor.class).in(Singleton.class);
+                break;
         }
     }
 }

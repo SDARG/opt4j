@@ -196,8 +196,12 @@ public class DjlDominancePredictor implements GatekeeperModel {
                     .optLabels(labelsND)
                     .setSampling(this.batchSize, false)
                     .build();
-
-            long totalTP = 0, totalTN = 0, totalFP = 0, totalFN = 0;
+            
+            //init counter for internal metrics
+            long totalTP = 0;
+            long totalTN = 0;
+            long totalFP = 0;
+            long totalFN = 0;
 
             for (Batch batch : trainingData.getData(subManager)) {
                 try {

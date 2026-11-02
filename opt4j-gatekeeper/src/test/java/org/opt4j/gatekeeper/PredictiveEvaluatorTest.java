@@ -68,7 +68,7 @@ class PredictiveEvaluatorTest {
     }
 
     @Test
-    void evaluate_shouldCallDelegate_whenPredictionIsFalse() {
+    void evaluateShouldCallDelegateWhenPredictionIsFalse() {
         // Exploration = 20%, model says "Do not skip"
         Objectives result = evaluateTwice(0.2, false);
 
@@ -78,7 +78,7 @@ class PredictiveEvaluatorTest {
     }
 
     @Test
-    void evaluate_shouldReturnInfeasible_whenModelPredictsDominated_andNoExploration() {
+    void evaluateShouldReturnInfeasibleWhenModelPredictsDominatedAndNoExploration() {
         // Exploration = 0.0 (Meaning random.nextDouble() > 0.0 is always TRUE -> Guaranteed Skip)
         Objectives result = evaluateTwice(0.0, true);
 
@@ -92,7 +92,7 @@ class PredictiveEvaluatorTest {
     }
 
     @Test
-    void evaluate_shouldForceExploration_whenModelPredictsDominated_butRandomTriggersExploration() {
+    void evaluateShouldForceExplorationWhenModelPredictsDominatedButRandomTriggersExploration() {
         // Exploration = 1.0 (Meaning random.nextDouble() > 1.0 is always FALSE -> Guaranteed Explore)
         Objectives result = evaluateTwice(1.0, true);
 
@@ -102,7 +102,7 @@ class PredictiveEvaluatorTest {
     }
 
     @Test
-    void evaluate_shouldCallDelegate_whenSkippingIsGloballyDisabled() {
+    void evaluateShouldCallDelegateWhenSkippingIsGloballyDisabled() {
         // Enable skipping = FALSE
         PredictiveEvaluator evaluator = new PredictiveEvaluator(
                 delegate, dominanceManager, archive, mainRandom, false, 0.2);

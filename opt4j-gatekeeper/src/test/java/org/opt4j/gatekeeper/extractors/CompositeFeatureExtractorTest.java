@@ -25,7 +25,7 @@ class CompositeFeatureExtractorTest {
     }
 
     @Test
-    void testCompositeFlattening_WithIntegerAndList() {
+    void testCompositeFlatteningWithIntegerAndList() {
         CompositeFeatureExtractor extractor = new CompositeFeatureExtractor();
 
         IntegerGenotype ig = new IntegerGenotype(0, 10);

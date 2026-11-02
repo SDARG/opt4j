@@ -31,7 +31,7 @@ class PrimitiveFeatureExtractorTest {
     }
 
     @Test
-    void testDoubleFeatureExtractor_NormalBounds() {
+    void testDoubleFeatureExtractorNormalBounds() {
         DoubleFeatureExtractor extractor = new DoubleFeatureExtractor();
 
         // Create genotype with bounds [0.0, 10.0]
@@ -49,7 +49,7 @@ class PrimitiveFeatureExtractorTest {
     }
 
     @Test
-    void testDoubleFeatureExtractor_MinEqualsMax_PreventsNaN() {
+    void testDoubleFeatureExtractorMinEqualsMaxPreventsNaN() {
         DoubleFeatureExtractor extractor = new DoubleFeatureExtractor();
 
         // Edge case: lower bound == upper bound
@@ -66,7 +66,7 @@ class PrimitiveFeatureExtractorTest {
     }
 
     @Test
-    void testIntegerFeatureExtractor_MinEqualsMax_PreventsNaN() {
+    void testIntegerFeatureExtractorMinEqualsMaxPreventsNaN() {
         IntegerFeatureExtractor extractor = new IntegerFeatureExtractor();
 
         // Edge case: lower bound == upper bound
@@ -83,7 +83,7 @@ class PrimitiveFeatureExtractorTest {
     }
 
     @Test
-    void testBooleanExtractor_ThrowsExceptionForWrongGenotype() {
+    void testBooleanExtractorThrowsExceptionForWrongGenotype() {
         BooleanFeatureExtractor extractor = new BooleanFeatureExtractor();
         Individual mockIndividual = mock(Individual.class);
         when(mockIndividual.getGenotype()).thenReturn(new DoubleGenotype()); // Wrong type
@@ -92,7 +92,7 @@ class PrimitiveFeatureExtractorTest {
     }
 
     @Test
-    void testDoubleExtractor_ThrowsExceptionForWrongGenotype() {
+    void testDoubleExtractorThrowsExceptionForWrongGenotype() {
         DoubleFeatureExtractor extractor = new DoubleFeatureExtractor();
         Individual mockIndividual = mock(Individual.class);
         when(mockIndividual.getGenotype()).thenReturn(new BooleanGenotype()); // Wrong type
@@ -101,7 +101,7 @@ class PrimitiveFeatureExtractorTest {
     }
 
     @Test
-    void testIntegerExtractor_ThrowsExceptionForWrongGenotype() {
+    void testIntegerExtractorThrowsExceptionForWrongGenotype() {
         IntegerFeatureExtractor extractor = new IntegerFeatureExtractor();
         Individual mockIndividual = mock(Individual.class);
         when(mockIndividual.getGenotype()).thenReturn(new BooleanGenotype()); // Wrong type

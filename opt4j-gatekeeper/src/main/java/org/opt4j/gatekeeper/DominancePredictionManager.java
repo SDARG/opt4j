@@ -52,8 +52,7 @@ public class DominancePredictionManager {
     public DominancePredictionManager(
             GatekeeperModel model,
             FeatureExtractor featureExtractor,
-            @Constant(value = "predictionStartIteration", namespace = NeuralGatekeeperModule.class) int predictionStartIteration,
-            Random mainRandom) {
+            @Constant(value = "predictionStartIteration", namespace = NeuralGatekeeperModule.class) int predictionStartIteration) {
 
         this.model = model;
         this.featureExtractor = featureExtractor;

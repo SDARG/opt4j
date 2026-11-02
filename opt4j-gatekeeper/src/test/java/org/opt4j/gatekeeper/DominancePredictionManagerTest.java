@@ -1,5 +1,18 @@
 package org.opt4j.gatekeeper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,12 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.opt4j.core.Individual;
 import org.opt4j.core.optimizer.Archive;
 
-import java.util.List;
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class DominancePredictionManagerTest {
 
@@ -21,14 +28,13 @@ class DominancePredictionManagerTest {
     @Mock private FeatureExtractor featureExtractor;
     @Mock private Archive archive;
     @Mock private Individual individual;
-    @Mock private Random random;
 
     private DominancePredictionManager manager;
 
     @BeforeEach
     void setUp() {
         // Prediction starts at iteration 25
-        manager = new DominancePredictionManager(model, featureExtractor, 25, random);
+        manager = new DominancePredictionManager(model, featureExtractor, 25);
     }
 
     @Test
@@ -48,7 +54,7 @@ class DominancePredictionManagerTest {
     }
 
     @Test
-    void testShouldSkip_FalseDuringWarmupPhase() {
+    void testShouldSkipFalseDuringWarmupPhase() {
         manager.setCurrentIteration(10); // 10 < 25
 
         boolean skip = manager.shouldSkipEvaluation(individual, archive);
@@ -58,7 +64,7 @@ class DominancePredictionManagerTest {
     }
 
     @Test
-    void testShouldSkip_DelegatesToModelAfterWarmup() {
+    void testShouldSkipDelegatesToModelAfterWarmup() {
         manager.setCurrentIteration(30); // 30 > 25
 
         float[] newFeatures = { 1.0f };
@@ -79,8 +85,8 @@ class DominancePredictionManagerTest {
     }
 
     @Test
-    void testShouldSkip_FalseIfDependenciesAreNull() {
-        DominancePredictionManager nullManager = new DominancePredictionManager(null, null, 0, random);
+    void testShouldSkipFalseIfDependenciesAreNull() {
+        DominancePredictionManager nullManager = new DominancePredictionManager(null, null, 0);
         nullManager.setCurrentIteration(10);
 
         assertFalse(nullManager.shouldSkipEvaluation(individual, archive));

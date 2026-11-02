@@ -80,7 +80,6 @@ class GatekeeperTrainingListenerTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     void testIterationComplete_FiltersInfeasibleAndCombinesFeaturesCorrectly() {
         population.add(feasibleInd);
         population.add(infeasibleInd); // This one should be filtered out
@@ -119,7 +118,7 @@ class GatekeeperTrainingListenerTest {
     }
 
     @Test
-    void testIterationComplete_SkipsTrainingIfPopulationIsEmptyOrAllInfeasible() {
+    void testIterationCompleteSkipsTrainingIfPopulationIsEmptyOrAllInfeasible() {
         population.add(infeasibleInd);
 
         listener.optimizationStarted(null);
@@ -129,7 +128,7 @@ class GatekeeperTrainingListenerTest {
     }
 
     @Test
-    void testIterationComplete_DeduplicatesIndividuals() {
+    void testIterationCompleteDeduplicatesIndividuals() {
         population.add(feasibleInd);
         population.add(feasibleInd); // Duplicate instance (same hashcode)
 

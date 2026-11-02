@@ -32,6 +32,7 @@ import org.opt4j.core.config.annotations.Parent;
 import org.opt4j.core.problem.Evaluator;
 import org.opt4j.core.start.Constant;
 import org.opt4j.core.start.Opt4JModule;
+import org.opt4j.gatekeeper.djl.DjlDominancePredictor;
 
 @Parent(NeuralGatekeeper.class)
 @Icon(Icons.PUZZLE_BLUE)
@@ -232,6 +233,6 @@ public class NeuralGatekeeperModule extends Opt4JModule {
         addOptimizerStateListener(EvaluationLogger.class);
 
         // Bind DJL Implementation to the Interface
-        bind(GatekeeperModel.class).to(org.opt4j.gatekeeper.djl.DjlDominancePredictor.class).in(Singleton.class);
+        bind(GatekeeperModel.class).to(DjlDominancePredictor.class).in(Singleton.class);
     }
 }
