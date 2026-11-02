@@ -80,7 +80,7 @@ class GatekeeperTrainingListenerTest {
     }
 
     @Test
-    void testIterationComplete_FiltersInfeasibleAndCombinesFeaturesCorrectly() {
+    void testIterationCompleteFiltersInfeasibleAndCombinesFeaturesCorrectly() {
         population.add(feasibleInd);
         population.add(infeasibleInd); // This one should be filtered out
 
