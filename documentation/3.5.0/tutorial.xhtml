@@ -1,0 +1,666 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+<link href="prettify.css" type="text/css" rel="stylesheet" />
+<link href="tutstyle.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="prettify.js"></script>
+<title>Opt4J &mdash; A Modular Framework for Meta-heuristic Optimization &mdash; Tutorial</title>
+</head>
+<body onload="prettyPrint()">
+
+	<h1>Opt4J Tutorial</h1>
+	<p>Version: 3.5.0 - Date: 2026-11-02</p>
+
+	<h2 class="nocount">Contents</h2>
+	<ol>
+		<li><a href="#installation">Installation</a></li>
+		<li><a href="#problems">Defining Optimization Problems</a></li>
+		<li><a href="#algorithms">Defining Optimization Algorithms</a></li>
+		<li><a href="#gatekeeper">Predictive Evaluation with the Neural Gatekeeper</a></li>
+		<li><a href="#integration">Integration</a></li>
+	</ol>
+
+	<h2>
+		<a id="installation"></a>Installation
+	</h2>
+
+	<p>
+		Opt4J currently requires Java 21.
+		To compile the following examples, you will need the respective JDK installed.
+		Opt4J is distributed as single .zip file that can be downloaded from <a href="https://github.com/sdarg/opt4j/releases">here</a>.
+		After extracting the files, the folder structure looks like this:
+	</p>
+	<ul class="iconlist">
+		<li class="folder">opt4j-3.5.0</li>
+		<li><ul class="iconlist">
+			<li class="folder">bin</li>
+			<li><ul class="iconlist">
+				<li class="linux">opt4j</li>
+				<li class="bat">opt4j.bat</li>
+				<li class="xml">test.config.xml</li>
+				<li class="python">batch.py</li>
+			</ul></li>
+			<li class="folder">lib</li>
+			<li class="folder">licenses</li>
+			<li class="folder">plugins</li>
+		</ul></li>
+	</ul>
+	<p>The application is launched with opt4j.bat under Windows and
+		opt4j under Linux/Unix/OSX, respectively. Once started, it will appear
+		the module configurator that allows to select an optimizer and problem
+		as well as setting their parameters. For testing, load the
+		test.config.xml and start the optimization with 'run'.</p>
+	<p>To develop custom optimization problems and algorithms for
+		Opt4J, the files in the lib folder have to be on the classpath for
+		compiling and starting the code. To start the module configurator
+		manually, one has to run the class <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/start/Opt4J.html">Opt4J</a> which
+		contains a corresponding main method.</p>
+	<p>To execute a specific configuration without the indirection over
+		the user interface, you need to pass a configuration file to the
+		application with the additional -s parameter to start the
+		optimization. You may try this by executing the following command
+		inside the bin folder:</p>
+	<pre class="console">&gt; ./opt4j -s test.config.xml</pre>
+	<p>If you write custom optimization problems and algorithms, you
+		can drop a jar-file with the compiled code into the plugins folder and
+		the corresponding modules are found automatically once Opt4J starts.</p>
+
+	<p class="tip">Use the batch.py script with python 2.x to run batch
+		experiments for predefined configuration xml files. Execute 'python
+		batch.py' to get further instructions how to use the script.</p>
+
+	<h2>
+		<a id="problems"></a>Defining Optimization Problems
+	</h2>
+
+	<p>Custom optimization problems are typically defined by providing
+		three main classes:
+		(1) The <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/problem/Creator.html">Creator</a>,
+		(2) the <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/problem/Decoder.html">Decoder</a>, and
+		(3) the <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/problem/Evaluator.html">Evaluator</a>.
+		The functionality of these classes is illustrated in the following figure:
+		<img src="img/problem.png" alt="Creator &rarr; Genotype &rarr; Decoder &rarr; Phenotype &rarr; Evaluator &rarr; Objectives" style="width: 100%; height: auto; display: block;"/></p>
+	<p>The creator provides random genotypes. A genotype is the genetic
+		representation of an individual. The decoder transforms the genotype
+		into the phenotype which represents all observable characteristics and
+		components of the individual. Finally, based on the phenotype, the
+		evaluator determines the objectives that represent the quality of the
+		current individual.</p>
+
+	<p>By defining the creator, decoder, and evaluator (and implicitly
+		the genotype and phenotype), the optimization algorithm can tackle the
+		problem. In the following, it is shown how this can be done for two
+		simple problems.</p>
+
+	<h3>Example: Hello World</h3>
+	<p>
+		The hello world problem is inspired by the <a
+			href="http://watchmaker.uncommons.org/">Watchmaker Framework</a>
+		tutorial. The goal is to optimize a string of eleven characters until
+		this string results in the optimal solution "HELLO WORLD". For this
+		purpose, we need to define the corresponding creator, decoder, and
+		evaluator.
+	</p>
+	<p>In the first step, we define the creator that implicitly defines
+		the genotype:</p>
+	<pre class="prettyprint">public class HelloWorldCreator implements Creator&lt;SelectGenotype&lt;Character&gt;&gt; {
+	protected Character[] ALPHABET = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+			'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ' };
+	protected Random random = new Random();
+	@Override
+	public SelectGenotype&lt;Character&gt; create() {
+		SelectGenotype&lt;Character&gt; genotype = new SelectGenotype&lt;&gt;(ALPHABET);
+		genotype.init(random, 11);
+		return genotype;
+	}
+}
+</pre>
+	<p>As mentioned, the task of the creator is to generate random
+		genotype objects. In our case, we want to generate random strings with
+		eleven characters. Here, we choose one of the predefined genotype
+		classes that allows to select from a given alphabet and initialize it
+		randomly with eleven (11) characters.</p>
+	<p class="tip">Note that Opt4J contains a set of predefined
+		genotype classes (in the <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/genotype/package-summary.html">genotype</a> package) that can
+		also be combined and one should always choose from this set if
+		possible instead of implementing custom genotypes that require an
+		implementation of custom operators.</p>
+
+	<p>In the second step, we define the decoder that implicitly
+		defines the phenotype:</p>
+	<pre class="prettyprint">public class HelloWorldDecoder implements Decoder&lt;SelectGenotype&lt;Character&gt;, String&gt; {
+	public String decode(SelectGenotype&lt;Character&gt; genotype) {
+		String phenotype = "";
+		for (int i = 0; i &lt; genotype.size(); i++) {
+			phenotype += genotype.getValue(i);
+		}
+		return phenotype;
+	}
+}
+</pre>
+	<p>The task of the decoder is to convert our genotype into a
+		phenotype which in our case is a string. This is done straightforward
+		by copying the characters into a string.</p>
+
+	<p>In the third step, we define the evaluator:</p>
+	<pre class="prettyprint">public class HelloWorldEvaluator implements Evaluator&lt;String&gt; {
+	@Override
+	public Objectives evaluate(String phenotype) {
+		int value = 0;
+		for (int i = 0; i &lt; phenotype.length(); i++) {
+			value += (phenotype.charAt(i) == "HELLO WORLD".charAt(i)) ? 1 : 0;
+		}
+		Objectives objectives = new Objectives();
+		objectives.add("objective", Sign.MAX, value);
+		return objectives;
+	}
+}
+</pre>
+	<p>The task of the evaluator is to determine the quality of one
+		phenotype, i.e., one string. In our case, we count the number of
+		matching characters when it is compared to "HELLO WORLD". Here, we
+		want the number to be maximized. Note that we can add multiple
+		objectives such that the problem becomes a multi-objective
+		optimization problem.</p>
+
+	<p>Finally, we define a problem module:</p>
+	<pre class="prettyprint">public class HelloWorldModule extends ProblemModule {
+	protected void config() {
+		bindProblem(HelloWorldCreator.class, HelloWorldDecoder.class, HelloWorldEvaluator.class);
+	}
+}
+</pre>
+	<p>The problem module defines the problem and here particularly the
+		corresponding creator, decoder, and evaluator. Once the module
+		configurator is started, this problem module is automatically detected
+		if it is on the classpath and we can select it. </p>
+	<p class="tip">You can also add additional evaluators and, thus,
+		implicitly additional objectives by passing the additional evaluator
+		class to the <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/problem/ProblemModule.html#addEvaluator(java.lang.Class)">addEvaluator(..)</a> method inside the config method.</p>
+
+	<h3>Example: Traveling Salesman</h3>
+
+	<p>
+		The <a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">traveling
+			salesman problem</a> is a classic optimization problem. The goal is to
+		minimize the length of a path that is required to visit a set of
+		cities. The following code examples show a little bit of the
+		dependency injection capabilities that are integrated into Opt4J by
+		using <a href="http://code.google.com/p/google-guice/">Google
+			Guice</a>. It might be therefore also a good idea to have a short look at
+		the tutorial of Guice if one plans to use dependency injection
+		extensively. For this example, a profound understanding of Guice will
+		not be necessary.
+	</p>
+
+	<p>Let us start by defining our problem instance:</p>
+	<pre class="prettyprint">public class SalesmanProblem {
+	protected Set&lt;City&gt; cities = new HashSet&lt;&gt;();
+	public class City {
+		protected final double x;
+		protected final double y;
+		public City(double x, double y) {
+			this.x = x;
+			this.y = y;
+		}
+		public double getX() {
+			return x;
+		}
+		public double getY() {
+			return y;
+		}
+	}
+	@Inject
+	public SalesmanProblem(@Constant(value = "size") int size) {
+		Random random = new Random(0);
+		for (int i = 0; i &lt; size; i++) {
+			final double x = random.nextDouble() * 100;
+			final double y = random.nextDouble() * 100;
+			final City city = new City(x, y);
+			cities.add(city);
+		}
+	}
+	public Set&lt;City&gt; getCities() {
+		return cities;
+	}
+}
+</pre>
+	<p>First we define that a city is given by an x and a y coordinate.
+		In the constructor of our problem, we randomly generate a certain
+		amount of cities that can later on be obtained. Here, the constructor
+		is annotated with @Inject that is used by Guice to indicate which
+		constructor will be used when the instance is created. The size
+		argument in the constructor is annotated as constant that will be
+		later set in the problem module.</p>
+
+	<p>The phenotype looks as follows:</p>
+	<pre class="prettyprint">public class SalesmanRoute extends ArrayList&lt;City&gt; {
+}
+</pre>
+	<p>In this case, we define a custom phenotype that is represented
+		as a list of cities.</p>
+
+	<p>Now its again time to define our creator, decoder, and
+		evaluator. Lets start with the creator:</p>
+	<pre class="prettyprint">public class SalesmanCreator implements Creator&lt;PermutationGenotype&lt;City&gt;&gt; {
+	protected final SalesmanProblem problem;
+	@Inject
+	public SalesmanCreator(SalesmanProblem problem) {
+		this.problem = problem;
+	}
+	@Override
+	public PermutationGenotype&lt;City&gt; create() {
+		PermutationGenotype&lt;City&gt; genotype = new PermutationGenotype&lt;&gt;();
+		for (City city : problem.getCities()) {
+			genotype.add(city);
+		}
+		Collections.shuffle(genotype);
+		return genotype;
+	}
+}
+</pre>
+	<p>The creator receives the problem instance in the constructor and
+		saves it into a member variable. Here, we again see the @Inject
+		annotation that is a little Guice magic to wire everything together.
+		For the genotype, we use a predefined permutation genotype and add all
+		cities. The permutation defines the order in which the cities will be
+		visited by the traveling salesman. Note that each genotype is randomly
+		shuffled before it is returned which is important since each genotype
+		has initially to be generated completely randomly.</p>
+
+	<p>In the next step, we define the decoder:</p>
+	<pre class="prettyprint">public class SalesmanDecoder implements Decoder&lt;PermutationGenotype&lt;City&gt;, SalesmanRoute&gt; {
+	public SalesmanRoute decode(PermutationGenotype&lt;City&gt; genotype) {
+		SalesmanRoute salesmanRoute = new SalesmanRoute();
+		for (City city : genotype) {
+			salesmanRoute.add(city);
+		}
+		return salesmanRoute;
+	}
+}
+</pre>
+	<p>Here, we simply take the genotype and copy the cities in its
+		current order into a route. Note that for more complex problems, a
+		decoder can often do much more than just transforming the
+		representation such as repairing, etc. Moreover, the decoder allows to
+		implement different genotype representations of the same problem while
+		the evaluator does not have to be changed at all since the decoder can
+		transform each genetic representation into the same phenotype.</p>
+
+	<p>The evaluator looks as follows:</p>
+	<pre class="prettyprint">public class SalesmanEvaluator implements Evaluator&lt;SalesmanRoute&gt; {
+	public Objectives evaluate(SalesmanRoute salesmanRoute) {
+		double dist = 0;
+		for (int i = 0; i &lt; salesmanRoute.size(); i++) {
+			City one = salesmanRoute.get(i);
+			City two = salesmanRoute.get((i + 1) % salesmanRoute.size());
+			dist += getEuclideanDistance(one, two);
+		}
+		Objectives objectives = new Objectives();
+		objectives.add("distance", Sign.MIN, dist);
+		return objectives;
+	}
+	private double getEuclideanDistance(City one, City two) {
+		final double x = one.getX() - two.getX();
+		final double y = one.getY() - two.getY();
+		return Math.sqrt(x * x + y * y);
+	}
+}
+</pre>
+	<p>The evaluator calculates the length of the current route and
+		returns it as an objective that has to be minimized.</p>
+
+	<p>Finally we define the module as follows:</p>
+	<pre class="prettyprint">public class SalesmanModule extends ProblemModule {
+	@Constant(value = "size")
+	protected int size = 100;
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public void config() {
+		bindProblem(SalesmanCreator.class, SalesmanDecoder.class, SalesmanEvaluator.class);
+	}
+}
+</pre>
+	<p>Additionally to setting the creator, decoder, and evaluator, we
+		add a property size and annotate it as constant, corresponding to the
+		argument in the constructor of the problem instance. Note that a
+		correct property in the modules always requires a getter and setter
+		method. If we start the configurator now, we will see that
+		additionally to adding the problem module, we can also now set the
+		size of our problem. The wiring of the problem, i.e., setting the size
+		of the problem instance and passing the problem instance to the
+		creator is now done by Guice and we do not have to burden ourselves
+		with that.</p>
+
+	<h2>
+		<a id="algorithms"></a>Defining Optimization Algorithms
+	</h2>
+
+	<p>Optimization in Opt4J follows a strict iterative pattern. All
+		optimization algorithms have an initialization and an iterative
+		optimization (next). Within these methods, the population of
+		individuals has to be improved while the archive is updated in the
+		background. As discussed before, each individual consists of a
+		genotype, phenotype, and its objectives.</p>
+
+	<p>Opt4J already integrates many tools that are required to
+		assemble optimization algorithms. The main ones are the following:</p>
+
+	<ul>
+		<li>Factories that allow to construct new individuals either
+			randomly or with a given genotype.</li>
+		<li>Operators that allow to generate new genotypes from existing
+			ones by mutation, crossover, algebraic operations, and so on.</li>
+		<li>Selectors that allow to determine the worst (and parent)
+			solutions of a population based on the objectives which is
+			particularly important for multi-objective problems.</li>
+	</ul>
+
+	<p>If you want to write custom optimizers, the following example
+		will give you an idea how this is possible in Opt4J. On the other
+		hand, it might be also worth to have a look into the source code and
+		learn from reading the code of the existing algorithms.</p>
+
+	<h3>Example: Mutate Optimizer</h3>
+
+	<p>This example shows how to write a very simple optimizer that is
+		based on mutation only. The presented optimizer has a fixed population size
+		of 100 and creates 25 offspring individuals from 25 parent individuals
+		each generation by a mutate operation. The optimizer is implemented as
+		follows:</p>
+	<pre class="prettyprint">public class MutateOptimizer implements IterativeOptimizer {
+	protected final IndividualFactory individualFactory;
+	protected final Mutate&lt;Genotype&gt; mutate;
+	protected final Copy&lt;Genotype&gt; copy;
+	protected final Selector selector;
+	private final Population population;
+	public static final int POPSIZE = 100;
+	public static final int OFFSIZE = 25;
+	@Inject
+	public MutateOptimizer(Population population, IndividualFactory individualFactory,
+			Selector selector, Mutate&lt;Genotype&gt; mutate, Copy&lt;Genotype&gt; copy) {
+		this.individualFactory = individualFactory;
+		this.mutate = mutate;
+		this.copy = copy;
+		this.selector = selector;
+		this.population = population;
+	}
+	public void initialize() throws TerminationException {
+		selector.init(OFFSIZE + POPSIZE);
+	}
+	public void next() throws TerminationException {
+		if (population.isEmpty()) {
+			for (int i = 0; i &lt; POPSIZE; i++) {
+				population.add(individualFactory.create());
+			}
+		} else {
+			if (population.size() &gt; POPSIZE) {
+				Collection&lt;Individual&gt; lames = selector.getLames(population.size() - POPSIZE,
+						population);
+				population.removeAll(lames);
+			}
+			Collection&lt;Individual&gt; parents = selector.getParents(OFFSIZE, population);
+			for (Individual parent : parents) {
+				Genotype genotype = copy.copy(parent.getGenotype());
+				mutate.mutate(genotype, 0.1);
+				Individual child = individualFactory.create(genotype);
+				population.add(child);
+			}
+		}
+	}
+}
+</pre>
+	<p>The initialization ensures that the selector is initialized. The optimization 
+		process is implemented in the next method. In the first iteration, the population 
+		is still empty and 100 new individuals are created and added. 
+		In all following iterations, first, the population is reduced to 100 by 
+		removing the worst individuals that are identified by the selector. Then, 25
+		parent individuals are determined by the selector and for each of
+		these individuals, one individual is created by copying the genotype
+		and mutating it. Finally, the new individuals are added to the
+		population.</p>
+
+	<p>The optimization module looks as follows:</p>
+	<pre class="prettyprint">public class MutateOptimizerModule extends OptimizerModule {
+	@MaxIterations
+	protected int iterations = 1000;
+	public int getIterations() {
+		return iterations;
+	}
+	public void setIterations(int iterations) {
+		this.iterations = iterations;
+	}
+	@Override
+	public void config() {
+		bindIterativeOptimizer(MutateOptimizer.class);
+	}
+}
+</pre>
+	<p>The module requires to set the maximal number of iterations for
+		the iterative optimizer by adding a property with the annotation
+		@MaxIterations.</p>
+
+	<h2>
+		<a id="gatekeeper"></a>Predictive Evaluation with the Neural Gatekeeper
+	</h2>
+
+	<p>
+		In many real-world applications, evaluating the fitness of an individual (e.g., via numerical simulations or hardware synthesis) is computationally expensive and therefore slow.
+		Opt4J includes the Neural Gatekeeper, an extension that uses machine learning (via the Deep Java Library, DJL) to train a neural network on-the-fly during the optimization process.
+	</p>
+	<p>
+		The Gatekeeper acts as a filter: before an individual is evaluated, its features are passed to a neural network. If the network predicts that the individual will be dominated by the current
+		archive, the true evaluation is skipped (returning <code>INFEASIBLE</code> objectives), saving significant computation time. The modified evaluation flow is illustrated below:
+	</p>
+	<p>
+		<img src="img/gatekeeper.png"
+			 alt="Individual &rarr; Feature Extractor &rarr; Neural Network &rarr; Decision: Infeasible OR Expensive Evaluator"
+			 style="width: 100%;"/>
+	</p>
+	<p class="tip">
+		The native PyTorch libraries required by DJL are not shipped with Opt4J. They are downloaded automatically into <code>~/.djl.ai</code>
+		the first time the Gatekeeper is used, so the first run takes a bit longer and requires an internet connection.
+	</p>
+
+	<h3>Feature Extraction</h3>
+	<p>
+		To use the Neural Gatekeeper, the representation (Phenotype) of an individual must be translated into a numerical feature vector. Opt4J provides the
+		<code>FeatureExtractorModule</code> with built-in extractors for common genotypes.
+	</p>
+	<p class="tip">
+		If you are using a <code>BooleanGenotype</code>, <code>DoubleGenotype</code>, <code>IntegerGenotype</code>, or a <code>CompositeGenotype</code>, you can simply select the respective <code>ExtractorType</code>.
+		For custom genotypes, you can implement the <code>FeatureExtractor</code> interface and bind it manually.
+	</p>
+
+	<h3>Example: Skipping Expensive Evaluations</h3>
+	<p>
+		To demonstrate the Gatekeeper, let us take the <i>MinOnes</i> problem and simulate an expensive evaluation by adding a thread delay. First, we implement the expensive evaluator:
+	</p>
+	<pre class="prettyprint">public class ExpensiveEvaluator implements Evaluator&lt;MinOnesResult&gt; {
+    @Override
+    public Objectives evaluate(MinOnesResult minOnesResult) {
+        // Simulate a computationally expensive task
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        int value = 0;
+        for (Boolean v : minOnesResult) {
+            if (v != null &amp;&amp; v) value++;
+        }
+        Objectives objectives = new Objectives();
+        objectives.add("ones", Sign.MIN, value);
+        return objectives;
+    }
+}
+</pre>
+
+	<p>
+		Because the <i>MinOnes</i> problem uses SAT decoding, its Genotype is a complex representation that is not natively supported by the standard extractors.
+		This is the perfect opportunity to write a custom <code>FeatureExtractor</code>. We will extract the features directly from the Phenotype (the <code>MinOnesResult</code>) instead:
+	</p>
+	<pre class="prettyprint">public class MinOnesFeatureExtractor implements FeatureExtractor {
+    @Override
+    public float[] extractFeatures(Individual individual) {
+        MinOnesResult phenotype = (MinOnesResult) individual.getPhenotype();
+        // MinOnes uses 1000 variables
+        float[] features = new float[1000];
+        for (int i = 0; i &lt; 1000; i++) {
+            Boolean val = phenotype.get(i);
+            features[i] = (val != null &amp;&amp; val) ? 1.0f : 0.0f;
+        }
+        return features;
+    }
+    @Override
+    public int getFeatureVectorSize() {
+        return 1000;
+    }
+}
+</pre>
+
+	<p>
+		Then, we create a custom problem module to bind our new evaluator and our custom extractor:
+	</p>
+	<pre class="prettyprint">public class ExpensiveMinOnesModule extends ProblemModule {
+    @Override
+    protected void config() {
+        // We reuse the Creator and Decoder from MinOnes, but plug in our ExpensiveEvaluator
+        bindProblem(MinOnesDecoder.class, MinOnesDecoder.class, ExpensiveEvaluator.class);
+        // Bind the custom feature extractor to the gatekeeper
+        bind(FeatureExtractor.class).to(MinOnesFeatureExtractor.class);
+    }
+}
+</pre>
+
+	<p>
+		Finally, we configure our modules programmatically. We simply add the <code>NeuralGatekeeperModule</code> to our optimization task.
+		By default, the Gatekeeper uses its aggressive profile, so we do not need to set any parameters manually.
+	</p>
+	<pre class="prettyprint">public class GatekeeperExample {
+    public static void main(String[] args) {
+        // The base problem and optimizer
+        ExpensiveMinOnesModule minOnes = new ExpensiveMinOnesModule();
+        EvolutionaryAlgorithmModule ea = new EvolutionaryAlgorithmModule();
+        ea.setGenerations(100);
+        ea.setPopulationSize(100);
+        // Configure the Gatekeeper (using default parameters)
+        NeuralGatekeeperModule gatekeeper = new NeuralGatekeeperModule();
+        // Run the Task
+        Opt4JTask task = new Opt4JTask(false);
+        task.init(ea, minOnes, gatekeeper);
+        try {
+            task.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            task.close();
+        }
+    }
+}
+</pre>
+
+	<h3>Parameter Configuration &amp; Profiles</h3>
+	<p>
+		While the default parameters work well for many problems, the <code>NeuralGatekeeperModule</code> exposes several parameters so you can tailor the surrogate model to your problem. Two standard profiles are recommended:
+	</p>
+	<ul>
+		<li>Aggressive Profile (Default): Start Iteration = 25 | Exploration = 0.2 | Learning Rate = 0.001 | Threshold = 0.8 | Penalty = 1.0</li>
+		<li>Conservative Profile: Start Iteration = 50 | Exploration = 0.2 | Learning Rate = 0.0005 | Threshold = 0.95 | Penalty = 10.0</li>
+	</ul>
+
+	<p>The individual parameters are categorized as follows:</p>
+
+	<h4>Core Behavior</h4>
+	<ul>
+		<li>enablePredictiveSkipping: Toggles the prediction on or off.</li>
+		<li>predictionStartIteration: The generation at which skipping begins. Earlier iterations are used purely as a warm-up phase to gather training data.</li>
+		<li>explorationProbability: The chance (e.g., 0.2 for 20%) that an individual will be evaluated anyway, even if the model predicted it to be dominated. This ensures the optimizer does not get stuck in local optima.</li>
+	</ul>
+
+	<h4>Neural Network Architecture</h4>
+	<ul>
+		<li>hiddenLayerCount / hiddenLayerSize: Defines the depth and width of the multi-layer perceptron.</li>
+		<li>useGpu: Enables hardware acceleration if CUDA/DJL native libraries are available. (not recommended for anything but the biggest neural networks)</li>
+	</ul>
+
+	<h4>Training &amp; Classification Logic</h4>
+	<ul>
+		<li>learningRate: The step size used by the Adam optimizer during backpropagation.</li>
+		<li>batchSize: The number of samples processed simultaneously during training.</li>
+		<li>maxArchiveSamplesForTraining: Caps the number of archive individuals compared against new individuals to keep training times fast (-1 uses the entire archive (recommended)).</li>
+		<li>predictionThreshold: The confidence threshold (0.0 to 1.0) required to classify an individual as dominated. Higher values are safer (conservative).</li>
+		<li>falsePositivePenalty: A loss multiplier applied during training when the model incorrectly predicts that a good individual is dominated. Setting this high prevents the model from being too eager to skip.</li>
+	</ul>
+
+	<h4>Logging</h4>
+	<ul>
+		<li>tsvFilename / accuracyFilename: Files generated during the run to track the true evaluation count, skipped evaluations, and the precision/recall of the neural network.</li>
+	</ul>
+	<p class="tip">
+		Note on Logging: Because the Gatekeeper intercepts the evaluation process and returns <code>INFEASIBLE</code> objectives for skipped individuals, the evaluation counts reported by other separate loggers or default Opt4J metrics will be inaccurate. Always rely on the Gatekeeper's own log files for the true evaluation count. Furthermore, if you enable additional loggers, ensure they are configured to use a different output file to avoid overwriting or corrupting the Gatekeeper's data.
+	</p>
+
+	<h2>
+		<a id="integration"></a>Integration
+	</h2>
+	<p>Opt4J is designed as a framework. However, it might also be
+		comfortably used as a library in other projects. To embed Opt4J in
+		other applications, the modules can be configured in Java, i.e.,
+		without the usage of the configurator. The following code snippet
+		shows how to optimize the first DTLZ test function with an
+		evolutionary algorithm from Java and, finally, how to obtain the best
+		found solutions:</p>
+
+	<pre class="prettyprint">EvolutionaryAlgorithmModule ea = new EvolutionaryAlgorithmModule();
+ea.setGenerations(500);
+ea.setAlpha(100);
+DTLZModule dtlz = new DTLZModule();
+dtlz.setFunction(DTLZModule.Function.DTLZ1);
+ViewerModule viewer = new ViewerModule();
+viewer.setCloseOnStop(true);
+Opt4JTask task = new Opt4JTask(false);
+task.init(ea,dtlz,viewer);
+try {
+        task.execute();
+        Archive archive = task.getInstance(Archive.class);
+        for (Individual individual : archive) {
+                // obtain the phenotype and objective, etc. of each individual
+        }
+} catch (Exception e) {
+        e.printStackTrace();
+} finally {
+        task.close();
+} </pre>
+	<p>First, you will have to construct the desired modules for the
+		optimization process. An optimization process requires at
+		least a
+		<a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/problem/ProblemModule.html">ProblemModule</a>
+		which defines the Creator, Decoder, and Evaluator as described in
+		<a href="#problems">Section 2</a>. Here, the
+		<a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/benchmarks/dtlz/DTLZModule.html">DTLZModule</a>
+		is used as an example. Also, an
+		<a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/optimizer/OptimizerModule.html">OptimizerModule</a>
+		is required which defines the optimization algorithm to use for the problem. In the	example, the
+		<a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/optimizers/ea/EvolutionaryAlgorithmModule.html">EvolutionaryAlgorithmModule</a> is chosen but also the MutateOptimizerModule as developed in <a href="#algorithms">Section 3</a> could be used here. Additionally, the optional
+		<a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/viewer/ViewerModule.html">ViewerModule</a>
+		is created, which provides the GUI for the optimization process.</p>
+	<p>The
+		<a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/start/Opt4JTask.html">Opt4JTask</a>
+		takes these modules and controls the optimization process.
+		Here, it is constructed with the parameter <code>false</code> that
+		indicates that the task is closed manually and not
+		automatically once the optimization stops. The Opt4JTask is
+		initialized with the modules. Now, it is possible to execute the task
+		(which is blocking in this case, but you can also start it in a
+		separate thread) and once the optimization is finished, you can obtain
+		the <a class="jdoc" href="../../javadoc/3.5.0/org/opt4j/core/optimizer/Archive.html">Archive</a> to iterate over the best solutions. After closing the
+		task, obtaining instances like the Archive is not possible anymore.</p>
+
+</body>
+</html>
